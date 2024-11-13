@@ -30,7 +30,7 @@ const Hero = () => {
                                 className="self-center cursor-pointer"
                                 size={30}
                             />
-                            <h1 className="text-3xl font-display text-center self-center">
+                            <h1 className="text-3xl font-display text-center self-center ">
                                 Donatella
                             </h1>
                             <div className="flex items-center justify-end gap-10">
@@ -54,7 +54,7 @@ const Hero = () => {
                     </nav>
 
                     <div className="w-[70%] pt-[66px] mx-auto text-center flex flex-col justify-center items-center gap-1 text-white-base z-50">
-                        <h1 className="text-[86px] italic font-semibold font-display drop-shadow-lg shadow-white">
+                        <h1 className="freakyTitle text-[86px] italic font-semibold font-display drop-shadow-lg shadow-white">
                             Capture Your Story.
                         </h1>
                         <p
