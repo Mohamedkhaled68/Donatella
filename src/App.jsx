@@ -5,25 +5,25 @@ import { IndividualForm, IndividualLastForm } from "./components";
 import SelectCategory from "./components/SelectCategory";
 
 const App = () => {
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const response = await axios.get(
-                    "https://api.quickr.tech/models/api/v1/auth",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
-                console.log(response.data); // Set the user data
-            } catch (err) {
-                console.log("Failed to fetch user");
-            }
-        };
+    // useEffect(() => {
+    //     const fetchUser = async () => {
+    //         try {
+    //             const response = await axios.get(
+    //                 "https://api.quickr.tech/models/api/v1/auth",
+    //                 {
+    //                     headers: {
+    //                         Authorization: `Bearer ${token}`,
+    //                     },
+    //                 }
+    //             );
+    //             console.log(response.data); // Set the user data
+    //         } catch (err) {
+    //             console.log("Failed to fetch user");
+    //         }
+    //     };
 
-        fetchUser(); // Call the function when component mounts
-    }, []);
+    //     fetchUser(); // Call the function when component mounts
+    // }, []);
     return (
         <>
             <Routes>
