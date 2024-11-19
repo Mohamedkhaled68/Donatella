@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import Button from "./shared/ui/Button";
 
 const ModelsCard = ({ title, description, image, button }) => {
     return (

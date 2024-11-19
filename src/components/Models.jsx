@@ -1,7 +1,7 @@
 import React from "react";
 import ModelsCard from "./ModelsCard";
 import { manModel, talent1, talent2, talent3, womanModel } from "../assets";
-import Button from "./Button";
+import Button from "./shared/ui/Button";
 
 const Models = ({ modelsRef, talentsRef }) => {
     return (
@@ -67,10 +67,18 @@ const Models = ({ modelsRef, talentsRef }) => {
                             </div>
                         </div>
                         <div className="flex justify-center items-center gap-5">
-                            <Button className={"font-light text-white-base bg-[#1F2224]"}>
+                            <Button
+                                className={
+                                    "font-light text-white-base bg-[#1F2224]"
+                                }
+                            >
                                 Look For Talent
                             </Button>
-                            <Button className={"font-light border-thin border-[#1F2224]"}>
+                            <Button
+                                className={
+                                    "font-light border-thin border-[#1F2224]"
+                                }
+                            >
                                 Sign Up As Talent
                             </Button>
                         </div>

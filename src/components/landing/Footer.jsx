@@ -1,10 +1,5 @@
 import React from "react";
-import {
-    FaFacebook,
-    FaTwitter,
-    FaInstagram,
-    FaPaperPlane,
-} from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 
 const icons = [
     {

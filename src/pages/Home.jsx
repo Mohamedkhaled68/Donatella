@@ -1,13 +1,11 @@
 import React from "react";
-import { Footer, Hero, Instructions, Models } from "../components";
 
 const Home = () => {
     return (
         <>
-            <Hero />
-            <Models />
-            <Instructions />
-            <Footer />
+            <div className="text-3xl text-white-base">
+                mm
+            </div>
         </>
     );
 };

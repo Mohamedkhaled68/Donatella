@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/userTokenStore";
 import useUserStore from "../../store/userStore";
 
-const useRegister = () => {
-    // const setToken = useAuthStore((state) => state.signIn);
+const useLogin = () => {
+    const setToken = useAuthStore((state) => state.signIn);
     const navigate = useNavigate();
     const { setUserData } = useUserStore();
 
@@ -20,11 +20,11 @@ const useRegister = () => {
             });
             console.log(response.data);
             setUserData(response.data);
-            // setToken(response.data.token);
+            setToken(response.data.token);
             return response.data;
         },
         onSuccess: () => {
-            navigate("/verifying-page", { replace: true });
+            navigate("/profile", { replace: true });
         },
         onError: (error) => {
             const errorMessage =
@@ -35,4 +35,4 @@ const useRegister = () => {
     });
 };
 
-export default useRegister;
+export default useLogin;

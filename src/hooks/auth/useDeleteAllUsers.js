@@ -2,26 +2,19 @@ import { useMutation } from "@tanstack/react-query";
 import { baseUrl } from "../../utils/baseUrl";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import useUserStore from "../../store/userStore";
 
-const useRegister = () => {
+const useDeleteAllUsers = () => {
     const navigate = useNavigate();
-    const { setUserData } = useUserStore();
-
     return useMutation({
         mutationKey: ["user"],
-        mutationFn: async (user) => {
-            const response = await axios.post(`${baseUrl}/auth/signup`, user, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            console.log(response.data.data.id);
-            setUserData(response.data.data.id);
+        mutationFn: async () => {
+            const response = await axios.delete(`${baseUrl}/users/all`);
+            console.log(response.data);
             return response.data;
         },
         onSuccess: () => {
-            navigate("/verifying-page", { replace: true });
+            console.log("Users deleted successfully!!");
+            navigate("/landing");
         },
         onError: (error) => {
             const errorMessage =
@@ -32,4 +25,4 @@ const useRegister = () => {
     });
 };
 
-export default useRegister;
+export default useDeleteAllUsers;

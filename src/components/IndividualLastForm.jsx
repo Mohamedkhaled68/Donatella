@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import LogoHeader from "./LogoHeader";
+import LogoHeader from "./shared/ui/LogoHeader";
 import LoadImage from "./LoadImage";
 import useOnboarding from "../hooks/auth/useOnboarding";
 

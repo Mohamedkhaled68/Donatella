@@ -1,6 +1,9 @@
 export { default as girlImg } from "./images/girl.jpeg";
 export { default as manModel } from "./images/landing_man_model.jpg";
 export { default as womanModel } from "./images/landing_woman_model.png";
+export { default as profileGirl } from "./images/profile-girl-image.png";
+export { default as profileHeadshot } from "./images/profile-headshot-image.png";
+export { default as profileFullbody } from "./images/profile-fullbody-image.png";
 export { default as talent1 } from "./images/talent1.jpeg";
 export { default as talent2 } from "./images/talent2.jpeg";
 export { default as talent3 } from "./images/talent3.jpeg";

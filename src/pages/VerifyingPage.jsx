@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
-import LogoHeader from "../components/LogoHeader";
+import React, { useEffect, useRef, useState } from "react";
 import useVerifyUser from "../hooks/auth/useVerifyUser";
 import useUserStore from "../store/userStore";
+import { Link } from "react-router-dom";
+import { BackButton } from "../components";
 
 const VerifyingPage = ({ length = 4 }) => {
     const [otp, setOtp] = useState(new Array(length).fill(""));
@@ -44,35 +45,50 @@ const VerifyingPage = ({ length = 4 }) => {
             inputRefs.current[index - 1].focus();
         }
     };
+
+    useEffect(() => {
+        inputRefs.current[0].focus();
+    }, []);
     return (
         <>
-            <section className="min-h-screen">
-                <LogoHeader />
-                <div className="w-full h-full flex justify-center items-center">
-                    <div className="flex flex-col items-center justify-center gap-5 mt-10 bg-black/50 px-5 py-2 rounded-md text-white-base">
-                        <h1 className="font-display font-medium text-3xl text-center">
-                            Enter OTP
-                        </h1>
-                        <div className="grid grid-cols-4 gap-5">
-                            {otp.map((_, index) => (
-                                <input
-                                    key={index}
-                                    ref={(el) =>
-                                        (inputRefs.current[index] = el)
-                                    }
-                                    type="text"
-                                    maxLength="1"
-                                    value={otp[index]}
-                                    onChange={(e) =>
-                                        handleChange(e.target.value, index)
-                                    }
-                                    onKeyDown={(e) => handleBackspace(e, index)}
-                                    className="w-[50px] h-[50px] rounded-md p-5 bg-white-base text-black text-center text-xl"
-                                />
-                            ))}
+            <section className="h-screen relative">
+                <div className="container mx-auto pt-20 text-white-base">
+                    <div className="grid grid-cols-3">
+                        <BackButton />
+                        <div className="flex flex-col justify-center items-center gap-3">
+                            <h1 className="font-display text-[46px] font-bold text-center">
+                                Enter OTP
+                            </h1>
+                            <p className="font-body text-center text-[#94A3B8] w-[70%] mx-auto text-md font-light">
+                                Welcome back! Let’s dive back into your creative
+                                journey.
+                            </p>
                         </div>
-                        <button className="button">Resend OTP</button>
                     </div>
+                    <div className="grid grid-cols-4 justify-items-center gap-5 w-full mt-10">
+                        {otp.map((_, index) => (
+                            <input
+                                key={index}
+                                ref={(el) => (inputRefs.current[index] = el)}
+                                type="text"
+                                maxLength="1"
+                                value={otp[index]}
+                                onChange={(e) =>
+                                    handleChange(e.target.value, index)
+                                }
+                                onKeyDown={(e) => handleBackspace(e, index)}
+                                className="w-[80px] h-[170px] pb-10 outline-none  border-b-4 border-white-base text-white-base bg-transparent text-center font-display font-bold text-[128px]"
+                            />
+                        ))}
+                    </div>
+                </div>
+                <div className="absolute bottom-0 left-0 w-full pb-10 flex justify-center items-start">
+                    <p className="text-sm font-semibold font-body text-[#64748B]">
+                        Didn’t receive a code yet?{" "}
+                        <Link to={"#"} className="text-blue-primary">
+                            Click here to request another one!
+                        </Link>
+                    </p>
                 </div>
             </section>
         </>

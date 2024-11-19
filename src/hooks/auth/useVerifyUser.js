@@ -9,7 +9,7 @@ const useVerifyUser = () => {
     const navigate = useNavigate();
 
     return useMutation({
-        mutationKey: ["user", "verifyUser"],
+        mutationKey: ["user"],
         mutationFn: async (data) => {
             const response = await axios.patch(
                 `${baseUrl}/auth/verify-account`,
@@ -20,8 +20,8 @@ const useVerifyUser = () => {
                     },
                 }
             );
-            console.log(response.data);
-            setToken(response.data.token);
+            console.log(response.data.data.token);
+            setToken(response.data.data.token);
             return response.data;
         },
         onSuccess: () => {

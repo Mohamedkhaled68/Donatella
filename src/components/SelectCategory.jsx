@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import LogoHeader from "./LogoHeader";
+import LogoHeader from "./shared/ui/LogoHeader";
 import { FaArrowLeft } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTheme } from "../hooks/useTheme";
 import { cate1, cate2, cate3, cate4 } from "../assets";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -14,17 +13,12 @@ const categories = [
 ];
 
 const SelectCategory = () => {
-    // const { showMenu, setShowMenu } = useTheme();
     const navigate = useNavigate();
     const [role, setRole] = useState("");
     const [disabled, setDisabled] = useState(true);
-    // const handleShowMenu = () => {
-    //     setShowMenu(false);
-    // };
 
     const navigateToForm = (title) => {
         navigate("/individual-form", { state: { category: title } });
-        // setShowMenu(false);
     };
 
     const handleRoleChange = (selectedRole) => {
@@ -39,17 +33,6 @@ const SelectCategory = () => {
         }
     }, [role]);
 
-    // useEffect(() => {
-    //     if (showMenu) {
-    //         document.body.style.overflow = "hidden";
-    //     } else {
-    //         document.body.style.overflow = "unset";
-    //     }
-
-    //     return () => {
-    //         document.body.style.overflow = "unset";
-    //     };
-    // }, [showMenu]);
     return (
         <>
             <AnimatePresence>

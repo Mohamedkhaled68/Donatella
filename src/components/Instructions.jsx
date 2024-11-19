@@ -5,7 +5,7 @@ import {
     instructionImg3,
     searchTalentImage,
 } from "../assets";
-import Button from "./Button";
+import Button from "./shared/ui/Button";
 const InstructionsData = [
     {
         btn: "Create Account",

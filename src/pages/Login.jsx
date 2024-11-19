@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { login1, login2 } from "../assets";
-import LogoHeader from "../components/LogoHeader";
+import LogoHeader from "../components/shared/ui/LogoHeader";
 import { NavLink } from "react-router-dom";
-import { FaAngleDown } from "react-icons/fa6";
+import useLogin from "../hooks/auth/useLogin";
 import { motion } from "framer-motion";
+import { FormButton, FormGroup } from "../components";
+import { validateForm } from "../utils/validators";
+import toast from "react-hot-toast";
 
 const initialFormValues = {
     email: "",
@@ -11,6 +14,11 @@ const initialFormValues = {
 };
 const Login = () => {
     const [formValues, setFormValues] = useState(initialFormValues);
+    const [role, setRole] = useState("Individual");
+    const [disabled, setDisabled] = useState(true);
+    const [errors, setErrors] = useState({});
+
+    const { mutateAsync, onSuccess } = useLogin();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -20,10 +28,34 @@ const Login = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        
+        try {
+            console.log({ ...formValues, role: role.toUpperCase() });
+
+            // await mutateAsync({ ...formValues, role: role.toUpperCase() });
+        } catch (error) {
+            console.log("An error occurred.");
+        } finally {
+            console.log({ ...formValues, role: role.toUpperCase() });
+            toast.success("Logged in successfully!!");
+            setFormValues(initialFormValues);
+        }
     };
+
+    const handleRoleChange = (selectedRole) => {
+        setRole(selectedRole);
+    };
+
+    useEffect(() => {
+        const isFilled = Object.values(formValues).every(
+            (value) => value !== ""
+        );
+        const errors = validateForm(formValues);
+        setErrors(errors);
+
+        setDisabled(!isFilled || Object.keys(errors).length !== 0);
+    }, [formValues]);
     return (
         <>
             <motion.div
@@ -61,70 +93,63 @@ const Login = () => {
                                 <h2 className="text-xl font-semibold font-display">
                                     Login As:
                                 </h2>
-                                <div className="flex items-center justify-center gap-10">
-                                    <div className="relative w-1/2">
-                                        <select
-                                            className="appearance-none bg-white-base text-left rounded-xl w-full text-gray-base text-medium font-bold font-body px-[18px] pl-[35px] py-[14px]"
-                                            name="category"
-                                        >
-                                            <option value="Individual">
-                                                Individual
-                                            </option>
-                                        </select>
-                                        <FaAngleDown className="absolute right-9 top-1/2 transform -translate-y-1/2 text-gray-base" />
-                                    </div>
-                                    <div className="relative w-1/2">
-                                        <select
-                                            className="appearance-none bg-white-base text-left rounded-xl w-full text-gray-base text-medium font-bold font-body px-[18px] pl-[35px] py-[14px]"
-                                            name="category"
-                                        >
-                                            <option value="model">Model</option>
-                                        </select>
-                                        <FaAngleDown className="absolute right-9 top-1/2 transform -translate-y-1/2 text-gray-base" />
-                                    </div>
+                                <div className="flex justify-center items-center gap-5 w-full">
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            handleRoleChange("Organization")
+                                        }
+                                        className={`${
+                                            role === "Organization"
+                                                ? "bg-white-base text-gray-deep"
+                                                : "bg-[#27292C] text-white-base"
+                                        } w-1/2 px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl`}
+                                    >
+                                        Organization
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            handleRoleChange("Individual")
+                                        }
+                                        className={`${
+                                            role === "Individual"
+                                                ? "bg-white-base text-gray-deep"
+                                                : "bg-[#27292C] text-white-base"
+                                        } w-1/2 border-medium border-white-base px-5 py-4 text-medium font-bold rounded-xl`}
+                                    >
+                                        Individual
+                                    </button>
                                 </div>
 
                                 <div className="flex flex-col gap-5 mt-[20px]">
-                                    <div className="flex flex-col gap-2">
-                                        <label
-                                            className="text-white-base text-sm font-body font-normal"
-                                            htmlFor="email"
-                                        >
-                                            Email Address
-                                        </label>
-                                        <input
-                                            className="rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-[#94A3B8] text-medium font-body px-[18px] py-[14px] w-full"
-                                            type="email"
-                                            name="email"
-                                            id="email"
-                                            placeholder="i.e. davon@mail.com"
-                                            value={formValues.email}
-                                            onChange={handleInputChange}
-                                        />
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <label
-                                            className="text-white-base text-sm font-body font-normal"
-                                            htmlFor="email"
-                                        >
-                                            Password
-                                        </label>
-                                        <input
-                                            className="rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-[#94A3B8] text-medium font-body px-[18px] py-[14px] w-full"
-                                            type="password"
-                                            name="password"
-                                            id="password"
-                                            placeholder="********"
-                                            value={formValues.password}
-                                            onChange={handleInputChange}
-                                        />
-                                    </div>
+                                    <FormGroup
+                                        label={"Email"}
+                                        type="email"
+                                        name="email"
+                                        id="email"
+                                        placeholder="i.e. davon@mail.com"
+                                        value={formValues.email}
+                                        onChange={handleInputChange}
+                                        error={errors.email}
+                                    />
+                                    <FormGroup
+                                        label={"Password"}
+                                        type="password"
+                                        name="password"
+                                        id="password"
+                                        placeholder="********"
+                                        value={formValues.password}
+                                        onChange={handleInputChange}
+                                        error={errors.password}
+                                    />
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center items-center gap-2 mt-8">
-                                <button className="button bg-blue-primary text-white-base px-[72px] py-3 text-medium font-semibold">
-                                    Login
-                                </button>
+                                <FormButton
+                                    disabled={disabled}
+                                    text={"Login"}
+                                />
                                 <p className="text-medium text-white-base/40">
                                     Don't have an account?{" "}
                                     <NavLink

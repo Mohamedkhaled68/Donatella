@@ -1,8 +1,8 @@
 import React from "react";
-import { headerVideo } from "../assets";
+import { headerVideo } from "../../assets";
 import { NavLink } from "react-router-dom";
-import Button from "./Button";
-import Sidebar from "./Sidebar";
+import Button from "../shared/ui/Button";
+import Sidebar from "../Sidebar";
 
 const Hero = () => {
     return (

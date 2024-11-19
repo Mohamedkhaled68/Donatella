@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import LogoHeader from "./LogoHeader";
+import LogoHeader from "./shared/ui/LogoHeader";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { FaCheck } from "react-icons/fa6";
-import { useTheme } from "../hooks/useTheme";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { use } from "framer-motion/client";
-import useUserStore from "../store/userStore";
+import BackButton from "./shared/ui/BackButton";
 
 const inputStyle =
     "bg-transparent border-thin border-[#334155] rounded-br-3 px-[17px] py-[13px] w-full text-white-base font-body font-normal text-sm";
@@ -69,8 +66,6 @@ const IndividualForm = () => {
     const [disabled, setDisabled] = useState(true);
     const navigate = useNavigate();
 
-    const { handleGoBack } = useTheme();
-
     const location = useLocation();
 
     const handleInputChange = (e) => {
@@ -114,11 +109,7 @@ const IndividualForm = () => {
                 <LogoHeader />
                 <div className="container mx-auto my-10">
                     <div className="grid grid-cols-4 my-4">
-                        <FaArrowLeft
-                            onClick={handleGoBack}
-                            className="text-blue-primary self-center cursor-pointer"
-                            size={30}
-                        />
+                        <BackButton size={30} />
                         <div className="col-span-2 flex flex-col justify-center items-center gap-[14px]">
                             <h1 className="capitalize text-5xl font-display font-bold text-white-base">
                                 {category}
