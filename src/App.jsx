@@ -8,7 +8,7 @@ import {
     Signup,
     VerifyingPage,
 } from "./pages";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import {
     IndividualForm,
     IndividualLastForm,
@@ -67,11 +67,14 @@ const App = () => {
                         />
 
                         <Route
-                            path="/"
                             element={<ProtectedRoute redirectPath="/landing" />}
                         >
-                            <Route path="profile" element={<Profile />} />
-                            <Route path="explore" element={<Explore />} />
+                            <Route
+                                path="/"
+                                element={<Navigate to="/profile" replace />}
+                            />
+                            <Route path="/profile" element={<Profile />} />
+                            <Route path="/explore" element={<Explore />} />
                         </Route>
                         <Route
                             path="/verifying-page"
