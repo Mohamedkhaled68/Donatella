@@ -6,7 +6,7 @@ import useUserStore from "../../store/userStore";
 
 const useRegister = () => {
     const navigate = useNavigate();
-    const { setUserData } = useUserStore();
+    const { setUserId } = useUserStore();
 
     return useMutation({
         mutationKey: ["user"],
@@ -17,7 +17,7 @@ const useRegister = () => {
                 },
             });
             console.log(response.data.data.id);
-            setUserData(response.data.data.id);
+            setUserId(response.data.data.id);
             return response.data;
         },
         onSuccess: () => {

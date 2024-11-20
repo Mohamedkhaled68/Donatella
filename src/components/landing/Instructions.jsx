@@ -4,8 +4,8 @@ import {
     instructionImg2,
     instructionImg3,
     searchTalentImage,
-} from "../assets";
-import Button from "./shared/ui/Button";
+} from "../../assets";
+import Button from "../shared/ui/Button";
 const InstructionsData = [
     {
         btn: "Create Account",

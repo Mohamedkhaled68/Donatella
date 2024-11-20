@@ -16,6 +16,7 @@ const Login = () => {
     const [formValues, setFormValues] = useState(initialFormValues);
     const [role, setRole] = useState("Individual");
     const [disabled, setDisabled] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
 
     const { mutateAsync, onSuccess } = useLogin();
@@ -30,17 +31,34 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            console.log({ ...formValues, role: role.toUpperCase() });
 
-            // await mutateAsync({ ...formValues, role: role.toUpperCase() });
-        } catch (error) {
-            console.log("An error occurred.");
-        } finally {
-            console.log({ ...formValues, role: role.toUpperCase() });
-            toast.success("Logged in successfully!!");
-            setFormValues(initialFormValues);
-        }
+        setLoading(true);
+        await toast
+            .promise(
+                mutateAsync({ ...formValues, role: role.toUpperCase() }),
+                {
+                    loading: "Logging in...",
+                    success: "Logged in successfully!",
+                    error: "Login failed! Please check your credentials.",
+                },
+                {
+                    success: {
+                        icon: "🚀",
+                    },
+                    error: {
+                        icon: "❌",
+                    },
+                }
+            )
+            .then(() => {
+                setFormValues(initialFormValues);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     const handleRoleChange = (selectedRole) => {
@@ -147,6 +165,7 @@ const Login = () => {
                             </div>
                             <div className="flex flex-col justify-center items-center gap-2 mt-8">
                                 <FormButton
+                                    loading={loading}
                                     disabled={disabled}
                                     text={"Login"}
                                 />

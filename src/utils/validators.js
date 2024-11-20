@@ -13,6 +13,8 @@ export const validateForm = (formValues) => {
                             /([A-Z])/g,
                             " $1"
                         )} is required.`;
+                    } else if (value.length < 3) {
+                        errors[field] = `must be at least 3 characters.`;
                     }
                     break;
 
@@ -27,7 +29,7 @@ export const validateForm = (formValues) => {
                 case "password":
                     if (!value) {
                         errors.password = "Password is required.";
-                    } else if (value.length < 6) {
+                    } else if (!/^(?=.*[A-Z])(?=.*[\W_]).{6,}$/.test(value)) {
                         errors.password =
                             "Password must be at least 6 characters.";
                     }

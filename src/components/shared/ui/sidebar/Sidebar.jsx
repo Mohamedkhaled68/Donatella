@@ -27,10 +27,13 @@ const Sidebar = () => {
 
     useEffect(() => {
         if (open) {
-            document.body.style.overflow = "hidden";
+            document.documentElement.style.overflowY = "hidden";
         } else {
-            document.body.style.overflow = "unset";
+            document.documentElement.style.overflowY = "unset";
         }
+        return () => {
+            document.documentElement.style.overflowY = "unset";
+        };
     }, [open]);
     return (
         <motion.div

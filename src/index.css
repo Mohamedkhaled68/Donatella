@@ -27,7 +27,7 @@
 html {
     scrollbar-width: thin;
     scrollbar-color: #3b3b3b #121417;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
 }
 
 body {

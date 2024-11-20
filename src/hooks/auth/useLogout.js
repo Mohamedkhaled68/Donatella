@@ -3,27 +3,24 @@ import { baseUrl } from "../../utils/baseUrl";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/userTokenStore";
-import useUserStore from "../../store/userStore";
 
-const useLogin = () => {
-    const setToken = useAuthStore((state) => state.signIn);
+const useLogout = () => {
+    const token = useAuthStore((state) => state.authToken);
+    const signOut = useAuthStore((state) => state.signOut);
     const navigate = useNavigate();
-    const { setUserData } = useUserStore();
-
     return useMutation({
         mutationKey: ["user"],
-        mutationFn: async (user) => {
-            const response = await axios.post(`${baseUrl}/auth/login`, user, {
+        mutationFn: async () => {
+            const response = await axios.delete(`${baseUrl}/sessions`, {
                 headers: {
-                    "Content-Type": "application/json",
-                },
+                    Authorization: `Bearer ${token}`,
+                }
             });
-            setUserData(response.data.data);
-            setToken(response.data.data.token);
+            signOut();
             return response.data;
         },
         onSuccess: () => {
-            navigate("/", { replace: true });
+            navigate("/landing");
         },
         onError: (error) => {
             const errorMessage =
@@ -34,4 +31,4 @@ const useLogin = () => {
     });
 };
 
-export default useLogin;
+export default useLogout;

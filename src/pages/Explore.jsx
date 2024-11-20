@@ -3,9 +3,9 @@ import { Footer, IndividualCard, Navbar } from "../components";
 import { IoMenu } from "react-icons/io5";
 
 const activeStyle =
-    "bg-white-base px-[77px] py-[17px] text-black text-medium font-bold rounded-xl";
+    "bg-white-base px-[77px] py-[17px] text-black text-medium font-bold rounded-xl transition-all duration-300";
 const inActiveStyle =
-    "bg-[#27292C] border-2 border-white-base px-[77px] py-[17px] text-white-base text-sm font-light rounded-xl";
+    "bg-[#27292C] border-2 border-white-base px-[77px] py-[17px] text-white-base text-sm font-light rounded-xl transition-all duration-300";
 
 const filters = [
     {

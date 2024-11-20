@@ -5,3 +5,4 @@ export { default as Profile } from "./Profile";
 export { default as Explore } from "./Explore";
 export { default as VerifyingPage } from "./VerifyingPage";
 export { default as DeleteUsers } from "./DeleteUsers";
+export { default as Logout } from "./Logout";

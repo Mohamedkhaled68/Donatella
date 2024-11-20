@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/userTokenStore";
 
 const useOnboarding = () => {
-    // const setToken = useAuthStore((state) => state.signIn);
-    const { authToken } = useAuthStore();
+    const token = useAuthStore((state) => state.authToken);
 
     const navigate = useNavigate();
 
@@ -18,16 +17,15 @@ const useOnboarding = () => {
                 data,
                 {
                     headers: {
-                        Authorization: `Bearer ${authToken}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             );
             console.log(response.data);
-            // setToken(response.data.token);
             return response.data;
         },
         onSuccess: () => {
-            navigate("/login", { replace: true });
+            navigate("/", { replace: true });
         },
         onError: (error) => {
             const errorMessage =

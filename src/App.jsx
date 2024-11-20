@@ -4,6 +4,7 @@ import {
     Explore,
     Landing,
     Login,
+    Logout,
     Profile,
     Signup,
     VerifyingPage,
@@ -19,12 +20,17 @@ import { FaAnglesUp } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
+import useUserStore from "./store/userStore";
 
 const App = () => {
     const location = useLocation();
     const [isVisible, setIsVisible] = useState(false);
+    const userId = useUserStore((state) => state.userId);
+
 
     useEffect(() => {
+        console.log("User Id : " , userId);
+        
         const toggleVisibility = () => {
             if (window.scrollY > 200) {
                 setIsVisible(true);
@@ -50,6 +56,7 @@ const App = () => {
                 <PageContainer pathname={location.pathname}>
                     <Routes location={location}>
                         <Route path="/delete-users" element={<DeleteUsers />} />
+                        <Route path="/logout" element={<Logout />} />
                         <Route path="/landing" element={<Landing />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />

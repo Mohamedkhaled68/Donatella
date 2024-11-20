@@ -1,7 +1,7 @@
 import React from "react";
 import ModelsCard from "./ModelsCard";
-import { manModel, talent1, talent2, talent3, womanModel } from "../assets";
-import Button from "./shared/ui/Button";
+import { manModel, talent1, talent2, talent3, womanModel } from "../../assets";
+import Button from "../shared/ui/Button";
 
 const Models = ({ modelsRef, talentsRef }) => {
     return (
