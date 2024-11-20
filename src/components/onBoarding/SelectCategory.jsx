@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import LogoHeader from "./shared/ui/LogoHeader";
+import LogoHeader from "../shared/ui/LogoHeader";
 import { FaArrowLeft } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import { cate1, cate2, cate3, cate4 } from "../assets";
+import { cate1, cate2, cate3, cate4 } from "../../assets";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const categories = [

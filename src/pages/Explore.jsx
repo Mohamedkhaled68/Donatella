@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Footer, IndividualCard, Navbar } from "../components";
+import { Footer, IndividualCard } from "../components";
 import { IoMenu } from "react-icons/io5";
 
 const activeStyle =
@@ -93,7 +93,6 @@ const Explore = () => {
     return (
         <>
             <section className="min-h-screen mb-10">
-                <Navbar />
                 <div className="container mx-auto w-full">
                     <div className="flex justify-between items-center my-12">
                         {filters.map((i) => (

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import LogoHeader from "./shared/ui/LogoHeader";
+import LogoHeader from "../shared/ui/LogoHeader";
 import LoadImage from "./LoadImage";
-import useOnboarding from "../hooks/auth/useOnboarding";
+import useOnboarding from "../../hooks/auth/useOnboarding";
 
 const imagesInputs = [
     { id: 1, label: "Profile Picture" },
@@ -29,7 +29,6 @@ const initialFormValues = {
 
 const IndividualLastForm = () => {
     const [role, setRole] = useState("");
-    const [userdata, setUserdata] = useState({});
     const [disabled, setDisabled] = useState(false);
     const [formValues, setFormValues] = useState(initialFormValues);
 
@@ -40,57 +39,36 @@ const IndividualLastForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // console.log({ ...userdata, role, specialtyInfo: { ...formValues } });
-        const b = {
-            bio: "my bio",
-            socialAccount: "Http://maes.com",
-            yearsOfExperience: 1,
-            workExperience: [
-                {
-                    title: "model",
-                    company: "maes",
-                    startDate: "2024-01-15",
-                    endDate: "2024-06-30",
+
+        try {
+            await mutateAsync({
+                role,
+                specialtyInfo: {
+                    birthDate: "2015-05-15",
+                    gender: "MALE",
+                    nationality: "EG",
+                    skinToneEnum: "MEDIUM",
+                    hairColorEnum: "BROWN",
+                    eyeColorEnum: "BLUE",
+                    weight: 70,
+                    height: 180,
+                    waist: 75,
+                    hips: 90,
+                    shoeSize: 42,
+                    dressSize: 10,
+                    bust: 66,
                 },
-            ],
-            availableForTravel: true,
-            legallyWorking: true,
-            holdingBachelors: true,
-        };
-
-        navigate("/profile");
-
-        // try {
-        //     await mutateAsync({
-        //         ...b,
-        //         role,
-        //         specialtyInfo: {
-        //             birthDate: "2015-05-15",
-        //             gender: "MALE",
-        //             nationality: "EG",
-        //             skinToneEnum: "MEDIUM",
-        //             hairColorEnum: "BROWN",
-        //             eyeColorEnum: "BLUE",
-        //             weight: 70,
-        //             height: 180,
-        //             waist: 75,
-        //             hips: 90,
-        //             shoeSize: 42,
-        //             dressSize: 10,
-        //             bust: 66,
-        //         },
-        //     });
-        // } catch (error) {
-        //     // setError("An error occurred.");
-        //     console.log(error.message);
-        // } finally {
-        //     console.log({
-        //         ...b,
-        //         role,
-        //         specialtyInfo: { ...formValues },
-        //     });
-        //     setFormValues(initialFormValues);
-        // }
+            });
+        } catch (error) {
+            // setError("An error occurred.");
+            console.log(error.message);
+        } finally {
+            console.log({
+                role,
+                specialtyInfo: { ...formValues },
+            });
+            setFormValues(initialFormValues);
+        }
     };
 
     const handleInputChange = (e) => {
@@ -106,7 +84,6 @@ const IndividualLastForm = () => {
             navigate("/individual-form");
         } else {
             setRole(location.state.category);
-            setUserdata(JSON.parse(localStorage.getItem("userData")));
         }
     }, [location.state, navigate]);
 

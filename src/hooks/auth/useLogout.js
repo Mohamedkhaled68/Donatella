@@ -8,6 +8,8 @@ const useLogout = () => {
     const token = useAuthStore((state) => state.authToken);
     const signOut = useAuthStore((state) => state.signOut);
     const navigate = useNavigate();
+
+    
     return useMutation({
         mutationKey: ["user"],
         mutationFn: async () => {
@@ -24,8 +26,8 @@ const useLogout = () => {
         },
         onError: (error) => {
             const errorMessage =
-                error.response?.data?.message ||
-                "An unexpected error occurred.";
+            error.response?.data?.data?.message ||
+            "An unexpected error occurred.";
             throw new Error(errorMessage);
         },
     });

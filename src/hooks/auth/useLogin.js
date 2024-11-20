@@ -27,7 +27,7 @@ const useLogin = () => {
         },
         onError: (error) => {
             const errorMessage =
-                error.response?.data?.message ||
+                error.response?.data?.data?.message ||
                 "An unexpected error occurred.";
             throw new Error(errorMessage);
         },

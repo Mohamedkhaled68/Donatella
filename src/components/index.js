@@ -7,8 +7,8 @@ export { default as Footer } from "./landing/Footer";
 export { default as Models } from "./landing/Models";
 export { default as Instructions } from "./landing/Instructions";
 
-export { default as IndividualForm } from "./IndividualForm";
-export { default as IndividualLastForm } from "./IndividualLastForm";
+export { default as IndividualForm } from "./onBoarding/IndividualForm";
+export { default as IndividualLastForm } from "./onBoarding/IndividualLastForm";
 
 //COTAINERS
 export { default as PageContainer } from "./containers/PageContainer";
@@ -23,8 +23,6 @@ export { default as LogoHeader } from "./shared/ui/LogoHeader";
 export { default as Loading } from "./shared/ui/Loading";
 
 export { default as Sidebar } from "./shared/ui/sidebar/Sidebar";
-
-
 
 //AUTH & FORMS COMPONENTS
 export { default as OrganizationRegisterForm } from "./auth/registration/OrganizationRegisterForm";

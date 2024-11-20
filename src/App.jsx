@@ -15,22 +15,17 @@ import {
     IndividualLastForm,
     PageContainer,
 } from "./components";
-import SelectCategory from "./components/SelectCategory";
+import SelectCategory from "./components/onBoarding/SelectCategory";
 import { FaAnglesUp } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
-import useUserStore from "./store/userStore";
 
 const App = () => {
     const location = useLocation();
     const [isVisible, setIsVisible] = useState(false);
-    const userId = useUserStore((state) => state.userId);
-
 
     useEffect(() => {
-        console.log("User Id : " , userId);
-        
         const toggleVisibility = () => {
             if (window.scrollY > 200) {
                 setIsVisible(true);

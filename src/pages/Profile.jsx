@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { profileFullbody, profileGirl, profileHeadshot } from "../assets";
 import Footer from "../components/landing/Footer";
 import { BiArrowBack } from "react-icons/bi";
@@ -9,13 +9,16 @@ import { RxCalendar } from "react-icons/rx";
 import { FaArrowsAltV } from "react-icons/fa";
 import { GiWeight } from "react-icons/gi";
 import { FaPlus } from "react-icons/fa6";
-import { Navbar } from "../components";
+import useGetCurrentUser from "../hooks/auth/useGetCurrentUser";
 
 const Profile = () => {
+    const { data: user } = useGetCurrentUser();
+
+    console.log(user);
+
     return (
         <>
             <section className="min-h-screen">
-                <Navbar />
                 <div className="container mx-auto flex flex-col text-white-base pb-8">
                     <div className="w-full flex justify-around items-center gap-[170px] my-8">
                         <div className="grow-0 self-start">

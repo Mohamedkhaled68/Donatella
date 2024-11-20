@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import LogoHeader from "./shared/ui/LogoHeader";
+import LogoHeader from "../shared/ui/LogoHeader";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { FaCheck } from "react-icons/fa6";
-import BackButton from "./shared/ui/BackButton";
+import BackButton from "../shared/ui/BackButton";
 
 const inputStyle =
     "bg-transparent border-thin border-[#334155] rounded-br-3 px-[17px] py-[13px] w-full text-white-base font-body font-normal text-sm";
