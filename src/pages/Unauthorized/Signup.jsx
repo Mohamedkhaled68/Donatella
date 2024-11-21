@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import LogoHeader from "../components/shared/ui/LogoHeader";
-import { girlImg } from "../assets";
+import LogoHeader from "../../components/shared/ui/LogoHeader";
+import { girlImg } from "../../assets";
 import {
     BackButton,
-    InitialIndividualRegisterForm,
+    IndividualRegisterForm,
     OrganizationRegisterForm,
-} from "../components";
+} from "../../components";
 
 const Signup = () => {
     const [role, setRole] = useState("Individual");
@@ -72,7 +72,7 @@ const Signup = () => {
                                     role={role}
                                 />
                             ) : (
-                                <InitialIndividualRegisterForm
+                                <IndividualRegisterForm
                                     key={"Individual"}
                                     role={role}
                                 />

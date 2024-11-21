@@ -6,15 +6,12 @@ import {
     Login,
     Logout,
     Profile,
+    ProfileFormSection,
     Signup,
     VerifyingPage,
 } from "./pages";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import {
-    IndividualForm,
-    IndividualLastForm,
-    PageContainer,
-} from "./components";
+import { IndividualForm, PageContainer } from "./components";
 import SelectCategory from "./components/onBoarding/SelectCategory";
 import { FaAnglesUp } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
@@ -60,12 +57,13 @@ const App = () => {
                             element={<IndividualForm />}
                         />
                         <Route
+                            path="/profile-form"
+                            element={<ProfileFormSection />}
+                        />
+
+                        <Route
                             path="/selectCategory"
                             element={<SelectCategory />}
-                        />
-                        <Route
-                            path="/individual-last-form"
-                            element={<IndividualLastForm />}
                         />
 
                         <Route

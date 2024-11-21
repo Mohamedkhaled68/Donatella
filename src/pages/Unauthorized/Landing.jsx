@@ -1,5 +1,5 @@
 import React from "react";
-import { Footer, Hero, Instructions, Models } from "../components";
+import { Footer, Hero, Instructions, Models } from "../../components";
 
 const Landing = () => {
     return (

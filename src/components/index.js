@@ -8,7 +8,6 @@ export { default as Models } from "./landing/Models";
 export { default as Instructions } from "./landing/Instructions";
 
 export { default as IndividualForm } from "./onBoarding/IndividualForm";
-export { default as IndividualLastForm } from "./onBoarding/IndividualLastForm";
 
 //COTAINERS
 export { default as PageContainer } from "./containers/PageContainer";
@@ -26,7 +25,8 @@ export { default as Sidebar } from "./shared/ui/sidebar/Sidebar";
 
 //AUTH & FORMS COMPONENTS
 export { default as OrganizationRegisterForm } from "./auth/registration/OrganizationRegisterForm";
-export { default as InitialIndividualRegisterForm } from "./auth/registration/InitialIndividualRegisterForm";
+export { default as IndividualRegisterForm } from "./auth/registration/IndividualRegisterForm";
+export { default as ModelProfileForm } from "./onBoarding/Profile Forms/ModelProfileForm";
 
 //AUTHORIZED
 export { default as Navbar } from "./Navbar";

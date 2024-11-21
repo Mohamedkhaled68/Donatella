@@ -11,7 +11,7 @@ import {
 } from "../../../utils/constants";
 import toast from "react-hot-toast";
 
-const InitialIndividualRegisterForm = ({role}) => {
+const IndividualRegisterForm = ({ role }) => {
     const [formValues, setFormValues] = useState(
         initialIndividualRegisterFormValues
     );
@@ -100,4 +100,4 @@ const InitialIndividualRegisterForm = ({role}) => {
     );
 };
 
-export default InitialIndividualRegisterForm;
+export default IndividualRegisterForm;

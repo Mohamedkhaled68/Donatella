@@ -6,7 +6,7 @@ import useUserStore from "../../store/userStore";
 
 const useRegister = () => {
     const navigate = useNavigate();
-    const { setUserId } = useUserStore();
+    const setUserId = useUserStore((state) => state.setUserId);
 
     return useMutation({
         mutationKey: ["user"],
@@ -25,8 +25,8 @@ const useRegister = () => {
         },
         onError: (error) => {
             const errorMessage =
-            error.response?.data?.data?.message ||
-            "An unexpected error occurred.";
+                error.response?.data?.data?.message ||
+                "An unexpected error occurred.";
             throw new Error(errorMessage);
         },
     });

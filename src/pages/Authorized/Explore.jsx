@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Footer, IndividualCard } from "../components";
+import { Footer, IndividualCard } from "../../components";
 import { IoMenu } from "react-icons/io5";
 
 const activeStyle =

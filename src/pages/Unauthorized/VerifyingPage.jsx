@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import useVerifyUser from "../hooks/auth/useVerifyUser";
-import useUserStore from "../store/userStore";
+import useVerifyUser from "../../hooks/auth/useVerifyUser";
+import useUserStore from "../../store/userStore";
 import { Link } from "react-router-dom";
-import { BackButton } from "../components";
+import { BackButton } from "../../components";
 
 const VerifyingPage = ({ length = 4 }) => {
     const [otp, setOtp] = useState(new Array(length).fill(""));
     const inputRefs = useRef([]);
-    const { userId } = useUserStore();
+    const userId = useUserStore((state) => state.userId);
 
     const { mutateAsync } = useVerifyUser();
 

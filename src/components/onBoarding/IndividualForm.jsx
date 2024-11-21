@@ -61,12 +61,11 @@ const initialFormValues = {
 
 const IndividualForm = () => {
     const [category, setCategory] = useState("");
+    const location = useLocation();
     const [check, setCheck] = useState(false);
     const [formValues, setFormValues] = useState(initialFormValues);
     const [disabled, setDisabled] = useState(true);
     const navigate = useNavigate();
-
-    const location = useLocation();
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -83,7 +82,7 @@ const IndividualForm = () => {
         localStorage.setItem("userData", JSON.stringify(formValues));
 
         setFormValues(initialFormValues);
-        navigate("/individual-last-form", {
+        navigate("/profile-form", {
             state: { category: location.state.category },
         });
     };

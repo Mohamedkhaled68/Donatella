@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { login1, login2 } from "../assets";
-import LogoHeader from "../components/shared/ui/LogoHeader";
+import { login1, login2 } from "../../assets";
+import LogoHeader from "../../components/shared/ui/LogoHeader";
 import { NavLink } from "react-router-dom";
-import useLogin from "../hooks/auth/useLogin";
+import useLogin from "../../hooks/auth/useLogin";
 import { motion } from "framer-motion";
-import { FormButton, FormGroup } from "../components";
-import { validateForm } from "../utils/validators";
+import { FormButton, FormGroup } from "../../components";
+import { validateForm } from "../../utils/validators";
 import toast from "react-hot-toast";
 
 const initialFormValues = {

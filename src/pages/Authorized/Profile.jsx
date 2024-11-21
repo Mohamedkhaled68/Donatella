@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { profileFullbody, profileGirl, profileHeadshot } from "../assets";
-import Footer from "../components/landing/Footer";
+import { profileFullbody, profileGirl, profileHeadshot } from "../../assets";
+import Footer from "../../components/landing/Footer";
 import { BiArrowBack } from "react-icons/bi";
 import { FiEdit } from "react-icons/fi";
-import Rating from "../components/Rating";
+import Rating from "../../components/Rating";
 import { FaTransgender } from "react-icons/fa";
 import { RxCalendar } from "react-icons/rx";
 import { FaArrowsAltV } from "react-icons/fa";
 import { GiWeight } from "react-icons/gi";
 import { FaPlus } from "react-icons/fa6";
-import useGetCurrentUser from "../hooks/auth/useGetCurrentUser";
+import useGetCurrentUser from "../../hooks/auth/useGetCurrentUser";
 
 const Profile = () => {
     const { data: user } = useGetCurrentUser();
-
-    console.log(user);
 
     return (
         <>
