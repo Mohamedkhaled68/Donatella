@@ -1,3 +1,7 @@
+//******************CONSTANTS***************************
+
+//****************FORMS CONSTANTS
+
 export const initialIndividualRegisterFormValues = {
     firstName: "",
     lastName: "",
@@ -286,35 +290,19 @@ export const initialEditorProfileFormValues = {
     motionEffects: false,
 };
 
-// export const editorProfileFormGroupData = [
-//     {
-//         label: "Camera owned / used",
-//         type: "text",
-//         name: "camera",
-//         id: "camera",
-//         placeholder: "i.e. Nikon",
-//         value: (formValues) => formValues.camera,
-//         // error: (errors) => errors.camera,
-//     },
-//     {
-//         label: "Lighting owned / used",
-//         type: "text",
-//         name: "lighting",
-//         id: "lighting",
-//         placeholder: "i.e. Nikon",
-//         value: (formValues) => formValues.lighting,
-//         // error: (errors) => errors.lighting,
-//     },
-//     {
-//         label: "Lens Used",
-//         type: "text",
-//         name: "lense",
-//         id: "lense",
-//         placeholder: "i.e. Nikon",
-//         value: (formValues) => formValues.lense,
-//         // error: (errors) => errors.lense,
-//     },
-// ];
+export const initialModelImagesValues = {
+    profile: null,
+    cover: null,
+    headshot: null,
+    fullBody: null,
+};
+export const initialRestImagesValues = {
+    portfolio1: null,
+    portfolio2: null,
+    profile: null,
+    reel: null,
+};
+//************************************************* */
 
 //********ENUMS********
 
@@ -858,7 +846,7 @@ const WeightEnum = {
     },
 };
 
-// CountryEnum (abbreviated example for brevity) 
+// CountryEnum (abbreviated example for brevity)
 const CountryEnum = {
     id: "nationality",
     enums: {
@@ -1152,9 +1140,3 @@ export const ClientEventsEnum = {
     MY_SEEN_MESSAGE: "MY_SEEN_MESSAGE",
 };
 //************************************************************
-export const initialModelImagesValues = {
-    profile: null,
-    cover: null,
-    headshot: null,
-    fullBody: null,
-};

@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import useVerifyUser from "../../hooks/auth/useVerifyUser";
 import useUserStore from "../../store/userStore";
 import { Link } from "react-router-dom";
-import { BackButton } from "../../components";
+import { BackButton, Loading } from "../../components";
 
 const VerifyingPage = ({ length = 4 }) => {
     const [otp, setOtp] = useState(new Array(length).fill(""));
     const inputRefs = useRef([]);
     const userId = useUserStore((state) => state.userId);
+    const [loading, setLoading] = useState(false);
 
     const { mutateAsync } = useVerifyUser();
 
@@ -23,12 +24,7 @@ const VerifyingPage = ({ length = 4 }) => {
 
         // Trigger onComplete callback when OTP is fully entered
         if (newOtp.join("").length === length) {
-            console.log(newOtp.join(""));
-            console.log({
-                id: userId,
-                otp: newOtp.join(""),
-            });
-
+            setLoading(true);
             try {
                 await mutateAsync({
                     userId,
@@ -36,6 +32,8 @@ const VerifyingPage = ({ length = 4 }) => {
                 });
             } catch (error) {
                 console.log("An error occurred.");
+            } finally {
+                setLoading(false);
             }
         }
     };
@@ -52,6 +50,11 @@ const VerifyingPage = ({ length = 4 }) => {
     return (
         <>
             <section className="h-screen relative">
+                {loading && (
+                    <div className="absolute w-full h-full flex justify-center items-center z-[10000] bg-black/50">
+                        <Loading />
+                    </div>
+                )}
                 <div className="container mx-auto pt-20 text-white-base">
                     <div className="grid grid-cols-3">
                         <BackButton />

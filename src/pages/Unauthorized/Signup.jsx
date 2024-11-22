@@ -4,11 +4,13 @@ import { girlImg } from "../../assets";
 import {
     BackButton,
     IndividualRegisterForm,
+    Loading,
     OrganizationRegisterForm,
 } from "../../components";
 
 const Signup = () => {
     const [role, setRole] = useState("Individual");
+    const [loading, setLoading] = useState(false);
 
     const handleRoleChange = (selectedRole) => {
         setRole(selectedRole);
@@ -18,6 +20,11 @@ const Signup = () => {
     return (
         <>
             <section className="max-h-screen bg-[#121417]">
+                {loading && (
+                    <div className="absolute w-full h-full flex justify-center items-center z-[10000] bg-black/50">
+                        <Loading />
+                    </div>
+                )}
                 <LogoHeader />
                 <div className="container mx-auto flex justify-between h-full mt-10">
                     <div className="grow flex-1 h-full">
@@ -70,11 +77,15 @@ const Signup = () => {
                                 <OrganizationRegisterForm
                                     key={"Organization"}
                                     role={role}
+                                    loading={loading}
+                                    setLoading={setLoading}
                                 />
                             ) : (
                                 <IndividualRegisterForm
                                     key={"Individual"}
                                     role={role}
+                                    loading={loading}
+                                    setLoading={setLoading}
                                 />
                             )}
                         </div>

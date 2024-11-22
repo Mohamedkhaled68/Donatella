@@ -27,6 +27,9 @@ export { default as Sidebar } from "./shared/ui/sidebar/Sidebar";
 export { default as OrganizationRegisterForm } from "./auth/registration/OrganizationRegisterForm";
 export { default as IndividualRegisterForm } from "./auth/registration/IndividualRegisterForm";
 export { default as ModelProfileForm } from "./onBoarding/Profile Forms/ModelProfileForm";
+export { default as VideographerProfileForm } from "./onBoarding/Profile Forms/VideographerProfileForm";
+export { default as PhotographerProfileForm } from "./onBoarding/Profile Forms/PhotographerProfileForm";
+export { default as EditorProfileForm } from "./onBoarding/Profile Forms/EditorProfileForm";
 
 //AUTHORIZED
 export { default as Navbar } from "./Navbar";

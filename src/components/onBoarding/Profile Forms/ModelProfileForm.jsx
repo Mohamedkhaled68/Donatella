@@ -7,7 +7,7 @@ import {
 } from "../../../utils/constants";
 import FormButton from "../../shared/ui/FormButton";
 import FormGroup from "../../shared/ui/FormGroup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import useOnboarding from "../../../hooks/auth/useOnboarding";
 
@@ -28,10 +28,10 @@ const userProfile = {
     holdingBachelors: true,
 };
 
-const ModelProfileForm = ({ imageUrls }) => {
+const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
     const [formValues, setFormValues] = useState(initialModelProfileFormValues);
     const [disabled, setDisabled] = useState(true);
-    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const { mutateAsync } = useOnboarding();
 
@@ -48,21 +48,23 @@ const ModelProfileForm = ({ imageUrls }) => {
         e.preventDefault();
         setLoading(true);
         try {
-            mutateAsync({
-                role: "MODEL",
-                ...userProfile,
-                specialtyInfo: { ...formValues },
-            });
+            // mutateAsync({
+            //     role,
+            //     ...userProfile,
+            //     specialtyInfo: { ...formValues },
+            // });
+            return new Promise((resolve) => setTimeout(resolve, 3000));
         } catch (error) {
             console.log(error.message);
         } finally {
             console.log({
-                role: "MODEL",
+                role,
                 ...userProfile,
                 specialtyInfo: { ...formValues },
             });
             setLoading(false);
             setFormValues(initialModelProfileFormValues);
+            navigate("/");
         }
     };
 
@@ -126,6 +128,7 @@ const ModelProfileForm = ({ imageUrls }) => {
                                                 ? "max-w-[120px]"
                                                 : "max-w-[170px]"
                                         }
+                                        validate={false}
                                     >
                                         {onBoardingEnums.map((enumObj, idx) => {
                                             if (id === enumObj.id) {

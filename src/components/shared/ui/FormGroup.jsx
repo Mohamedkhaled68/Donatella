@@ -16,6 +16,7 @@ const FormGroup = ({
     label,
     error,
     children,
+    validate,
 }) => {
     return (
         <div className={`flex flex-col gap-2 ${containerStyle}`}>
@@ -26,7 +27,7 @@ const FormGroup = ({
                 >
                     {label}
                 </label>
-                {type !== "select" && type !== "date" && (
+                {validate && (
                     <div className="flex justify-start items-center gap-1">
                         {!error && (
                             <motion.div

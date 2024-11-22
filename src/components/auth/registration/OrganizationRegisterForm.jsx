@@ -80,6 +80,7 @@ const OrganizationRegisterForm = ({ role }) => {
                             value={group.value(formValues)}
                             onChange={handleInputChange}
                             error={group.error(errors)}
+                            validate={true}
                         />
                     </motion.div>
                 ))}

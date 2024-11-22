@@ -11,7 +11,7 @@ import {
 } from "../../../utils/constants";
 import toast from "react-hot-toast";
 
-const IndividualRegisterForm = ({ role }) => {
+const IndividualRegisterForm = ({ role, loading, setLoading }) => {
     const [formValues, setFormValues] = useState(
         initialIndividualRegisterFormValues
     );
@@ -26,17 +26,34 @@ const IndividualRegisterForm = ({ role }) => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
-        try {
-            console.log({ ...formValues, role: role.toUpperCase() });
-            await mutateAsync({ ...formValues, role: role.toUpperCase() });
-        } catch (error) {
-            console.log("An error occurred.");
-        } finally {
-            console.log({ ...formValues, role: role.toUpperCase() });
-            toast.success("Registered successfully!!");
-            setFormValues(initialIndividualRegisterFormValues);
-        }
+        await toast
+            .promise(
+                mutateAsync({ ...formValues, role: role.toUpperCase() }),
+                {
+                    loading: "Registering...",
+                    success: "Registered successfully!",
+                    error: "Registration failed! Please check your credentials.",
+                },
+                {
+                    success: {
+                        icon: "🚀",
+                    },
+                    error: {
+                        icon: "❌",
+                    },
+                }
+            )
+            .then(() => {
+                setFormValues(initialIndividualRegisterFormValues);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     useEffect(() => {
@@ -82,12 +99,17 @@ const IndividualRegisterForm = ({ role }) => {
                                 value={group.value(formValues)}
                                 onChange={handleInputChange}
                                 error={group.error(errors)}
+                                validate={true}
                             />
                         </motion.div>
                     ))}
                 </div>
                 <div className="flex flex-col justify-center items-center gap-2 mt-6">
-                    <FormButton disabled={disabled} text={"Sign Up"} />
+                    <FormButton
+                        loading={loading}
+                        disabled={disabled}
+                        text={"Sign Up"}
+                    />
                     <p className="text-medium text-white-base/40">
                         Don't have an account?{" "}
                         <NavLink className="text-blue-primary" to="/signup">

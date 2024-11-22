@@ -3,8 +3,7 @@ import { login1, login2 } from "../../assets";
 import LogoHeader from "../../components/shared/ui/LogoHeader";
 import { NavLink } from "react-router-dom";
 import useLogin from "../../hooks/auth/useLogin";
-import { motion } from "framer-motion";
-import { FormButton, FormGroup } from "../../components";
+import { FormButton, FormGroup, Loading } from "../../components";
 import { validateForm } from "../../utils/validators";
 import toast from "react-hot-toast";
 
@@ -76,12 +75,12 @@ const Login = () => {
     }, [formValues]);
     return (
         <>
-            <motion.div
-                initial={{ x: -1000 }}
-                animate={{ x: 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="h-screen flex items-center"
-            >
+            <div className="h-screen flex items-center relative">
+                {loading && (
+                    <div className="absolute w-full h-full flex justify-center items-center z-[10000] bg-black/50">
+                        <Loading />
+                    </div>
+                )}
                 <div className="relative h-full w-1/3">
                     <img
                         className="w-full h-full object-cover filter grayscale"
@@ -150,6 +149,7 @@ const Login = () => {
                                         value={formValues.email}
                                         onChange={handleInputChange}
                                         error={errors.email}
+                                        validate={true}
                                     />
                                     <FormGroup
                                         label={"Password"}
@@ -160,6 +160,7 @@ const Login = () => {
                                         value={formValues.password}
                                         onChange={handleInputChange}
                                         error={errors.password}
+                                        validate={true}
                                     />
                                 </div>
                             </div>
@@ -190,7 +191,7 @@ const Login = () => {
                     />
                     <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-[#101010] to-[#00000049]" />
                 </div>
-            </motion.div>
+            </div>
         </>
     );
 };
