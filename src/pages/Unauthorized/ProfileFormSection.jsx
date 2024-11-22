@@ -47,12 +47,10 @@ const ProfileFormSection = () => {
         if (!location.state) {
             navigate("/individual-form");
         } else {
-            console.log(location.state.category);
-
             setRole(location.state.category);
         }
 
-        if (location.state.category === "model") {
+        if (location.state.category === "MODEL") {
             setImageUrls(initialModelImagesValues);
         } else {
             setImageUrls(initialRestImagesValues);
@@ -102,34 +100,34 @@ const ProfileFormSection = () => {
                         />
                     )}
                     <div className="grid grid-cols-2 gap-6 justify-items-center">
-                        {role.toLocaleLowerCase() === "model"
-                            ? modelImagesInputs.map((input, idx) => (
-                                  <LoadImage
-                                      onImageChange={handleImageChange}
-                                      key={input.id}
-                                      label={input.label}
-                                      inputId={`${input.id}`}
-                                      className={
-                                          input.id.startsWith("portfolio")
-                                              ? "col-span-2"
-                                              : "col-span-1 max-w-[250px] h-[320px]"
-                                      }
-                                  />
-                              ))
-                            : restImagesInputs.map((input, idx) => (
-                                  <LoadImage
-                                      onImageChange={handleImageChange}
-                                      key={input.id}
-                                      label={input.label}
-                                      inputId={`${input.id}`}
-                                      className={
-                                          input.id.startsWith("portfolio")
-                                              ? "col-span-2 h-[150px]"
-                                              : "col-span-1 max-w-[250px] h-[320px]"
-                                      }
-                                  />
-                              ))}
-                        {}
+                        {role.toLocaleLowerCase() === "model" &&
+                            modelImagesInputs.map((input, idx) => (
+                                <LoadImage
+                                    onImageChange={handleImageChange}
+                                    key={input.id}
+                                    label={input.label}
+                                    inputId={`${input.id}`}
+                                    className={
+                                        input.id.startsWith("portfolio")
+                                            ? "col-span-2"
+                                            : "col-span-1 max-w-[250px] h-[320px]"
+                                    }
+                                />
+                            ))}
+                        {role.toLocaleLowerCase() !== "model" &&
+                            restImagesInputs.map((input, idx) => (
+                                <LoadImage
+                                    onImageChange={handleImageChange}
+                                    key={input.id}
+                                    label={input.label}
+                                    inputId={`${input.id}`}
+                                    className={
+                                        input.id.startsWith("portfolio")
+                                            ? "col-span-2 h-[150px]"
+                                            : "col-span-1 max-w-[250px] h-[320px]"
+                                    }
+                                />
+                            ))}
                     </div>
                 </div>
             </section>

@@ -18,7 +18,7 @@ const SelectCategory = () => {
     const [disabled, setDisabled] = useState(true);
 
     const navigateToForm = (title) => {
-        navigate("/individual-form", { state: { category: title } });
+        navigate("/experience-form", { state: { category: title } });
     };
 
     const handleRoleChange = (selectedRole) => {

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-    initialModelImagesValues,
     initialModelProfileFormValues,
     modelProfileFormGroupData,
     onBoardingEnums,
@@ -10,23 +9,6 @@ import FormGroup from "../../shared/ui/FormGroup";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import useOnboarding from "../../../hooks/auth/useOnboarding";
-
-const userProfile = {
-    bio: "my bio",
-    socialAccount: "http://maes.com",
-    yearsOfExperience: 1,
-    workExperience: [
-        {
-            title: "model",
-            company: "maes",
-            startDate: "2024-01-15",
-            endDate: "2024-06-30",
-        },
-    ],
-    availableForTravel: true,
-    legallyWorking: true,
-    holdingBachelors: true,
-};
 
 const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
     const [formValues, setFormValues] = useState(initialModelProfileFormValues);
@@ -47,6 +29,7 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        const userProfile = JSON.parse(localStorage.getItem("userData"));
         try {
             // mutateAsync({
             //     role,
@@ -60,7 +43,7 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
             console.log({
                 role,
                 ...userProfile,
-                specialtyInfo: { ...formValues },
+                specialtyInfo: { ...formValues, images: imageUrls },
             });
             setLoading(false);
             setFormValues(initialModelProfileFormValues);
@@ -154,7 +137,7 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
                                                                     value={
                                                                         value
                                                                     }
-                                                                    className="text-black font-normal capitalize"
+                                                                    className="text-white-base font-normal capitalize"
                                                                 >
                                                                     {isNaN(
                                                                         value

@@ -7,8 +7,6 @@ export { default as Footer } from "./landing/Footer";
 export { default as Models } from "./landing/Models";
 export { default as Instructions } from "./landing/Instructions";
 
-export { default as IndividualForm } from "./onBoarding/IndividualForm";
-
 //COTAINERS
 export { default as PageContainer } from "./containers/PageContainer";
 

@@ -8,6 +8,7 @@ export { default as Login } from "./Unauthorized/Login";
 export { default as Signup } from "./Unauthorized/Signup";
 export { default as VerifyingPage } from "./Unauthorized/VerifyingPage";
 export { default as ProfileFormSection } from "./Unauthorized/ProfileFormSection";
+export { default as ExperienceFormSection } from "./Unauthorized/ExperienceFormSection";
 
 //TO DELETED
 export { default as DeleteUsers } from "./DeleteUsers";

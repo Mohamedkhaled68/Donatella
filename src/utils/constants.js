@@ -73,6 +73,8 @@ export const organizationRegisterFormGroupData = [
     },
 ];
 
+// PROFILES FORM
+
 export const initialModelProfileFormValues = {
     birthDate: "",
     gender: "",
@@ -302,6 +304,88 @@ export const initialRestImagesValues = {
     profile: null,
     reel: null,
 };
+
+// EXPERIENCE FORM
+export const initialExperienceFormValues = {
+    bio: "",
+    socialAccount: "",
+    yearsOfExperience: "", // To Number
+    // workExperience: [
+    //     {
+    //         title: "",
+    //         company: "",
+    //         startDate: "",
+    //         endDate: "",
+    //     },
+    // ],
+    availableForTravel: "",
+    legallyWorking: "",
+    holdingBachelors: "",
+    hasWorkExperience: "",
+};
+
+export const ExperienceFormGroupData = [
+    {
+        label: "Bio:",
+        type: "text",
+        name: "bio",
+        id: "bio",
+        placeholder: "Type here",
+        value: (formValues) => formValues.bio,
+        // error: (errors) => errors.bio,
+    },
+    {
+        label: "Link Your Most Followed Social Account:",
+        type: "text",
+        name: "socialAccount",
+        id: "socialAccount",
+        placeholder: "Type here",
+        value: (formValues) => formValues.socialAccount,
+        // error: (errors) => errors.socialAccount,
+    },
+    {
+        label: "How many years of experience do you have?",
+        type: "text",
+        name: "yearsOfExperience",
+        id: "yearsOfExperience",
+        placeholder: "Type here",
+        value: (formValues) => formValues.yearsOfExperience,
+        // error: (errors) => errors.yearsOfExperience,
+    },
+    {
+        label: "Are you available for travel for shoots?",
+        type: "select",
+        name: "availableForTravel",
+        id: "availableForTravel",
+        value: (formValues) => formValues.availableForTravel,
+        // error: (errors) => errors.availableForTravel,
+    },
+    {
+        label: "Are you legally eligible to work in your location?",
+        type: "select",
+        name: "legallyWorking",
+        id: "legallyWorking",
+        value: (formValues) => formValues.legallyWorking,
+        // error: (errors) => errors.legallyWorking,
+    },
+    {
+        label: "Do you hold a bachelors degree?",
+        type: "select",
+        name: "holdingBachelors",
+        id: "holdingBachelors",
+        value: (formValues) => formValues.holdingBachelors,
+        // error: (errors) => errors.holdingBachelors,
+    },
+    {
+        label: (role) => `Have you worked as a ${role} before?`,
+        type: "select",
+        name: "hasWorkExperience",
+        id: "hasWorkExperience",
+        value: (formValues) => formValues.hasWorkExperience,
+        // error: (errors) => errors.hasWorkExperience,
+    },
+];
+
 //************************************************* */
 
 //********ENUMS********

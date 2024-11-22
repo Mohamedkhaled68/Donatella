@@ -48,3 +48,11 @@ input[type="date"] {
 .drop-shadow {
     text-shadow: 0px 0px 5px #ffff;
 }
+
+select{
+    color: #fcfcfc
+}
+option {
+    background-color: #121417;
+    color: #fcfcfc;
+}

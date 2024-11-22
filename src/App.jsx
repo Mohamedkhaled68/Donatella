@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
     DeleteUsers,
+    ExperienceFormSection,
     Explore,
     Landing,
     Login,
@@ -11,12 +12,13 @@ import {
     VerifyingPage,
 } from "./pages";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { IndividualForm, PageContainer } from "./components";
+import { PageContainer } from "./components";
 import SelectCategory from "./components/onBoarding/SelectCategory";
 import { FaAnglesUp } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
+import WorkExperienceForm from "./pages/WorkExperienceForm";
 
 const App = () => {
     const location = useLocation();
@@ -47,25 +49,34 @@ const App = () => {
             <AnimatePresence mode="wait">
                 <PageContainer pathname={location.pathname}>
                     <Routes location={location}>
-                        <Route path="/delete-users" element={<DeleteUsers />} />
-                        <Route path="/logout" element={<Logout />} />
+                        {/* UNAUTHORIZED */}
                         <Route path="/landing" element={<Landing />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route
-                            path="/individual-form"
-                            element={<IndividualForm />}
+                            path="/verifying-page"
+                            element={<VerifyingPage />}
+                        />
+
+                        {/* ONBOARDING */}
+                        <Route
+                            path="/selectCategory"
+                            element={<SelectCategory />}
+                        />
+                        <Route
+                            path="/experience-form"
+                            element={<ExperienceFormSection />}
                         />
                         <Route
                             path="/profile-form"
                             element={<ProfileFormSection />}
                         />
 
-                        <Route
-                            path="/selectCategory"
-                            element={<SelectCategory />}
-                        />
+                        <Route path="/delete-users" element={<DeleteUsers />} />
+                        <Route path="/logout" element={<Logout />} />
+                        <Route path="/work" element={<WorkExperienceForm />} />
 
+                        {/* AUTHORIZED */}
                         <Route
                             element={<ProtectedRoute redirectPath="/landing" />}
                         >
@@ -76,10 +87,6 @@ const App = () => {
                             <Route path="/profile" element={<Profile />} />
                             <Route path="/explore" element={<Explore />} />
                         </Route>
-                        <Route
-                            path="/verifying-page"
-                            element={<VerifyingPage />}
-                        />
                     </Routes>
                 </PageContainer>
             </AnimatePresence>
