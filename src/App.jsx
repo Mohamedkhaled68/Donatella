@@ -18,7 +18,6 @@ import { FaAnglesUp } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
-import WorkExperienceForm from "./pages/WorkExperienceForm";
 
 const App = () => {
     const location = useLocation();
@@ -74,7 +73,6 @@ const App = () => {
 
                         <Route path="/delete-users" element={<DeleteUsers />} />
                         <Route path="/logout" element={<Logout />} />
-                        <Route path="/work" element={<WorkExperienceForm />} />
 
                         {/* AUTHORIZED */}
                         <Route

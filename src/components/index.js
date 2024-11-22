@@ -28,6 +28,7 @@ export { default as ModelProfileForm } from "./onBoarding/Profile Forms/ModelPro
 export { default as VideographerProfileForm } from "./onBoarding/Profile Forms/VideographerProfileForm";
 export { default as PhotographerProfileForm } from "./onBoarding/Profile Forms/PhotographerProfileForm";
 export { default as EditorProfileForm } from "./onBoarding/Profile Forms/EditorProfileForm";
+export { default as WorkExperienceForm } from "./onBoarding/WorkExperienceForm";
 
 //AUTHORIZED
 export { default as Navbar } from "./Navbar";

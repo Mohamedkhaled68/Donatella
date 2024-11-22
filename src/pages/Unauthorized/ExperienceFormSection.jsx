@@ -4,6 +4,7 @@ import {
     FormButton,
     FormGroup,
     LogoHeader,
+    WorkExperienceForm,
 } from "../../components";
 import {
     ExperienceFormGroupData,
@@ -12,7 +13,6 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { FaCheck } from "react-icons/fa6";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import WorkExperienceForm from "../WorkExperienceForm";
 
 const ExperienceFormSection = () => {
     const [formValues, setFormValues] = useState(initialExperienceFormValues);

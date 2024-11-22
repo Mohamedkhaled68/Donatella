@@ -24,7 +24,7 @@ const Rating = ({ maxRating = 5, song }) => {
     // }, [rating]);
 
     return (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center">
             {Array.from({ length: maxRating }, (_, i) => {
                 return i < rating ? (
                     <FaStar
@@ -33,16 +33,16 @@ const Rating = ({ maxRating = 5, song }) => {
                             console.log(rating);
                             mutateAsync({ ...song, userId: data?._id, rating });
                         }}
-                        className="text-primary cursor-pointer"
+                        className="text-white-base cursor-pointer"
                         key={i}
-                        size={25}
+                        size={20}
                     />
                 ) : (
                     <CiStar
                         onClick={() => handleRating(i)}
-                        className="text-primary cursor-pointer"
+                        className="text-white-base cursor-pointer"
                         key={i}
-                        size={25}
+                        size={20}
                     />
                 );
             })}

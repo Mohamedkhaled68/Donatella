@@ -128,9 +128,15 @@ const Explore = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="grid grid-cols-4 gap-12">
+                    <div className="grid grid-cols-4 gap-10 justify-items-center">
                         {profiles.map((profile) => (
-                            <IndividualCard />
+                            <IndividualCard
+                                className={
+                                    filter === "models"
+                                        ? ""
+                                        : "col-span-2 w-[528px] h-[303px]"
+                                }
+                            />
                         ))}
                     </div>
                 </div>

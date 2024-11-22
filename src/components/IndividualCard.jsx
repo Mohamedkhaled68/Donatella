@@ -1,11 +1,19 @@
 import React from "react";
 import Rating from "./Rating";
 import { profileGirl } from "../assets";
+import { IoMaleFemaleSharp } from "react-icons/io5";
+import { FaEye } from "react-icons/fa";
+import { PiDressBold } from "react-icons/pi";
+import { GiRunningShoe } from "react-icons/gi";
+import { VscColorMode } from "react-icons/vsc";
+import { headIcon } from "../assets";
 
-const IndividualCard = () => {
+const IndividualCard = ({ className }) => {
     return (
         <>
-            <div className="bg-[#313131] border-thin border-white-base/5 rounded-[20px] p-4 flex flex-col gap-4">
+            <div
+                className={`bg-[#313131] border-thin w-[240px] h-[508px]  border-white-base/5 rounded-[20px] p-4 flex flex-col gap-4 ${className}`}
+            >
                 <div className="flex flex-col gap-2">
                     <div className="flex justify-between items-center">
                         <h1 className="name || text-md font-bold text-white-base font-display">
@@ -22,9 +30,41 @@ const IndividualCard = () => {
                         <Rating maxRating={5} />
                     </div>
                 </div>
-                <div className="rounded-[4px] border-thin border-white-base/5 ">
+                <div className="rounded-md h-full w-full relative group hover:border-white-base/70 duration-200 border-thin overflow-hidden border-white-base/5 ">
+                    <div className="absolute w-full h-full top-0 group-hover:opacity-100 opacity-0 duration-300 left-0 bg-black/80 flex justify-center items-center">
+                        <div className="h-full w-full flex-wrap  py-5 flex flex-col gap-3 justify-between items-center text-white-base">
+                            <span className="flex gap-2 items-center">
+                                <img
+                                    className="w-[20px]"
+                                    src={headIcon}
+                                    alt="headIcon"
+                                />
+                                Blonde
+                            </span>
+                            <span className="flex gap-2 items-center">
+                                <GiRunningShoe size={25} />
+                                39
+                            </span>
+                            <span className="flex gap-2 items-center">
+                                <FaEye />
+                                Green
+                            </span>
+                            <span className="flex gap-2 items-center">
+                                <IoMaleFemaleSharp size={25} />
+                                Female
+                            </span>
+                            <span className="flex gap-2 items-center">
+                                <PiDressBold size={25} />
+                                40
+                            </span>
+                            <span className="flex gap-2 items-center">
+                                <VscColorMode size={25} />
+                                White
+                            </span>
+                        </div>
+                    </div>
                     <img
-                        className="object-cover max-w-full"
+                        className="object-cover w-full h-full "
                         src={profileGirl}
                         alt=""
                     />

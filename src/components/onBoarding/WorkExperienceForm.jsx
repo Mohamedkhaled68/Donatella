@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { IoClose } from "react-icons/io5";
 import { motion } from "framer-motion";
-
-
 
 const WorkExperienceForm = ({
     setModal,
