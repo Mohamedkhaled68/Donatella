@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import LogoHeader from "../shared/ui/LogoHeader";
-import { FaArrowLeft } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { cate1, cate2, cate3, cate4 } from "../../assets";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -64,14 +63,9 @@ const SelectCategory = () => {
                                     ease: "easeInOut",
                                 },
                             }}
-                            className="grid grid-cols-4 my-5"
+                            className="w-full flex justify-center items-center my-5"
                         >
-                            <FaArrowLeft
-                                // onClick={handleShowMenu}
-                                className="text-blue-primary self-center cursor-pointer"
-                                size={30}
-                            />
-                            <div className="col-span-2 flex flex-col justify-center items-center gap-[14px]">
+                            <div className="flex flex-col justify-center items-center gap-[14px]">
                                 <h1 className="text-3xl font-display font-bold text-white-base">
                                     Select Your Speciality
                                 </h1>

@@ -27,9 +27,13 @@ export { default as IndividualRegisterForm } from "./auth/registration/Individua
 export { default as ModelProfileForm } from "./onBoarding/Profile Forms/ModelProfileForm";
 export { default as VideographerProfileForm } from "./onBoarding/Profile Forms/VideographerProfileForm";
 export { default as PhotographerProfileForm } from "./onBoarding/Profile Forms/PhotographerProfileForm";
+export { default as OrganizationProfileForm } from "./onBoarding/Profile Forms/OrganizationProfileForm";
 export { default as EditorProfileForm } from "./onBoarding/Profile Forms/EditorProfileForm";
 export { default as WorkExperienceForm } from "./onBoarding/WorkExperienceForm";
 
 //AUTHORIZED
 export { default as Navbar } from "./Navbar";
 export { default as IndividualCard } from "./IndividualCard";
+export { default as ProfileHeader } from "./profile/ProfileHeader";
+export { default as Reviews } from "./profile/Reviews";
+export { default as JobCard } from "./JobCard";

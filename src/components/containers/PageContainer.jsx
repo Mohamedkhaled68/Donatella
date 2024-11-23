@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import { use } from "framer-motion/client";
+import { useUserStore } from "../../store/userStore";
 
 const pageVariants = {
     initial: { opacity: 0, x: -1000 },
@@ -8,6 +10,11 @@ const pageVariants = {
     transition: { duration: 0.3, ease: "easeInOut" },
 };
 const PageContainer = ({ children, className, pathname }) => {
+    const { userStatus } = useUserStore((state) => state);
+
+    useEffect(() => {
+        console.log(userStatus);
+    }, [userStatus]);
     return (
         <motion.div
             key={pathname}

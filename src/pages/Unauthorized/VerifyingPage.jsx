@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import useVerifyUser from "../../hooks/auth/useVerifyUser";
-import useUserStore from "../../store/userStore";
-import { Link } from "react-router-dom";
+import { useUserStore } from "../../store/userStore";
+import { Link, useNavigate } from "react-router-dom";
 import { BackButton, Loading } from "../../components";
 
 const VerifyingPage = ({ length = 4 }) => {
     const [otp, setOtp] = useState(new Array(length).fill(""));
-    const inputRefs = useRef([]);
-    const userId = useUserStore((state) => state.userId);
     const [loading, setLoading] = useState(false);
+    const inputRefs = useRef([]);
+    const { userStatus } = useUserStore((state) => state);
+    const navigate = useNavigate();
 
     const { mutateAsync } = useVerifyUser();
 
@@ -27,7 +28,7 @@ const VerifyingPage = ({ length = 4 }) => {
             setLoading(true);
             try {
                 await mutateAsync({
-                    userId,
+                    userId: userStatus.id,
                     otp: newOtp.join(""),
                 });
             } catch (error) {

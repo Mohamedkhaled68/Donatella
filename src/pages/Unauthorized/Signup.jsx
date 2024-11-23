@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import LogoHeader from "../../components/shared/ui/LogoHeader";
-import { girlImg } from "../../assets";
+import { formVideo, girlImg } from "../../assets";
 import {
     BackButton,
     IndividualRegisterForm,
@@ -14,21 +14,20 @@ const Signup = () => {
 
     const handleRoleChange = (selectedRole) => {
         setRole(selectedRole);
-        console.log("Selected role:", selectedRole);
     };
 
     return (
         <>
-            <section className="max-h-screen bg-[#121417]">
-                {loading && (
-                    <div className="absolute w-full h-full flex justify-center items-center z-[10000] bg-black/50">
-                        <Loading />
-                    </div>
-                )}
+            {loading && (
+                <div className="absolute w-full h-full flex justify-center items-center z-[10000] bg-black/50">
+                    <Loading />
+                </div>
+            )}
+            <section className="h-screen min-w-full bg-[#121417]">
                 <LogoHeader />
-                <div className="container mx-auto flex justify-between h-full mt-10">
+                <div className="container h-full mx-auto flex justify-between items-center mt-10">
                     <div className="grow flex-1 h-full">
-                        <div className="flex flex-col gap-5">
+                        <div className="flex justify-between flex-col gap-5">
                             <div className="flex gap-10">
                                 <BackButton />
                                 <div className="flex flex-col gap-3">
@@ -90,14 +89,17 @@ const Signup = () => {
                             )}
                         </div>
                     </div>
-                    <div className="w-[50%] flex justify-center items-center h-full">
-                        <div className="relative rounded-3xl overflow-hidden group h-full w-[60%]">
-                            <img
-                                className="max-w-full max-h-full object-cover filter grayscale group-hover:scale-110 duration-500 group-hover:grayscale-0"
-                                src={girlImg}
-                                alt="girl"
-                            />
-                            <div className="w-[calc(100%-6px)] h-[calc(100%-6px)] bg-black/45 group-hover:bg-black/0 duration-300 rounded-3xl absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" />
+                    <div className="grow flex-1 flex justify-center items-center h-full">
+                        <div className="relative rounded-3xl overflow-hidden  h-full w-[60%]">
+                            <video
+                                className="absolute w-full top-0 left-0 z-10"
+                                autoPlay
+                                muted
+                                loop
+                            >
+                                <source src={formVideo} />
+                            </video>
+                            <div className="w-[calc(100%-6px)] z-20 h-[calc(100%-6px)] bg-black/70  rounded-3xl absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" />
                         </div>
                     </div>
                 </div>

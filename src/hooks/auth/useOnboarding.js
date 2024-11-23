@@ -3,14 +3,16 @@ import { baseUrl } from "../../utils/baseUrl";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/userTokenStore";
+import { useUserStore } from "../../store/userStore";
 
 const useOnboarding = () => {
     const token = useAuthStore((state) => state.authToken);
+    const { setUserStatus } = useUserStore((state) => state);
 
     const navigate = useNavigate();
 
     return useMutation({
-        mutationKey: ["user", "completeData"],
+        mutationKey: ["user", "onboarding"],
         mutationFn: async (data) => {
             const response = await axios.patch(
                 `${baseUrl}/users/onboarding`,
@@ -21,7 +23,8 @@ const useOnboarding = () => {
                     },
                 }
             );
-            console.log(response.data);
+            setUserStatus(response.data.data);
+            console.log(response.data.data);
             return response.data;
         },
         onSuccess: () => {
@@ -29,8 +32,8 @@ const useOnboarding = () => {
         },
         onError: (error) => {
             const errorMessage =
-            error.response?.data?.data?.message ||
-            "An unexpected error occurred.";
+                error.response?.data?.data?.message ||
+                "An unexpected error occurred.";
             throw new Error(errorMessage);
         },
     });

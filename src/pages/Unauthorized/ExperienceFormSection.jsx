@@ -29,20 +29,10 @@ const ExperienceFormSection = () => {
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
-        const parsedValue = (() => {
-            if (value == "true" || value == "false") {
-                return value === "true";
-            }
-            if (value == Number(value)) {
-                return Number(value);
-            }
-
-            return value;
-        })();
 
         setFormValues((prevValues) => ({
             ...prevValues,
-            [id]: parsedValue,
+            [id]: value,
         }));
     };
 
@@ -52,11 +42,20 @@ const ExperienceFormSection = () => {
 
     const handleSubmite = (e) => {
         e.preventDefault();
-        console.log({ ...formValues, workExperience });
+
+        const transformedFormValues = Object.fromEntries(
+            Object.entries(formValues).map(([key, value]) => {
+                if (value === "true") return [key, true];
+                if (value === "false") return [key, false];
+                if (!isNaN(value) && value !== "") return [key, Number(value)];
+                return [key, value];
+            })
+        );
+        console.log({ ...transformedFormValues, workExperience });
 
         localStorage.setItem(
             "userData",
-            JSON.stringify({ ...formValues, workExperience })
+            JSON.stringify({ ...transformedFormValues, workExperience })
         );
 
         setFormValues(initialExperienceFormValues);

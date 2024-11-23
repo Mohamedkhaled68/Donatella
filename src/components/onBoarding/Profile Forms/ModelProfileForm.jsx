@@ -9,11 +9,11 @@ import FormGroup from "../../shared/ui/FormGroup";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import useOnboarding from "../../../hooks/auth/useOnboarding";
+import { useUserStore } from "../../../store/userStore";
 
 const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
     const [formValues, setFormValues] = useState(initialModelProfileFormValues);
     const [disabled, setDisabled] = useState(true);
-    const navigate = useNavigate();
 
     const { mutateAsync } = useOnboarding();
 
@@ -31,23 +31,25 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
         setLoading(true);
         const userProfile = JSON.parse(localStorage.getItem("userData"));
         try {
-            // mutateAsync({
-            //     role,
-            //     ...userProfile,
-            //     specialtyInfo: { ...formValues },
-            // });
-            return new Promise((resolve) => setTimeout(resolve, 3000));
+            mutateAsync({
+                individualProfile: {
+                    role: "MODEL",
+                    ...userProfile,
+                    specialtyInfo: { ...formValues },
+                },
+            });
         } catch (error) {
             console.log(error.message);
         } finally {
             console.log({
-                role,
-                ...userProfile,
-                specialtyInfo: { ...formValues, images: imageUrls },
+                individualProfile: {
+                    role: "MODEL",
+                    ...userProfile,
+                    specialtyInfo: { ...formValues },
+                },
             });
             setLoading(false);
             setFormValues(initialModelProfileFormValues);
-            navigate("/");
         }
     };
 
@@ -118,6 +120,10 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
                                                 const values = Object.keys(
                                                     enumObj.enums
                                                 );
+
+                                                const myValues = Object.values(
+                                                    enumObj.enums
+                                                );
                                                 return (
                                                     <React.Fragment key={id}>
                                                         <option
@@ -135,7 +141,12 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
                                                                 <option
                                                                     key={`${idx}-${valueIdx}`}
                                                                     value={
-                                                                        value
+                                                                        id ===
+                                                                        "nationality"
+                                                                            ? myValues[
+                                                                                  valueIdx
+                                                                              ]
+                                                                            : value
                                                                     }
                                                                     className="text-white-base font-normal capitalize"
                                                                 >

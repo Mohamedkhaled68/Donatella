@@ -72,7 +72,7 @@ const IndividualRegisterForm = ({ role, loading, setLoading }) => {
                 className="w-[100%] flex flex-col gap-4 mt-6"
                 onSubmit={handleSubmit}
             >
-                <div className="grid grid-cols-4 gap-5">
+                <div className="grid grid-cols-1 gap-5">
                     {individualRegisterFormGroupData.map((group, index) => (
                         <motion.div
                             key={index}
@@ -104,7 +104,7 @@ const IndividualRegisterForm = ({ role, loading, setLoading }) => {
                         </motion.div>
                     ))}
                 </div>
-                <div className="flex flex-col justify-center items-center gap-2 mt-6">
+                <div className="flex flex-col items-start gap-2 mt-6 pb-5">
                     <FormButton
                         loading={loading}
                         disabled={disabled}

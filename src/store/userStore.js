@@ -1,10 +1,25 @@
 import { create } from "zustand";
 
-const useUserStore = create((set) => ({
-    userId: "",
-    userData: {},
-    setUserData: (data) => set({ userData: data }),
-    setUserId: (id) => set({ userId: id }),
+export const useUserStore = create((set) => ({
+    userStatus: {},
+
+    setUserStatus: (user) => {
+        localStorage.setItem("userStatus", JSON.stringify(user));
+        set(() => ({ userStatus: user }));
+    },
+
+    rehydrate: () => {
+        const storedUserStatus = JSON.parse(localStorage.getItem("userStatus"));
+        if (storedUserStatus) {
+            set(() => ({ userStatus: storedUserStatus }));
+        }
+    },
+
+    clearUserStatus: () => {
+        localStorage.removeItem("userStatus");
+        set(() => ({ userStatus: null }));
+    },
 }));
 
-export default useUserStore;
+// Call rehydrate at app start
+useUserStore.getState().rehydrate();

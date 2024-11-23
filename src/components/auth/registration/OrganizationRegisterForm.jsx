@@ -18,7 +18,7 @@ const OrganizationRegisterForm = ({ role }) => {
     const [disabled, setDisabled] = useState(true);
     const [errors, setErrors] = useState({});
 
-    const { mutateAsync, isSuccess } = useRegister();
+    const { mutateAsync } = useRegister();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -33,7 +33,6 @@ const OrganizationRegisterForm = ({ role }) => {
         } catch (error) {
             console.log("An error occurred.");
         } finally {
-            console.log({ ...formValues, role: role.toUpperCase() });
             toast.success("Registered successfully!!");
             setFormValues(initialOrganizationRegisterFormValues);
         }

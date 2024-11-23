@@ -16,6 +16,8 @@ export const useGetCurrentUser = () => {
             });
             return data.data;
         },
+        staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+        retry: 1, // Retry once on failure
     });
 };
 

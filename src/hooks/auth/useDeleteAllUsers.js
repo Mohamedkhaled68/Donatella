@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const useDeleteAllUsers = () => {
     const navigate = useNavigate();
     return useMutation({
-        mutationKey: ["user"],
+        mutationKey: ["user", "delete"],
         mutationFn: async () => {
             const response = await axios.delete(`${baseUrl}/users/all`);
             console.log(response.data);

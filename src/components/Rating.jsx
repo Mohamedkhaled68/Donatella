@@ -5,7 +5,7 @@ import { FaStar } from "react-icons/fa";
 // import useRating from "../../hooks/songs/useRating";
 // import { useModalContext } from "./ModalProvider";
 
-const Rating = ({ maxRating = 5, song }) => {
+const Rating = ({ maxRating = 5, size = 20 }) => {
     // Modal States
     // const { setIsModalVisible, setSelectedSong } = useModalContext();
 
@@ -35,14 +35,14 @@ const Rating = ({ maxRating = 5, song }) => {
                         }}
                         className="text-white-base cursor-pointer"
                         key={i}
-                        size={20}
+                        size={size}
                     />
                 ) : (
                     <CiStar
                         onClick={() => handleRating(i)}
                         className="text-white-base cursor-pointer"
                         key={i}
-                        size={20}
+                        size={size}
                     />
                 );
             })}

@@ -8,7 +8,16 @@ import { GiRunningShoe } from "react-icons/gi";
 import { VscColorMode } from "react-icons/vsc";
 import { headIcon } from "../assets";
 
-const IndividualCard = ({ className }) => {
+const attributes = [
+    { icon: headIcon, text: "Blonde", isImage: true },
+    { icon: <GiRunningShoe size={25} />, text: "39" },
+    { icon: <FaEye size={25} />, text: "Green" },
+    { icon: <IoMaleFemaleSharp size={25} />, text: "Female" },
+    { icon: <PiDressBold size={25} />, text: "40" },
+    { icon: <VscColorMode size={25} />, text: "White" },
+];
+
+const IndividualCard = ({ className, filter }) => {
     return (
         <>
             <div
@@ -32,35 +41,36 @@ const IndividualCard = ({ className }) => {
                 </div>
                 <div className="rounded-md h-full w-full relative group hover:border-white-base/70 duration-200 border-thin overflow-hidden border-white-base/5 ">
                     <div className="absolute w-full h-full top-0 group-hover:opacity-100 opacity-0 duration-300 left-0 bg-black/80 flex justify-center items-center">
-                        <div className="h-full w-full flex-wrap  py-5 flex flex-col gap-3 justify-between items-center text-white-base">
-                            <span className="flex gap-2 items-center">
-                                <img
-                                    className="w-[20px]"
-                                    src={headIcon}
-                                    alt="headIcon"
-                                />
-                                Blonde
-                            </span>
-                            <span className="flex gap-2 items-center">
-                                <GiRunningShoe size={25} />
-                                39
-                            </span>
-                            <span className="flex gap-2 items-center">
-                                <FaEye />
-                                Green
-                            </span>
-                            <span className="flex gap-2 items-center">
-                                <IoMaleFemaleSharp size={25} />
-                                Female
-                            </span>
-                            <span className="flex gap-2 items-center">
-                                <PiDressBold size={25} />
-                                40
-                            </span>
-                            <span className="flex gap-2 items-center">
-                                <VscColorMode size={25} />
-                                White
-                            </span>
+                        <div
+                            className={`h-full w-full grid ${
+                                filter !== "models"
+                                    ? "grid-cols-2"
+                                    : "grid-cols-1"
+                            } grid-cols-2 gap-2 justify-items-center py-2 text-white-base`}
+                        >
+                            {attributes.map((attr, index) => (
+                                <span
+                                    key={index}
+                                    className={`flex justify-center items-center w-full ${
+                                        filter !== "models"
+                                            ? "col-span-1"
+                                            : "col-span-2"
+                                    }`}
+                                >
+                                    {attr.isImage ? (
+                                        <img
+                                            className="w-[20px]"
+                                            src={attr.icon}
+                                            alt="icon"
+                                        />
+                                    ) : (
+                                        attr.icon
+                                    )}
+                                    <p className="w-[30%] text-center">
+                                        {attr.text}
+                                    </p>
+                                </span>
+                            ))}
                         </div>
                     </div>
                     <img

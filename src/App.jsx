@@ -10,14 +10,17 @@ import {
     ProfileFormSection,
     Signup,
     VerifyingPage,
+    Messages,
+    OrgProfileForm,
+    Payments,
 } from "./pages";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { PageContainer } from "./components";
 import SelectCategory from "./components/onBoarding/SelectCategory";
 import { FaAnglesUp } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
-import ProtectedRoute from "./routes/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
+import { PostJob, ProtectedRoute } from "./routes";
 
 const App = () => {
     const location = useLocation();
@@ -59,7 +62,7 @@ const App = () => {
 
                         {/* ONBOARDING */}
                         <Route
-                            path="/selectCategory"
+                            path="/select-category"
                             element={<SelectCategory />}
                         />
                         <Route
@@ -69,6 +72,10 @@ const App = () => {
                         <Route
                             path="/profile-form"
                             element={<ProfileFormSection />}
+                        />
+                        <Route
+                            path="/organization-form"
+                            element={<OrgProfileForm />}
                         />
 
                         <Route path="/delete-users" element={<DeleteUsers />} />
@@ -84,6 +91,12 @@ const App = () => {
                             />
                             <Route path="/profile" element={<Profile />} />
                             <Route path="/explore" element={<Explore />} />
+                            <Route
+                                path="/explore/post-job"
+                                element={<PostJob />}
+                            />
+                            <Route path="/messages" element={<Messages />} />
+                            <Route path="/payments" element={<Payments />} />
                         </Route>
                     </Routes>
                 </PageContainer>

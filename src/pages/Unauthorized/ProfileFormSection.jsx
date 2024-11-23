@@ -45,7 +45,7 @@ const ProfileFormSection = () => {
 
     useEffect(() => {
         if (!location.state) {
-            navigate("/individual-form");
+            navigate("/experience-form");
         } else {
             setRole(location.state.category);
         }
