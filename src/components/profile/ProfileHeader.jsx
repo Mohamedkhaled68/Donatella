@@ -1,11 +1,8 @@
 import React from "react";
-import { BiArrowBack } from "react-icons/bi";
 import Rating from "../../components/Rating";
 import { FiEdit } from "react-icons/fi";
 import { FaTiktok, FaInstagram } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
-import { FaPhoneAlt } from "react-icons/fa";
-import { FaMessage } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { CountryEnum } from "../../utils/constants";
 const ProfileHeader = ({ data, role }) => {

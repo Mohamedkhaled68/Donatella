@@ -15,4 +15,3 @@ export { default as OrgProfileForm } from "./Unauthorized/OrgProfileForm";
 
 //TO DELETED
 export { default as DeleteUsers } from "./DeleteUsers";
-export { default as Logout } from "./Logout";

@@ -5,7 +5,6 @@ import {
     Explore,
     Landing,
     Login,
-    Logout,
     Profile,
     ProfileFormSection,
     Signup,
@@ -79,7 +78,6 @@ const App = () => {
                         />
 
                         <Route path="/delete-users" element={<DeleteUsers />} />
-                        <Route path="/logout" element={<Logout />} />
 
                         {/* AUTHORIZED */}
                         <Route
