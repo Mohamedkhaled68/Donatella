@@ -17,7 +17,7 @@ const useLogin = () => {
                     "Content-Type": "application/json",
                 },
             });
-            setUserStatus(response.data.data);
+            setUserStatus(response.data.data.user);
             setToken(response.data.data.token);
             return response.data;
         },

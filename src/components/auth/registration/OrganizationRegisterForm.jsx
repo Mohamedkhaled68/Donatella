@@ -83,7 +83,7 @@ const OrganizationRegisterForm = ({ role }) => {
                         />
                     </motion.div>
                 ))}
-                <div className="flex flex-col justify-center items-center gap-2 mt-6">
+                <div className="flex flex-col items-start gap-2 mt-6">
                     <FormButton disabled={disabled} text={"Sign Up"} />
                     <p className="text-medium text-white-base/40">
                         Don't have an account?{" "}

@@ -112,6 +112,7 @@ const Login = () => {
                                 </h2>
                                 <div className="flex justify-center items-center gap-5 w-full">
                                     <button
+                                        key={"Organization"}
                                         type="button"
                                         onClick={() =>
                                             handleRoleChange("Organization")
@@ -120,11 +121,12 @@ const Login = () => {
                                             role === "Organization"
                                                 ? "bg-white-base text-gray-deep"
                                                 : "bg-[#27292C] text-white-base"
-                                        } w-1/2 px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl`}
+                                        } w-1/2 px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
                                     >
                                         Organization
                                     </button>
                                     <button
+                                        key={"Individual"}
                                         type="button"
                                         onClick={() =>
                                             handleRoleChange("Individual")
@@ -133,7 +135,7 @@ const Login = () => {
                                             role === "Individual"
                                                 ? "bg-white-base text-gray-deep"
                                                 : "bg-[#27292C] text-white-base"
-                                        } w-1/2 border-medium border-white-base px-5 py-4 text-medium font-bold rounded-xl`}
+                                        } w-1/2 border-medium border-white-base px-5 py-4 text-medium font-bold rounded-xl transition-all duration-300`}
                                     >
                                         Individual
                                     </button>

@@ -10,14 +10,26 @@ import { FaPlus } from "react-icons/fa6";
 import ProfileHeader from "../../components/profile/ProfileHeader";
 import { useUserStore } from "../../store/userStore";
 import { Reviews } from "../../components";
-import useGetCurrentUser from "../../hooks/auth/useGetCurrentUser";
+import { splitText } from "../../utils/helpers";
 
 const Profile = () => {
+    const [bio, setBio] = useState("");
     const { userStatus } = useUserStore((state) => state);
 
     const dateFormat = (date) => {
         return new Date(date).getFullYear();
     };
+
+    useEffect(() => {
+        console.log(userStatus);
+        if (userStatus.organization) {
+            const splitedBio = splitText(userStatus.organization.bio, 40);
+            setBio(splitedBio);
+        } else {
+            const splitedBio = splitText(userStatus.individual.bio, 40);
+            setBio(splitedBio);
+        }
+    }, [userStatus]);
     return (
         <>
             <section className="min-h-screen">
@@ -31,10 +43,10 @@ const Profile = () => {
                             </h1>
                             <FiEdit size={20} />
                         </div>
-                        <p className="font-body text-md font-light text-white-base">
-                            {userStatus.organization
-                                ? userStatus.organization.bio
-                                : userStatus.individual.bio}
+                        <p className="font-body flex flex-col gap-3 text-md font-light text-white-base">
+                            {bio.map((item, index) => (
+                                <p key={index}>{item}</p>
+                            ))}
                         </p>
                     </div>
                     <Border />

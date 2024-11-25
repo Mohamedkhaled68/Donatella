@@ -23,76 +23,70 @@ const Signup = () => {
                     <Loading />
                 </div>
             )}
-            <section className="h-screen min-w-full bg-[#121417]">
+            <section className="h-full w-full bg-[#121417]">
                 <LogoHeader />
-                <div className="container h-full mx-auto flex justify-between items-center mt-10">
-                    <div className="grow flex-1 h-full">
-                        <div className="flex justify-between flex-col gap-5">
-                            <div className="flex gap-10">
-                                <BackButton />
-                                <div className="flex flex-col gap-3">
-                                    <h1 className="text-5xl font-display font-bold text-white-base">
-                                        Who Would I like to be?
-                                    </h1>
-                                    <p className="text-sm text-white-base/40 w-[70%]">
-                                        Create your profile today and open the
-                                        door to exciting new opportunities.
-                                    </p>
-                                </div>
+                <div className="container h-full mx-auto grid grid-cols-2 gap-x-8 mt-10">
+                    <div className="flex justify-between flex-col gap-5">
+                        <div className="flex gap-10">
+                            <BackButton />
+                            <div className="flex flex-col gap-3">
+                                <h1 className="text-5xl font-display font-bold text-white-base">
+                                    Step into the Spotlight
+                                </h1>
+                                <p className="text-sm text-white-base/40 w-[70%]">
+                                    Create your profile today and open the door
+                                    to exciting new opportunities.
+                                </p>
                             </div>
-
-                            <div className="flex justify-center items-center gap-5 w-full">
-                                <button
-                                    key={"Organization"}
-                                    type="button"
-                                    onClick={() =>
-                                        handleRoleChange("Organization")
-                                    }
-                                    className={`${
-                                        role === "Organization"
-                                            ? "bg-white-base text-gray-deep"
-                                            : "bg-[#27292C] text-white-base"
-                                    } w-1/2 px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
-                                >
-                                    Organization
-                                </button>
-                                <button
-                                    key={"Individual"}
-                                    type="button"
-                                    onClick={() =>
-                                        handleRoleChange("Individual")
-                                    }
-                                    className={`${
-                                        role === "Individual"
-                                            ? "bg-white-base text-gray-deep"
-                                            : "bg-[#27292C] text-white-base"
-                                    } w-1/2 border-medium border-white-base px-5 py-4 text-medium font-bold rounded-xl transition-all duration-300`}
-                                >
-                                    Individual
-                                </button>
-                            </div>
-
-                            {role === "Organization" ? (
-                                <OrganizationRegisterForm
-                                    key={"Organization"}
-                                    role={role}
-                                    loading={loading}
-                                    setLoading={setLoading}
-                                />
-                            ) : (
-                                <IndividualRegisterForm
-                                    key={"Individual"}
-                                    role={role}
-                                    loading={loading}
-                                    setLoading={setLoading}
-                                />
-                            )}
                         </div>
+
+                        <div className="flex justify-center items-center gap-5 w-full">
+                            <button
+                                key={"Organization"}
+                                type="button"
+                                onClick={() => handleRoleChange("Organization")}
+                                className={`${
+                                    role === "Organization"
+                                        ? "bg-white-base text-gray-deep"
+                                        : "bg-[#27292C] text-white-base"
+                                } w-1/2 px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
+                            >
+                                Organization
+                            </button>
+                            <button
+                                key={"Individual"}
+                                type="button"
+                                onClick={() => handleRoleChange("Individual")}
+                                className={`${
+                                    role === "Individual"
+                                        ? "bg-white-base text-gray-deep"
+                                        : "bg-[#27292C] text-white-base"
+                                } w-1/2 border-medium border-white-base px-5 py-4 text-medium font-bold rounded-xl transition-all duration-300`}
+                            >
+                                Individual
+                            </button>
+                        </div>
+
+                        {role === "Organization" ? (
+                            <OrganizationRegisterForm
+                                key={"Organization"}
+                                role={role}
+                                loading={loading}
+                                setLoading={setLoading}
+                            />
+                        ) : (
+                            <IndividualRegisterForm
+                                key={"Individual"}
+                                role={role}
+                                loading={loading}
+                                setLoading={setLoading}
+                            />
+                        )}
                     </div>
-                    <div className="grow flex-1 flex justify-center items-center h-full">
-                        <div className="relative rounded-3xl overflow-hidden  h-full w-[60%]">
+                    <div className="w-[400px] mx-auto">
+                        <div className="relative rounded-3xl w-full overflow-hidden">
                             <video
-                                className="absolute w-full top-0 left-0 z-10"
+                                className="max-h-[500px] w-full top-0 left-0 z-10 bg-transparent object-cover"
                                 autoPlay
                                 muted
                                 loop
