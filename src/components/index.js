@@ -18,6 +18,7 @@ export { default as BackButton } from "./shared/ui/BackButton";
 export { default as Button } from "./shared/ui/Button";
 export { default as LogoHeader } from "./shared/ui/LogoHeader";
 export { default as Loading } from "./shared/ui/Loading";
+export { default as TextExpander } from "./shared/TextExpander";
 
 export { default as Sidebar } from "./shared/ui/sidebar/Sidebar";
 
@@ -37,3 +38,5 @@ export { default as IndividualCard } from "./IndividualCard";
 export { default as ProfileHeader } from "./profile/ProfileHeader";
 export { default as Reviews } from "./profile/Reviews";
 export { default as JobCard } from "./JobCard";
+export { default as ChatWindow } from "./messages/ChatWindow";
+export { default as ChatList } from "./messages/ChatList";

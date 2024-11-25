@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import DropMenu from "./DropMenu";
 
 const Navbar = () => {
     const [showDrop, setShowDrop] = useState(false);
-
-    // Close the dropdown when clicking outside
 
     return (
         <>

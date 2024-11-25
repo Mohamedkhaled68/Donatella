@@ -13,7 +13,7 @@ import { Reviews } from "../../components";
 import { splitText } from "../../utils/helpers";
 
 const Profile = () => {
-    const [bio, setBio] = useState("");
+    const [bio, setBio] = useState([]);
     const { userStatus } = useUserStore((state) => state);
 
     const dateFormat = (date) => {
@@ -43,11 +43,11 @@ const Profile = () => {
                             </h1>
                             <FiEdit size={20} />
                         </div>
-                        <p className="font-body flex flex-col gap-3 text-md font-light text-white-base">
-                            {bio.map((item, index) => (
+                        <div className="font-body flex flex-col gap-3 text-md font-light text-white-base">
+                            {bio?.map((item, index) => (
                                 <p key={index}>{item}</p>
                             ))}
-                        </p>
+                        </div>
                     </div>
                     <Border />
                     {userStatus.individual && (
