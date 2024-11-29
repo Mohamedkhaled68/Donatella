@@ -1,5 +1,5 @@
-import React from "react";
-import Rating from "../../components/Rating";
+import React, { useEffect } from "react";
+import Rating from "../shared/Rating";
 import { FiEdit } from "react-icons/fi";
 import { FaTiktok, FaInstagram } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
@@ -18,6 +18,10 @@ const ProfileHeader = ({ data, role }) => {
     function getKeyByValue(obj, value) {
         return Object.keys(obj).find((key) => obj[key] === value);
     }
+
+    useEffect(() => {
+        console.log(data);
+    }, []);
     return (
         <>
             <div className="w-full flex justify-around items-center gap-[170px] my-8">
@@ -30,7 +34,7 @@ const ProfileHeader = ({ data, role }) => {
                                     <FiEdit size={18} />
                                 </div>
                             </div>
-                            <Rating size={30} maxRating={5} />
+                            <Rating rating={4} size={30} maxRating={5} />
                         </div>
                         <div className="flex flex-col items-center gap-5">
                             <div className="flex flex-col justify-center items-center">
@@ -41,9 +45,9 @@ const ProfileHeader = ({ data, role }) => {
                                     {/* Los Angeles, CA, USA */}
                                     {getKeyByValue(
                                         CountryEnum.enums,
-                                        data.organization.location
+                                        data?.organization.location
                                     )}
-                                    , {""} {data.organization.location}
+                                    , {""} {data?.organization.location}
                                 </p>
                             </div>
                             <div className="text-base font-light font-body text-center w-[210px] capitalize rounded-lg bg-[#197FE540] px-[5px] py-2">
@@ -51,15 +55,15 @@ const ProfileHeader = ({ data, role }) => {
                             </div>
                             <div className="w-full flex items-center justify-around">
                                 <IconLink
-                                    url={data.organization.instagram}
+                                    url={data?.organization.instagram}
                                     Icon={FaInstagram}
                                 />
                                 <IconLink
-                                    url={data.organization.tiktok}
+                                    url={data?.organization.tiktok}
                                     Icon={FaTiktok}
                                 />
                                 <IconLink
-                                    url={data.organization.website}
+                                    url={data?.organization.website}
                                     Icon={TbWorld}
                                 />
                             </div>
@@ -84,11 +88,11 @@ const ProfileHeader = ({ data, role }) => {
                                     {/* Los Angeles, CA, USA */}
                                     {getKeyByValue(
                                         CountryEnum.enums,
-                                        data.individual.specialtyInfo
+                                        data?.individual.specialtyInfo
                                             .nationality
                                     )}
                                     , {""}{" "}
-                                    {data.individual.specialtyInfo.nationality}
+                                    {data?.individual.specialtyInfo.nationality}
                                 </p>
                             </div>
                             <div className="text-base font-light font-body text-center w-[210px] capitalize rounded-lg bg-[#197FE540] px-[5px] py-2">
@@ -101,7 +105,7 @@ const ProfileHeader = ({ data, role }) => {
                 {role === "INDIVIDUAL" ? (
                     <div className="flex flex-col items-center gap-5">
                         <div className="flex flex-col justify-center items-center">
-                            <Rating size={30} maxRating={5} />
+                            <Rating rating={3} size={30} maxRating={5} />
                             <p className="font-body text-white-base/50 text-base font-light">
                                 0 Projects Completed
                             </p>

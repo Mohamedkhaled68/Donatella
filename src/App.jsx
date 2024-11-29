@@ -19,12 +19,19 @@ import SelectCategory from "./components/onBoarding/SelectCategory";
 import { FaAnglesUp } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
-import { PostJob, ProtectedRoute } from "./routes";
+import { JobView, PostJob, ProtectedRoute } from "./routes";
+
 
 const App = () => {
     const location = useLocation();
     const [isVisible, setIsVisible] = useState(false);
 
+    const handleScrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
     useEffect(() => {
         const toggleVisibility = () => {
             if (window.scrollY > 200) {
@@ -37,13 +44,6 @@ const App = () => {
         window.addEventListener("scroll", toggleVisibility);
         return () => window.removeEventListener("scroll", toggleVisibility);
     }, []);
-
-    const handleScrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    };
 
     return (
         <>
@@ -92,6 +92,10 @@ const App = () => {
                             <Route
                                 path="/explore/post-job"
                                 element={<PostJob />}
+                            />
+                            <Route
+                                path="/explore/:jobId"
+                                element={<JobView />}
                             />
                             <Route path="/messages" element={<Messages />} />
                             <Route path="/payments" element={<Payments />} />

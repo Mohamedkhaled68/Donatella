@@ -16,3 +16,18 @@ export const splitText = (text, wordsPerParagraph) => {
         return paragraphs;
     }
 };
+
+
+export function haveCommonLetters(word1, word2) {
+    // Convert both words to lowercase for case-insensitive comparison
+    const prefix1 = word1.toLowerCase().slice(0, 2);
+    const prefix2 = word2.toLowerCase().slice(0, 2);
+
+    // Check if the first three letters are equal
+    return prefix1 === prefix2;
+}
+
+export const dateFormat = (date) => {
+    return new Date(date).getFullYear();
+};
+

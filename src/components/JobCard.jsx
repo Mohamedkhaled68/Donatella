@@ -1,9 +1,17 @@
 import React from "react";
 import { orgLogo } from "../assets";
-import Rating from "./Rating";
+import Rating from "./shared/Rating";
+import { useNavigate } from "react-router-dom";
 
 const JobCard = ({ job }) => {
-    const { company, description, rate, tags, duration, logo, location } = job;
+    const { company, description, rate, tags, id, duration, logo, location } =
+        job;
+
+    const navigate = useNavigate(); // Initialize the useNavigate hook
+
+    const handleNavigateToJob = () => {
+        navigate(`/explore/${id}`); // Navigate to the JobView page with the jobId
+    };
     return (
         <>
             <div className="flex items-center bg-[#313131] text-white border-thin border-white-base rounded-lg p-6 gap-5 space-x-4 shadow-lg ">
@@ -13,7 +21,7 @@ const JobCard = ({ job }) => {
                         alt={`${company} logo`}
                         className="w-[120px] h-[120px] rounded-full"
                     />
-                    <Rating />
+                    <Rating size={15} rating={3} />
                 </div>
                 <div className="flex-1 grow">
                     <h3 className="font-bold border-b border-white-base/10 pb-3 w-[50%]">
@@ -42,7 +50,10 @@ const JobCard = ({ job }) => {
                 <div className="flex flex-col justify-center items-center gap-3">
                     <p className="text-[20px] font-bold">{rate}</p>
                     <p className="text-sm text-gray-400">{duration}</p>
-                    <button className="bg-blue-primary hover:bg-blue-600 duration-200 text-white py-3 px-[60px] rounded-[46px] text-md font-bold">
+                    <button
+                        onClick={handleNavigateToJob}
+                        className="bg-blue-primary hover:bg-blue-600 duration-200 text-white py-3 px-[60px] rounded-[46px] text-md font-bold"
+                    >
                         View Job
                     </button>
                 </div>

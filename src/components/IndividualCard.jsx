@@ -1,5 +1,5 @@
 import React from "react";
-import Rating from "./Rating";
+import Rating from "./shared/Rating";
 import { profileGirl } from "../assets";
 import { IoMaleFemaleSharp } from "react-icons/io5";
 import { FaEye } from "react-icons/fa";

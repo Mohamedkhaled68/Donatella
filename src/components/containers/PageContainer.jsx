@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { use } from "framer-motion/client";
 import { useUserStore } from "../../store/userStore";
 
 const pageVariants = {
@@ -15,6 +14,7 @@ const PageContainer = ({ children, className, pathname }) => {
     useEffect(() => {
         console.log(userStatus);
     }, [userStatus]);
+
     return (
         <motion.div
             key={pathname}

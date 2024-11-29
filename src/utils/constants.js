@@ -250,7 +250,7 @@ export const videographerProfileFormGroupData = [
 
 export const initialPhotographerProfileFormValues = {
     camera: "",
-    lighting: "",
+    lightning: "",
     lense: "",
 };
 
@@ -265,12 +265,12 @@ export const photographerProfileFormGroupData = [
         // error: (errors) => errors.camera,
     },
     {
-        label: "Lighting owned / used",
+        label: "lightning owned / used",
         type: "text",
-        name: "lighting",
-        id: "lighting",
+        name: "lightning",
+        id: "lightning",
         placeholder: "i.e. Nikon",
-        value: (formValues) => formValues.lighting,
+        value: (formValues) => formValues.lightning,
         // error: (errors) => errors.lighting,
     },
     {

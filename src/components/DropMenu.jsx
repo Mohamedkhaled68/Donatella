@@ -32,7 +32,7 @@ const DropMenu = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.3 }}
             ref={dropMenuRef}
-            className="absolute bg-slate-600 rounded-md right-10 top-[52px] min-w-[150px] overflow-hidden shadow-lg"
+            className="absolute bg-slate-600 rounded-md right-10 z-[10000] top-[52px] min-w-[150px] overflow-hidden shadow-lg"
         >
             <div className="flex flex-col">
                 {items.map((item) => (

@@ -4,7 +4,7 @@ import { Navigation } from "swiper/modules"; // Import the Navigation module
 import "swiper/css";
 import "swiper/css/navigation"; // Import Swiper's navigation styles
 import { BiSolidRightArrow, BiSolidLeftArrow } from "react-icons/bi";
-import Rating from "../Rating";
+import Rating from "../shared/Rating";
 
 const reviews = [
     {

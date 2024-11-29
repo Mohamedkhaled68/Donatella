@@ -5,7 +5,7 @@ import { FaStar } from "react-icons/fa";
 // import useRating from "../../hooks/songs/useRating";
 // import { useModalContext } from "./ModalProvider";
 
-const Rating = ({ maxRating = 5, size = 20 }) => {
+const ToRating = ({ maxRating = 5, size = 20 }) => {
     // Modal States
     // const { setIsModalVisible, setSelectedSong } = useModalContext();
 
@@ -50,4 +50,4 @@ const Rating = ({ maxRating = 5, size = 20 }) => {
     );
 };
 
-export default Rating;
+export default ToRating;

@@ -27,21 +27,19 @@ const PhotographerProfileForm = ({ imageUrls, loading, setLoading, role }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        const userProfile = JSON.parse(localStorage.getItem("userData"));
         try {
-            // mutateAsync({
-            //     role,
-            //     ...userProfile,
-            //     specialtyInfo: { ...formValues },
-            // });
+            mutateAsync({
+                individualProfile: {
+                    role: "PHOTOGRAPHER",
+                    ...userProfile,
+                    specialtyInfo: { ...formValues },
+                },
+            });
             return new Promise((resolve) => setTimeout(resolve, 3000));
         } catch (error) {
             console.log(error.message);
         } finally {
-            console.log({
-                role,
-                // ...userProfile,
-                specialtyInfo: { ...formValues },
-            });
             setLoading(false);
             setFormValues(initialPhotographerProfileFormValues);
             navigate("/");

@@ -10,18 +10,12 @@ import { FaPlus } from "react-icons/fa6";
 import ProfileHeader from "../../components/profile/ProfileHeader";
 import { useUserStore } from "../../store/userStore";
 import { Reviews } from "../../components";
-import { splitText } from "../../utils/helpers";
+import { splitText, dateFormat } from "../../utils/helpers";
 
 const Profile = () => {
     const [bio, setBio] = useState([]);
     const { userStatus } = useUserStore((state) => state);
-
-    const dateFormat = (date) => {
-        return new Date(date).getFullYear();
-    };
-
     useEffect(() => {
-        console.log(userStatus);
         if (userStatus.organization) {
             const splitedBio = splitText(userStatus.organization.bio, 40);
             setBio(splitedBio);
@@ -30,6 +24,7 @@ const Profile = () => {
             setBio(splitedBio);
         }
     }, [userStatus]);
+    if(userStatus === null) return null
     return (
         <>
             <section className="min-h-screen">

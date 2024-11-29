@@ -19,6 +19,8 @@ export { default as Button } from "./shared/ui/Button";
 export { default as LogoHeader } from "./shared/ui/LogoHeader";
 export { default as Loading } from "./shared/ui/Loading";
 export { default as TextExpander } from "./shared/TextExpander";
+export { default as ToRating } from "./shared/ToRating";
+export { default as Rating } from "./shared/Rating";
 
 export { default as Sidebar } from "./shared/ui/sidebar/Sidebar";
 

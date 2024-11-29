@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Footer, IndividualCard, JobCard } from "../../components";
 import { IoMenu } from "react-icons/io5";
 import { useUserStore } from "../../store/userStore";
+import { haveCommonLetters } from "../../utils/helpers";
 
 const activeStyle =
     "bg-white-base px-[77px] py-[17px] text-black text-medium font-bold rounded-xl transition-all duration-300";
@@ -114,6 +115,7 @@ const profiles = [
 
 const jobsData = [
     {
+        id: 1,
         company: "EMG Models",
         location: "New York, USA",
         description:
@@ -125,6 +127,7 @@ const jobsData = [
         rating: 5,
     },
     {
+        id: 2,
         company: "United Models",
         location: "Los Angeles, USA",
         description:
@@ -136,6 +139,7 @@ const jobsData = [
         rating: 4,
     },
     {
+        id: 3,
         company: "Every Inch",
         location: "San Francisco, USA",
         description:
@@ -147,6 +151,7 @@ const jobsData = [
         rating: 5,
     },
     {
+        id: 4,
         company: "Vibrant Vision",
         location: "Seattle, USA",
         description:
@@ -158,6 +163,7 @@ const jobsData = [
         rating: 5,
     },
     {
+        id: 5,
         company: "Capture Dreams",
         location: "Chicago, USA",
         description:
@@ -169,6 +175,7 @@ const jobsData = [
         rating: 4,
     },
     {
+        id: 6,
         company: "Visionary Shoots",
         location: "Miami, USA",
         description: "Lifestyle Photographer for a Casual Beach Photoshoot",
@@ -179,6 +186,7 @@ const jobsData = [
         rating: 5,
     },
     {
+        id: 7,
         company: "Starlight Studios",
         location: "Austin, USA",
         description:
@@ -190,6 +198,7 @@ const jobsData = [
         rating: 5,
     },
     {
+        id: 8,
         company: "Eventful Moments",
         location: "Boston, USA",
         description:
@@ -201,6 +210,7 @@ const jobsData = [
         rating: 4,
     },
     {
+        id: 9,
         company: "Classic Capture",
         location: "Dallas, USA",
         description:
@@ -212,6 +222,7 @@ const jobsData = [
         rating: 5,
     },
     {
+        id: 10,
         company: "Urban Edge",
         location: "Houston, USA",
         description: "Seeking a Male Model for an Edgy Urban Wear Campaign",
@@ -222,6 +233,7 @@ const jobsData = [
         rating: 4,
     },
     {
+        id: 11,
         company: "Sunset Shoots",
         location: "Phoenix, USA",
         description: "Model Needed for a Golden Hour Beach Photoshoot",
@@ -232,6 +244,7 @@ const jobsData = [
         rating: 5,
     },
     {
+        id: 12,
         company: "Timeless Tales",
         location: "Orlando, USA",
         description:
@@ -243,6 +256,7 @@ const jobsData = [
         rating: 4,
     },
     {
+        id: 13,
         company: "Fresh Frames",
         location: "Denver, USA",
         description: "Model Required for a High-Energy Athletic Wear Campaign",
@@ -253,6 +267,7 @@ const jobsData = [
         rating: 5,
     },
     {
+        id: 14,
         company: "Elegant Edits",
         location: "Nashville, USA",
         description: "Fashion Photographer Needed for a Runway Show Coverage",
@@ -263,6 +278,7 @@ const jobsData = [
         rating: 5,
     },
     {
+        id: 15,
         company: "Modern Muse",
         location: "Portland, USA",
         description:
@@ -274,6 +290,7 @@ const jobsData = [
         rating: 5,
     },
     {
+        id: 16,
         company: "Golden Glimpse",
         location: "Las Vegas, USA",
         description:
@@ -285,6 +302,7 @@ const jobsData = [
         rating: 4,
     },
     {
+        id: 17,
         company: "Vivid Visions",
         location: "San Diego, USA",
         description:
@@ -296,6 +314,7 @@ const jobsData = [
         rating: 5,
     },
     {
+        id: 18,
         company: "Prime Pixels",
         location: "Charlotte, USA",
         description:
@@ -307,6 +326,7 @@ const jobsData = [
         rating: 5,
     },
     {
+        id: 19,
         company: "Studio Solace",
         location: "San Jose, USA",
         description:
@@ -318,6 +338,7 @@ const jobsData = [
         rating: 4,
     },
     {
+        id: 20,
         company: "Cinematic Frames",
         location: "Atlanta, USA",
         description: "Lead Photographer for a Cinematic Short Film Project",
@@ -328,6 +349,7 @@ const jobsData = [
         rating: 5,
     },
 ];
+
 
 const Explore = () => {
     const [filter, setFilter] = useState("models");
@@ -341,15 +363,6 @@ const Explore = () => {
             setFilter(id);
         }
     };
-
-    function haveCommonLetters(word1, word2) {
-        // Convert both words to lowercase for case-insensitive comparison
-        const prefix1 = word1.toLowerCase().slice(0, 2);
-        const prefix2 = word2.toLowerCase().slice(0, 2);
-
-        // Check if the first three letters are equal
-        return prefix1 === prefix2;
-    }
 
     useEffect(() => {
         const filteredJobs = jobsData.filter((job) =>
@@ -414,9 +427,9 @@ const Explore = () => {
                     {userStatus.role === "INDIVIDUAL" ? (
                         <>
                             <div className="flex flex-col gap-5">
-                                {jobs.map((job, idx) => (
+                                {jobs.map((job) => (
                                     <JobCard
-                                        key={idx}
+                                        key={job.id}
                                         filter={orgFilter}
                                         job={job}
                                     />

@@ -20,6 +20,7 @@ export { default as chatImage3 } from "./images/chat3.jpg";
 export { default as chatImage4 } from "./images/chat4.jpg";
 export { default as chatImage5 } from "./images/chat5.jpg";
 export { default as chatImage6 } from "./images/chat6.jpg";
+export { default as chatbg } from "./images/chat-background.jpg";
 
 export { default as cate1 } from "./images/cate1.jpeg";
 export { default as cate2 } from "./images/cate2.jpeg";
