@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BackButton, FormButton, FormGroup } from "../../components";
 import {
-    initialJobPostFormValues,
     JobPostFormGroupData,
 } from "../../utils/constants";
 import { motion } from "framer-motion";
@@ -9,8 +8,33 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import { useUserStore } from "../../store/userStore";
 
+const initialJobPostFormValue = {
+    title: "",
+    jobCategory: "MODEL",
+    requiredExperience: {
+        minimum: 0,
+        maximum: 0,
+    },
+    careerLevel: "MID_LEVEL",
+    jobDuration: {
+        minimum: 0,
+        minimumPrefix: "DAY",
+        maximum: 0,
+        maximumPrefix: "DAY",
+    },
+    location: "",
+    salary: 0,
+    // tattos: "",
+    description: "",
+    requirements: "",
+    educationLevel: "BACHELOR",
+    tags: [],
+};
+
 const PostJob = () => {
-    const [formValues, setFormValues] = useState(initialJobPostFormValues);
+    const [formValues, setFormValues] = useState({
+        ...initialJobPostFormValues,
+    });
     const [disabled, setDisabled] = useState(true);
     const [check, setCheck] = useState(false);
     const navigate = useNavigate();
@@ -64,7 +88,7 @@ const PostJob = () => {
                     </div>
                     <form onSubmit={handleSubmit}>
                         <div className="grid grid-cols-8 gap-4 pt-8">
-                            {JobPostFormGroupData.map((formGroup, idx) => (
+                            {/* {JobPostFormGroupData.map((formGroup, idx) => (
                                 <motion.div
                                     initial={{ opacity: 0, x: 40 }}
                                     animate={{ opacity: 1, x: 0 }}
@@ -88,7 +112,19 @@ const PostJob = () => {
                                         placeholder={formGroup.placeholder}
                                     />
                                 </motion.div>
-                            ))}
+                            ))} */}
+                            <FormGroup
+                                value={formValues}
+                                type="text"
+                                name="title"
+                                id="title"
+                            />
+                            <input
+                                className={`rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-[#94A3B8] text-medium font-body px-[18px] py-[14px] w-full col-span-2`}
+                                type="text"
+                                name="title"
+                                id="title"
+                            />
                         </div>
                         <div className="flex justify-between items-center mt-[50px]">
                             <div className="flex flex-col gap-7 flex-1">

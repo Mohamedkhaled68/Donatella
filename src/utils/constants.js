@@ -456,15 +456,6 @@ export const ExperienceFormGroupData = [
 
 // JOB POST FORM
 
-export const initialJobPostFormValues = {
-    jobTitle: "",
-    jobCategory: "",
-    experienceNeeded: "",
-    careerLevel: "",
-    jobDescription: "",
-    jobRequirements: "",
-};
-
 export const JobPostFormGroupData = [
     {
         label: "Job Title:",
