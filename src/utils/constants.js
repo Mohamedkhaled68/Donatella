@@ -204,7 +204,7 @@ export const modelProfileFormGroupData = [
 
 export const initialVideographerProfileFormValues = {
     camera: "",
-    lighting: "",
+    lightning: "",
     lense: "",
     stabilizer: "",
 };
@@ -220,13 +220,13 @@ export const videographerProfileFormGroupData = [
         // error: (errors) => errors.camera,
     },
     {
-        label: "Lighting owned / used",
+        label: "lightning owned / used",
         type: "text",
-        name: "lighting",
-        id: "lighting",
+        name: "lightning",
+        id: "lightning",
         placeholder: "i.e. Nikon",
-        value: (formValues) => formValues.lighting,
-        // error: (errors) => errors.lighting,
+        value: (formValues) => formValues.lightning,
+        // error: (errors) => errors.lightning,
     },
     {
         label: "Lens Used",
@@ -239,7 +239,7 @@ export const videographerProfileFormGroupData = [
     },
     {
         label: "Stabilizer / gimbal availability",
-        type: "text",
+        type: "select",
         name: "stabilizer",
         id: "stabilizer",
         placeholder: "i.e. Nikon",
@@ -285,11 +285,11 @@ export const photographerProfileFormGroupData = [
 ];
 
 export const initialEditorProfileFormValues = {
-    software: "",
+    editingSoftware: "",
     colorGrading: false,
-    soundEffects: false,
+    soundEditing: false,
     visualEffects: false,
-    motionEffects: false,
+    motionGraphics: false,
 };
 export const initialOrgProfileFormValues = {
     bio: "",
@@ -404,7 +404,7 @@ export const ExperienceFormGroupData = [
     },
     {
         label: "Link Your Most Followed Social Account:",
-        type: "text",
+        type: "url",
         name: "socialAccount",
         id: "socialAccount",
         placeholder: "Type here",
@@ -413,7 +413,7 @@ export const ExperienceFormGroupData = [
     },
     {
         label: "How many years of experience do you have?",
-        type: "text",
+        type: "number",
         name: "yearsOfExperience",
         id: "yearsOfExperience",
         placeholder: "Type here",

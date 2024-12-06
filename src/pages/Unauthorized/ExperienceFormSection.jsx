@@ -17,7 +17,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 const ExperienceFormSection = () => {
     const [formValues, setFormValues] = useState(initialExperienceFormValues);
     const [workExperience, setWorkExperience] = useState([
-        { title: "", company: "", startDate: "", endDate: "" },
+        { title: "", company: "", startDate: "2020-01-01", endDate: "" },
     ]);
     const [category, setCategory] = useState("");
     const [modal, setModal] = useState(false);

@@ -14,6 +14,10 @@ const Messages = () => {
     } = useMessagesStore((state) => state);
     const { mutateAsync: getMessages } = useGetMessages();
 
+    const handleOpenChat = () => {
+        setCurrentChat(messagesList[0]);
+    };
+
     useEffect(() => {
         if (!receivedMessage) return;
 
@@ -36,6 +40,7 @@ const Messages = () => {
                 <ChatList
                     currentChat={currentChat}
                     messagesList={messagesList}
+                    handleOpenChat={handleOpenChat}
                 />
                 <ChatWindow
                     currentChat={currentChat}

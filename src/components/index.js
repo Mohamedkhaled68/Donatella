@@ -33,12 +33,15 @@ export { default as PhotographerProfileForm } from "./onBoarding/Profile Forms/P
 export { default as OrganizationProfileForm } from "./onBoarding/Profile Forms/OrganizationProfileForm";
 export { default as EditorProfileForm } from "./onBoarding/Profile Forms/EditorProfileForm";
 export { default as WorkExperienceForm } from "./onBoarding/WorkExperienceForm";
+export { default as TagInput } from "./explore/Tag";
 
 //AUTHORIZED
 export { default as Navbar } from "./Navbar";
 export { default as IndividualCard } from "./IndividualCard";
 export { default as ProfileHeader } from "./profile/ProfileHeader";
 export { default as Reviews } from "./profile/Reviews";
+export { default as Portfolio } from "./profile/Portfolio";
+export { default as Experience } from "./profile/Experience";
 export { default as JobCard } from "./JobCard";
 export { default as ChatWindow } from "./messages/ChatWindow";
 export { default as ChatList } from "./messages/ChatList";

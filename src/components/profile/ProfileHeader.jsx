@@ -5,8 +5,10 @@ import { FaTiktok, FaInstagram } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { CountryEnum } from "../../utils/constants";
-const ProfileHeader = ({ data, role }) => {
+import { useUserStore } from "../../store/userStore";
+const ProfileHeader = ({ data }) => {
     const navigate = useNavigate();
+    const { userStatus } = useUserStore((state) => state);
     const handleNavigate = (role) => {
         if (role === "ORGANIZATION") {
             navigate("/explore/post-job");
@@ -25,7 +27,7 @@ const ProfileHeader = ({ data, role }) => {
     return (
         <>
             <div className="w-full flex justify-around items-center gap-[170px] my-8">
-                {role === "ORGANIZATION" ? (
+                {data.role === "ORGANIZATION" ? (
                     <>
                         <div className="flex flex-col justify-center items-center gap-3">
                             <div className="flex justify-center items-end relative">
@@ -51,7 +53,7 @@ const ProfileHeader = ({ data, role }) => {
                                 </p>
                             </div>
                             <div className="text-base font-light font-body text-center w-[210px] capitalize rounded-lg bg-[#197FE540] px-[5px] py-2">
-                                {role.toLowerCase()}
+                                {data.role.toLowerCase()}
                             </div>
                             <div className="w-full flex items-center justify-around">
                                 <IconLink
@@ -84,25 +86,30 @@ const ProfileHeader = ({ data, role }) => {
                                 <h1 className="font-display text-2xl font-black capitalize">
                                     {data.individual.fullName}
                                 </h1>
-                                <p className="font-body text-white-base/50 text-base font-light capitalize mt-4">
-                                    {/* Los Angeles, CA, USA */}
-                                    {getKeyByValue(
-                                        CountryEnum.enums,
-                                        data?.individual.specialtyInfo
-                                            .nationality
-                                    )}
-                                    , {""}{" "}
-                                    {data?.individual.specialtyInfo.nationality}
-                                </p>
+                                {userStatus.individual.role === "MODEL" && (
+                                    <p className="font-body text-white-base/50 text-base font-light capitalize mt-4">
+                                        {/* Los Angeles, CA, USA */}
+                                        {getKeyByValue(
+                                            CountryEnum.enums,
+                                            data?.individual.specialtyInfo
+                                                .nationality
+                                        )}
+                                        , {""}{" "}
+                                        {
+                                            data?.individual.specialtyInfo
+                                                .nationality
+                                        }
+                                    </p>
+                                )}
                             </div>
                             <div className="text-base font-light font-body text-center w-[210px] capitalize rounded-lg bg-[#197FE540] px-[5px] py-2">
-                                {role.toLowerCase()}
+                                {data?.individual?.role?.toLowerCase()}
                             </div>
                         </div>
                     </>
                 )}
 
-                {role === "INDIVIDUAL" ? (
+                {data.role === "INDIVIDUAL" ? (
                     <div className="flex flex-col items-center gap-5">
                         <div className="flex flex-col justify-center items-center">
                             <Rating rating={3} size={30} maxRating={5} />

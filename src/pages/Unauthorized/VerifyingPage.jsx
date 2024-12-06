@@ -3,6 +3,7 @@ import useVerifyUser from "../../hooks/auth/useVerifyUser";
 import { useUserStore } from "../../store/userStore";
 import { Link, useNavigate } from "react-router-dom";
 import { BackButton, Loading } from "../../components";
+import useReSendOtp from "../../hooks/auth/useReSendOtp";
 
 const VerifyingPage = ({ length = 4 }) => {
     const [otp, setOtp] = useState(new Array(length).fill(""));
@@ -12,6 +13,7 @@ const VerifyingPage = ({ length = 4 }) => {
     const navigate = useNavigate();
 
     const { mutateAsync } = useVerifyUser();
+    const { mutateAsync: reSendOtp } = useReSendOtp();
 
     const handleChange = async (value, index) => {
         const newOtp = [...otp];
@@ -87,12 +89,15 @@ const VerifyingPage = ({ length = 4 }) => {
                     </div>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full pb-10 flex justify-center items-start">
-                    <p className="text-sm font-semibold font-body text-[#64748B]">
+                    <div className="text-sm font-semibold font-body text-[#64748B]">
                         Didn’t receive a code yet?{" "}
-                        <Link to={"#"} className="text-blue-primary">
+                        <div
+                            onClick={reSendOtp}
+                            className="text-blue-primary cursor-pointer"
+                        >
                             Click here to request another one!
-                        </Link>
-                    </p>
+                        </div>
+                    </div>
                 </div>
             </section>
         </>

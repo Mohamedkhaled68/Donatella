@@ -34,6 +34,7 @@ export { default as instructionImg3 } from "./images/instructionImg3.png";
 export { default as searchTalentImage } from "./images/search_talent_image.jpeg";
 
 export { default as headIcon } from "./icons/head.svg";
+export { default as blueHeadIcon } from "./icons/blue-head.svg";
 
 export { default as formVideo } from "./videos/form-video.mp4";
 export { default as headerVideo } from "./videos/header-video.mp4";

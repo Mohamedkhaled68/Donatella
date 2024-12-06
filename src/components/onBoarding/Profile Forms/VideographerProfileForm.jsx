@@ -21,31 +21,38 @@ const VideographerProfileForm = ({ imageUrls, loading, setLoading, role }) => {
     const handleInputChange = (e) => {
         const { id, value } = e.target;
 
-        setFormValues({ ...formValues, [id]: value });
+        // Convert the value to a boolean if it's "true" or "false"
+        const newValue =
+            value === "true" ? true : value === "false" ? false : value;
+
+        setFormValues({ ...formValues, [id]: newValue });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        const userProfile = await JSON.parse(localStorage.getItem("userData"));
         try {
-            // mutateAsync({
-            //     role,
-            //     ...userProfile,
-            //     specialtyInfo: { ...formValues },
-            // });
-            return new Promise((resolve) => setTimeout(resolve, 3000));
+            await mutateAsync({
+                individualProfile: {
+                    role: "VIDEOGRAPHER",
+                    ...userProfile,
+                    specialtyInfo: { ...formValues },
+                },
+            });
         } catch (error) {
+            setLoading(false);
             console.log(error.message);
         } finally {
             console.log({
-                role,
-                // ...userProfile,
-                imageUrls,
-                specialtyInfo: { ...formValues },
+                individualProfile: {
+                    role: "VIDEOGRAPHER",
+                    ...userProfile,
+                    specialtyInfo: { ...formValues },
+                },
             });
             setLoading(false);
             setFormValues(initialVideographerProfileFormValues);
-            navigate("/");
         }
     };
 
@@ -114,7 +121,11 @@ const VideographerProfileForm = ({ imageUrls, loading, setLoading, role }) => {
                                         onChange={handleInputChange}
                                         placeholder={placeholder}
                                         validate={false}
-                                    />
+                                    >
+                                        <option value="">Select</option>
+                                        <option value={true}>Yes</option>
+                                        <option value={false}>No</option>
+                                    </FormGroup>
                                 </motion.div>
                             )
                         )}
