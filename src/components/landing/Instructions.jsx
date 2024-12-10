@@ -33,7 +33,7 @@ const InstructionsData = [
 const Instructions = () => {
     return (
         <>
-            <section className="py-12 border-b-4 border-[#fcfcfc0d] container mx-auto mb-10">
+            <section className="py-12 container mx-auto mb-10">
                 <h1 className="text-center text-6xl font-display font-normal text-white-base mb-12">
                     How It Works:
                 </h1>
@@ -45,12 +45,12 @@ const Instructions = () => {
                                 className="w-full bg-[#1F2224] border-[3px] border-[#f1f1f133] p-[75px] rounded-br-3 text-white-base font-body flex [&:nth-child(2)]:flex-row-reverse items-center justify-center gap-[88px]"
                             >
                                 <div
-                                    className={`w-[100%] ${
+                                    className={`w-[80%] ${
                                         index == 1 && "flex justify-end"
                                     } h-full`}
                                 >
                                     <img
-                                        className="filter grayscale"
+                                        className="filter grayscale w-full object-cover"
                                         src={image}
                                         alt={title}
                                     />
@@ -80,29 +80,7 @@ const Instructions = () => {
                     )}
                 </div>
             </section>
-            <section className="container mx-auto mb-10">
-                <div className="relative w-full border-[3px] border-[#f1f1f133] p-20 rounded-br-3 text-white font-body overflow-hidden">
-                    <div className="absolute inset-0 z-0 max-w-full max-h-full overflow-hidden">
-                        <img
-                            className="w-full h-full object-cover filter grayscale"
-                            src={searchTalentImage}
-                            alt="Background talent search"
-                        />
-                    </div>
-                    <div className="absolute w-full h-full top-0 left-0 inset-0 bg-[#1F2224]/75" />
-                    <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center z-10 w-full space-y-8 md:space-y-0">
-                        <p className="text-4xl font-bold text-white-base w-[50%]">
-                            Looking to hire talent as an organization? Let’s get
-                            started.
-                        </p>
-                        <div className="flex items-center gap-5">
-                            <Button className="bg-white text-[#1F2224] text-[22px] font-normal px-10 py-5">
-                                Search For Talent
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            
         </>
     );
 };

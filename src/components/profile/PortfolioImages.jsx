@@ -57,7 +57,7 @@ const PortfolioImages = () => {
                     <div className="w-full grid grid-cols-3 justify-items-center">
                         {imagesModel.map(({ id, src, alt }) => {
                             return (
-                                <div key={id} className="w-[320px]">
+                                <div key={id} className="w-[350px]">
                                     {src ? (
                                         <div className="max-w-full overflow-hidden h-full flex justify-center items-center rounded-md border-thin border-white-base/30">
                                             <img

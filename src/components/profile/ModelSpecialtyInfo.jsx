@@ -32,7 +32,7 @@ const ModelSpecialtyInfo = ({ userStatus }) => {
     return (
         <>
             <div className="w-full grid grid-cols-3 justify-items-center">
-                <div className="w-[320px]">
+                <div className="w-[350px]">
                     <div className="grid grid-cols-2 w-full gap-x-7 gap-y-[18px]">
                         <div className="px-[26px] py-[18px] bg-[#27292C] border-thin border-white-base/30 text-sm font-light font-body flex justify-center items-center gap-2">
                             <FaTransgender
@@ -61,7 +61,7 @@ const ModelSpecialtyInfo = ({ userStatus }) => {
                         </div>
                     </div>
                 </div>
-                <div className="w-[320px]">
+                <div className="w-[350px]">
                     <div className="grid grid-cols-2 w-full gap-x-7 gap-y-[18px]">
                         <div className="px-[26px] py-[18px] bg-[#27292C] border-thin border-white-base/30 text-sm font-light font-body flex justify-center items-center gap-2">
                             <FaEarthAmericas
@@ -96,7 +96,7 @@ const ModelSpecialtyInfo = ({ userStatus }) => {
                         </div>
                     </div>
                 </div>
-                <div className="w-[320px]">
+                <div className="w-[350px]">
                     <div className="grid grid-cols-2 w-full gap-x-7">
                         <div className="col-span-1 flex flex-col gap-[18px]">
                             <div className="px-[26px] py-[18px] bg-[#27292C] border-thin border-white-base/30 text-sm font-light font-body flex justify-center items-center gap-2">

@@ -81,13 +81,13 @@ const Reviews = () => {
                     nextEl: ".swiper-button-next-me",
                     prevEl: ".swiper-button-prev-me",
                 }}
-                spaceBetween={50}
+                spaceBetween={20}
                 slidesPerView={3}
                 className="relative"
             >
                 {reviews.map((review, index) => (
                     <SwiperSlide key={index}>
-                        <div className="review rounded-[20px] bg-[#3B3B3B] max-w-[310px] border-thin border-white-base/10 p-[17px]">
+                        <div className="review rounded-[20px] bg-[#3B3B3B] max-w-[380px] border-thin border-white-base/10 p-[17px]">
                             <h3 className="font-bold font-display text-[24px]">
                                 {review.name}
                             </h3>

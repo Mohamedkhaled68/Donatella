@@ -72,7 +72,7 @@ const IndividualRegisterForm = ({ role, loading, setLoading }) => {
                 className="w-[100%] flex flex-col gap-4 mt-6"
                 onSubmit={handleSubmit}
             >
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4">
                     {individualRegisterFormGroupData.map((group, index) => (
                         <motion.div
                             key={index}

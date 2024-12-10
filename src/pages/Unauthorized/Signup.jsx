@@ -23,10 +23,10 @@ const Signup = () => {
                     <Loading />
                 </div>
             )}
-            <section className="h-full w-full bg-[#121417]">
+            <section className="min-h-screen pb-[30px] w-full bg-[#121417]">
                 <LogoHeader />
-                <div className="container h-full mx-auto grid grid-cols-2 gap-x-8 mt-10">
-                    <div className="flex justify-between flex-col gap-5">
+                <div className="container min-h-[calc(100vh-56px)] mx-auto grid grid-cols-2 gap-x-8 mt-10">
+                    <div className="flex flex-col gap-[5%]">
                         <div className="flex gap-10">
                             <BackButton />
                             <div className="flex flex-col gap-3">
@@ -83,10 +83,10 @@ const Signup = () => {
                             />
                         )}
                     </div>
-                    <div className="w-[400px] mx-auto">
-                        <div className="relative rounded-3xl w-full overflow-hidden">
+                    <div className="max-w-[400px] max-h-full mx-auto">
+                        <div className="relative rounded-3xl max-h-full w-full overflow-hidden">
                             <video
-                                className="max-h-[500px] w-full top-0 left-0 z-10 bg-transparent object-cover"
+                                className="max-h-full max-w-full top-0 left-0 z-10 bg-transparent object-cover"
                                 autoPlay
                                 muted
                                 loop

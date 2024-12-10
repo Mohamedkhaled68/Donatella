@@ -7,6 +7,7 @@ import { Footer } from "../../components";
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import useSendMessage from "../../hooks/chat/useSendMessage";
 import useMessagesStore from "../../store/useMessagesStore";
+import { motion } from "framer-motion";
 
 const jobsData = [
     // Your jobs data...
@@ -17,8 +18,8 @@ const JobView = () => {
     const { jobId } = useParams();
     const navigate = useNavigate();
     const { mutateAsync } = useSendMessage();
-    const {setReceivedMessage} = useMessagesStore((state) => state);
-
+    const { setReceivedMessage } = useMessagesStore((state) => state);
+    const [openForm, setOpenForm] = useState(false);
 
     const handleNavigateToMessages = async () => {
         try {
@@ -30,9 +31,14 @@ const JobView = () => {
             });
         } catch (err) {
             console.log(err);
-        }finally{
+        } finally {
             navigate("/messages");
         }
+    };
+
+    const handleApply = (e) => {
+        e.preventDefault();
+        setOpenForm(false);
     };
 
     useEffect(() => {
@@ -41,7 +47,44 @@ const JobView = () => {
     }, [jobId]);
 
     return (
-        <section className="min-h-screen w-full">
+        <section className="min-h-screen w-full relative">
+            {openForm && (
+                <motion.div className="absolute w-full h-screen bg-[#0000005b]  top-0 left-0 flex justify-center items-center z-[100000]">
+                    <motion.form
+                        onSubmit={handleApply}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="w-[400px] p-[16px] bg-blue-primary text-white-base rounded-[15px] flex flex-col"
+                    >
+                        <h1 className="text-2xl font-bold font-body mb-[15px]">
+                            Apply to job :
+                        </h1>
+                        <p className="mb-[20px]">$20/HR - Cairo - 7 Days</p>
+
+                        <div className="flex flex-col gap-1">
+                            <h1>Cover Letter:</h1>
+                            <input
+                                className="rounded-[10px] w-full outline-none border-none p-2 text-black"
+                                type="text"
+                            />
+                        </div>
+                        <div className="flex items-center mt-[16px] gap-[10px]">
+                            <button
+                                onClick={() => setOpenForm(false)}
+                                className="w-full text-white-base border font-bold border-white-base bg-black rounded-full py-2"
+                            >
+                                Go Back
+                            </button>
+                            <button className="w-full bg-white-base font-bold text-black rounded-full py-2">
+                                Apply
+                            </button>
+                        </div>
+                    </motion.form>
+                </motion.div>
+            )}
+
             <div className="container mx-auto flex flex-col text-white-base pb-8">
                 <div className="w-full flex justify-around items-center gap-[170px] my-8">
                     <div className="flex flex-col justify-center items-center gap-3">
@@ -86,6 +129,7 @@ const JobView = () => {
                             </div>
                         </div>
                         <button
+                            onClick={() => setOpenForm(true)}
                             type="button"
                             className="text-lg font-bold font-body text-center w-full rounded-[46px] bg-blue-primary px-[73px] py-[15px]"
                         >

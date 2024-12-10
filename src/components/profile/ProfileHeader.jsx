@@ -6,6 +6,7 @@ import { TbWorld } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { CountryEnum } from "../../utils/constants";
 import { useUserStore } from "../../store/userStore";
+import { FaAngleDown } from "react-icons/fa6";
 const ProfileHeader = ({ data }) => {
     const navigate = useNavigate();
     const { userStatus } = useUserStore((state) => state);
@@ -117,8 +118,9 @@ const ProfileHeader = ({ data }) => {
                                 0 Projects Completed
                             </p>
                         </div>
-                        <div className="text-lg font-bold font-body text-center w-full rounded-[46px] bg-blue-primary px-[35px] py-[15px]">
-                            Profile Visibility
+                        <div className="text-lg font-bold font-body text-center w-full rounded-[46px] bg-blue-primary px-[35px] py-[15px] flex justify-center items-center gap-[10px]">
+                            <span>Profile Visibility</span>
+                            <FaAngleDown size={20} />
                         </div>
                     </div>
                 ) : (
