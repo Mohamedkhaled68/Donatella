@@ -70,7 +70,7 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
     return (
         <>
             <div className="flex flex-col gap-8">
-                <div>
+                <div >
                     <h1 className="capitalize text-5xl font-display font-bold">
                         Model form
                     </h1>

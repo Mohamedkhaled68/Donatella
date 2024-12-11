@@ -1,15 +1,21 @@
 import React from "react";
-import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaSnapchat } from "react-icons/fa6";
+import { FaTiktok } from "react-icons/fa";
 
 const icons = [
     {
-        icon: <FaFacebook size={25} />,
+        icon: <FaLinkedin size={35} />,
     },
     {
-        icon: <FaTwitter size={25} />,
+        icon: <FaTiktok size={35} />,
     },
     {
-        icon: <FaInstagram size={25} />,
+        icon: <FaInstagram size={35} />,
+    },
+    {
+        icon: <FaSnapchat size={35} />,
     },
 ];
 const Footer = () => {
@@ -35,7 +41,7 @@ const Footer = () => {
                                 {icons.map(({ icon }, idx) => (
                                     <div
                                         key={idx}
-                                        className="[&:nth-child(2)]:border-x-[1px] border-white-base p-2 px-5"
+                                        className="[&:nth-child(2)]:border-x-[2px] [&:nth-child(3)]:border-r-[2px] border-white-base/50 p-2 px-5"
                                     >
                                         {icon}
                                     </div>

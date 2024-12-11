@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
+    BackButton,
     EditorProfileForm,
     Loading,
     LogoHeader,
@@ -66,68 +67,71 @@ const ProfileFormSection = () => {
                     </div>
                 )}
                 <LogoHeader />
-                <div className="container mx-auto grid grid-cols-2 gap-6 mt-10">
-                    {role.toLocaleLowerCase() === "model" && (
-                        <ModelProfileForm
-                            imageUrls={imageUrls}
-                            loading={loading}
-                            setLoading={setLoading}
-                            role={role}
-                        />
-                    )}
-                    {role.toLocaleLowerCase() === "videographer" && (
-                        <VideographerProfileForm
-                            imageUrls={imageUrls}
-                            loading={loading}
-                            setLoading={setLoading}
-                            role={role}
-                        />
-                    )}
-                    {role.toLocaleLowerCase() === "photographer" && (
-                        <PhotographerProfileForm
-                            imageUrls={imageUrls}
-                            loading={loading}
-                            setLoading={setLoading}
-                            role={role}
-                        />
-                    )}
-                    {role.toLocaleLowerCase() === "editor" && (
-                        <EditorProfileForm
-                            imageUrls={imageUrls}
-                            loading={loading}
-                            setLoading={setLoading}
-                            role={role}
-                        />
-                    )}
-                    <div className="grid grid-cols-2 gap-6 justify-items-center">
-                        {role.toLocaleLowerCase() === "model" &&
-                            modelImagesInputs.map((input, idx) => (
-                                <LoadImage
-                                    onImageChange={handleImageChange}
-                                    key={input.id}
-                                    label={input.label}
-                                    inputId={`${input.id}`}
-                                    className={
-                                        input.id.startsWith("portfolio")
-                                            ? "col-span-2"
-                                            : "col-span-1 max-w-[250px] h-[320px]"
-                                    }
-                                />
-                            ))}
-                        {role.toLocaleLowerCase() !== "model" &&
-                            restImagesInputs.map((input, idx) => (
-                                <LoadImage
-                                    onImageChange={handleImageChange}
-                                    key={input.id}
-                                    label={input.label}
-                                    inputId={`${input.id}`}
-                                    className={
-                                        input.id.startsWith("portfolio")
-                                            ? "col-span-2 h-[150px]"
-                                            : "col-span-1 max-w-[250px] h-[320px]"
-                                    }
-                                />
-                            ))}
+                <div className="flex gap-[50px]">
+                    <BackButton className={"mt-10 ml-4"}/>
+                    <div className="container mx-auto grid grid-cols-2 gap-6 mt-10">
+                        {role.toLocaleLowerCase() === "model" && (
+                            <ModelProfileForm
+                                imageUrls={imageUrls}
+                                loading={loading}
+                                setLoading={setLoading}
+                                role={role}
+                            />
+                        )}
+                        {role.toLocaleLowerCase() === "videographer" && (
+                            <VideographerProfileForm
+                                imageUrls={imageUrls}
+                                loading={loading}
+                                setLoading={setLoading}
+                                role={role}
+                            />
+                        )}
+                        {role.toLocaleLowerCase() === "photographer" && (
+                            <PhotographerProfileForm
+                                imageUrls={imageUrls}
+                                loading={loading}
+                                setLoading={setLoading}
+                                role={role}
+                            />
+                        )}
+                        {role.toLocaleLowerCase() === "editor" && (
+                            <EditorProfileForm
+                                imageUrls={imageUrls}
+                                loading={loading}
+                                setLoading={setLoading}
+                                role={role}
+                            />
+                        )}
+                        <div className="grid grid-cols-2 gap-6 justify-items-center">
+                            {role.toLocaleLowerCase() === "model" &&
+                                modelImagesInputs.map((input, idx) => (
+                                    <LoadImage
+                                        onImageChange={handleImageChange}
+                                        key={input.id}
+                                        label={input.label}
+                                        inputId={`${input.id}`}
+                                        className={
+                                            input.id.startsWith("portfolio")
+                                                ? "col-span-2"
+                                                : "col-span-1 max-w-[250px] h-[320px]"
+                                        }
+                                    />
+                                ))}
+                            {role.toLocaleLowerCase() !== "model" &&
+                                restImagesInputs.map((input, idx) => (
+                                    <LoadImage
+                                        onImageChange={handleImageChange}
+                                        key={input.id}
+                                        label={input.label}
+                                        inputId={`${input.id}`}
+                                        className={
+                                            input.id.startsWith("portfolio")
+                                                ? "col-span-2 h-[150px]"
+                                                : "col-span-1 max-w-[250px] h-[320px]"
+                                        }
+                                    />
+                                ))}
+                        </div>
                     </div>
                 </div>
             </section>

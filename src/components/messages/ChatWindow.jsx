@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FaMicrophone, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { formatChatTimestamp } from "../../utils/helpers";
 import { GrAttachment } from "react-icons/gr";
-import { BsEmojiGrin } from "react-icons/bs";
-import { IoCameraOutline } from "react-icons/io5";
 
 const ChatWindow = ({ messagesEndRef, currentChat }) => {
     const [input, setInput] = useState("");
@@ -42,6 +40,7 @@ const ChatWindow = ({ messagesEndRef, currentChat }) => {
     // Auto-scroll on component mount
     useEffect(() => {
         scrollToBottom();
+        console.log(currentChat);
     }, [currentChat]);
 
     // Function to break long words
@@ -79,12 +78,12 @@ const ChatWindow = ({ messagesEndRef, currentChat }) => {
                     <div className="flex flex-col w-full h-full">
                         {/* Header */}
                         <div className="border-b-thin border-white-base flex items-center gap-3 pb-2">
-                            <div className="relative w-[50px] h-[50px] rounded-full flex justify-center items-center bg-zinc-700">
-                                {currentChat.image ? (
+                            <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full flex justify-center items-center bg-zinc-700">
+                                {currentChat.sender.profilePicture ? (
                                     <img
-                                        src={currentChat.sender.image}
+                                        src={currentChat.sender.profilePicture}
                                         alt={currentChat.sender.name}
-                                        className="max-w-full object-cover"
+                                        className="max-w-full h-full object-cover"
                                     />
                                 ) : (
                                     <FaUser
@@ -92,6 +91,7 @@ const ChatWindow = ({ messagesEndRef, currentChat }) => {
                                         size={20}
                                     />
                                 )}
+                                
                             </div>
                             <div className="flex flex-col">
                                 <h1 className="text-white-base font-display text-[16px] font-bold">
@@ -146,29 +146,17 @@ const ChatWindow = ({ messagesEndRef, currentChat }) => {
                                         placeholder="Type your message..."
                                         className="grow text-black bg-transparent border-none outline-none mx-[20px]"
                                     />
-                                    <BsEmojiGrin
-                                        className="cursor-pointer"
-                                        size={22}
-                                    />
-                                    <IoCameraOutline
-                                        className="ml-[10px] cursor-pointer"
-                                        size={23}
-                                    />
                                 </div>
-                                <div className="bg-blue-primary rounded-[14px] p-3 cursor-pointer">
-                                    {input ? (
-                                        <IoSend
-                                            className={`text-white-base`}
-                                            size={25}
-                                            onClick={handleSendMessage}
-                                        />
-                                    ) : (
-                                        <FaMicrophone
-                                            size={25}
-                                            className="text-white-base"
-                                        />
-                                    )}
-                                </div>
+                                <button
+                                    disabled={!input}
+                                    className="bg-blue-primary rounded-[14px] p-3 cursor-pointer disabled:bg-slate-500 duration-300"
+                                >
+                                    <IoSend
+                                        className={`text-white-base`}
+                                        size={25}
+                                        onClick={handleSendMessage}
+                                    />
+                                </button>
                             </form>
                         </div>
                     </div>

@@ -23,7 +23,7 @@ const ChatList = ({
             {messagesList?.map((chat) => (
                 <div
                     key={chat.id}
-                    onClick={handleOpenChat}
+                    onClick={()=> handleOpenChat(chat.id)}
                     className={`flex items-center gap-4 w-full h-[16.66666666666667%] p-4 hover:bg-white-base/10 cursor-pointer duration-200 ${
                         currentChat?.id === chat.id ? "bg-white-base/10" : ""
                     }`}
@@ -38,7 +38,6 @@ const ChatList = ({
                         ) : (
                             <FaUser className="text-[#9e9e9ebd]" size={20} />
                         )}
-                        <FaUser className="text-[#9e9e9ebd]" size={20} />
                     </div>
                     <div className="flex flex-col">
                         <h1 className="text-white-base font-display text-[20px] font-semibold">

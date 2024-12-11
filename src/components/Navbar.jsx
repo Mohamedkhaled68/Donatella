@@ -51,7 +51,7 @@ const Navbar = () => {
                             }
                             to={"/profile"}
                         >
-                            MyProfile
+                            My Profile
                         </NavLink>
                     </ul>
                     <div

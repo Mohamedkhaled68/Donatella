@@ -45,7 +45,7 @@ const Instructions = () => {
                                 className="w-full bg-[#1F2224] border-[3px] border-[#f1f1f133] p-[75px] rounded-br-3 text-white-base font-body flex [&:nth-child(2)]:flex-row-reverse items-center justify-center gap-[88px]"
                             >
                                 <div
-                                    className={`w-[80%] ${
+                                    className={`w-[70%] ${
                                         index == 1 && "flex justify-end"
                                     } h-full`}
                                 >
