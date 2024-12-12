@@ -33,7 +33,7 @@ const Portfolio = () => {
                                 </h1>
                                 <FiEdit size={20} />
                             </div>
-                            <div className="grid grid-cols-3 justify-items-center">
+                            <div className="grid grid-cols-3 gap-x-[10rem] justify-items-center">
                                 <div className="flex flex-col justify-center items-center gap-6 w-[320px]">
                                     <div className="w-full overflow-hidden rounded-[90px] border-thin border-white-base/30">
                                         <img
@@ -80,7 +80,7 @@ const Portfolio = () => {
                         </h1>
                         <FiEdit size={20} />
                     </div>
-                    <div className="grid grid-cols-4 justify-items-center">
+                    <div className="grid grid-cols-4 gap-x-[7.5rem] justify-items-center">
                         <div className="flex flex-col justify-center items-center gap-6 w-[228px]">
                             <div className="w-full overflow-hidden rounded-md border-thin border-white-base/30">
                                 <img

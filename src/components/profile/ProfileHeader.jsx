@@ -25,6 +25,9 @@ const ProfileHeader = ({ data }) => {
     useEffect(() => {
         console.log(data);
     }, []);
+    if (!data) {
+        return;
+    }
     return (
         <>
             <div className="w-full flex justify-around items-center gap-[170px] my-8">
@@ -133,7 +136,7 @@ const ProfileHeader = ({ data }) => {
                         </button>
                         <button
                             type="button"
-                            onClick={() => handleNavigate(role)}
+                            onClick={() => handleNavigate(data.role)}
                             className="text-lg font-bold font-body text-center w-full rounded-[46px] bg-blue-primary px-[73px] py-[15px]"
                         >
                             Post Job

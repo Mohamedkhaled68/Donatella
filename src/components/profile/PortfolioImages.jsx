@@ -54,7 +54,7 @@ const PortfolioImages = () => {
         <>
             {userStatus.individual.role === "MODEL" ? (
                 <>
-                    <div className="w-full grid grid-cols-3 justify-items-center">
+                    <div className="w-full grid grid-cols-3 justify-items-center gap-x-[7.3rem] ">
                         {imagesModel.map(({ id, src, alt }) => {
                             return (
                                 <div key={id} className="w-[350px]">
@@ -79,7 +79,7 @@ const PortfolioImages = () => {
                 </>
             ) : (
                 <>
-                    <div className="w-full grid grid-cols-4 justify-items-center gap-6">
+                    <div className="w-full grid grid-cols-4  justify-items-center gap-6">
                         {images.map(({ id, src, alt }) => {
                             return (
                                 <div

@@ -31,7 +31,7 @@ const ModelSpecialtyInfo = ({ userStatus }) => {
     } = userStatus.individual.specialtyInfo;
     return (
         <>
-            <div className="w-full grid grid-cols-3 justify-items-center">
+            <div className="w-full grid grid-cols-3 gap-x-[7.3rem] justify-items-center">
                 <div className="w-[350px]">
                     <div className="grid grid-cols-2 w-full gap-x-7 gap-y-[18px]">
                         <div className="px-[26px] py-[18px] bg-[#27292C] border-thin border-white-base/30 text-sm font-light font-body flex justify-center items-center gap-2">
