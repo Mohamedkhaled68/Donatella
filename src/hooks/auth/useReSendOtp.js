@@ -20,6 +20,7 @@ const useReSendOtp = () => {
                     },
                 }
             );
+            console.log(response.data);
             return response.data;
         },
         onSuccess: () => {},

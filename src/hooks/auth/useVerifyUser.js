@@ -30,9 +30,9 @@ const useVerifyUser = () => {
         },
         onSuccess: () => {
             if (userStatus.role === "INDIVIDUAL") {
-                navigate("/select-category");
+                navigate("/select-category", { replace: true });
             } else {
-                navigate("/organization-form");
+                navigate("/organization-form", { replace: true });
             }
         },
         onError: (error) => {

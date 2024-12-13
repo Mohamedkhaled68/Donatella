@@ -1,16 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import useVerifyUser from "../../hooks/auth/useVerifyUser";
 import { useUserStore } from "../../store/userStore";
-import { Link, useNavigate } from "react-router-dom";
 import { BackButton, Loading } from "../../components";
 import useReSendOtp from "../../hooks/auth/useReSendOtp";
+import toast from "react-hot-toast";
 
 const VerifyingPage = ({ length = 4 }) => {
     const [otp, setOtp] = useState(new Array(length).fill(""));
     const [loading, setLoading] = useState(false);
     const inputRefs = useRef([]);
     const { userStatus } = useUserStore((state) => state);
-    const navigate = useNavigate();
 
     const { mutateAsync } = useVerifyUser();
     const { mutateAsync: reSendOtp } = useReSendOtp();
@@ -47,6 +46,36 @@ const VerifyingPage = ({ length = 4 }) => {
         }
     };
 
+    const handleResendOtp = async () => {
+        setLoading(true);
+        await toast
+            .promise(
+                reSendOtp(),
+                {
+                    loading: "Resending...",
+                    success: "Resent successfully!",
+                    error: (err) => {
+                        setLoading(false);
+
+                        err?.response?.data?.message;
+                    },
+                },
+                {
+                    success: {
+                        icon: "🚀",
+                    },
+                }
+            ).then((m) => {
+                console.log(m);
+                
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
     useEffect(() => {
         inputRefs.current[0].focus();
     }, []);
@@ -89,10 +118,10 @@ const VerifyingPage = ({ length = 4 }) => {
                     </div>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full pb-10 flex justify-center items-start">
-                    <div className="text-sm font-semibold font-body text-[#64748B]">
+                    <div className="text-sm font-semibold flex items-center gap-[5px] font-body text-[#64748B]">
                         Didn’t receive a code yet?{" "}
                         <div
-                            onClick={reSendOtp}
+                            onClick={handleResendOtp}
                             className="text-blue-primary cursor-pointer"
                         >
                             Click here to request another one!

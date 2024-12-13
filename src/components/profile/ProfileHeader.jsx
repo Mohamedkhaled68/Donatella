@@ -114,13 +114,11 @@ const ProfileHeader = ({ data }) => {
                 )}
 
                 {data.role === "INDIVIDUAL" ? (
-                    <div className="flex flex-col items-center gap-5">
-                        <div className="flex flex-col justify-center items-center">
-                            <Rating rating={3} size={30} maxRating={5} />
-                            <p className="font-body text-white-base/50 text-base font-light">
-                                0 Projects Completed
-                            </p>
-                        </div>
+                    <div className="flex flex-col items-center justify-between gap-5">
+                        <Rating rating={3} size={30} maxRating={5} />
+                        <p className="font-body text-white-base/50 text-base font-light">
+                            0 Projects Completed
+                        </p>
                         <div className="text-lg font-bold font-body text-center w-full rounded-[46px] bg-blue-primary px-[35px] py-[15px] flex justify-center items-center gap-[10px]">
                             <span>Profile Visibility</span>
                             <FaAngleDown size={20} />

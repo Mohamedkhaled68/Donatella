@@ -11,7 +11,7 @@ import FormGroup from "../../shared/ui/FormGroup";
 import FormButton from "../../shared/ui/FormButton";
 import toast from "react-hot-toast";
 
-const OrganizationRegisterForm = ({ role }) => {
+const OrganizationRegisterForm = ({ role, loading, setLoading }) => {
     const [formValues, setFormValues] = useState(
         initialOrganizationRegisterFormValues
     );
@@ -24,18 +24,32 @@ const OrganizationRegisterForm = ({ role }) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
-        try {
-            console.log({ ...formValues, role: role.toUpperCase() });
-            await mutateAsync({ ...formValues, role: role.toUpperCase() });
-        } catch (error) {
-            console.log("An error occurred.");
-        } finally {
-            toast.success("Registered successfully!!");
-            setFormValues(initialOrganizationRegisterFormValues);
-        }
+        await toast
+            .promise(
+                mutateAsync({ ...formValues, role: role.toUpperCase() }),
+                {
+                    loading: "Registering...",
+                    success: "Registered successfully!",
+                    error: (err) => err?.response?.data?.message,
+                },
+                {
+                    success: {
+                        icon: "🚀",
+                    },
+                }
+            )
+            .catch((err) => {
+                console.error(err);
+            })
+            .finally(() => {
+                setFormValues(initialOrganizationRegisterFormValues);
+                setLoading(false);
+            });
     };
 
     useEffect(() => {
@@ -84,7 +98,7 @@ const OrganizationRegisterForm = ({ role }) => {
                     </motion.div>
                 ))}
                 <div className="flex flex-col items-start gap-2 mt-6">
-                    <FormButton disabled={disabled} text={"Sign Up"} />
+                    <FormButton loading={loading} disabled={disabled} text={"Sign Up"} />
                     <p className="text-medium text-white-base/40">
                         Don't have an account?{" "}
                         <NavLink className="text-blue-primary" to="/signup">

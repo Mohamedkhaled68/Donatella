@@ -3,7 +3,7 @@ import { login1, login2 } from "../../assets";
 import LogoHeader from "../../components/shared/ui/LogoHeader";
 import { NavLink } from "react-router-dom";
 import useLogin from "../../hooks/auth/useLogin";
-import { FormButton, FormGroup, Loading } from "../../components";
+import { BackButton, FormButton, FormGroup, Loading } from "../../components";
 import { validateForm } from "../../utils/validators";
 import toast from "react-hot-toast";
 
@@ -92,7 +92,10 @@ const Login = () => {
                 <div className="w-2/3 h-full bg-[#121417] text-white">
                     <LogoHeader />
                     <div className="container mx-auto pt-6">
-                        <div className="flex flex-col items-center gap-3 mb-[8px]">
+                        <div className="flex flex-col items-center gap-3 mb-[8px] relative">
+                            <div className="absolute top-[10%] left-[5%]">
+                                <BackButton />
+                            </div>
                             <h1 className="text-[40px] font-bold font-display">
                                 Good To See You Again
                             </h1>

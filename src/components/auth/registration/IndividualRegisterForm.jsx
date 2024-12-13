@@ -34,24 +34,19 @@ const IndividualRegisterForm = ({ role, loading, setLoading }) => {
                 {
                     loading: "Registering...",
                     success: "Registered successfully!",
-                    error: "Registration failed! Please check your credentials.",
+                    error: (err) => err?.response?.data?.message,
                 },
                 {
                     success: {
                         icon: "🚀",
                     },
-                    error: {
-                        icon: "❌",
-                    },
                 }
             )
-            .then(() => {
-                setFormValues(initialIndividualRegisterFormValues);
-            })
             .catch((err) => {
                 console.error(err);
             })
             .finally(() => {
+                setFormValues(initialIndividualRegisterFormValues);
                 setLoading(false);
             });
     };

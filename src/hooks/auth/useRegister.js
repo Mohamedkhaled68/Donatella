@@ -16,7 +16,6 @@ const useRegister = () => {
                     "Content-Type": "application/json",
                 },
             });
-            console.log(response.data.data);
             setUserStatus(response.data.data);
             return response.data;
         },
@@ -24,10 +23,7 @@ const useRegister = () => {
             navigate("/verifying-page", { replace: true });
         },
         onError: (error) => {
-            const errorMessage =
-                error.response?.data?.data?.message ||
-                "An unexpected error occurred.";
-            throw new Error(errorMessage);
+            return error?.response?.data?.message;
         },
     });
 };
