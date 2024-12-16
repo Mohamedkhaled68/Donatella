@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Footer, IndividualCard, JobCard } from "../../components";
-import { IoMenu } from "react-icons/io5";
+import { FaAngleDown } from "react-icons/fa6";
 import { useUserStore } from "../../store/userStore";
 import { haveCommonLetters } from "../../utils/helpers";
+import useGetIndividuals from "../../hooks/explore/useGetIndividuals";
+import { motion } from "framer-motion";
+import { IoMaleFemaleSharp } from "react-icons/io5";
+import { FaEye } from "react-icons/fa";
+import { PiDressBold } from "react-icons/pi";
+import { GiRunningShoe } from "react-icons/gi";
+import { VscColorMode } from "react-icons/vsc";
+import { blueHeadIcon } from "../../assets";
 
 const activeStyle =
     "bg-white-base px-[77px] py-[17px] text-black text-medium font-bold rounded-xl transition-all duration-300";
@@ -350,12 +358,13 @@ const jobsData = [
     },
 ];
 
-
 const Explore = () => {
     const [filter, setFilter] = useState("models");
     const [orgFilter, setOrgFilter] = useState("modeling");
+    const [openFilter, setOpenFilter] = useState(false);
     const [jobs, setJobs] = useState(jobsData);
     const { userStatus } = useUserStore((state) => state);
+    const { mutateAsync: getIndividuals } = useGetIndividuals();
     const handleFilter = (id) => {
         if (userStatus.role === "INDIVIDUAL") {
             setOrgFilter(id);
@@ -364,12 +373,27 @@ const Explore = () => {
         }
     };
 
+    const handleOpenFilter = () => {
+        setOpenFilter(!openFilter);
+    };
+
     useEffect(() => {
         const filteredJobs = jobsData.filter((job) =>
             job.tags.some((tag) => haveCommonLetters(tag, orgFilter))
         );
 
         setJobs(filteredJobs);
+    }, [orgFilter]);
+
+    useEffect(() => {
+        const m = async () => {
+            const data = await getIndividuals();
+            console.log(data);
+        };
+
+        return () => {
+            m();
+        };
     }, [orgFilter]);
 
     return (
@@ -405,14 +429,29 @@ const Explore = () => {
                                   </button>
                               ))}
                     </div>
-                    <div className="flex justify-between items-center my-12">
+                    <div className="flex justify-between items-center mt-12">
                         <div className="w-full rounded-3xl bg-[#27292C] flex justify-between items-center gap-[55px] px-[39px] py-2">
-                            <div className="rounded-lg px-4 py-2 text-white-base border-thin border-white-base flex justify-center items-center gap-2">
-                                <IoMenu className="text-white-base" size={22} />
-                                <select className="bg-transparent border-none outline-none text-sm font-light">
-                                    <option>Filter</option>
-                                    <option>kkkkkkk</option>
-                                </select>
+                            <div
+                                onClick={handleOpenFilter}
+                                className="cursor-pointer rounded-lg px-4 py-2 text-white-base border-thin border-white-base flex justify-center items-center gap-2"
+                            >
+                                <p className="bg-transparent border-none outline-none text-sm font-light">
+                                    Filters
+                                </p>
+                                <motion.div
+                                    initial={{ rotate: 0 }}
+                                    animate={{ rotate: openFilter ? 180 : 0 }}
+                                    transition={{
+                                        duration: 0.3,
+                                        ease: "easeInOut",
+                                        type: "tween",
+                                    }}
+                                >
+                                    <FaAngleDown
+                                        className="text-white-base"
+                                        size={22}
+                                    />
+                                </motion.div>
                             </div>
                             <input
                                 className="grow px-[62px] py-2 text-center placeholder:text-white-base/50 placeholder:text-sm placeholder:font-light bg-[#323335] rounded-2xl outline-none border-thin border-black text-white-base"
@@ -424,6 +463,110 @@ const Explore = () => {
                             </button>
                         </div>
                     </div>
+                    <motion.div
+                        initial={{ height: 0 }}
+                        animate={{ height: openFilter ? "auto" : 0 }}
+                        transition={{
+                            duration: 0.3,
+                            ease: "easeInOut",
+                            type: "tween",
+                        }}
+                        exit={{ height: 0 }}
+                        className="flex justify-between items-center mb-12 mt-5 h-0 overflow-hidden"
+                    >
+                        <div className="w-full rounded-3xl bg-[#27292C] flex justify-between items-center gap-[55px] px-[39px] py-2">
+                            <div className="flex items-center">
+                                <IoMaleFemaleSharp color="#197FE5" size={25} />
+                                <select
+                                    className="bg-transparent p-3 outline-none border-none"
+                                    name="gender"
+                                    id="gender"
+                                >
+                                    <option value="">Gender</option>
+                                    <option value="MALE">Male</option>
+                                    <option value="FEMALE">Female</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+                            <div className="flex items-center">
+                                <img width={25} src={blueHeadIcon} alt="" />
+                                <select
+                                    className="bg-transparent p-3 outline-none border-none"
+                                    name="hairColor"
+                                    id="hairColor"
+                                >
+                                    <option value="">Hair Color</option>
+                                    <option value="BLACK">Black</option>
+                                    <option value="BROWN">Brown</option>
+                                    <option value="BLONDE">Blonde</option>
+                                    <option value="RED">Red</option>
+                                </select>
+                            </div>
+                            <div className="flex items-center">
+                                <VscColorMode color="#197FE5" size={25} />
+                                <select
+                                    className="bg-transparent p-3 outline-none border-none"
+                                    name="tone"
+                                    id="tone"
+                                >
+                                    <option value="">Tone</option>
+                                    <option value="LIGHT">Light</option>
+                                    <option value="MEDIUM">Medium</option>
+                                    <option value="DARK">Dark</option>
+                                </select>
+                            </div>
+                            <div className="flex items-center">
+                                <FaEye color="#197FE5" size={25} />
+                                <select
+                                    className="bg-transparent p-3 outline-none border-none"
+                                    name="eyeColor"
+                                    id="eyeColor"
+                                >
+                                    <option value="">Eye Color</option>
+                                    <option value="BLUE">Blue</option>
+                                    <option value="GREEN">Green</option>
+                                    <option value="BROWN">Brown</option>
+                                    <option value="HAZEL">Hazle</option>
+                                </select>
+                            </div>
+                            <div className="flex items-center">
+                                <GiRunningShoe color="#197FE5" size={25} />
+                                <select
+                                    className="bg-transparent p-3 outline-none border-none"
+                                    name="shoeSize"
+                                    id="shoeSize"
+                                >
+                                    <option value="">Shoe Size</option>
+                                    {Array.from(
+                                        { length: 31 },
+                                        (_, i) => i + 20
+                                    ).map((value) => (
+                                        <option key={value} value={value}>
+                                            {value} cm
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="flex items-center">
+                                <PiDressBold color="#197FE5" size={25} />
+                                <select
+                                    className="bg-transparent p-3 outline-none border-none"
+                                    name="dressSize"
+                                    id="dressSize"
+                                >
+                                    <option value="">Dress Size</option>
+                                    {Array.from(
+                                        { length: 11 },
+                                        (_, i) => i + 10
+                                    ).map((value) => (
+                                        <option key={value} value={value}>
+                                            {value} cm
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    </motion.div>
                     {userStatus.role === "INDIVIDUAL" ? (
                         <>
                             <div className="flex flex-col gap-5">

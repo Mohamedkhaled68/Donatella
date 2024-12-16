@@ -404,7 +404,7 @@ export const ExperienceFormGroupData = [
     },
     {
         label: "Link Your Most Followed Social Account:",
-        type: "url",
+        type: "text",
         name: "socialAccount",
         id: "socialAccount",
         placeholder: "Type here",
@@ -437,7 +437,7 @@ export const ExperienceFormGroupData = [
         // error: (errors) => errors.legallyWorking,
     },
     {
-        label: "Do you have tattos?",
+        label: "Do you have tattoos?",
         type: "select",
         name: "holdingBachelors",
         id: "holdingBachelors",
@@ -553,7 +553,7 @@ const IndividualGenderEnum = {
 };
 
 // SkinToneEnum
-const SkinToneEnum = {
+export const SkinToneEnum = {
     id: "skinToneEnum",
     enums: {
         LIGHT: "LIGHT",
