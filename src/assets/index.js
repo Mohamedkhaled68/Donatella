@@ -35,6 +35,7 @@ export { default as searchTalentImage } from "./images/search_talent_image.jpeg"
 
 export { default as headIcon } from "./icons/head.svg";
 export { default as blueHeadIcon } from "./icons/blue-head.svg";
+export { default as donatellaLogo } from "./icons/donatella-logo.svg";
 
 export { default as formVideo } from "./videos/form-video.mp4";
 export { default as headerVideo } from "./videos/header-video.mp4";

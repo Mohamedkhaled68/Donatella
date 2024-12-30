@@ -8,10 +8,10 @@ const usePostJob = () => {
 
     return useMutation({
         mutationKey: ["jobs", "postJobs"],
-        mutationFn: async () => {
+        mutationFn: async (data) => {
             console.log(token);
 
-            const response = await axios.post(`${baseUrl}/jobs`, {
+            const response = await axios.post(`${baseUrl}/jobs`, data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 import React from "react";
-import { headerVideo } from "../../assets";
+import { donatellaLogo, headerVideo } from "../../assets";
 import { NavLink } from "react-router-dom";
 import Button from "../shared/ui/Button";
 import Sidebar from "../shared/ui/sidebar/Sidebar";
@@ -23,9 +23,13 @@ const Hero = () => {
                     <nav className="w-full flex justify-center items-center z-10 absolute top-0 left-0 text-white-base font-body">
                         <div className="container mx-auto py-8 grid  grid-cols-3 w-full">
                             <div className="col-span-1" />
-                            <h1 className="text-3xl font-display text-center self-center ">
-                                Donatella
-                            </h1>
+                            <div className="flex justify-center items-center">
+                                <img
+                                    className="w-[50%]"
+                                    src={donatellaLogo}
+                                    alt="logo"
+                                />
+                            </div>
                             <div className="flex items-center justify-end gap-10">
                                 <NavLink
                                     className={"text-white/75 text-sm"}

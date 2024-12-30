@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { BackButton, FormButton, TagInput } from "../../components";
-import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import { useUserStore } from "../../store/userStore";
@@ -42,8 +41,9 @@ const PostJob = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
-        // Check if the value is a valid number
-        const parsedValue = isNaN(value) ? value : Number(value); // Converts to number if possible, otherwise keeps it as a string
+        // Explicitly check for an empty string
+        const parsedValue =
+            value === "" ? "" : isNaN(value) ? value : Number(value);
 
         setFormValues((prevValues) => ({
             ...prevValues,
@@ -72,7 +72,10 @@ const PostJob = () => {
         console.log({ ...formValues, tags: [...tags] });
 
         try {
-            await mutateAsync({ ...formValues, tags: [...tags] });
+            await mutateAsync({
+                ...formValues,
+                tags: ["0193e4c8-d9d0-bab9-8db3-fb6723df86c9"],
+            });
         } catch (err) {
             console.log(err);
         }
@@ -334,12 +337,8 @@ const PostJob = () => {
                             >
                                 <option value="">Choose a career level</option>
                                 <option value="ENTRY_LEVEL">Entry Level</option>
-                                <option value="JUNIOR">Junior</option>
                                 <option value="MID_LEVEL">Mid-Level</option>
-                                <option value="SENIOR">Senior</option>
-                                <option value="LEAD">Lead</option>
-                                <option value="DIRECTOR">Director</option>
-                                <option value="EXECUTIVE">Executive</option>
+                                <option value="SENIOR_LEVEL">Senior</option>
                             </select>
                         </div>
 
@@ -403,7 +402,7 @@ const PostJob = () => {
                                 <option value="ASSOCIATE_DEGREE">
                                     Associate Degree
                                 </option>
-                                <option value="BACHELORS">
+                                <option value="BACHELOR">
                                     Bachelor's Degree
                                 </option>
                                 <option value="MASTERS">Master's Degree</option>
