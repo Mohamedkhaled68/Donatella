@@ -3,13 +3,13 @@ import useAuthStore from "../../store/userTokenStore";
 import axios from "axios";
 import { baseUrl } from "../../utils/baseUrl";
 
-const useGetIndividuals = () => {
+const useGetJobs = () => {
     const token = useAuthStore((state) => state.authToken);
     return useMutation({
-        mutationKey: ["explore", "individuals"],
+        mutationKey: ["explore", "jobs"],
         mutationFn: async ([category, searchKey]) => {
             const response = await axios.get(
-                `${baseUrl}/individuals?paginate[page]=1&paginate[limit]=15&filter[individualCategory]=${category}&filter[searchKey]=${searchKey}`,
+                `${baseUrl}/jobs?filter[jobCategory]=${category}&filter[searchKey]=${searchKey}&paginate[page]=1&paginate[limit]=15`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -27,4 +27,4 @@ const useGetIndividuals = () => {
     });
 };
 
-export default useGetIndividuals;
+export default useGetJobs;

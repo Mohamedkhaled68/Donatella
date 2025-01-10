@@ -91,7 +91,6 @@ const ChatWindow = ({ messagesEndRef, currentChat }) => {
                                         size={20}
                                     />
                                 )}
-                                
                             </div>
                             <div className="flex flex-col">
                                 <h1 className="text-white-base font-display text-[16px] font-bold">

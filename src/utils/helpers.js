@@ -1,3 +1,5 @@
+import { CountryEnum } from "./constants";
+
 export const splitText = (text, wordsPerParagraph) => {
     if (text?.includes(".")) {
         // Split based on dots and remove empty entries caused by consecutive dots or trailing dots
@@ -67,4 +69,10 @@ export const formatChatTimestamp = (timestamp) => {
 
     // Return formatted timestamp
     return isToday ? `today ${formattedTime}` : formattedTime;
+};
+
+export const getCountryByCode = (code) => {
+    const countryEntries = Object.entries(CountryEnum.enums);
+    const country = countryEntries.find(([_, value]) => value === code);
+    return country ? country[0] : undefined;
 };

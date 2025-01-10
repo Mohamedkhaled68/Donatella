@@ -8,11 +8,12 @@ const useSendMessage = () => {
 
     return useMutation({
         mutationKey: ["chat", "send"],
-        mutationFn: async ({ chatId, message }) => {
+        mutationFn: async ({ targetId, message }) => {
             const body = { content: message };
             console.log(body);
+            console.log(targetId);
             const response = await axios.post(
-                `${baseUrl}/chats/${chatId}/messages`,
+                `${baseUrl}/chats/${targetId}/messages`,
                 body,
                 {
                     headers: {
