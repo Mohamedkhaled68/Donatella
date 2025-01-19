@@ -21,7 +21,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 import { JobView, PostJob, ProtectedRoute } from "./routes";
 
-
 const App = () => {
     const location = useLocation();
     const [isVisible, setIsVisible] = useState(false);

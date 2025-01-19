@@ -28,9 +28,9 @@ export { default as cate3 } from "./images/cate3.png";
 export { default as cate4 } from "./images/cate4.png";
 export { default as orgLogo } from "./images/organization-logo.png";
 
-export { default as instructionImg1 } from "./images/instructionImg1.png";
-export { default as instructionImg2 } from "./images/instructionImg2.png";
-export { default as instructionImg3 } from "./images/instructionImg3.png";
+export { default as instructionImg1 } from "./images/instructionImg1.jpg";
+export { default as instructionImg2 } from "./images/instructionImg2.jpg";
+export { default as instructionImg3 } from "./images/instructionImg3.jpg";
 export { default as searchTalentImage } from "./images/search_talent_image.jpeg";
 
 export { default as headIcon } from "./icons/head.svg";

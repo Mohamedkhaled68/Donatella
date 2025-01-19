@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { login1, login2 } from "../../assets";
 import LogoHeader from "../../components/shared/ui/LogoHeader";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import useLogin from "../../hooks/auth/useLogin";
 import { BackButton, FormButton, FormGroup, Loading } from "../../components";
 import { validateForm } from "../../utils/validators";
@@ -17,6 +17,7 @@ const Login = () => {
     const [disabled, setDisabled] = useState(true);
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
+    const [isMobile, setIsMobile] = useState(false);
 
     const { mutateAsync, onSuccess } = useLogin();
 
@@ -27,6 +28,42 @@ const Login = () => {
             [name]: value,
         }));
     };
+
+    
+        // Enhanced mobile detection using multiple methods
+        const detectMobile = () => {
+            const userAgent =
+                navigator.userAgent || navigator.vendor || window.opera;
+            const mobileRegex =
+                /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
+    
+            const conditions = [
+                mobileRegex.test(userAgent.toLowerCase()),
+                typeof window.orientation !== "undefined",
+                navigator.maxTouchPoints > 0,
+                window.innerWidth <= 768,
+            ];
+    
+            return conditions.some((condition) => condition);
+        };
+    
+        useEffect(() => {
+            // Initial check
+            setIsMobile(detectMobile());
+    
+            // Add resize listener for responsive detection
+            const handleResize = () => {
+                setIsMobile(detectMobile());
+            };
+    
+            window.addEventListener("resize", handleResize);
+    
+            // Cleanup
+            return () => {
+                window.removeEventListener("resize", handleResize);
+            };
+        }, []);
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -73,6 +110,15 @@ const Login = () => {
 
         setDisabled(!isFilled || Object.keys(errors).length !== 0);
     }, [formValues]);
+
+
+    
+    if (isMobile) {
+        console.warn(
+            "Desktop Only: This feature is not available on mobile devices."
+        );
+        return <Navigate to="/" replace />;
+    }
     return (
         <>
             <div className="h-screen flex items-center relative">

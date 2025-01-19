@@ -82,7 +82,7 @@ const PortfolioGrid = ({ userStatus }) => {
                     key={index}
                     className={`${
                         userStatus?.individual?.role === "MODEL"
-                            ? "w-[350px]"
+                            ? "w-[350px] h-full"
                             : "col-span-2 h-[220px] w-full"
                     }`}
                 >
@@ -124,7 +124,7 @@ const PortfolioGrid = ({ userStatus }) => {
                         <label
                             className={`${
                                 userStatus?.individual?.role === "MODEL"
-                                    ? ""
+                                    ? "h-full"
                                     : "col-span-2"
                             } cursor-pointer relative max-w-full overflow-hidden h-full flex justify-center items-center rounded-md border-thin border-white-base/30`}
                             htmlFor={`portfolio-upload-${index}`}

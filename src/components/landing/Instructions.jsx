@@ -45,12 +45,12 @@ const Instructions = () => {
                                 className="w-full bg-[#1F2224] border-[3px] border-[#f1f1f133] p-[30px] lg:p-[75px] rounded-br-3 text-white-base font-body flex flex-col lg:flex-row lg:[&:nth-child(2)]:flex-row-reverse items-center justify-center gap-[20px] lg:gap-[88px]"
                             >
                                 <div
-                                    className={`w-full lg:w-[70%] ${
+                                    className={`w-full lg:w-[80%] ${
                                         index == 1 && "flex justify-end"
-                                    } h-full`}
+                                    } h-full overflow-hidden rounded-br-3 border-[3px] border-black/20`}
                                 >
                                     <img
-                                        className="filter grayscale w-full object-cover"
+                                        className="filter grayscale w-full object-cover h-full"
                                         src={image}
                                         alt={title}
                                     />
@@ -80,7 +80,6 @@ const Instructions = () => {
                     )}
                 </div>
             </section>
-            
         </>
     );
 };

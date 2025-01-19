@@ -47,6 +47,9 @@ const Links = () => {
                         </motion.li>
                     ))}
                 </ul>
+                <div className="lg:hidden w-full text-center absolute bottom-[5%] pb-2 left-[50%] translate-x-[-50%] translate-y-[-50%] text-white-base font-display text-xl font-thin italic">
+                    Account management is only through desktop for now.
+                </div>
             </motion.div>
         </>
     );

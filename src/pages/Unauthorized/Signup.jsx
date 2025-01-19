@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LogoHeader from "../../components/shared/ui/LogoHeader";
 import { formVideo, girlImg } from "../../assets";
 import {
@@ -7,14 +7,57 @@ import {
     Loading,
     OrganizationRegisterForm,
 } from "../../components";
+import { Navigate } from "react-router-dom";
 
 const Signup = () => {
     const [role, setRole] = useState("Individual");
     const [loading, setLoading] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     const handleRoleChange = (selectedRole) => {
         setRole(selectedRole);
     };
+
+    // Enhanced mobile detection using multiple methods
+    const detectMobile = () => {
+        const userAgent =
+            navigator.userAgent || navigator.vendor || window.opera;
+        const mobileRegex =
+            /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
+
+        const conditions = [
+            mobileRegex.test(userAgent.toLowerCase()),
+            typeof window.orientation !== "undefined",
+            navigator.maxTouchPoints > 0,
+            window.innerWidth <= 768,
+        ];
+
+        return conditions.some((condition) => condition);
+    };
+
+    useEffect(() => {
+        // Initial check
+        setIsMobile(detectMobile());
+
+        // Add resize listener for responsive detection
+        const handleResize = () => {
+            setIsMobile(detectMobile());
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        // Cleanup
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    if (isMobile) {
+        console.warn(
+            "Desktop Only: This feature is not available on mobile devices."
+        );
+        return <Navigate to="/" replace />;
+    }
 
     return (
         <>
@@ -84,16 +127,16 @@ const Signup = () => {
                         )}
                     </div>
                     <div className="max-w-[400px] max-h-full mx-auto">
-                        <div className="relative rounded-3xl max-h-full w-full overflow-hidden">
+                        <div className="relative rounded-3xl max-h-full border-[3px] border-black/50 w-full overflow-hidden">
                             <video
-                                className="max-h-full max-w-full top-0 left-0 z-10 bg-transparent object-cover"
+                                className="max-h-full max-w-full top-0 left-0 z-10 bg-transparent object-cover grayscale"
                                 autoPlay
                                 muted
                                 loop
                             >
                                 <source src={formVideo} />
                             </video>
-                            <div className="w-[calc(100%-6px)] z-20 h-[calc(100%-6px)] bg-black/70  rounded-3xl absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" />
+                            {/* <div className="w-full z-20 h-full bg  rounded-3xl absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" /> */}
                         </div>
                     </div>
                 </div>
