@@ -73,13 +73,13 @@ const HeadshotGrid = ({ userStatus }) => {
                 >
                     {headShot ? (
                         <div className="h-full flex flex-col justify-center items-center gap-6 w-[320px]">
-                            <div className="relative h-full w-full overflow-hidden rounded-[90px] border-thin border-white-base/30">
+                            <div className="relative group h-full w-full overflow-hidden rounded-[90px] border-thin border-white-base/30">
                                 <img
                                     className="max-w-[100%] h-full object-cover"
                                     src={headShot}
                                     alt="profileImage"
                                 />
-                                <div className="absolute bottom-0 left-0  w-full">
+                                <div className="absolute bottom-0 left-0  w-full group-hover:opacity-100 opacity-0 duration-300">
                                     <label
                                         className="w-full h-full cursor-pointer"
                                         htmlFor={`headShot-upload-${index}`}

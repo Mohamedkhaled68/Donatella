@@ -88,14 +88,14 @@ const PortfolioGrid = ({ userStatus }) => {
                 >
                     {portfolio ? (
                         <div
-                            className={`relative max-w-full overflow-hidden h-full flex justify-center items-center rounded-md border-thin border-white-base/30`}
+                            className={`relative group max-w-full overflow-hidden h-full flex justify-center items-center rounded-md border-thin border-white-base/30`}
                         >
                             <img
                                 className="w-[100%] h-full object-cover"
                                 src={portfolio}
                                 alt="profileImage"
                             />
-                            <div className="absolute bottom-0 left-0 w-full">
+                            <div className="absolute bottom-0 left-0 w-full group-hover:opacity-100 opacity-0 duration-300">
                                 <label
                                     className="w-full h-full cursor-pointer"
                                     htmlFor={`portfolio-upload-${index}`}

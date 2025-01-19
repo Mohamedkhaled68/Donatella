@@ -72,13 +72,13 @@ const FullBodyGrid = ({ userStatus }) => {
                     className="flex flex-col justify-center items-center gap-6 w-[228px]"
                 >
                     {fullBody ? (
-                        <div className="relative w-full h-full overflow-hidden rounded-md border-thin border-white-base/30">
+                        <div className="relative group w-full h-full overflow-hidden rounded-md border-thin border-white-base/30">
                             <img
                                 className="max-w-[100%] h-full object-cover"
                                 src={fullBody}
                                 alt="profileImage"
                             />
-                            <div className="absolute bottom-0 left-0  w-full">
+                            <div className="absolute bottom-0 left-0  w-full group-hover:opacity-100 opacity-0 duration-300">
                                 <label
                                     className="w-full h-full cursor-pointer"
                                     htmlFor={`fullbody-upload-${index}`}

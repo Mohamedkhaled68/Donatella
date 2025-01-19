@@ -28,7 +28,6 @@ const ReelGrid = ({ userStatus }) => {
             // Upload the image and get the URL or data
             const data = await uploadImage(file);
             console.log(data);
-            
 
             // Create a new array with the updated image at the specified index
             const updatedReels = [...userStatus.individual.specialtyInfo.reels];
@@ -72,13 +71,13 @@ const ReelGrid = ({ userStatus }) => {
                     className="flex flex-col justify-center items-center gap-6 w-[228px]"
                 >
                     {reel ? (
-                        <div className="relative w-full h-full overflow-hidden rounded-md border-thin border-white-base/30">
+                        <div className="relative group w-full h-full overflow-hidden rounded-md border-thin border-white-base/30">
                             <img
                                 className="max-w-[100%] h-full object-cover"
                                 src={reel}
                                 alt="reel"
                             />
-                            <div className="absolute bottom-0 left-0  w-full">
+                            <div className="absolute bottom-0 left-0  w-full group-hover:opacity-100 opacity-0 duration-300">
                                 <label
                                     className="w-full h-full cursor-pointer"
                                     htmlFor={`reel-upload-${index}`}

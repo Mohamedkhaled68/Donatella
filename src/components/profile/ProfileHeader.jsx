@@ -257,7 +257,7 @@ const ProfileHeader = ({ data }) => {
                 )}
 
                 {data.role === "INDIVIDUAL" ? (
-                    <div className="flex flex-col items-center justify-between gap-5">
+                    <div className="flex flex-col items-center justify-between gap-2">
                         <Rating rating={3} size={30} maxRating={5} />
                         <p className="font-body text-white-base/50 text-base font-light">
                             0 Projects Completed

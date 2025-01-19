@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Footer, JobCard } from "../../components";
+import { Footer, JobCard, Rating } from "../../components";
+import { orgLogo } from "../../assets";
 
 const jobs = [
     {
-        company: "EMG Models",
+        name: "EMG Models",
         location: "New York, USA",
         description:
             "Seeking a Talented Fashion Model for an Urban Photoshoot to Showcase Our Latest Collection",
@@ -14,7 +15,7 @@ const jobs = [
         rating: 5,
     },
     {
-        company: "United Models",
+        name: "United Models",
         location: "Los Angeles, USA",
         description:
             "Looking for an Experienced Photographer to Capture the Magic of a Luxury Wedding Celebration",
@@ -25,7 +26,7 @@ const jobs = [
         rating: 4,
     },
     {
-        company: "Every Inch",
+        name: "Every Inch",
         location: "San Francisco, USA",
         description:
             "Searching for a Creative Model to Bring Our Short Film Vision to Life with Stunning Visuals",
@@ -36,7 +37,7 @@ const jobs = [
         rating: 5,
     },
     {
-        company: "Vibrant Vision",
+        name: "Vibrant Vision",
         location: "Seattle, USA",
         description:
             "Charismatic Fashion Model for a High-End Photoshoot of Our Exclusive Collection",
@@ -47,7 +48,7 @@ const jobs = [
         rating: 5,
     },
     {
-        company: "Capture Dreams",
+        name: "Capture Dreams",
         location: "Chicago, USA",
         description:
             "Talented Photographer Wanted for a Large-Scale Corporate Event Coverage",
@@ -58,7 +59,7 @@ const jobs = [
         rating: 4,
     },
     {
-        company: "Visionary Shoots",
+        name: "Visionary Shoots",
         location: "Miami, USA",
         description: "Lifestyle Photographer for a Casual Beach Photoshoot",
         rate: "$15/HR",
@@ -68,7 +69,7 @@ const jobs = [
         rating: 5,
     },
     {
-        company: "Starlight Studios",
+        name: "Starlight Studios",
         location: "Austin, USA",
         description:
             "Seeking a Unique Model for Our Sci-Fi Inspired Magazine Cover Shoot",
@@ -79,7 +80,7 @@ const jobs = [
         rating: 5,
     },
     {
-        company: "Eventful Moments",
+        name: "Eventful Moments",
         location: "Boston, USA",
         description:
             "Energetic Photographer Needed for a Marathon Event Coverage",
@@ -90,7 +91,7 @@ const jobs = [
         rating: 4,
     },
     {
-        company: "Classic Capture",
+        name: "Classic Capture",
         location: "Dallas, USA",
         description:
             "Experienced Wedding Photographer to Document a Romantic Destination Wedding",
@@ -101,7 +102,7 @@ const jobs = [
         rating: 5,
     },
     {
-        company: "Urban Edge",
+        name: "Urban Edge",
         location: "Houston, USA",
         description: "Seeking a Male Model for an Edgy Urban Wear Campaign",
         rate: "$18/HR",
@@ -111,7 +112,7 @@ const jobs = [
         rating: 4,
     },
     {
-        company: "Sunset Shoots",
+        name: "Sunset Shoots",
         location: "Phoenix, USA",
         description: "Model Needed for a Golden Hour Beach Photoshoot",
         rate: "$15/HR",
@@ -121,7 +122,7 @@ const jobs = [
         rating: 5,
     },
     {
-        company: "Timeless Tales",
+        name: "Timeless Tales",
         location: "Orlando, USA",
         description:
             "Looking for an Artistic Photographer to Capture Timeless Moments",
@@ -132,7 +133,7 @@ const jobs = [
         rating: 4,
     },
     {
-        company: "Fresh Frames",
+        name: "Fresh Frames",
         location: "Denver, USA",
         description: "Model Required for a High-Energy Athletic Wear Campaign",
         rate: "$20/HR",
@@ -142,7 +143,7 @@ const jobs = [
         rating: 5,
     },
     {
-        company: "Elegant Edits",
+        name: "Elegant Edits",
         location: "Nashville, USA",
         description: "Fashion Photographer Needed for a Runway Show Coverage",
         rate: "$35/HR",
@@ -152,7 +153,7 @@ const jobs = [
         rating: 5,
     },
     {
-        company: "Modern Muse",
+        name: "Modern Muse",
         location: "Portland, USA",
         description:
             "Creative Director and Photographer for a Lifestyle Brand Photoshoot",
@@ -163,7 +164,7 @@ const jobs = [
         rating: 5,
     },
     {
-        company: "Golden Glimpse",
+        name: "Golden Glimpse",
         location: "Las Vegas, USA",
         description:
             "Experienced Event Photographer for a Grand Casino Night Event",
@@ -174,7 +175,7 @@ const jobs = [
         rating: 4,
     },
     {
-        company: "Vivid Visions",
+        name: "Vivid Visions",
         location: "San Diego, USA",
         description:
             "Talented Model Needed for a Vibrant Summerwear Collection",
@@ -185,7 +186,7 @@ const jobs = [
         rating: 5,
     },
     {
-        company: "Prime Pixels",
+        name: "Prime Pixels",
         location: "Charlotte, USA",
         description:
             "Creative Photographer Required for a Product Photography Session",
@@ -196,7 +197,7 @@ const jobs = [
         rating: 5,
     },
     {
-        company: "Studio Solace",
+        name: "Studio Solace",
         location: "San Jose, USA",
         description:
             "Photographer Needed for a Cozy Indoor Lifestyle Photoshoot",
@@ -207,7 +208,7 @@ const jobs = [
         rating: 4,
     },
     {
-        company: "Cinematic Frames",
+        name: "Cinematic Frames",
         location: "Atlanta, USA",
         description: "Lead Photographer for a Cinematic Short Film Project",
         rate: "$50/HR",
@@ -222,6 +223,7 @@ const PAGE_SIZE = 10;
 
 const Payments = () => {
     const [currentPage, setCurrentPage] = useState(1);
+    const [balance, setBalance] = useState(true);
 
     // Calculate the jobs to display for the current page
     const startIndex = (currentPage - 1) * PAGE_SIZE;
@@ -229,6 +231,10 @@ const Payments = () => {
     const currentJobs = jobs.slice(startIndex, endIndex);
 
     const totalPages = Math.ceil(jobs.length / PAGE_SIZE);
+
+    const hideBalance = () => {
+        setBalance(!balance);
+    };
 
     const handleNextPage = () => {
         if (currentPage < totalPages) {
@@ -243,7 +249,7 @@ const Payments = () => {
     };
     return (
         <>
-            <div className="p-6 space-y-6 text-white min-h-screen">
+            <div className="p-6 px-[5rem] space-y-6 text-white min-h-screen">
                 {/* Payment Details Section */}
                 <div className="flex flex-col">
                     <h1 className="text-[38px] font-bold font-display mb-5">
@@ -258,19 +264,26 @@ const Payments = () => {
                                 </p>
                             </div>
                             <div className="text-center border-x-thin border-black grow h-full flex flex-col justify-center items-center">
-                                <h3 className="text-[46px] font-bold">$2234</h3>
+                                <h3 className="text-[46px] font-bold">
+                                    ${balance ? "2145" : "*****"}
+                                </h3>
                                 <p className="text-sm font-light">Earnings</p>
                             </div>
                             <div className="text-center grow h-full flex flex-col justify-center items-center">
-                                <h3 className="text-[46px] font-bold">$375</h3>
+                                <h3 className="text-[46px] font-bold">
+                                    ${balance ? "375" : "*****"}
+                                </h3>
                                 <p className="text-sm font-light">
                                     Available to Withdraw
                                 </p>
                             </div>
                         </div>
                         <div className="flex flex-col justify-center items-center gap-2">
-                            <button className="w-full bg-transparent border-thin text-[20px] font-light border-blue-primary  text-white px-[55px] py-[21px] rounded-lg">
-                                Hide Earnigs
+                            <button
+                                onClick={hideBalance}
+                                className="w-full bg-transparent border-thin text-[20px] font-light border-blue-primary  text-white px-[55px] py-[21px] rounded-lg"
+                            >
+                                {balance ? "Hide" : "Show"} Balance
                             </button>
                             <button className="w-full bg-white-base text-[20px] font-bold  text-[#121417] px-[55px] py-[21px] rounded-lg">
                                 Get Paid
@@ -287,7 +300,55 @@ const Payments = () => {
                         Job History
                     </h1>
                     {currentJobs.map((job, idx) => (
-                        <JobCard key={idx} job={job} />
+                        <div
+                            key={idx}
+                            className="flex items-center bg-[#313131] text-white border-thin border-white-base rounded-lg p-6 gap-5 space-x-4 shadow-lg "
+                        >
+                            <div className="flex flex-col justify-center items-center gap-2">
+                                <img
+                                    src={orgLogo}
+                                    alt={`${job.name} logo`}
+                                    className="w-[120px] h-[120px] rounded-full"
+                                />
+                                <Rating size={15} rating={job.rating} />
+                            </div>
+                            <div className="flex-1 grow">
+                                <h3 className="font-bold border-b border-white-base/10 pb-3 w-[50%]">
+                                    <span className="text-white-base text-md font-bold font-display capitalize">
+                                        {job.name}{" "}
+                                    </span>
+                                    <span className="text-sm text-gray-400">
+                                        - {job.location}
+                                    </span>
+                                </h3>
+                                <p className="text-[22px] font-bold text-white-base w-[80%] mt-2">
+                                    {job.description}
+                                </p>
+                                <div className="flex flex-wrap gap-2 mt-3">
+                                    {job.tags.map((tag, index) => (
+                                        <span
+                                            key={index}
+                                            className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col justify-center items-center gap-3">
+                                <p className="text-[20px] font-bold">{`${job.rate}`}</p>
+                                <p className="text-sm text-gray-400 capitalize">
+                                    {job.duration}
+                                </p>
+                                <button
+                                    // onClick={handleNavigateToJob}
+                                    className="bg-blue-primary hover:bg-blue-600 duration-200 text-white py-3 px-[60px] rounded-[46px] text-md font-bold"
+                                >
+                                    View Job
+                                </button>
+                            </div>
+                        </div>
                     ))}
                 </div>
 

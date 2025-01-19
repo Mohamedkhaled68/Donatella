@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Rating from "../../components/shared/Rating";
 import { FaTiktok, FaInstagram } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
-import { Footer } from "../../components";
+import { BackButton, Footer } from "../../components";
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import useSendMessage from "../../hooks/chat/useSendMessage";
 import { motion } from "framer-motion";
@@ -115,10 +115,21 @@ const JobView = () => {
             )}
 
             <div className="container mx-auto flex flex-col text-white-base pb-8">
-                <div className="w-full flex justify-around items-center gap-[170px] my-8">
+                <div className="relative w-full flex justify-around items-center gap-[170px] my-8">
+                    <BackButton className={"absolute top-3 left-1"} />
                     <div className="flex flex-col justify-center items-center gap-3">
                         <div className="flex justify-center items-end relative">
-                            <div className="w-[124px] h-[124px] rounded-full bg-slate-400"></div>
+                            <div className="w-[124px] h-[124px] rounded-full bg-slate-400 overflow-hidden">
+                                {currentJob?.organization?.logo ? (
+                                    <img
+                                        className="w-full h-full object-cover"
+                                        src={currentJob?.organization?.logo}
+                                        alt="profile"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full bg-slate-400"></div>
+                                )}
+                            </div>
                         </div>
                         <Rating
                             rating={currentJob?.rating}
