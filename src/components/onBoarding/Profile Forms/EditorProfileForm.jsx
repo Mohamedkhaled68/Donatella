@@ -33,18 +33,34 @@ const EditorProfileForm = ({ imageUrls, loading, setLoading }) => {
         setLoading(true);
         const userProfile = JSON.parse(localStorage.getItem("userData"));
         try {
-            mutateAsync({
-                individualProfile: {
-                    role: "EDITOR",
-                    ...userProfile,
-                    specialtyInfo: { ...formValues },
-                },
-            });
+            const portfolio1 = imageUrls.portfolio1;
+            const portfolio2 = imageUrls.portfolio2;
+            const profile = imageUrls.profile;
+            const reel = imageUrls.reel;
+
             console.log({
                 individualProfile: {
                     role: "EDITOR",
                     ...userProfile,
-                    specialtyInfo: { ...formValues },
+                    specialtyInfo: {
+                        ...formValues,
+                        portfolioPictures: [portfolio1, portfolio2],
+                        profilePicture: [profile],
+                        reels: [reel],
+                    },
+                },
+            });
+
+            await mutateAsync({
+                individualProfile: {
+                    role: "EDITOR",
+                    ...userProfile,
+                    specialtyInfo: {
+                        ...formValues,
+                        portfolioPictures: [portfolio1, portfolio2],
+                        profilePicture: [profile],
+                        reels: [reel],
+                    },
                 },
             });
         } catch (error) {

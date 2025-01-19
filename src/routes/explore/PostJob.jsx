@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import { useUserStore } from "../../store/userStore";
 import usePostJob from "../../hooks/jobs/usePostJobs";
+import useGetTags from "../../hooks/explore/useGetTags";
 
 const initialJobPostFormValues = {
     title: "",
@@ -31,12 +32,15 @@ const PostJob = () => {
     const [formValues, setFormValues] = useState(initialJobPostFormValues);
     const [disabled, setDisabled] = useState(true);
     const [tags, setTags] = useState([]);
-
+    const [isInputVisible, setIsInputVisible] = useState(false);
+    const [selectedTags, setSelectedTags] = useState([]);
     const [check, setCheck] = useState(false);
+
     const navigate = useNavigate();
     const { userStatus } = useUserStore((state) => state);
 
     const { mutateAsync } = usePostJob();
+    const { mutateAsync: getTags } = useGetTags();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -69,17 +73,35 @@ const PostJob = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log({ ...formValues, tags: [...tags] });
+        console.log({ ...formValues, tags: selectedTags });
 
         try {
             await mutateAsync({
                 ...formValues,
-                tags: ["0193e4c8-d9d0-bab9-8db3-fb6723df86c9"],
+                tags: selectedTags,
             });
+            setFormValues(initialJobPostFormValues);
+            setSelectedTags([]);
+            setCheck(false);
         } catch (err) {
             console.log(err);
         }
     };
+
+    useEffect(() => {
+        const getTagsFunc = async () => {
+            try {
+                const data = await getTags();
+                console.log(data);
+
+                setTags(data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getTagsFunc();
+    }, [isInputVisible]);
 
     useEffect(() => {
         if (userStatus.role !== "ORGANIZATION") {
@@ -399,14 +421,11 @@ const PostJob = () => {
                                     Choose your education level
                                 </option>
                                 <option value="HIGH_SCHOOL">High School</option>
-                                <option value="ASSOCIATE_DEGREE">
-                                    Associate Degree
-                                </option>
+
                                 <option value="BACHELOR">
                                     Bachelor's Degree
                                 </option>
-                                <option value="MASTERS">Master's Degree</option>
-                                <option value="DOCTORATE">Doctorate</option>
+                                <option value="OTHER">Other Degree</option>
                             </select>
                         </div>
 
@@ -446,7 +465,14 @@ const PostJob = () => {
                             />
                         </div>
                     </div>
-                    <TagInput tags={tags} setTags={setTags} />
+                    <TagInput
+                        isInputVisible={isInputVisible}
+                        setIsInputVisible={setIsInputVisible}
+                        selectedTags={selectedTags}
+                        setSelectedTags={setSelectedTags}
+                        tags={tags}
+                        setTags={setTags}
+                    />
                     <div className="flex justify-between items-center mt-[50px]">
                         <div className="flex flex-col gap-7 flex-1">
                             <div className="flex items-center gap-3">

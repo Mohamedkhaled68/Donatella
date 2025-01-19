@@ -1,50 +1,64 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
-import { formatChatTimestamp } from "../../utils/helpers";
 import { GrAttachment } from "react-icons/gr";
+import { useUserStore } from "../../store/userStore";
 
-const ChatWindow = ({ messagesEndRef, currentChat }) => {
-    const [input, setInput] = useState("");
-    const [messages, setMessages] = useState([]);
-    const messagesContainerRef = useRef(null);
-    const [sendingStatus, setSendingStatus] = useState(false);
+const formatChatDate = (isoDateString) => {
+    const date = new Date(isoDateString);
 
-    const handleSendMessage = async (e) => {
-        e.preventDefault();
-        if (input.trim() !== "") {
-            const newMessages = [...messages, input];
-            setMessages(newMessages);
-            setInput("");
-
-            // Scroll to bottom after sending message
-            setTimeout(() => {
-                scrollToBottom();
-            }, 100);
-        }
+    const options = {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
     };
 
-    // Scroll to bottom function
-    const scrollToBottom = () => {
-        if (messagesContainerRef.current) {
-            messagesContainerRef.current.scrollTop =
-                messagesContainerRef.current.scrollHeight;
-        }
-    };
+    return date.toLocaleString(undefined, options);
+};
 
-    // Auto-scroll when messages change
-    useEffect(() => {
-        scrollToBottom();
-    }, [messages]);
+const Message = ({ message, timestamp, isSender }) => (
+    <div
+        className={`my-[10px] max-w-[60%] w-fit ${
+            isSender ? "self-end items-end" : "self-start items-start"
+        } flex flex-col  gap-2`}
+    >
+        <div
+            className={`px-[20px] py-[10px] ${
+                isSender ? "bg-blue-primary" : "bg-zinc-700"
+            } text-white-base text-[16px] font-light rounded-[19px] break-words max-w-full whitespace-pre-wrap`}
+        >
+            <p>{message}</p>
+        </div>
+        <span className="text-sm font-light text-[#707070]">{timestamp}</span>
+    </div>
+);
 
-    // Auto-scroll on component mount
+const ChatWindow = ({
+    messagesEndRef,
+    currentChat,
+    chatMessages,
+    handleSendMessage,
+    input,
+    setInput,
+    isLoading,
+    error,
+    messagesContainerRef,
+    scrollToBottom,
+}) => {
+    const inputRef = useRef(null);
+    const userStatus = useUserStore((state) => state.userStatus);
+
     useEffect(() => {
-        scrollToBottom();
-        console.log(currentChat);
+        setTimeout(() => scrollToBottom(), 6000);
     }, [currentChat]);
 
-    // Function to break long words
+    // Focus input on chat change
+    // useEffect(() => {
+    //     inputRef.current?.focus();
+    // }, [currentChat]);
+
     const breakLongWords = (text, maxWordLength = 20) => {
+        if (!text) return "";
         return text
             .split(" ")
             .map((word) =>
@@ -57,111 +71,112 @@ const ChatWindow = ({ messagesEndRef, currentChat }) => {
             .join(" ");
     };
 
-    return (
-        <>
-            <div className="w-[70%] relative overflow-hidden h-full p-4 rounded-lg bg-[#313131] flex flex-col">
-                {!currentChat ? (
-                    <div className="w-full h-full flex justify-center items-center">
-                        <div className="flex flex-col items-center justify-center gap-5">
-                            <h1 className="drop-shadow text-5xl text-white/90 font-display italic font-bold">
-                                Welcome to Donatella Chat
-                            </h1>
-                            <p className="text-sm font-light text-center italic w-[70%] mx-auto font-body text-white-base/70">
-                                Stay connected with your friends and colleagues
-                                in one seamless platform. Start meaningful
-                                conversations, share updates, and make every
-                                interaction count.
-                            </p>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="flex flex-col w-full h-full">
-                        {/* Header */}
-                        <div className="border-b-thin border-white-base flex items-center gap-3 pb-2">
-                            <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full flex justify-center items-center bg-zinc-700">
-                                {currentChat.sender.profilePicture ? (
-                                    <img
-                                        src={currentChat.sender.profilePicture}
-                                        alt={currentChat.sender.name}
-                                        className="max-w-full h-full object-cover"
-                                    />
-                                ) : (
-                                    <FaUser
-                                        className="text-[#9e9e9ebd]"
-                                        size={20}
-                                    />
-                                )}
-                            </div>
-                            <div className="flex flex-col">
-                                <h1 className="text-white-base font-display text-[16px] font-bold">
-                                    {currentChat.sender.name}
-                                </h1>
-                                <p className="text-white-base/70 font-body text-sm font-extralight">
-                                    online
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Messages */}
-                        <div
-                            ref={messagesContainerRef}
-                            className="relative h-full w-full grow overflow-y-auto px-3 custom-scrollbar scroll-smooth"
-                        >
-                            <div className="flex w-full flex-col justify-end">
-                                {messages.map((message, idx) => (
-                                    <div
-                                        key={idx}
-                                        className="my-[10px] max-w-[60%] w-fit self-end flex flex-col items-end gap-2"
-                                    >
-                                        <div className="px-[20px] py-[10px] bg-blue-primary text-white-base text-[16px] font-light rounded-[19px] break-words max-w-full whitespace-pre-wrap">
-                                            <p>{breakLongWords(message)}</p>
-                                        </div>
-                                        <span className="text-sm font-light text-[#707070]">
-                                            {formatChatTimestamp(
-                                                new Date().toLocaleString()
-                                            )}
-                                        </span>
-                                    </div>
-                                ))}
-                                <div ref={messagesEndRef} />{" "}
-                                {/* Anchor for scroll */}
-                            </div>
-                        </div>
-
-                        {/* Input Area */}
-                        <div className="w-full border-t-thin border-white-base pt-3">
-                            <form
-                                onSubmit={handleSendMessage}
-                                className="flex items-center gap-4"
-                            >
-                                <div className="flex items-center grow px-[15px] py-[11px] rounded-[19px] bg-[#EFF6FCDE]">
-                                    <GrAttachment size={22} />
-                                    <input
-                                        type="text"
-                                        value={input}
-                                        onChange={(e) =>
-                                            setInput(e.target.value)
-                                        }
-                                        placeholder="Type your message..."
-                                        className="grow text-black bg-transparent border-none outline-none mx-[20px]"
-                                    />
-                                </div>
-                                <button
-                                    disabled={!input}
-                                    className="bg-blue-primary rounded-[14px] p-3 cursor-pointer disabled:bg-slate-500 duration-300"
-                                >
-                                    <IoSend
-                                        className={`text-white-base`}
-                                        size={25}
-                                        onClick={handleSendMessage}
-                                    />
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                )}
+    if (!currentChat) {
+        return (
+            <div className="w-[70%] h-full flex justify-center items-center p-4 rounded-lg bg-[#313131]">
+                <div className="flex flex-col items-center justify-center gap-5 text-center">
+                    <h1 className="drop-shadow text-5xl text-white/90 font-display italic font-bold">
+                        Welcome to Donatella Chat
+                    </h1>
+                    <p className="text-sm font-light italic w-[70%] mx-auto font-body text-white-base/70">
+                        Stay connected with your friends and colleagues in one
+                        seamless platform. Start meaningful conversations, share
+                        updates, and make every interaction count.
+                    </p>
+                </div>
             </div>
-        </>
+        );
+    }
+
+    return (
+        <div className="w-[70%] relative overflow-hidden h-full p-4 rounded-lg bg-[#313131] flex flex-col">
+            {/* Header */}
+            <div className="border-b-thin border-white-base flex items-center gap-3 pb-2">
+                <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full flex justify-center items-center bg-zinc-700">
+                    {currentChat.friend.profilePicture ? (
+                        <img
+                            src={currentChat.friend.profilePicture}
+                            alt={currentChat.friend.name}
+                            className="max-w-full h-full object-cover"
+                            loading="lazy"
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.style.display = "none";
+                            }}
+                        />
+                    ) : (
+                        <FaUser className="text-[#9e9e9ebd]" size={20} />
+                    )}
+                </div>
+                <div className="flex flex-col">
+                    <h2 className="text-white-base font-display text-[16px] font-bold">
+                        {currentChat.friend.name}
+                    </h2>
+                    <p className="text-white-base/70 font-body text-sm font-extralight">
+                        online
+                    </p>
+                </div>
+            </div>
+
+            {/* Messages */}
+            <div
+                ref={messagesContainerRef}
+                className="relative h-full w-full grow overflow-y-auto px-3 custom-scrollbar scroll-smooth"
+            >
+                <div className="flex w-full flex-col justify-end">
+                    {error && (
+                        <div className="text-red-500 text-center py-2 text-sm">
+                            {error}
+                        </div>
+                    )}
+                    {chatMessages.map((message) => (
+                        <Message
+                            key={message?.id}
+                            message={breakLongWords(message?.content)}
+                            timestamp={formatChatDate(message?.createdAt)}
+                            isSender={message?.sender?.id === userStatus.id}
+                        />
+                    ))}
+                    <div ref={messagesEndRef} />
+                </div>
+            </div>
+
+            {/* Input Area */}
+            <div className="w-full border-t-thin border-white-base pt-3">
+                <form
+                    onSubmit={handleSendMessage}
+                    className="flex items-center gap-4"
+                >
+                    <div className="flex items-center grow px-[15px] py-[11px] rounded-[19px] bg-[#EFF6FCDE]">
+                        <button
+                            type="button"
+                            className="hover:opacity-70 transition-opacity"
+                            onClick={() => {
+                                /* Handle attachment */
+                            }}
+                        >
+                            <GrAttachment size={22} />
+                        </button>
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            placeholder="Type your message..."
+                            className="grow text-black bg-transparent border-none outline-none mx-[20px]"
+                            // disabled={isLoading}
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        // disabled={!input.trim()}
+                        className="bg-blue-primary rounded-[14px] p-3 cursor-pointer disabled:bg-slate-500 duration-300 hover:opacity-90"
+                    >
+                        <IoSend className="text-white-base" size={25} />
+                    </button>
+                </form>
+            </div>
+        </div>
     );
 };
 

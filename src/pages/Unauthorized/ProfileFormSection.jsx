@@ -17,7 +17,7 @@ import {
 
 const modelImagesInputs = [
     { id: "profile", label: "Profile Picture" },
-    { id: "cover", label: "Cover Picture" },
+    { id: "portfolio", label: "Portfolio Picture" },
     { id: "headshot", label: "Headshot" },
     { id: "fullBody", label: "Full Body" },
 ];
@@ -68,7 +68,7 @@ const ProfileFormSection = () => {
                 )}
                 <LogoHeader />
                 <div className="flex gap-[50px]">
-                    <BackButton className={"mt-10 ml-4"}/>
+                    <BackButton className={"mt-10 ml-4"} />
                     <div className="container mx-auto grid grid-cols-2 gap-6 mt-10">
                         {role.toLocaleLowerCase() === "model" && (
                             <ModelProfileForm
@@ -103,22 +103,17 @@ const ProfileFormSection = () => {
                             />
                         )}
                         <div className="grid grid-cols-2 gap-6 justify-items-center">
-                            {role.toLocaleLowerCase() === "model" &&
-                                modelImagesInputs.map((input, idx) => (
+                            {role === "MODEL" &&
+                                modelImagesInputs.map((input) => (
                                     <LoadImage
                                         onImageChange={handleImageChange}
                                         key={input.id}
                                         label={input.label}
                                         inputId={`${input.id}`}
-                                        className={
-                                            input.id.startsWith("portfolio")
-                                                ? "col-span-2"
-                                                : "col-span-1 max-w-[250px] h-[320px]"
-                                        }
                                     />
                                 ))}
-                            {role.toLocaleLowerCase() !== "model" &&
-                                restImagesInputs.map((input, idx) => (
+                            {role !== "MODEL" &&
+                                restImagesInputs.map((input) => (
                                     <LoadImage
                                         onImageChange={handleImageChange}
                                         key={input.id}

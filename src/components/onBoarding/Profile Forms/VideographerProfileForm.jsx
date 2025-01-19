@@ -3,25 +3,23 @@ import {
     initialVideographerProfileFormValues,
     videographerProfileFormGroupData,
 } from "../../../utils/constants";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useOnboarding from "../../../hooks/auth/useOnboarding";
 import { motion } from "framer-motion";
 import FormButton from "../../shared/ui/FormButton";
 import FormGroup from "../../shared/ui/FormGroup";
 
-const VideographerProfileForm = ({ imageUrls, loading, setLoading, role }) => {
+const VideographerProfileForm = ({ imageUrls, loading, setLoading }) => {
     const [formValues, setFormValues] = useState(
         initialVideographerProfileFormValues
     );
     const [disabled, setDisabled] = useState(true);
-    const navigate = useNavigate();
 
     const { mutateAsync } = useOnboarding();
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
 
-        // Convert the value to a boolean if it's "true" or "false"
         const newValue =
             value === "true" ? true : value === "false" ? false : value;
 
@@ -33,11 +31,34 @@ const VideographerProfileForm = ({ imageUrls, loading, setLoading, role }) => {
         setLoading(true);
         const userProfile = await JSON.parse(localStorage.getItem("userData"));
         try {
+            const portfolio1 = imageUrls.portfolio1;
+            const portfolio2 = imageUrls.portfolio2;
+            const profile = imageUrls.profile;
+            const reel = imageUrls.reel;
+
+            console.log({
+                individualProfile: {
+                    role: "VIDEOGRAPHER",
+                    ...userProfile,
+                    specialtyInfo: {
+                        ...formValues,
+                        portfolioPictures: [portfolio1, portfolio2],
+                        profilePicture: [profile],
+                        reels: [reel],
+                    },
+                },
+            });
+
             await mutateAsync({
                 individualProfile: {
                     role: "VIDEOGRAPHER",
                     ...userProfile,
-                    specialtyInfo: { ...formValues },
+                    specialtyInfo: {
+                        ...formValues,
+                        portfolioPictures: [portfolio1, portfolio2],
+                        profilePicture: [profile],
+                        reels: [reel],
+                    },
                 },
             });
         } catch (error) {

@@ -28,7 +28,7 @@ const FormGroup = ({
                     {label}
                 </label>
                 {validate && (
-                    <div className="flex justify-start items-center gap-1">
+                    <div className="flex justify-end w-[60%] items-center gap-1">
                         {!error && (
                             <motion.div
                                 initial={{ scale: 0, opacity: 0 }}

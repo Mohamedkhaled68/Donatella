@@ -6,12 +6,11 @@ import {
 } from "../../../utils/constants";
 import FormButton from "../../shared/ui/FormButton";
 import FormGroup from "../../shared/ui/FormGroup";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import useOnboarding from "../../../hooks/auth/useOnboarding";
-import { useUserStore } from "../../../store/userStore";
 
-const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
+const ModelProfileForm = ({ imageUrls, loading, setLoading }) => {
     const [formValues, setFormValues] = useState(initialModelProfileFormValues);
     const [disabled, setDisabled] = useState(true);
 
@@ -31,23 +30,41 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
         setLoading(true);
         const userProfile = JSON.parse(localStorage.getItem("userData"));
         try {
+            const profile = imageUrls.profile;
+            const portfolio = imageUrls.portfolio;
+            const headshot = imageUrls.headshot;
+            const fullBody = imageUrls.fullBody;
+
             mutateAsync({
                 individualProfile: {
                     role: "MODEL",
                     ...userProfile,
-                    specialtyInfo: { ...formValues },
+                    specialtyInfo: {
+                        ...formValues,
+                        profilePicture: [profile],
+                        portfolioPictures: [portfolio],
+                        headShots: [headshot],
+                        fullBodyShots: [fullBody],
+                    },
+                },
+            });
+
+            console.log({
+                individualProfile: {
+                    role: "MODEL",
+                    ...userProfile,
+                    specialtyInfo: {
+                        ...formValues,
+                        profilePicture: [profile],
+                        portfolio: [portfolio],
+                        headshot: [headshot],
+                        fullBody: [fullBody],
+                    },
                 },
             });
         } catch (error) {
             console.log(error.message);
         } finally {
-            console.log({
-                individualProfile: {
-                    role: "MODEL",
-                    ...userProfile,
-                    specialtyInfo: { ...formValues },
-                },
-            });
             setLoading(false);
             setFormValues(initialModelProfileFormValues);
         }
@@ -70,7 +87,7 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading, role }) => {
     return (
         <>
             <div className="flex flex-col gap-8">
-                <div >
+                <div>
                     <h1 className="capitalize text-5xl font-display font-bold">
                         Model form
                     </h1>

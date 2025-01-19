@@ -129,7 +129,7 @@ const ExperienceFormSection = () => {
                                 ) => (
                                     <motion.div
                                         key={id}
-                                        className="flex flex-col gap-2 w-full md:w-[48%]"
+                                        className="flex flex-col gap-2 w-full first:w-full md:w-[48%]"
                                         initial={{ y: -10, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
                                         transition={{

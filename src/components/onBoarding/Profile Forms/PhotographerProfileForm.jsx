@@ -29,13 +29,37 @@ const PhotographerProfileForm = ({ imageUrls, loading, setLoading, role }) => {
         setLoading(true);
         const userProfile = JSON.parse(localStorage.getItem("userData"));
         try {
-            mutateAsync({
+            const portfolio1 = imageUrls.portfolio1;
+            const portfolio2 = imageUrls.portfolio2;
+            const profile = imageUrls.profile;
+            const reel = imageUrls.reel;
+
+            console.log({
                 individualProfile: {
                     role: "PHOTOGRAPHER",
                     ...userProfile,
-                    specialtyInfo: { ...formValues },
+                    specialtyInfo: {
+                        ...formValues,
+                        portfolioPictures: [portfolio1, portfolio2],
+                        profilePicture: [profile],
+                        reels: [reel],
+                    },
                 },
             });
+
+            await mutateAsync({
+                individualProfile: {
+                    role: "PHOTOGRAPHER",
+                    ...userProfile,
+                    specialtyInfo: {
+                        ...formValues,
+                        portfolioPictures: [portfolio1, portfolio2],
+                        profilePicture: [profile],
+                        reels: [reel],
+                    },
+                },
+            });
+
             return new Promise((resolve) => setTimeout(resolve, 3000));
         } catch (error) {
             console.log(error.message);

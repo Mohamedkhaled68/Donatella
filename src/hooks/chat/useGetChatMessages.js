@@ -3,16 +3,14 @@ import { baseUrl } from "../../utils/baseUrl";
 import axios from "axios";
 import useAuthStore from "../../store/userTokenStore";
 
-const useSendMessage = () => {
+const useGetChatMessages = () => {
     const token = useAuthStore((state) => state.authToken);
 
     return useMutation({
-        mutationKey: ["chat", "send"],
-        mutationFn: async ({ chatId, message }) => {
-            const body = { content: message };
-            const response = await axios.post(
-                `${baseUrl}/chats/${chatId}/messages`,
-                body,
+        mutationKey: ["chat", "getChatMessages"],
+        mutationFn: async (chatId) => {
+            const response = await axios.get(
+                `${baseUrl}/chats/${chatId}/messages?paginate[limit]=20&paginate[direction]=AFTER`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -28,9 +26,9 @@ const useSendMessage = () => {
             const errorMessage =
                 error.response?.data?.message ||
                 "An unexpected error occurred.";
-            throw new Error(errorMessage);
+            console.log("Error fetching messages:", errorMessage);
         },
     });
 };
 
-export default useSendMessage;
+export default useGetChatMessages;

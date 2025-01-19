@@ -3,34 +3,36 @@ import { baseUrl } from "../../utils/baseUrl";
 import axios from "axios";
 import useAuthStore from "../../store/userTokenStore";
 
-const useSendMessage = () => {
+const useUploadImage = () => {
     const token = useAuthStore((state) => state.authToken);
 
     return useMutation({
-        mutationKey: ["chat", "send"],
-        mutationFn: async ({ chatId, message }) => {
-            const body = { content: message };
+        mutationKey: ["user", "uploadImage"],
+        mutationFn: async (file) => {
+            const formData = new FormData();
+            formData.append("file", file); // Replace "image" with the key expected by your backend
             const response = await axios.post(
-                `${baseUrl}/chats/${chatId}/messages`,
-                body,
+                `${baseUrl}/upload/images`,
+                formData,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
+                        "Content-Type": "multipart/form-data", // Axios will handle the boundary
                     },
                 }
             );
-            console.log(response.data.data);
             return response.data.data;
         },
-        onSuccess: () => {},
+        onSuccess: (data) => {
+            console.log(data);
+        },
         onError: (error) => {
             const errorMessage =
-                error.response?.data?.message ||
+                error.response?.data?.data?.message ||
                 "An unexpected error occurred.";
             throw new Error(errorMessage);
         },
     });
 };
 
-export default useSendMessage;
+export default useUploadImage;

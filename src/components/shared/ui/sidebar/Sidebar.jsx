@@ -41,7 +41,7 @@ const Sidebar = () => {
             className="sidebar || flex flex-col justify-center items-center bg-white-base text-black"
         >
             <motion.div
-                className="bg || z-[1000] absolute top-0 bottom-0 left-0 w-[400px] bg-[#27292C] shadow-lg shadow-white-base"
+                className="bg || z-[1000] absolute top-0 bottom-0 left-0 w-full lg:w-[400px] bg-[#27292C] shadow-lg shadow-white-base"
                 variants={variants}
             >
                 <Links />

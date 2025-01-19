@@ -4,6 +4,7 @@ import { CgCloseR } from "react-icons/cg";
 import { MdOutlineAddBox } from "react-icons/md";
 import { LogoHeader, OrganizationProfileForm } from "../../components";
 import { CiImageOn } from "react-icons/ci";
+import useUploadImage from "../../hooks/auth/useUploadImage";
 
 const OrgProfileForm = () => {
     const [loading, setLoading] = useState(false);
@@ -11,7 +12,9 @@ const OrgProfileForm = () => {
     const [previewUrl, setPreviewUrl] = useState(""); // Store preview URL
     const inputId = "media";
 
-    const handleMediaChange = (event) => {
+    const { mutateAsync: uploadImage } = useUploadImage();
+
+    const handleMediaChange = async (event) => {
         const file = event.target.files[0];
         if (!file) return;
 
@@ -28,9 +31,10 @@ const OrgProfileForm = () => {
             alert("Invalid file type. Please upload an image or video.");
             return;
         }
+        const data = await uploadImage(file);
+        setMedia(data);
 
-        setMedia(file);
-        setPreviewUrl(URL.createObjectURL(file)); // Generate a preview URL
+        setPreviewUrl(data); // Generate a preview URL
     };
 
     const handleRemoveMedia = () => {

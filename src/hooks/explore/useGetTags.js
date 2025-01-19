@@ -1,16 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
-import { baseUrl } from "../../utils/baseUrl";
-import axios from "axios";
 import useAuthStore from "../../store/userTokenStore";
+import axios from "axios";
+import { baseUrl } from "../../utils/baseUrl";
 
-const useGetMessages = () => {
+const useGetTags = () => {
     const token = useAuthStore((state) => state.authToken);
-
     return useMutation({
-        mutationKey: ["chat", "getMessages"],
-        mutationFn: async () => {
+        mutationKey: ["explore", "getTags"],
+        mutationFn: async (searchKey) => {
             const response = await axios.get(
-                `${baseUrl}/chats?filter[searchKey]=&paginate[page]=1&paginate[limit]=5`,
+                `${baseUrl}/tags?searchKey=${searchKey || ""}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -22,12 +21,9 @@ const useGetMessages = () => {
         },
         onSuccess: () => {},
         onError: (error) => {
-            const errorMessage =
-                error.response?.data?.message ||
-                "An unexpected error occurred.";
-            console.log("Error fetching messages:", errorMessage);
+            console.error("Mutation failed:", error);
         },
     });
 };
 
-export default useGetMessages;
+export default useGetTags;

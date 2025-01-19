@@ -31,7 +31,7 @@ export const validateForm = (formValues) => {
                         errors.password = "Password is required.";
                     } else if (!/^(?=.*[A-Z])(?=.*[\W_]).{6,}$/.test(value)) {
                         errors.password =
-                            "Password must be at least 6 characters.";
+                            "Password must be at least 8 characters long, and include at least one uppercase letter, one number, and one special character.";
                     }
                     break;
 

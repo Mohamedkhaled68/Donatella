@@ -3,23 +3,21 @@ import { baseUrl } from "../../utils/baseUrl";
 import axios from "axios";
 import useAuthStore from "../../store/userTokenStore";
 
-const usePostJob = () => {
+const useGetCurrentUser = () => {
     const token = useAuthStore((state) => state.authToken);
 
     return useMutation({
-        mutationKey: ["jobs", "postJobs"],
-        mutationFn: async (data) => {
-            const response = await axios.post(`${baseUrl}/jobs`, data, {
+        mutationKey: ["user", "getMe"],
+        mutationFn: async () => {
+            const response = await axios.get(`${baseUrl}/auth`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
             });
-            return response.data;
+            return response.data.data;
         },
-        onSuccess: (data) => {
-            console.log(data);
-        },
+        onSuccess: () => {},
         onError: (error) => {
             const errorMessage =
                 error.response?.data?.message ||
@@ -29,4 +27,4 @@ const usePostJob = () => {
     });
 };
 
-export default usePostJob;
+export default useGetCurrentUser;

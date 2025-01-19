@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Footer, IndividualCard, JobCard, Loading } from "../../components";
 import { FaAngleDown } from "react-icons/fa6";
 import { useUserStore } from "../../store/userStore";
-import { haveCommonLetters } from "../../utils/helpers";
 import useGetIndividuals from "../../hooks/explore/useGetIndividuals";
 import { motion } from "framer-motion";
 import { IoMaleFemaleSharp } from "react-icons/io5";
@@ -88,9 +87,9 @@ const filterAnimationVariants = {
 };
 
 const activeStyle =
-    "bg-white-base px-[77px] py-[17px] text-black text-medium font-bold rounded-xl transition-all duration-300";
+    "bg-white-base text-center w-full xl:py-[17px] py-[15px] text-black text-medium font-bold rounded-xl transition-all duration-300";
 const inActiveStyle =
-    "bg-[#27292C] border-2 border-white-base px-[77px] py-[17px] text-white-base text-sm font-light rounded-xl transition-all duration-300";
+    "bg-[#27292C] text-center  w-full xl:py-[17px] py-[15px] text-white-base text-sm font-light rounded-xl transition-all duration-300 border-2 border-white-base";
 
 const filters = [
     {
@@ -157,11 +156,11 @@ const orgFilters = [
 
 const SearchBar = ({ onSearch, setIsOpent, isOpen, userStatus }) => {
     return (
-        <div className="w-full rounded-3xl bg-[#27292C] flex justify-between items-center gap-[55px] px-[39px] py-2">
+        <div className="w-full rounded-3xl bg-[#27292C] grid grid-cols-5 gap-[55px] px-[30px] py-4">
             {userStatus.role !== "INDIVIDUAL" && (
                 <div
                     onClick={() => setIsOpent((prev) => !prev)}
-                    className="px-[42px] cursor-pointer py-3 flex justify-between items-center gap-[10px] border-2 border-white-base text-white-base rounded-lg"
+                    className="lg:px-[42px] cursor-pointer col-span-1 py-3 flex justify-center gap-[3px] lg:gap-[10px] items-center border-2 border-white-base text-white-base rounded-lg"
                 >
                     <p>Filters</p>
                     <motion.div
@@ -177,12 +176,12 @@ const SearchBar = ({ onSearch, setIsOpent, isOpen, userStatus }) => {
             )}
 
             <input
-                className="grow px-[62px] py-2 text-center placeholder:text-white-base/50 placeholder:text-sm placeholder:font-light bg-[#323335] rounded-2xl outline-none border-thin border-black text-white-base"
+                className={`grow px-[62px] py-2 text-center ${userStatus.role === "INDIVIDUAL" && "lg:col-span-4"} col-span-3 placeholder:text-white-base/50 placeholder:text-sm placeholder:font-light bg-[#323335] rounded-2xl outline-none border-thin border-black text-white-base`}
                 placeholder="Search for a model you want to hire"
                 type="text"
                 onChange={(e) => onSearch(e.target.value)}
             />
-            <button className="px-[62px] py-3 border-2 border-blue-primary text-white-base rounded-lg">
+            <button className="xl:px-[62px] text-center py-3 border-2 col-span-1 border-blue-primary text-white-base rounded-lg">
                 Search
             </button>
         </div>
@@ -190,7 +189,7 @@ const SearchBar = ({ onSearch, setIsOpent, isOpen, userStatus }) => {
 };
 
 const FilterButtons = ({ filters, activeFilter, onFilterChange }) => (
-    <div className="flex justify-between items-center my-12">
+    <div className="grid grid-cols-4 gap-10 justify-items-center my-12">
         {filters.map((filter) => (
             <button
                 key={filter.id}
@@ -396,7 +395,7 @@ const Explore = () => {
                                 ))}
                             </div>
                         ) : (
-                            <div className="grid grid-cols-4 gap-5 justify-items-center">
+                            <div className="grid grid-cols-2 justify-items-center lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-x-10">
                                 {data.map((profile, idx) => (
                                     <IndividualCard
                                         profile={profile}

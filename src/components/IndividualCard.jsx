@@ -95,7 +95,7 @@ const IndividualCard = ({ className, filter, profile }) => {
 
     return (
         <div
-            className={`bg-[#313131] border-thin w-[300px] h-[508px] border-white-base/5 rounded-[20px] p-4 flex flex-col gap-4 ${className}`}
+            className={`bg-[#313131] border-thin min-w-[300px] max-w-full h-[508px] border-white-base/5 rounded-[20px] p-4 flex flex-col gap-4 ${className}`}
         >
             <div className="flex flex-col gap-2">
                 <div className="flex justify-between items-center">

@@ -67,9 +67,9 @@ const reviews = [
 
 const Reviews = () => {
     return (
-        <div className="relative w-full flex justify-between items-center px-20">
+        <div className="relative w-full flex justify-between items-center px-10">
             <button
-                className="swiper-button-prev-me absolute top-1/2 left-0 z-10 text-white  p-3 rounded-full cursor-pointer transform -translate-y-1/2 hover:bg-black/50 duration-200"
+                className="swiper-button-prev-me absolute top-1/2 -left-4 z-10 text-white p-3 rounded-full cursor-pointer transform -translate-y-1/2 hover:bg-black/50 duration-200"
                 aria-label="Previous slide"
             >
                 <BiSolidLeftArrow size={30} />
@@ -83,11 +83,29 @@ const Reviews = () => {
                 }}
                 spaceBetween={20}
                 slidesPerView={3}
+                breakpoints={{
+                    640: {
+                        slidesPerView: 1,
+                        spaceBetweenSlides: 30,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetweenSlides: 30,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetweenSlides: 30,
+                    },
+                    1280: {
+                        slidesPerView: 4,
+                        spaceBetweenSlides: 30,
+                    },
+                }}
                 className="relative"
             >
                 {reviews.map((review, index) => (
                     <SwiperSlide key={index}>
-                        <div className="review rounded-[20px] bg-[#3B3B3B] max-w-[380px] border-thin border-white-base/10 p-[17px]">
+                        <div className="review rounded-[20px] bg-[#3B3B3B] w-full md:w-[100%]  border-thin border-white-base/10 p-[17px]">
                             <h3 className="font-bold font-display text-[24px]">
                                 {review.name}
                             </h3>
@@ -105,7 +123,7 @@ const Reviews = () => {
 
             {/* Custom Navigation Buttons */}
             <button
-                className="swiper-button-next-me absolute top-1/2 right-0 z-10 text-white p-3 rounded-full cursor-pointer transform -translate-y-1/2 hover:bg-black/50 duration-200"
+                className="swiper-button-next-me absolute top-1/2 -right-4 z-10 text-white p-3 rounded-full cursor-pointer transform -translate-y-1/2 hover:bg-black/50 duration-200"
                 aria-label="Next slide"
             >
                 <BiSolidRightArrow size={30} />

@@ -3,10 +3,15 @@ import { FiEdit } from "react-icons/fi";
 import { CgCloseR } from "react-icons/cg";
 import { CiImageOn } from "react-icons/ci";
 import { MdOutlineAddBox } from "react-icons/md";
+import useUploadImage from "../../hooks/auth/useUploadImage";
+import useUploadVideo from "../../hooks/auth/useUploadVideo";
 
 const LoadImage = ({ label, inputId, onImageChange, className }) => {
     const [media, setMedia] = useState(null);
     const [loading, setLoading] = useState(false);
+
+    const { mutateAsync: uploadImage } = useUploadImage();
+    const { mutateAsync: uploadVideo } = useUploadVideo();
 
     const handleMediaChange = async (e) => {
         const file = e.target.files[0];
@@ -21,12 +26,14 @@ const LoadImage = ({ label, inputId, onImageChange, className }) => {
             if (file.type.startsWith("video/")) {
                 setLoading(true);
                 const thumbnail = await generateVideoThumbnail(mediaUrl);
+                const data = await uploadVideo(file);
                 setMedia(thumbnail);
-                onImageChange(inputId, thumbnail);
+                onImageChange(inputId, data);
                 setLoading(false);
             } else {
+                const data = await uploadImage(file);
                 setMedia(mediaUrl);
-                onImageChange(inputId, mediaUrl);
+                onImageChange(inputId, data);
             }
         } else {
             alert("Please select a valid file (image or video).");

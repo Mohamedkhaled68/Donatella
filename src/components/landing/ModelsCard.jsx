@@ -5,8 +5,8 @@ const ModelsCard = ({ title, description, image, button }) => {
     return (
         <>
             <div className="bg-white col-span-1 py-4 px-10 h-full rounded-br-4 flex flex-col items-center justify-center gap-5">
-                <h1 className="text-6xl font-display text-center">{title}</h1>
-                <p className="text-center text-lg font-extralight">
+                <h1 className="text-4xl lg:text-6xl font-display text-center">{title}</h1>
+                <p className="text-center text-[14px] lg:text-lg font-extralight">
                     {description}
                 </p>
 

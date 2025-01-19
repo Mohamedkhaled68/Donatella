@@ -25,15 +25,11 @@ const OrganizationProfileForm = ({ loading, setLoading, imageUrl }) => {
         e.preventDefault();
         setLoading(true);
         try {
-            console.log({
-                organizationProfile: {
-                    ...formValues,
-                },
-            });
 
             mutateAsync({
                 organizationProfile: {
                     ...formValues,
+                    logo: imageUrl,
                 },
             });
         } catch (error) {

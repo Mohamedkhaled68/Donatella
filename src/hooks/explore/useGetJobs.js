@@ -20,7 +20,9 @@ const useGetJobs = () => {
 
             return response.data.data;
         },
-        onSuccess: () => {},
+        onSuccess: (data) => {
+            console.log(data);
+        },
         onError: (error) => {
             console.error("Mutation failed:", error);
         },

@@ -34,18 +34,18 @@ const Instructions = () => {
     return (
         <>
             <section className="py-12 container mx-auto mb-10">
-                <h1 className="text-center text-6xl font-display font-normal text-white-base mb-12">
+                <h1 className="text-center text-5xl lg:text-6xl font-display font-normal text-white-base mb-12">
                     How It Works:
                 </h1>
-                <div className="flex flex-col gap-12 w-full">
+                <div className="flex flex-col gap-12 w-[85%] mx-auto ">
                     {InstructionsData.map(
                         ({ title, description, btn, image }, index) => (
                             <div
                                 key={index}
-                                className="w-full bg-[#1F2224] border-[3px] border-[#f1f1f133] p-[75px] rounded-br-3 text-white-base font-body flex [&:nth-child(2)]:flex-row-reverse items-center justify-center gap-[88px]"
+                                className="w-full bg-[#1F2224] border-[3px] border-[#f1f1f133] p-[30px] lg:p-[75px] rounded-br-3 text-white-base font-body flex flex-col lg:flex-row lg:[&:nth-child(2)]:flex-row-reverse items-center justify-center gap-[20px] lg:gap-[88px]"
                             >
                                 <div
-                                    className={`w-[70%] ${
+                                    className={`w-full lg:w-[70%] ${
                                         index == 1 && "flex justify-end"
                                     } h-full`}
                                 >
@@ -59,7 +59,7 @@ const Instructions = () => {
                                     <span className="text-[42px] font-body font-black">
                                         #{index + 1}
                                     </span>
-                                    <h1 className="text-3xl font-body font-bold mb-3">
+                                    <h1 className="text-xl lg:text-3xl font-body font-bold mb-3">
                                         {title}
                                     </h1>
                                     <p className="text-sm font-body text-white-base/60 font-normal">

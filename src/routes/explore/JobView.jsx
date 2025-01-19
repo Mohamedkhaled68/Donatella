@@ -6,28 +6,48 @@ import { TbWorld } from "react-icons/tb";
 import { Footer } from "../../components";
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import useSendMessage from "../../hooks/chat/useSendMessage";
-import useMessagesStore from "../../store/useMessagesStore";
 import { motion } from "framer-motion";
+import useGetJob from "../../hooks/jobs/useGetJob";
 
-const jobsData = [
-    // Your jobs data...
-];
+function timeAgo(postedTime) {
+    const now = new Date();
+    const postedDate = new Date(postedTime);
+    const diffInSeconds = Math.floor((now - postedDate) / 1000);
+
+    const intervals = {
+        year: 31536000, // 60 * 60 * 24 * 365
+        month: 2592000, // 60 * 60 * 24 * 30
+        week: 604800, // 60 * 60 * 24 * 7
+        day: 86400, // 60 * 60 * 24
+        hour: 3600, // 60 * 60
+        minute: 60,
+        second: 1,
+    };
+
+    for (const [key, seconds] of Object.entries(intervals)) {
+        const interval = Math.floor(diffInSeconds / seconds);
+        if (interval >= 1) {
+            return `${interval} ${key}${interval > 1 ? "s" : ""} ago`;
+        }
+    }
+
+    return "just now";
+}
 
 const JobView = () => {
-    const [currentJob, setCurrentJob] = useState(null);
     const { jobId } = useParams();
     const navigate = useNavigate();
-    const { mutateAsync } = useSendMessage();
-    const { setReceivedMessage } = useMessagesStore((state) => state);
+    const [currentJob, setCurrentJob] = useState(null);
+    const { mutateAsync: sendMessage } = useSendMessage();
     const [openForm, setOpenForm] = useState(false);
+
+    const { mutateAsync: getJob } = useGetJob();
 
     const handleNavigateToMessages = async () => {
         try {
-            await mutateAsync({
-                chatId: "01937253-ab36-f588-fa6c-d8d2caf8f3d9",
+            await sendMessage({
+                chatId: currentJob?.organization?.id,
                 message: "from individual to organization",
-            }).then((res) => {
-                setReceivedMessage(res.data);
             });
         } catch (err) {
             console.log(err);
@@ -42,8 +62,17 @@ const JobView = () => {
     };
 
     useEffect(() => {
-        const job = jobsData.find((job) => job.id === parseInt(jobId));
-        setCurrentJob(job);
+        const a = async () => {
+            try {
+                const data = await getJob(jobId);
+                console.log(data);
+                setCurrentJob(data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        a();
     }, [jobId]);
 
     return (
@@ -100,19 +129,28 @@ const JobView = () => {
                     <div className="flex flex-col items-center gap-5">
                         <div className="flex flex-col justify-center items-center">
                             <h1 className="font-display text-2xl font-black capitalize">
-                                {currentJob?.company}
+                                {currentJob?.organization?.name}
                             </h1>
                             <p className="font-body text-white-base/50 text-base font-light capitalize">
-                                {currentJob?.location}
+                                {currentJob?.organization?.location}
                             </p>
                         </div>
                         <div className="text-base font-light font-body text-center w-[210px] capitalize rounded-lg bg-[#197FE540] px-[5px] py-2">
                             organization
                         </div>
                         <div className="w-full flex items-center justify-around">
-                            <IconLink url={"#"} Icon={FaInstagram} />
-                            <IconLink url={"#"} Icon={FaTiktok} />
-                            <IconLink url={"#"} Icon={TbWorld} />
+                            <IconLink
+                                url={currentJob?.organization?.instagram}
+                                Icon={FaInstagram}
+                            />
+                            <IconLink
+                                url={currentJob?.organization?.tiktok}
+                                Icon={FaTiktok}
+                            />
+                            <IconLink
+                                url={currentJob?.organization?.website}
+                                Icon={TbWorld}
+                            />
                         </div>
                     </div>
 
@@ -144,12 +182,10 @@ const JobView = () => {
                         {/* Details */}
                         <div className="p-6 col-span-2 bg-[#313131] rounded-lg border-2 border-white/15">
                             <h2 className="text-xl font-bold mb-2">Details</h2>
-                            <p className="text-lg">
-                                Looking for a model to do a photoshoot in Paris
-                                as soon as possible today!
-                            </p>
+                            <p className="text-lg">{currentJob?.title}</p>
                             <p className="text-sm text-gray-400 mt-3">
-                                Posted 1 month ago – Paris, FR
+                                Posted {timeAgo(currentJob?.createdAt)} –{" "}
+                                {currentJob?.location}
                             </p>
                             <p className="mt-3 text-lg">
                                 <span className="font-bold">81</span> People
@@ -189,13 +225,15 @@ const JobView = () => {
                                     <span className="font-bold">
                                         Experience Needed:
                                     </span>{" "}
-                                    2 to 5 Years
+                                    {currentJob?.requiredExperience?.minimum} to{" "}
+                                    {currentJob?.requiredExperience?.maximum}{" "}
+                                    Years
                                 </p>
                                 <p className="text-sm">
                                     <span className="font-bold">
                                         Career Level:
                                     </span>{" "}
-                                    Experienced
+                                    {currentJob?.careerLevel}
                                 </p>
                                 <p className="text-sm">
                                     <span className="font-bold">
@@ -207,13 +245,13 @@ const JobView = () => {
                                     <span className="font-bold">
                                         Job Salary:
                                     </span>{" "}
-                                    $20/Hr
+                                    ${currentJob?.salary}/Hr
                                 </p>
                                 <p className="text-sm">
                                     <span className="font-bold">
                                         Job Category:
                                     </span>{" "}
-                                    Model
+                                    {currentJob?.jobCategory}
                                 </p>
                             </div>
                         </div>
@@ -224,8 +262,7 @@ const JobView = () => {
                                 Job Description
                             </h2>
                             <p className="text-sm text-gray-300">
-                                We are seeking a charismatic fashion model to
-                                collaborate on an exclusive photoshoot...
+                                {currentJob?.description}
                             </p>
                         </div>
 

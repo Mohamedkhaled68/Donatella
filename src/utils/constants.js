@@ -370,7 +370,7 @@ export const OrgProfileFormGroupData = [
 
 export const initialModelImagesValues = {
     profile: null,
-    cover: null,
+    portfolio: null,
     headshot: null,
     fullBody: null,
 };
@@ -389,7 +389,6 @@ export const initialExperienceFormValues = {
     availableForTravel: "",
     legallyWorking: "",
     holdingBachelors: "",
-    hasWorkExperience: "",
 };
 
 export const ExperienceFormGroupData = [
@@ -443,14 +442,6 @@ export const ExperienceFormGroupData = [
         id: "holdingBachelors",
         value: (formValues) => formValues.holdingBachelors,
         // error: (errors) => errors.holdingBachelors,
-    },
-    {
-        label: (role) => `Have you worked as a ${role} before?`,
-        type: "select",
-        name: "hasWorkExperience",
-        id: "hasWorkExperience",
-        value: (formValues) => formValues.hasWorkExperience,
-        // error: (errors) => errors.hasWorkExperience,
     },
 ];
 
@@ -1234,5 +1225,3 @@ export const ClientEventsEnum = {
     MY_SEEN_MESSAGE: "MY_SEEN_MESSAGE",
 };
 //************************************************************
-
-
