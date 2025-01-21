@@ -19,7 +19,7 @@ import SelectCategory from "./components/onBoarding/SelectCategory";
 import { FaAnglesUp } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
-import { JobView, PostJob, ProtectedRoute } from "./routes";
+import { IndividualView, JobView, PostJob, ProtectedRoute } from "./routes";
 
 const App = () => {
     const location = useLocation();
@@ -93,8 +93,12 @@ const App = () => {
                                 element={<PostJob />}
                             />
                             <Route
-                                path="/explore/:jobId"
+                                path="//explore/jobs/:jobId"
                                 element={<JobView />}
+                            />
+                            <Route
+                                path="/explore/individuals/:individualId"
+                                element={<IndividualView />}
                             />
                             <Route path="/messages" element={<Messages />} />
                             <Route path="/payments" element={<Payments />} />

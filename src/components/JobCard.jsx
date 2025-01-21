@@ -10,7 +10,7 @@ const JobCard = ({ job }) => {
     const navigate = useNavigate();
 
     const handleNavigateToJob = () => {
-        navigate(`/explore/${id}`);
+        navigate(`/explore/jobs/${id}`);
     };
     return (
         <>

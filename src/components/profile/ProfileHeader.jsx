@@ -136,6 +136,9 @@ const ProfileHeader = ({ data }) => {
     if (!data) {
         return;
     }
+
+    console.log(data);
+
     return (
         <>
             <div className="w-full flex justify-around items-center gap-[170px] my-8">
@@ -235,15 +238,14 @@ const ProfileHeader = ({ data }) => {
                                 </h1>
                                 {userStatus.individual.role === "MODEL" && (
                                     <p className="font-body text-white-base/50 text-base font-light capitalize mt-4">
-                                        {/* Los Angeles, CA, USA */}
                                         {getKeyByValue(
                                             CountryEnum.enums,
-                                            data?.individual.specialtyInfo
+                                            data?.individual?.specialtyInfo
                                                 .nationality
                                         )}
                                         , {""}{" "}
                                         {
-                                            data?.individual.specialtyInfo
+                                            data?.individual?.specialtyInfo
                                                 .nationality
                                         }
                                     </p>

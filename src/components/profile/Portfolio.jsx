@@ -54,7 +54,7 @@ const Portfolio = () => {
                     </>
                 )}
                 {/* FULL BODY && REELS */}
-                <div className="py-5 flex flex-col gap-6 my-8">
+                <div className="py-5 flex flex-col gap-6 my-8 h-full">
                     <div className="w-full flex justify-between items-center">
                         <h1 className="text-[38px] font-bold font-display">
                             {userStatus.individual.role === "MODEL" ? (

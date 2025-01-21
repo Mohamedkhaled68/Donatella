@@ -3,9 +3,9 @@ import {
     instructionImg1,
     instructionImg2,
     instructionImg3,
-    searchTalentImage,
 } from "../../assets";
 import Button from "../shared/ui/Button";
+import { Link } from "react-router-dom";
 const InstructionsData = [
     {
         btn: "Create Account",
@@ -65,7 +65,10 @@ const Instructions = () => {
                                     <p className="text-sm font-body text-white-base/60 font-normal">
                                         {description}
                                     </p>
-                                    <div className="flex items-center gap-5 mt-8">
+                                    <Link
+                                        to={"/signup"}
+                                        className="flex items-center gap-5 mt-8"
+                                    >
                                         <Button
                                             className={
                                                 "bg-white-base text-[#1F2224] font-light"
@@ -73,7 +76,7 @@ const Instructions = () => {
                                         >
                                             {btn}
                                         </Button>
-                                    </div>
+                                    </Link>
                                 </div>
                             </div>
                         )

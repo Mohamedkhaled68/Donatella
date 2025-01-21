@@ -8,6 +8,7 @@ import { GiRunningShoe } from "react-icons/gi";
 import { VscColorMode } from "react-icons/vsc";
 import { headIcon } from "../assets";
 import { getCountryByCode } from "../utils/helpers";
+import { useNavigate } from "react-router-dom";
 
 // Define attribute types for better organization and type safety
 const AttributeTypes = {
@@ -92,6 +93,14 @@ const AttributeItem = ({ attribute, profile, isModelView }) => (
 const IndividualCard = ({ className, filter, profile }) => {
     const isModelView = filter === "models";
     const hourlyRate = profile?.hourlyRate || "54$/HR";
+    const navigate = useNavigate();
+
+    const handleNavigateToIndividual = () => {
+        const { id } = profile;
+        console.log(id);
+
+        navigate(`/explore/individuals/${id}`);
+    };
 
     return (
         <div
@@ -144,7 +153,10 @@ const IndividualCard = ({ className, filter, profile }) => {
                     alt={`${profile?.firstName || "Profile"} image`}
                 />
             </div>
-            <button className="btn || py-3 px-[50px] bg-blue-primary rounded-[46px] text-white-base text-medium font-semibold font-body text-center">
+            <button
+                onClick={handleNavigateToIndividual}
+                className="btn || py-3 px-[50px] bg-blue-primary rounded-[46px] text-white-base text-medium font-semibold font-body text-center"
+            >
                 View Profile
             </button>
         </div>

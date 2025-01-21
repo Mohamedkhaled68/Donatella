@@ -64,11 +64,11 @@ const ReelGrid = ({ userStatus }) => {
     };
 
     return (
-        <div className="grid grid-cols-4 gap-x-[7.5rem] justify-items-center">
+        <div className="grid grid-cols-4 gap-x-[7.5rem] justify-items-center h-full">
             {items.map((reel, index) => (
                 <div
                     key={index}
-                    className="flex flex-col justify-center items-center gap-6 w-[228px]"
+                    className="flex flex-col justify-center items-center gap-6 w-[230px] min-h-[380px]"
                 >
                     {reel ? (
                         <div className="relative group w-full h-full overflow-hidden rounded-md border-thin border-white-base/30">

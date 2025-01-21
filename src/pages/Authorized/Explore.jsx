@@ -395,7 +395,7 @@ const Explore = () => {
                                 ))}
                             </div>
                         ) : (
-                            <div className="grid grid-cols-2 justify-items-center lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-x-10">
+                            <div className="grid grid-cols-2 justify-items-center lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-10">
                                 {data.map((profile, idx) => (
                                     <IndividualCard
                                         profile={profile}

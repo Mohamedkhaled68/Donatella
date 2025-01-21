@@ -98,11 +98,15 @@ const OrganizationRegisterForm = ({ role, loading, setLoading }) => {
                     </motion.div>
                 ))}
                 <div className="flex flex-col items-start gap-2 mt-6">
-                    <FormButton loading={loading} disabled={disabled} text={"Sign Up"} />
+                    <FormButton
+                        loading={loading}
+                        disabled={disabled}
+                        text={"Sign Up"}
+                    />
                     <p className="text-medium text-white-base/40">
-                        Don't have an account?{" "}
-                        <NavLink className="text-blue-primary" to="/signup">
-                            Create free account
+                        Already have an account?{" "}
+                        <NavLink className="text-blue-primary" to="/login">
+                            Click here to log in!
                         </NavLink>
                     </p>
                 </div>

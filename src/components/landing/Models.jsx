@@ -35,7 +35,7 @@ const Models = ({ modelsRef, talentsRef }) => {
                             Highlight your creativity and expertise as a
                             talented videographer, photographer, or editor.
                         </p>
-                        <div className="relative w-full rounded-3xl overflow-hidden flex items-center">
+                        <div className="relative w-full rounded-[100px] overflow-hidden flex items-center">
                             <img
                                 className="w-[10%] lg:w-1/3 object-cover h-full filter grayscale"
                                 src={talent1}
@@ -51,9 +51,9 @@ const Models = ({ modelsRef, talentsRef }) => {
                                 src={talent3}
                                 alt="talent3"
                             />
-                            <div className="w-[calc(100%-4px)] h-[calc(100%-4px)] bg-black/70 group-hover:bg-black/0 duration-400 rounded-3xl absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white flex justify-center items-center">
+                            <div className="w-[calc(100%-4px)] h-[calc(100%-4px)] bg-black/70 group-hover:bg-black/0 duration-400 rounded-[100px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white flex justify-center items-center">
                                 <div className="flex flex-col gap-10 items-center">
-                                    <h1 className="text-4xl lg:text-6xl leading-[45px] lg:leading-[65px] font-display w-[70%] mx-auto font-extrabold text-center">
+                                    <h1 className="text-[30px] xl:text-6xl leading-[45px] lg:leading-[65px] font-display w-[70%] mx-auto font-extrabold text-center">
                                         Access to top industry professionals
                                     </h1>
                                     <p className="hidden md:block text-large text-white-base/75 font-display w-[60%] mx-auto font-[400] text-center">
@@ -69,14 +69,14 @@ const Models = ({ modelsRef, talentsRef }) => {
                         <div className="flex justify-center items-center gap-5">
                             <Button
                                 className={
-                                    "font-light text-white-base bg-[#1F2224]"
+                                    "font-light text-white-base bg-[#1F2224] text-sm lg:text-base"
                                 }
                             >
                                 Look For Talent
                             </Button>
                             <Button
                                 className={
-                                    "font-light border-thin border-[#1F2224]"
+                                    "font-light border-thin border-[#1F2224] text-sm lg:text-base"
                                 }
                             >
                                 Sign Up As Talent
