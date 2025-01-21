@@ -19,7 +19,7 @@ const Login = () => {
     const [errors, setErrors] = useState({});
     const [isMobile, setIsMobile] = useState(false);
 
-    const { mutateAsync, onSuccess } = useLogin();
+    const { mutateAsync } = useLogin();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -114,9 +114,6 @@ const Login = () => {
 
     
     if (isMobile) {
-        console.warn(
-            "Desktop Only: This feature is not available on mobile devices."
-        );
         return <Navigate to="/" replace />;
     }
     return (

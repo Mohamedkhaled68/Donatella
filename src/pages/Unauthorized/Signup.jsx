@@ -7,12 +7,13 @@ import {
     Loading,
     OrganizationRegisterForm,
 } from "../../components";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 const Signup = () => {
     const [role, setRole] = useState("Individual");
     const [loading, setLoading] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const location = useLocation();
 
     const handleRoleChange = (selectedRole) => {
         setRole(selectedRole);
@@ -58,6 +59,15 @@ const Signup = () => {
         );
         return <Navigate to="/" replace />;
     }
+
+    useEffect(() => {
+        console.log(location.state);
+        if (location.state?.role) {
+            setRole(location.state.role);
+        } else {
+            setRole("Individual");
+        }
+    }, []);
 
     return (
         <>

@@ -1,5 +1,6 @@
 import React from "react";
-import { FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { FaSnapchat } from "react-icons/fa6";
 import { FaTiktok } from "react-icons/fa";
@@ -9,14 +10,6 @@ import { FaFacebook } from "react-icons/fa";
 
 const icons = [
     {
-        icon: <FaLinkedin size={25} />,
-        link: "https://www.linkedin.com/company/donatellaksa/",
-    },
-    {
-        icon: <FaTiktok size={25} />,
-        link: "https://www.tiktok.com/@donatellaksa",
-    },
-    {
         icon: <FaInstagram size={25} />,
         link: "https://www.instagram.com/donatellaksa",
     },
@@ -25,16 +18,24 @@ const icons = [
         link: "https://snapchat.com/t/6pI2FaWD",
     },
     {
+        icon: <FaTiktok size={25} />,
+        link: "https://www.tiktok.com/@donatellaksa",
+    },
+    {
+        icon: <FaLinkedin size={25} />,
+        link: "https://www.linkedin.com/company/donatellaksa/",
+    },
+    {
         icon: <FaYoutube size={25} />,
         link: "https://youtube.com/@donatellaksa",
     },
     {
-        icon: <FaFacebook size={25} />,
-        link: "https://www.facebook.com/DonatellaKsa",
+        icon: <FaXTwitter size={25} />,
+        link: "https://x.com/donatellaksa",
     },
     {
-        icon: <FaTwitter size={25} />,
-        link: "https://x.com/donatellaksa",
+        icon: <FaFacebook size={25} />,
+        link: "https://www.facebook.com/DonatellaKsa",
     },
 ];
 const Footer = () => {
