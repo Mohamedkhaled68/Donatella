@@ -176,7 +176,9 @@ const SearchBar = ({ onSearch, setIsOpent, isOpen, userStatus }) => {
             )}
 
             <input
-                className={`grow px-[62px] py-2 text-center ${userStatus.role === "INDIVIDUAL" && "lg:col-span-4"} col-span-3 placeholder:text-white-base/50 placeholder:text-sm placeholder:font-light bg-[#323335] rounded-2xl outline-none border-thin border-black text-white-base`}
+                className={`grow px-[62px] py-2 text-center ${
+                    userStatus.role === "INDIVIDUAL" && "lg:col-span-4"
+                } col-span-3 placeholder:text-white-base/50 placeholder:text-sm placeholder:font-light bg-[#323335] rounded-2xl outline-none border-thin border-black text-white-base`}
                 placeholder="Search for a model you want to hire"
                 type="text"
                 onChange={(e) => onSearch(e.target.value)}
@@ -292,6 +294,8 @@ const Explore = () => {
                         filtered.category,
                         searchTerm.toLocaleLowerCase(),
                     ]);
+                    console.log(profilesData);
+
                     let filteredProfiles = profilesData.items;
 
                     // Apply advanced filters

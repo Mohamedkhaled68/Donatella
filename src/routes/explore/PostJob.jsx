@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { BackButton, FormButton, TagInput } from "../../components";
-import { Link, useNavigate } from "react-router-dom";
+import { BackButton, FormButton, Loading, TagInput } from "../../components";
+import { useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import { useUserStore } from "../../store/userStore";
 import usePostJob from "../../hooks/jobs/usePostJobs";
 import useGetTags from "../../hooks/explore/useGetTags";
+import { CountryEnum } from "../../utils/constants";
+import toast from "react-hot-toast";
 
 const initialJobPostFormValues = {
     title: "",
@@ -28,12 +30,48 @@ const initialJobPostFormValues = {
     tags: [],
 };
 
+// Duration validation utilities
+const convertToDays = (value, prefix) => {
+    switch (prefix) {
+        case "DAY":
+            return value;
+        case "WEEK":
+            return value * 7;
+        case "MONTH":
+            return value * 30; // Using 30 days as approximate month length
+        case "YEAR":
+            return value * 365;
+        default:
+            return 0;
+    }
+};
+
+const isValidDurationRange = (
+    minDuration,
+    minPrefix,
+    maxDuration,
+    maxPrefix
+) => {
+    // First check if all required fields are filled
+    if (!minDuration || !minPrefix || !maxDuration || !maxPrefix) {
+        return false;
+    }
+
+    // Convert both durations to days for accurate comparison
+    const minInDays = convertToDays(minDuration, minPrefix);
+    const maxInDays = convertToDays(maxDuration, maxPrefix);
+
+    return minInDays <= maxInDays;
+};
+
 const PostJob = () => {
     const [formValues, setFormValues] = useState(initialJobPostFormValues);
-    const [disabled, setDisabled] = useState(true);
+
     const [tags, setTags] = useState([]);
     const [isInputVisible, setIsInputVisible] = useState(false);
     const [selectedTags, setSelectedTags] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [disabled, setDisabled] = useState(true);
     const [check, setCheck] = useState(false);
 
     const navigate = useNavigate();
@@ -58,10 +96,8 @@ const PostJob = () => {
     const handleNumberInputChange = (e, field) => {
         const { name, value } = e.target;
 
-        // Convert the value to a number, ensuring it's a valid number
         const numericValue = value ? parseFloat(value) : "";
 
-        // Check if it's a valid number, otherwise, set it to an empty string or a fallback value
         setFormValues((prevValues) => ({
             ...prevValues,
             [field]: {
@@ -73,18 +109,65 @@ const PostJob = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log({ ...formValues, tags: selectedTags });
-
+        setLoading(true);
         try {
+            if (
+                formValues.requiredExperience.minimum >
+                formValues.requiredExperience.maximum
+            ) {
+                toast.error(
+                    "Minimum experience should be less than maximum experience"
+                );
+                setCheck(false);
+                setFormValues({
+                    ...formValues,
+                    requiredExperience: {
+                        minimum: "",
+                        maximum: "",
+                    },
+                });
+                return;
+            }
+
+            // Add the new duration validation
+            if (
+                !isValidDurationRange(
+                    formValues.jobDuration.minimum,
+                    formValues.jobDuration.minimumPrefix,
+                    formValues.jobDuration.maximum,
+                    formValues.jobDuration.maximumPrefix
+                )
+            ) {
+                toast.error(
+                    "Invalid duration range. Please check your minimum and maximum durations."
+                );
+                setCheck(false);
+                setFormValues({
+                    ...formValues,
+                    jobDuration: {
+                        minimum: 1,
+                        minimumPrefix: "",
+                        maximum: 2,
+                        maximumPrefix: "",
+                    },
+                });
+                return;
+            }
+
+            console.log({ ...formValues, tags: selectedTags });
             await mutateAsync({
                 ...formValues,
                 tags: selectedTags,
             });
+        } catch (err) {
+            console.log(err);
+        } finally {
             setFormValues(initialJobPostFormValues);
             setSelectedTags([]);
             setCheck(false);
-        } catch (err) {
-            console.log(err);
+            toast.success("Job posted successfully");
+            setLoading(false);
+            navigate("/");
         }
     };
 
@@ -92,8 +175,6 @@ const PostJob = () => {
         const getTagsFunc = async () => {
             try {
                 const data = await getTags();
-                console.log(data);
-
                 setTags(data);
             } catch (err) {
                 console.log(err);
@@ -114,15 +195,28 @@ const PostJob = () => {
             (value) => value !== "" && value !== 0
         );
 
-        if (isFilled && check) {
+        if (
+            isFilled &&
+            check &&
+            !loading &&
+            selectedTags.length !== 0 &&
+            formValues.jobDuration.maximumPrefix !== "" &&
+            formValues.jobDuration.minimumPrefix !== ""
+        ) {
             setDisabled(false);
         } else {
             setDisabled(true);
         }
-    }, [formValues, check]);
+    }, [formValues, check, selectedTags]);
 
     return (
-        <section className="w-full h-full">
+        <section className="relative w-full h-full">
+            {loading && (
+                <div className="absolute top-0 left-0 w-full h-full bg-black/50 z-[1000] flex justify-center items-center">
+                    <Loading />
+                </div>
+            )}
+
             <div className="container mx-auto py-5">
                 <div className="w-full grid grid-cols-3">
                     <BackButton />
@@ -184,7 +278,7 @@ const PostJob = () => {
                             </select>
                         </div>
 
-                        {/* Experince Needed */}
+                        {/* Experience Needed */}
                         <div className="col-span-2 self-end">
                             <label
                                 htmlFor="jobCategory"
@@ -372,15 +466,24 @@ const PostJob = () => {
                             >
                                 Location
                             </label>
-                            <input
-                                type="text"
-                                id="location"
-                                name="location"
+                            <select
+                                className="rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-[#94A3B8] text-medium font-body px-[18px] py-[14px] w-full mt-2"
                                 value={formValues.location}
                                 onChange={handleInputChange}
-                                className="rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-[#94A3B8] text-medium font-body px-[18px] py-[14px] w-full mt-2"
-                                placeholder="Enter job location"
-                            />
+                                name="location"
+                                id="location"
+                            >
+                                <option value="">Select Country</option>
+                                {Object.entries(CountryEnum.enums).map(
+                                    ([country, code]) => (
+                                        <option key={code} value={code}>
+                                            {country
+                                                .replace(/([A-Z])/g, " $1")
+                                                .trim()}
+                                        </option>
+                                    )
+                                )}
+                            </select>
                         </div>
 
                         {/* Salary */}
@@ -471,7 +574,6 @@ const PostJob = () => {
                         selectedTags={selectedTags}
                         setSelectedTags={setSelectedTags}
                         tags={tags}
-                        setTags={setTags}
                     />
                     <div className="flex justify-between items-center mt-[50px]">
                         <div className="flex flex-col gap-7 flex-1">
@@ -498,14 +600,11 @@ const PostJob = () => {
                                 platform.
                             </p>
                         </div>
-                        <div className="flex flex-col items-end flex-1 gap-[17px]">
-                            <FormButton text={"Next"} disabled={disabled} />
-                            <p className="text-right text-sm text-[#64748B]">
-                                Don't have an account yet?{" "}
-                                <Link className="text-blue-primary" to="/login">
-                                    Click here to create one!
-                                </Link>
-                            </p>
+                        <div className="flex flex-col items-end flex-1 gap-[17px] pb-5">
+                            <FormButton
+                                text={"Next"}
+                                disabled={disabled || loading}
+                            />
                         </div>
                     </div>
                 </form>

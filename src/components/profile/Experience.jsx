@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { dateFormat } from "../../utils/helpers";
-import { FiEdit } from "react-icons/fi";
+import { FiEdit, FiPlus } from "react-icons/fi";
 import useUpdateMe from "../../hooks/user/useUpdateMe";
 import { useUserStore } from "../../store/userStore";
+import toast from "react-hot-toast";
+
+const formateDate = (d) => {
+    const date = new Date(d);
+    return `${date.getFullYear()}-${(date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+};
 
 const Experience = ({ userStatus }) => {
-    const [isEditing, setIsEditing] = useState(false); // Toggle form visibility
+    const [isEditing, setIsEditing] = useState(false);
+    const [disabled, setDisabled] = useState(true);
     const [experience, setExperience] = useState(
         userStatus.individual?.workExperience || []
     );
@@ -13,23 +22,38 @@ const Experience = ({ userStatus }) => {
     const { mutateAsync: updateMe } = useUpdateMe();
     const { setUserStatus } = useUserStore((state) => state);
 
-    const handleEditClick = () => {
-        setIsEditing(true);
-    };
+    const handleEditClick = () => setIsEditing(true);
 
     const handleInputChange = (index, field, value) => {
         const updatedExperience = [...experience];
         updatedExperience[index][field] = value;
-    
-        // Validation logic for date fields
+
+        // Validate date fields
         if (field === "startDate" || field === "endDate") {
             const { startDate, endDate } = updatedExperience[index];
-            if (startDate && endDate && new Date(startDate) >= new Date(endDate)) {
-                alert("Start date must be before the end date.");
-                return; 
+            if (
+                startDate &&
+                endDate &&
+                new Date(startDate) >= new Date(endDate)
+            ) {
+                toast.error("Start date must be before the end date.");
+                return;
             }
         }
-    
+
+        setExperience(updatedExperience);
+    };
+
+    const handleAddExperience = () => {
+        setExperience([
+            ...experience,
+            { title: "", company: "", startDate: "", endDate: "" },
+        ]);
+        if (!isEditing) setIsEditing(true);
+    };
+
+    const handleRemoveExperience = (index) => {
+        const updatedExperience = experience.filter((_, i) => i !== index);
         setExperience(updatedExperience);
     };
 
@@ -38,6 +62,7 @@ const Experience = ({ userStatus }) => {
         try {
             const { firstName, lastName, fullName, ...rest } =
                 userStatus.individual;
+
             await updateMe({ ...rest, workExperience: [...experience] });
 
             setUserStatus({
@@ -47,14 +72,30 @@ const Experience = ({ userStatus }) => {
                     workExperience: [...experience],
                 },
             });
-
-            console.log("Updated Experience:", experience);
         } catch (err) {
-            console.log(err);
+            console.error(err);
         } finally {
             setIsEditing(false);
         }
     };
+
+    useEffect(() => {
+        const isExperienceComplete = (ex) => {
+            return ex.every(
+                ({ title, company, startDate, endDate }) =>
+                    title.trim() !== "" &&
+                    company.trim() !== "" &&
+                    startDate.trim() !== "" &&
+                    endDate.trim() !== ""
+            );
+        };
+
+        if (isEditing && isExperienceComplete(experience)) {
+            setDisabled(false);
+        } else {
+            setDisabled(true);
+        }
+    }, [experience, isEditing]);
 
     return (
         <div className="py-5 flex flex-col gap-6 my-8">
@@ -62,11 +103,18 @@ const Experience = ({ userStatus }) => {
                 <h1 className="text-[38px] font-bold font-display">
                     Experience & Awards
                 </h1>
-                <FiEdit
-                    size={20}
-                    onClick={handleEditClick}
-                    className="cursor-pointer"
-                />
+                <div className="flex items-center gap-4">
+                    <FiPlus
+                        size={20}
+                        onClick={handleAddExperience}
+                        className="cursor-pointer"
+                    />
+                    <FiEdit
+                        size={20}
+                        onClick={handleEditClick}
+                        className="cursor-pointer"
+                    />
+                </div>
             </div>
             {!isEditing ? (
                 <div className="flex flex-col gap-3">
@@ -96,9 +144,22 @@ const Experience = ({ userStatus }) => {
                 >
                     {experience.map((exp, index) => (
                         <div key={index} className="flex flex-col gap-2">
-                            <label className="font-medium text-lg">
-                                Experience {index + 1}
-                            </label>
+                            <div className="flex justify-between items-center">
+                                <label className="font-medium text-lg">
+                                    Experience {index + 1}
+                                </label>
+                                {experience.length > 1 && (
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            handleRemoveExperience(index)
+                                        }
+                                        className="text-red-500 hover:text-red-700"
+                                    >
+                                        Remove
+                                    </button>
+                                )}
+                            </div>
                             <input
                                 type="text"
                                 placeholder="Title"
@@ -128,7 +189,11 @@ const Experience = ({ userStatus }) => {
                             <input
                                 type="date"
                                 placeholder="Start Date"
-                                value={exp.startDate}
+                                value={
+                                    exp.startDate
+                                        ? formateDate(exp.startDate)
+                                        : ""
+                                }
                                 onChange={(e) =>
                                     handleInputChange(
                                         index,
@@ -141,7 +206,9 @@ const Experience = ({ userStatus }) => {
                             <input
                                 type="date"
                                 placeholder="End Date"
-                                value={exp.endDate}
+                                value={
+                                    exp.endDate ? formateDate(exp.endDate) : ""
+                                }
                                 onChange={(e) =>
                                     handleInputChange(
                                         index,
@@ -153,16 +220,31 @@ const Experience = ({ userStatus }) => {
                             />
                         </div>
                     ))}
+                    {/* <div className="flex items-center gap-2 mt-4">
+                        <button
+                            type="button"
+                            onClick={handleAddExperience}
+                            className="px-4 py-2 grow bg-green-500 text-white rounded-md hover:bg-green-600"
+                        >
+                            Add Another Experience
+                        </button>
+                    </div> */}
                     <div className="flex items-center gap-2">
                         <div
-                            onClick={() => setIsEditing(false)}
+                            onClick={() => {
+                                setIsEditing(false);
+                                setExperience(
+                                    userStatus.individual.workExperience
+                                );
+                            }}
                             className="cursor-pointer text-center grow px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
                         >
                             Cancel
                         </div>
                         <button
                             type="submit"
-                            className="px-4 py-2 grow bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                            disabled={disabled}
+                            className="px-4 py-2 grow bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-slate-500 disabled:cursor-not-allowed"
                         >
                             Save
                         </button>

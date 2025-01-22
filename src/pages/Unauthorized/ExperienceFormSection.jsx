@@ -12,7 +12,7 @@ import {
 } from "../../utils/constants";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaCheck } from "react-icons/fa6";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ExperienceFormSection = () => {
     const [formValues, setFormValues] = useState(initialExperienceFormValues);
@@ -229,17 +229,8 @@ const ExperienceFormSection = () => {
                                     disqualification from the platform.
                                 </p>
                             </div>
-                            <div className="flex flex-col items-end flex-1 gap-[17px]">
+                            <div className="flex flex-col items-end flex-1 gap-[17px] pb-5">
                                 <FormButton text={"Next"} disabled={disabled} />
-                                <p className="text-right text-sm text-[#64748B]">
-                                    Don't have an account yet?{" "}
-                                    <Link
-                                        className="text-blue-primary"
-                                        to="/login"
-                                    >
-                                        Click here to create one!
-                                    </Link>
-                                </p>
                             </div>
                         </div>
                     </form>

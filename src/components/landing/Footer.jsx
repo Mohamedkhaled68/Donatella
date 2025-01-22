@@ -49,7 +49,7 @@ const Footer = () => {
                         </div>
                         <p className="hidden lg:block text-[17px] font-extralight">
                             <span className="font-bold">&copy;</span> All Rights
-                            Reserved, 2024.
+                            Reserved, {new Date().getFullYear()}.
                         </p>
                     </div>
                     <div className="flex flex-col mt-[20px] lg:mt-[0] items-center lg:items-end gap-5 lg:gap-11">
@@ -78,7 +78,7 @@ const Footer = () => {
                         </ul>
                         <p className="block lg:hidden text-[14px] lg:text-[17px] font-extralight">
                             <span className="font-bold">&copy;</span> All Rights
-                            Reserved, 2024.
+                            Reserved, {new Date().getFullYear()}.
                         </p>
                     </div>
                 </div>

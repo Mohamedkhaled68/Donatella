@@ -330,7 +330,7 @@ const ProfileHeader = ({ data }) => {
 export default ProfileHeader;
 
 const IconLink = ({ url, Icon }) => (
-    <div onClick={() => window.open(url, "_blank")} className="cursor-pointer">
+    <a href={url} target="_blank" className="cursor-pointer">
         <Icon size={25} />
-    </div>
+    </a>
 );

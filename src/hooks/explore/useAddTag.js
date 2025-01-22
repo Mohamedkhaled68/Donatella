@@ -15,11 +15,11 @@ const useAddTag = () => {
                 },
             });
 
-            console.log(response.data.data);
+            return response.data.data;
         },
         onSuccess: () => {},
         onError: (error) => {
-            console.error("Mutation failed:", error);
+            return error?.response?.data?.message;
         },
     });
 };

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import useAddTag from "../../hooks/explore/useAddTag";
+import toast from "react-hot-toast";
 
 const TagInput = ({
     tags,
-    setTags,
     isInputVisible,
     setIsInputVisible,
     selectedTags,
@@ -22,24 +22,21 @@ const TagInput = ({
         if (e.key === "Enter" && tagInput.trim() !== "") {
             try {
                 const newTag = { title: tagInput.trim() };
-                await addTag({ title: tagInput.trim() });
-                setTags((prevTags) => [...prevTags, newTag.id]);
+                await addTag(newTag);
 
                 setTagInput("");
                 setIsInputVisible(false);
             } catch (err) {
-                console.log(err);
+                toast.error(err?.response?.data?.message[0]);
             }
         }
     };
 
     const handleTagClick = (tag) => {
-        const tagId = tag.id;
-        if (selectedTags.some((selectedTag) => selectedTag.id === tagId)) {
-            setSelectedTags(selectedTags.filter((t) => t.id !== tagId));
+        if (selectedTags.some((selectedTag) => selectedTag === tag.id)) {
+            setSelectedTags(selectedTags.filter((t) => t !== tag.id));
         } else {
-            console.log(tagId);
-            setSelectedTags([...selectedTags, tagId]);
+            setSelectedTags([...selectedTags, tag.id]);
         }
     };
 
@@ -77,6 +74,8 @@ const TagInput = ({
                                 className="tag-input rounded-lg bg-transparent border border-[#94A3B8] text-[#94A3B8] px-4 py-2 w-full focus:outline-none focus:border-[#0C71D7]"
                                 placeholder="Type and press Enter"
                                 autoFocus
+                                maxLength={15}
+                                minLength={2}
                             />
                         </motion.div>
                     )}
@@ -84,15 +83,15 @@ const TagInput = ({
 
                 <div className="flex flex-wrap gap-8 items-center">
                     <div className="flex flex-wrap gap-3 items-center">
-                        {tags.map((tag, index) => (
+                        {tags.map((tag) => (
                             <motion.div
-                                key={tag?.id || `tag-${index}`}
+                                key={tag?.id}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => handleTagClick(tag)}
                                 className={`tag-item cursor-pointer flex items-center gap-2 
                                 ${
-                                    selectedTags.some((id) => id === tag.id)
+                                    selectedTags.some((id) => id === tag?.id)
                                         ? "bg-[#0C71D7] text-white-base"
                                         : "bg-white-base text-black"
                                 } 
