@@ -61,7 +61,6 @@ const Signup = () => {
     }
 
     useEffect(() => {
-        console.log(location.state);
         if (location.state?.role) {
             setRole(location.state.role);
         } else {
@@ -94,30 +93,51 @@ const Signup = () => {
                         </div>
 
                         <div className="flex justify-center items-center gap-5 w-full">
-                            <button
-                                key={"Organization"}
-                                type="button"
-                                onClick={() => handleRoleChange("Organization")}
-                                className={`${
-                                    role === "Organization"
-                                        ? "bg-white-base text-gray-deep"
-                                        : "bg-[#27292C] text-white-base"
-                                } w-1/2 px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
-                            >
-                                Organization
-                            </button>
-                            <button
-                                key={"Individual"}
-                                type="button"
-                                onClick={() => handleRoleChange("Individual")}
-                                className={`${
-                                    role === "Individual"
-                                        ? "bg-white-base text-gray-deep"
-                                        : "bg-[#27292C] text-white-base"
-                                } w-1/2 border-medium border-white-base px-5 py-4 text-medium font-bold rounded-xl transition-all duration-300`}
-                            >
-                                Individual
-                            </button>
+                            {/* Organization Button */}
+                            <div className="relative group w-1/2">
+                                <button
+                                    key={"Organization"}
+                                    type="button"
+                                    onClick={() =>
+                                        handleRoleChange("Organization")
+                                    }
+                                    className={`${
+                                        role === "Organization"
+                                            ? "bg-white-base text-gray-deep"
+                                            : "bg-[#27292C] text-white-base"
+                                    } w-full px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
+                                >
+                                    Organization
+                                </button>
+                                <div className="absolute w-[300px] bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md">
+                                    Log in as an organization to hire top
+                                    talents in different fields for your job or
+                                    project.
+                                </div>
+                            </div>
+
+                            {/* Individual Button */}
+                            <div className="relative group w-1/2">
+                                <button
+                                    key={"Individual"}
+                                    type="button"
+                                    onClick={() =>
+                                        handleRoleChange("Individual")
+                                    }
+                                    className={`${
+                                        role === "Individual"
+                                            ? "bg-white-base text-gray-deep"
+                                            : "bg-[#27292C] text-white-base"
+                                    } w-full px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
+                                >
+                                    Individual
+                                </button>
+                                <div className="absolute w-[350px] bottom-full -right-[100%] z-[1000] transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md duration-300">
+                                    Log in as an individual to showcase your
+                                    talent, connect with businesses, and launch
+                                    your career on a trusted platform.
+                                </div>
+                            </div>
                         </div>
 
                         {role === "Organization" ? (

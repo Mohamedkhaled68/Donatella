@@ -29,41 +29,39 @@ const Login = () => {
         }));
     };
 
-    
-        // Enhanced mobile detection using multiple methods
-        const detectMobile = () => {
-            const userAgent =
-                navigator.userAgent || navigator.vendor || window.opera;
-            const mobileRegex =
-                /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
-    
-            const conditions = [
-                mobileRegex.test(userAgent.toLowerCase()),
-                typeof window.orientation !== "undefined",
-                navigator.maxTouchPoints > 0,
-                window.innerWidth <= 768,
-            ];
-    
-            return conditions.some((condition) => condition);
-        };
-    
-        useEffect(() => {
-            // Initial check
+    // Enhanced mobile detection using multiple methods
+    const detectMobile = () => {
+        const userAgent =
+            navigator.userAgent || navigator.vendor || window.opera;
+        const mobileRegex =
+            /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
+
+        const conditions = [
+            mobileRegex.test(userAgent.toLowerCase()),
+            typeof window.orientation !== "undefined",
+            navigator.maxTouchPoints > 0,
+            window.innerWidth <= 768,
+        ];
+
+        return conditions.some((condition) => condition);
+    };
+
+    useEffect(() => {
+        // Initial check
+        setIsMobile(detectMobile());
+
+        // Add resize listener for responsive detection
+        const handleResize = () => {
             setIsMobile(detectMobile());
-    
-            // Add resize listener for responsive detection
-            const handleResize = () => {
-                setIsMobile(detectMobile());
-            };
-    
-            window.addEventListener("resize", handleResize);
-    
-            // Cleanup
-            return () => {
-                window.removeEventListener("resize", handleResize);
-            };
-        }, []);
-    
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        // Cleanup
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -111,8 +109,6 @@ const Login = () => {
         setDisabled(!isFilled || Object.keys(errors).length !== 0);
     }, [formValues]);
 
-
-    
     if (isMobile) {
         return <Navigate to="/" replace />;
     }
@@ -156,35 +152,53 @@ const Login = () => {
                                 <h2 className="text-xl font-semibold font-display">
                                     Login As:
                                 </h2>
-                                <div className="flex justify-center items-center gap-5 w-full">
-                                    <button
-                                        key={"Organization"}
-                                        type="button"
-                                        onClick={() =>
-                                            handleRoleChange("Organization")
-                                        }
-                                        className={`${
-                                            role === "Organization"
-                                                ? "bg-white-base text-gray-deep"
-                                                : "bg-[#27292C] text-white-base"
-                                        } w-1/2 px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
-                                    >
-                                        Organization
-                                    </button>
-                                    <button
-                                        key={"Individual"}
-                                        type="button"
-                                        onClick={() =>
-                                            handleRoleChange("Individual")
-                                        }
-                                        className={`${
-                                            role === "Individual"
-                                                ? "bg-white-base text-gray-deep"
-                                                : "bg-[#27292C] text-white-base"
-                                        } w-1/2 border-medium border-white-base px-5 py-4 text-medium font-bold rounded-xl transition-all duration-300`}
-                                    >
-                                        Individual
-                                    </button>
+                                <div className="flex justify-center items-center gap-5 w-full relative">
+                                    {/* Organization Button */}
+                                    <div className="relative group w-1/2">
+                                        <button
+                                            key={"Organization"}
+                                            type="button"
+                                            onClick={() =>
+                                                handleRoleChange("Organization")
+                                            }
+                                            className={`${
+                                                role === "Organization"
+                                                    ? "bg-white-base text-gray-deep"
+                                                    : "bg-[#27292C] text-white-base"
+                                            } w-full px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
+                                        >
+                                            Organization
+                                        </button>
+                                        <div className="absolute w-[300px] bottom-full left-[0] transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md">
+                                            Log in as an organization to hire
+                                            top talents in different fields for
+                                            your job or project.
+                                        </div>
+                                    </div>
+
+                                    {/* Individual Button */}
+                                    <div className="relative group w-1/2">
+                                        <button
+                                            key={"Individual"}
+                                            type="button"
+                                            onClick={() =>
+                                                handleRoleChange("Individual")
+                                            }
+                                            className={`${
+                                                role === "Individual"
+                                                    ? "bg-white-base text-gray-deep"
+                                                    : "bg-[#27292C] text-white-base"
+                                            } w-full px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
+                                        >
+                                            Individual
+                                        </button>
+                                        <div className="absolute w-[350px] bottom-full -right-[190%] z-[1000] transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md duration-300">
+                                            Log in as an individual to showcase
+                                            your talent, connect with
+                                            businesses, and launch your career
+                                            on a trusted platform.
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div className="flex flex-col gap-5 mt-[20px]">
