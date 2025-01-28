@@ -141,12 +141,12 @@ const ProfileHeader = ({ data }) => {
 
     return (
         <>
-            <div className="w-full flex justify-around items-center gap-[170px] my-8">
+            <div className="w-full flex justify-around items-start gap-[170px] my-8">
                 {data.role === "ORGANIZATION" ? (
                     <>
-                        <div className="flex flex-col justify-center items-center gap-3">
-                            <div className="flex justify-center items-end relative">
-                                <div className="w-[124px] h-[124px] rounded-full bg-slate-400 overflow-hidden flex justify-center items-center">
+                        <div className="flex flex-col justify-center items-center gap-5">
+                            <div className="flex justify-center items-start relative">
+                                <div className="w-[100px] h-[100px] rounded-full bg-slate-400 overflow-hidden flex justify-center items-center">
                                     <img
                                         className="w-full h-full object-cover"
                                         src={data?.organization?.logo}
@@ -169,21 +169,21 @@ const ProfileHeader = ({ data }) => {
                             </div>
                             <Rating rating={4} size={30} maxRating={5} />
                         </div>
-                        <div className="flex flex-col items-center gap-5">
-                            <div className="flex flex-col justify-center items-center">
-                                <h1 className="font-display text-2xl font-black capitalize">
-                                    {data.organization.name}
-                                </h1>
-                                <p className="font-body text-white-base/50 text-base font-light capitalize">
-                                    {/* Los Angeles, CA, USA */}
-                                    {getKeyByValue(
-                                        CountryEnum.enums,
-                                        data?.organization.location
-                                    )}
-                                    , {""} {data?.organization.location}
-                                </p>
-                            </div>
-                            <div className="text-base font-light font-body text-center w-[210px] capitalize rounded-lg bg-[#197FE540] px-[5px] py-2">
+                        <div className="flex flex-col items-center -mt-[7px]">
+                            {/* <div className="flex flex-col justify-center items-center"> */}
+                            <h1 className="font-display text-2xl font-black capitalize mb-[10px]">
+                                {data.organization.name}
+                            </h1>
+                            <p className="mb-[10px] font-body text-white-base/50 text-base font-light capitalize">
+                                {/* Los Angeles, CA, USA */}
+                                {getKeyByValue(
+                                    CountryEnum.enums,
+                                    data?.organization.location
+                                )}
+                                , {""} {data?.organization.location}
+                            </p>
+                            {/* </div> */}
+                            <div className="mb-[15px] text-base font-light font-body text-center w-[210px] capitalize rounded-lg bg-[#197FE540] px-[5px] py-2">
                                 {data.role.toLowerCase()}
                             </div>
                             <div className="w-full flex items-center justify-around">
@@ -204,9 +204,11 @@ const ProfileHeader = ({ data }) => {
                     </>
                 ) : (
                     <>
-                        <div className="flex flex-col justify-center items-center gap-3">
+                        <div
+                            className={`flex flex-col justify-center items-center gap-3`}
+                        >
                             <div className="flex justify-center items-end relative">
-                                <div className="w-[124px] h-[124px] rounded-full bg-slate-400 overflow-hidden flex justify-center items-center">
+                                <div className="w-[115px] h-[115px] rounded-full bg-slate-400 overflow-hidden flex justify-center items-center">
                                     <img
                                         className="w-full h-full object-cover"
                                         src={
@@ -231,26 +233,44 @@ const ProfileHeader = ({ data }) => {
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-col items-center gap-3">
-                            <div className="flex flex-col justify-center items-center">
-                                <h1 className="font-display text-2xl font-black capitalize">
-                                    {data.individual.fullName}
-                                </h1>
-                                {userStatus.individual.role === "MODEL" && (
-                                    <p className="font-body text-white-base/50 text-base font-light capitalize mt-4">
-                                        {getKeyByValue(
-                                            CountryEnum.enums,
-                                            data?.individual?.specialtyInfo
-                                                .nationality
-                                        )}
-                                        , {""}{" "}
-                                        {
-                                            data?.individual?.specialtyInfo
-                                                .nationality
-                                        }
-                                    </p>
-                                )}
-                            </div>
+                        <div
+                            className={`flex flex-col items-center  ${
+                                userStatus.individual.role === "MODEL"
+                                    ? "gap-0"
+                                    : "gap-3"
+                            } `}
+                        >
+                            {/* <div className="flex flex-col justify-center items-center"> */}
+                            <h1
+                                className={`font-display text-2xl font-black capitalize ${
+                                    userStatus.individual.role === "MODEL"
+                                        ? "mb-[20px] -mt-[6px]"
+                                        : "-mt-[7px]"
+                                }`}
+                            >
+                                {data.individual.fullName}
+                            </h1>
+                            {userStatus.individual.role === "MODEL" && (
+                                <p className="font-body text-white-base/50 text-base font-light capitalize mt-[-10px] mb-[13px]">
+                                    {getKeyByValue(
+                                        CountryEnum.enums,
+                                        data?.individual?.specialtyInfo
+                                            .nationality
+                                    )}
+                                    , {""}{" "}
+                                    {
+                                        data?.individual?.specialtyInfo
+                                            .nationality
+                                    }
+                                </p>
+                            )}
+                            {/* </div> */}
+                            {userStatus.individual.role !== "MODEL" && (
+                                <p className="font-body text-white-base/50 text-base font-light">
+                                    0 Projects Completed
+                                </p>
+                            )}
+
                             <div className="text-base font-light font-body text-center w-[210px] capitalize rounded-lg bg-[#197FE540] px-[5px] py-2">
                                 {data?.individual?.role?.toLowerCase()}
                             </div>
@@ -259,11 +279,9 @@ const ProfileHeader = ({ data }) => {
                 )}
 
                 {data.role === "INDIVIDUAL" ? (
-                    <div className="flex flex-col items-center justify-between gap-2">
+                    <div className="flex flex-col items-center justify-between gap-[27px]">
                         <Rating rating={3} size={30} maxRating={5} />
-                        <p className="font-body text-white-base/50 text-base font-light">
-                            0 Projects Completed
-                        </p>
+
                         <div
                             onClick={() => setOpen(!open)}
                             className="cursor-pointer relative text-lg font-bold font-body text-center w-full rounded-[46px] bg-blue-primary px-[35px] py-[15px] flex justify-center items-center gap-[10px]"
@@ -274,9 +292,16 @@ const ProfileHeader = ({ data }) => {
                             <AnimatePresence>
                                 {open && (
                                     <motion.div
-                                        initial={{ height: 0 }}
-                                        animate={{ height: open ? "50px" : 0 }}
-                                        exit={{ height: 0 }}
+                                        initial={{ y: -10, opacity: 0 }}
+                                        animate={{
+                                            y: open ? 0 : -10,
+                                            opacity: open ? 1 : 0,
+                                        }}
+                                        exit={{
+                                            y: -10,
+                                            opacity: 0,
+                                            transition: { delay: 0.3 },
+                                        }}
                                         className="cursor-default overflow-hidden absolute w-full bg-slate-600 text-white-base rounded-md px-2 h-[50px] -bottom-14"
                                     >
                                         <div className="flex items-center justify-between mt-[12px] cursor-pointer">
@@ -306,7 +331,7 @@ const ProfileHeader = ({ data }) => {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex flex-col items-center gap-5">
+                    <div className="flex flex-col items-center gap-[35px]">
                         <button
                             type="button"
                             className="text-lg font-bold font-body text-center w-full rounded-[46px] bg-[#293038] px-[73px] py-[15px]"
@@ -328,9 +353,8 @@ const ProfileHeader = ({ data }) => {
 };
 
 export default ProfileHeader;
-
 const IconLink = ({ url, Icon }) => (
-    <a href={url} target="_blank" className="cursor-pointer">
+    <div onClick={() => window.open(url, "_blank")} className="cursor-pointer">
         <Icon size={25} />
-    </a>
+    </div>
 );

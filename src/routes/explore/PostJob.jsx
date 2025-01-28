@@ -83,6 +83,13 @@ const PostJob = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
+        if (name !== "salary") {
+            if (Number(value)) {
+                toast.error(`Please include charachters in ${name} field `);
+                return;
+            }
+        }
+
         // Explicitly check for an empty string
         const parsedValue =
             value === "" ? "" : isNaN(value) ? value : Number(value);
@@ -159,15 +166,15 @@ const PostJob = () => {
                 ...formValues,
                 tags: selectedTags,
             });
-        } catch (err) {
-            console.log(err);
-        } finally {
             setFormValues(initialJobPostFormValues);
             setSelectedTags([]);
-            setCheck(false);
             toast.success("Job posted successfully");
-            setLoading(false);
             navigate("/");
+        } catch (err) {
+            toast.error(err?.response?.data?.message);
+        } finally {
+            setCheck(false);
+            setLoading(false);
         }
     };
 
@@ -301,7 +308,7 @@ const PostJob = () => {
                                         )
                                     }
                                     className="rounded-[28px] px-[18px] py-[14px] outline-none bg-transparent text-[#94A3B8] text-medium font-body w-full"
-                                    placeholder="Enter minimum experience"
+                                    placeholder="Min Years"
                                 />
                                 <span>~</span>
                                 <input
@@ -318,7 +325,7 @@ const PostJob = () => {
                                         )
                                     }
                                     className="rounded-[28px] px-[18px] py-[14px] outline-none bg-transparent text-[#94A3B8] text-medium font-body w-full"
-                                    placeholder="Enter maximum experience"
+                                    placeholder="Max Years"
                                 />
                             </div>
                         </div>
@@ -349,7 +356,7 @@ const PostJob = () => {
                                                 )
                                             }
                                             className="px-[10px] py-[14px] outline-none bg-transparent text-[#94A3B8] text-medium font-body w-full"
-                                            placeholder="Minimum Duration"
+                                            placeholder="Min Duration"
                                         />
                                     </div>
 
@@ -400,7 +407,7 @@ const PostJob = () => {
                                                 )
                                             }
                                             className="rounded-[28px] px-[18px] py-[14px] outline-none bg-transparent text-[#94A3B8] text-medium font-body w-full"
-                                            placeholder="Maximum Duration"
+                                            placeholder="Max Duration"
                                         />
                                     </div>
 
@@ -501,7 +508,7 @@ const PostJob = () => {
                                 value={formValues.salary}
                                 onChange={handleInputChange}
                                 className="rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-[#94A3B8] text-medium font-body px-[18px] py-[14px] w-full mt-2"
-                                placeholder="Enter job salary"
+                                placeholder="Job Salary in $USD"
                             />
                         </div>
 
@@ -602,7 +609,7 @@ const PostJob = () => {
                         </div>
                         <div className="flex flex-col items-end flex-1 gap-[17px] pb-5">
                             <FormButton
-                                text={"Next"}
+                                text={"Post Job"}
                                 disabled={disabled || loading}
                             />
                         </div>

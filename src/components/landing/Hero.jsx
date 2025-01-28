@@ -28,6 +28,7 @@ const Hero = () => {
                                     className="w-[150px]"
                                     src={donatellaLogo}
                                     alt="logo"
+                                    loading="lazy"
                                 />
                             </div>
                             <div className="hidden lg:flex items-center justify-end gap-10">

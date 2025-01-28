@@ -12,6 +12,10 @@ export { default as VerifyingPage } from "./Unauthorized/VerifyingPage";
 export { default as ProfileFormSection } from "./Unauthorized/ProfileFormSection";
 export { default as ExperienceFormSection } from "./Unauthorized/ExperienceFormSection";
 export { default as OrgProfileForm } from "./Unauthorized/OrgProfileForm";
+export { default as AboutUs } from "./Unauthorized/AboutUs";
+export { default as Privacy } from "./Unauthorized/Privacy";
+export { default as Contact } from "./Unauthorized/Contact";
+export { default as Services } from "./Unauthorized/Services";
 
 //TO DELETED
 export { default as DeleteUsers } from "./DeleteUsers";

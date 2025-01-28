@@ -53,6 +53,7 @@ const Instructions = () => {
                                         className="filter grayscale w-full object-cover h-full"
                                         src={image}
                                         alt={title}
+                                        loading="lazy"
                                     />
                                 </div>
                                 <div className="flex flex-col">

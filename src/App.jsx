@@ -12,6 +12,10 @@ import {
     Messages,
     OrgProfileForm,
     Payments,
+    AboutUs,
+    Contact,
+    Services,
+    Privacy,
 } from "./pages";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { PageContainer } from "./components";
@@ -50,6 +54,11 @@ const App = () => {
                 <PageContainer pathname={location.pathname}>
                     <Routes location={location}>
                         {/* UNAUTHORIZED */}
+                        <Route path="/about" element={<AboutUs />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="/services" element={<Services />} />
+                        <Route path="/privacy" element={<Privacy />} />
+                        
                         <Route path="/landing" element={<Landing />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />

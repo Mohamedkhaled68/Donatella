@@ -1,20 +1,21 @@
 import React from "react";
 import { FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa";
-import { FaSnapchat } from "react-icons/fa6";
+import { FaInstagramSquare } from "react-icons/fa";
+import { FaSnapchatGhost } from "react-icons/fa";
 import { FaTiktok } from "react-icons/fa";
 import { donatellaLogo } from "../../assets";
 import { FaYoutube } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const icons = [
     {
-        icon: <FaInstagram size={25} />,
+        icon: <FaInstagramSquare size={25} />,
         link: "https://www.instagram.com/donatellaksa",
     },
     {
-        icon: <FaSnapchat size={25} />,
+        icon: <FaSnapchatGhost size={25} />,
         link: "https://snapchat.com/t/6pI2FaWD",
     },
     {
@@ -71,10 +72,18 @@ const Footer = () => {
                             </div>
                         </div>
                         <ul className="lg:list-disc flex gap-[8px] lg:gap-12 font-poppins text-[11px] lg:text-base font-light">
-                            <li>About us</li>
-                            <li>Privacy Policy</li>
-                            <li>Support</li>
-                            <li>Contact us</li>
+                            <li>
+                                <Link to={"/about"}>About us</Link>
+                            </li>
+                            <li>
+                                <Link to={"/privacy"}>Privacy PoLinkcy</Link>
+                            </li>
+                            <li>
+                                <Link to={"/services"}>Services</Link>
+                            </li>
+                            <li>
+                                <Link to={"/contact"}>Contact us</Link>
+                            </li>
                         </ul>
                         <p className="block lg:hidden text-[14px] lg:text-[17px] font-extralight">
                             <span className="font-bold">&copy;</span> All Rights

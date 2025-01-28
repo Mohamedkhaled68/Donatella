@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { CgCloseR } from "react-icons/cg";
 import { MdOutlineAddBox } from "react-icons/md";
-import { LogoHeader, OrganizationProfileForm } from "../../components";
+import { Loading, LogoHeader, OrganizationProfileForm } from "../../components";
 import { CiImageOn } from "react-icons/ci";
 import useUploadImage from "../../hooks/auth/useUploadImage";
 
@@ -44,11 +44,11 @@ const OrgProfileForm = () => {
 
     return (
         <>
-            <section className="min-h-screen w-full text-white pb-10">
+            <section className="relative min-h-screen w-full text-white pb-10">
                 <LogoHeader />
                 {loading && (
                     <div className="absolute w-full h-full flex justify-center items-center z-[10000] bg-black/50">
-                        <p>Loading...</p>
+                        <Loading />
                     </div>
                 )}
                 <div className="container mx-auto grid grid-cols-2 gap-6 mt-10">
@@ -56,6 +56,8 @@ const OrgProfileForm = () => {
                         loading={loading}
                         setLoading={setLoading}
                         imageUrl={previewUrl}
+                        setPreviewUrl={setPreviewUrl}
+                        setMedia={setMedia}
                     />
                     {/* Left Side */}
                     <div className="w-full h-full flex justify-center items-center">

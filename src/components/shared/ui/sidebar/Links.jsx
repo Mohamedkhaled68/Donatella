@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const variants = {
     open: {
@@ -26,7 +27,12 @@ const itemVariants = {
 };
 
 const Links = () => {
-    const items = ["Homepage", "Services", "Portfolio", "Contact", "About"];
+    const items = [
+        { path: "/about", name: "About" },
+        { path: "/services", name: "Services" },
+        { path: "/contact", name: "Contact" },
+        { path: "/privacy", name: "Privacy Policy" },
+    ];
 
     return (
         <>
@@ -37,13 +43,13 @@ const Links = () => {
                 <ul className="flex flex-col justify-center items-center gap-10">
                     {items.map((item) => (
                         <motion.li
-                            key={item}
+                            key={item.name}
                             variants={itemVariants}
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.95 }}
                             className="text-white-base font-display text-3xl font-thin italic cursor-pointer drop-shadow"
                         >
-                            {item}
+                            <Link to={item.path}>{item.name}</Link>
                         </motion.li>
                     ))}
                 </ul>

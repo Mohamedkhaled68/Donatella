@@ -77,6 +77,7 @@ const ModelsCard = ({
                     className="w-full h-full object-cover filter grayscale group-hover:scale-110 duration-500 group-hover:grayscale-0"
                     src={image}
                     alt="guy"
+                    loading="lazy"
                 />
                 <div className="w-[calc(100%-6px)] h-[calc(100%-6px)] bg-black/45 group-hover:bg-black/0 duration-300 rounded-[100px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" />
             </div>

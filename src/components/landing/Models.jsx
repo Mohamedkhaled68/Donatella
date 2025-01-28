@@ -137,16 +137,19 @@ const Models = ({ modelsRef, talentsRef }) => {
                             className="w-[10%] lg:w-1/3 object-cover h-full filter grayscale"
                             src={talent1}
                             alt="talent1"
+                            loading="lazy"
                         />
                         <img
                             className="w-[80%] lg:w-1/3 object-cover h-full border-x-4 border-slate-700 filter grayscale"
                             src={talent2}
                             alt="talent2"
+                            loading="lazy"
                         />
                         <img
                             className="w-[10%] lg:w-1/3 object-cover h-full filter grayscale"
                             src={talent3}
                             alt="talent3"
+                            loading="lazy"
                         />
                         <div className="w-[calc(100%-4px)] h-[calc(100%-4px)] bg-black/70 group-hover:bg-black/0 duration-400 rounded-[100px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white flex justify-center items-center">
                             <div className="flex flex-col gap-10 items-center">
