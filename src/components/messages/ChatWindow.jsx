@@ -1,76 +1,80 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { IoSend } from "react-icons/io5";
-import { GrAttachment } from "react-icons/gr";
 import { useUserStore } from "../../store/userStore";
+import { breakLongWords, formatChatDate } from "../../utils/helpers";
+import Message from "./Message";
+import useGetChatMessages from "../../hooks/chat/useGetChatMessages";
+import SendMessageContainer from "./SendMessageContainer";
+import ReviewModal from "./ReviewModal";
 
-const formatChatDate = (isoDateString) => {
-    const date = new Date(isoDateString);
+const ChatWindow = ({ currentChat, error, setReviewModal, reviewModal }) => {
+    const [jobRequest, setJobRequest] = useState([]);
+    const [chatMessages, setChatMessages] = useState([]);
 
-    const options = {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
+    const inputRef = useRef(null);
+    const messagesEndRef = useRef(null);
+    const messagesContainerRef = useRef(null);
+
+    const userStatus = useUserStore((state) => state.userStatus);
+    const { mutateAsync: getChatMessages } = useGetChatMessages();
+
+    const fetchMessages = async () => {
+        if (!currentChat) return;
+        try {
+            const chatData = await getChatMessages(currentChat?.id);
+            setChatMessages(chatData?.items?.reverse());
+        } catch (err) {
+            console.error("Error fetching messages:", err);
+        }
     };
 
-    return date.toLocaleString(undefined, options);
-};
-
-const Message = ({ message, timestamp, isSender }) => (
-    <div
-        className={`my-[10px] max-w-[60%] w-fit ${
-            isSender ? "self-end items-end" : "self-start items-start"
-        } flex flex-col  gap-2`}
-    >
-        <div
-            className={`px-[20px] py-[10px] ${
-                isSender ? "bg-blue-primary" : "bg-zinc-700"
-            } text-white-base text-[16px] font-light rounded-[19px] break-words max-w-full whitespace-pre-wrap`}
-        >
-            <p>{message}</p>
-        </div>
-        <span className="text-sm font-light text-[#707070]">{timestamp}</span>
-    </div>
-);
-
-const ChatWindow = ({
-    messagesEndRef,
-    currentChat,
-    chatMessages,
-    handleSendMessage,
-    input,
-    setInput,
-    isLoading,
-    error,
-    messagesContainerRef,
-    scrollToBottom,
-    setReviewModal,
-}) => {
-    const inputRef = useRef(null);
-    const userStatus = useUserStore((state) => state.userStatus);
+    const scrollToBottom = () => {
+        if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTo({
+                top: messagesContainerRef.current.scrollHeight,
+                behavior: "smooth",
+            });
+        }
+    };
 
     useEffect(() => {
         setTimeout(() => scrollToBottom(), 6000);
     }, [currentChat]);
 
-    // Focus input on chat change
-    // useEffect(() => {
-    //     inputRef.current?.focus();
-    // }, [currentChat]);
+    useEffect(() => {
+        const fetchMessagesInterval = setInterval(() => {
+            fetchMessages();
+        }, 2000); // Run every 2 seconds
 
-    const breakLongWords = (text, maxWordLength = 20) => {
-        if (!text) return "";
-        return text
-            .split(" ")
-            .map((word) =>
-                word.length > maxWordLength
-                    ? word
-                          .match(new RegExp(`.{1,${maxWordLength}}`, "g"))
-                          .join(" ")
-                    : word
-            )
-            .join(" ");
-    };
+        // Cleanup the interval when the component unmounts or currentChat changes
+        return () => {
+            clearInterval(fetchMessagesInterval);
+        };
+    }, [currentChat]); // Dependency array to run the effect when currentChat changes
+
+    useEffect(() => {
+        if (chatMessages.length > 0) {
+            chatMessages.forEach((message) => {
+                if (message.messageType === "REQUEST" && message.jobRequest.requestStatus !== "PENDING") {
+                    setJobRequest((prevJobRequests) => {
+                        if (
+                            prevJobRequests.every(
+                                (req) =>
+                                    req.job.id !== message.jobRequest.job.id
+                            )
+                        ) {
+                            return [...prevJobRequests, message.jobRequest];
+                        }
+                        return prevJobRequests;
+                    });
+                }
+            });
+        }
+    }, [chatMessages]);
+
+    // useEffect(() => {
+    //     console.log(jobRequest);
+    // });
 
     if (!currentChat) {
         return (
@@ -90,105 +94,81 @@ const ChatWindow = ({
     }
 
     return (
-        <div className="w-[70%] relative overflow-hidden h-full p-4 rounded-lg bg-[#313131] flex flex-col">
-            {/* Header */}
-            <div className="border-b-thin border-white-base flex justify-between items-center pb-2 w-full">
-                <div className="flex items-center  gap-3">
-                    <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full flex justify-center items-center bg-zinc-700">
-                        {currentChat.friend.profilePicture ? (
-                            <img
-                                src={currentChat.friend.profilePicture}
-                                alt={currentChat.friend.name}
-                                className="max-w-full h-full object-cover"
-                                loading="lazy"
-                                onError={(e) => {
-                                    e.target.onerror = null;
-                                    e.target.style.display = "none";
-                                }}
-                            />
-                        ) : (
-                            <FaUser className="text-[#9e9e9ebd]" size={20} />
-                        )}
-                    </div>
-                    <div className="flex flex-col">
-                        <h2 className="text-white-base font-display text-[16px] font-bold">
-                            {currentChat.friend.name}
-                        </h2>
-                        <p className="text-white-base/70 font-body text-sm font-extralight">
-                            online
-                        </p>
-                    </div>
-                </div>
-                {userStatus?.organization && (
-                    <button
-                        type="button"
-                        onClick={() => setReviewModal(true)}
-                        className="bg-background-dark rounded-3xl py-3 px-12 text-white-base"
-                    >
-                        Finish Job
-                    </button>
-                )}
-            </div>
-
-            {/* Messages */}
-            <div
-                ref={messagesContainerRef}
-                className="relative h-full w-full grow overflow-y-auto px-3 custom-scrollbar scroll-smooth"
-            >
-                <div className="flex w-full flex-col justify-end">
-                    {error && (
-                        <div className="text-red-500 text-center py-2 text-sm">
-                            {error}
+        <>
+            {reviewModal && <ReviewModal setReviewModal={setReviewModal} jobRequest={jobRequest}/>}
+            <div className="w-[70%] relative overflow-hidden h-full p-4 rounded-lg bg-[#313131] flex flex-col">
+                {/* Header */}
+                <div className="border-b-thin border-white-base flex justify-between items-center pb-2 w-full">
+                    <div className="flex items-center  gap-3">
+                        <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full flex justify-center items-center bg-zinc-700">
+                            {currentChat.friend.profilePicture ? (
+                                <img
+                                    src={currentChat.friend.profilePicture}
+                                    alt={currentChat.friend.name}
+                                    className="max-w-full h-full object-cover"
+                                    loading="lazy"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.style.display = "none";
+                                    }}
+                                />
+                            ) : (
+                                <FaUser
+                                    className="text-[#9e9e9ebd]"
+                                    size={20}
+                                />
+                            )}
                         </div>
-                    )}
-                    {chatMessages.map((message) => (
-                        <Message
-                            key={message?.id}
-                            message={breakLongWords(message?.content)}
-                            timestamp={formatChatDate(message?.createdAt)}
-                            isSender={message?.sender?.id === userStatus.id}
-                        />
-                    ))}
-                    <div ref={messagesEndRef} />
-                </div>
-            </div>
-
-            {/* Input Area */}
-            <div className="w-full border-t-thin border-white-base pt-3">
-                <form
-                    onSubmit={handleSendMessage}
-                    className="flex items-center gap-4"
-                >
-                    <div className="flex items-center grow px-[15px] py-[11px] rounded-[19px] bg-[#EFF6FCDE]">
+                        <div className="flex flex-col">
+                            <h2 className="text-white-base font-display text-[16px] font-bold">
+                                {currentChat.friend.name}
+                            </h2>
+                            <p className="text-white-base/70 font-body text-sm font-extralight">
+                                online
+                            </p>
+                        </div>
+                    </div>
+                    {userStatus?.organization && jobRequest.length === 0 && (
                         <button
                             type="button"
-                            className="hover:opacity-70 transition-opacity"
-                            onClick={() => {
-                                /* Handle attachment */
-                            }}
+                            onClick={() => setReviewModal(true)}
+                            className="bg-background-dark rounded-3xl py-3 px-12 text-white-base"
                         >
-                            <GrAttachment size={22} />
+                            Finish Job
                         </button>
-                        <input
-                            ref={inputRef}
-                            type="text"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            placeholder="Type your message..."
-                            className="grow text-black bg-transparent border-none outline-none mx-[20px]"
-                            // disabled={isLoading}
-                        />
+                    )}
+                </div>
+
+                {/* Messages */}
+                <div
+                    ref={messagesContainerRef}
+                    className="relative h-full w-full grow overflow-y-auto px-3 custom-scrollbar scroll-smooth"
+                >
+                    <div className="flex w-full flex-col justify-end">
+                        {error && (
+                            <div className="text-red-500 text-center py-2 text-sm">
+                                {error}
+                            </div>
+                        )}
+                        {chatMessages.map((message) => (
+                            <Message
+                                key={message?.id}
+                                message={breakLongWords(message?.content)}
+                                timestamp={formatChatDate(message?.createdAt)}
+                                isSender={message?.sender?.id === userStatus.id}
+                                type={message?.messageType}
+                                jobRequest={message?.jobRequest}
+                            />
+                        ))}
+                        <div ref={messagesEndRef} />
                     </div>
-                    <button
-                        type="submit"
-                        // disabled={!input.trim()}
-                        className="bg-blue-primary rounded-[14px] p-3 cursor-pointer disabled:bg-slate-500 duration-300 hover:opacity-90"
-                    >
-                        <IoSend className="text-white-base" size={25} />
-                    </button>
-                </form>
+                </div>
+                <SendMessageContainer
+                    inputRef={inputRef}
+                    fetchMessages={fetchMessages}
+                />
             </div>
-        </div>
+        </>
     );
 };
 

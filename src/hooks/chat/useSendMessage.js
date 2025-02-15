@@ -12,11 +12,13 @@ const useSendMessage = () => {
             // if (!token) throw new Error("Unauthorized: No token found.");
 
             let body = { content: message };
+
             if (messageType === "REQUEST" && jobId) {
-                return (body = { ...body, jobId, messageType });
+                body = { ...body, jobId, messageType }
+                
             }
 
-            console.log("body :", body);
+
 
             const response = await axios.post(
                 `${baseUrl}/chats/${chatId}/messages`,

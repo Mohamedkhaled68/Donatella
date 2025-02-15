@@ -45,3 +45,4 @@ export { default as Experience } from "./profile/Experience";
 export { default as JobCard } from "./JobCard";
 export { default as ChatWindow } from "./messages/ChatWindow";
 export { default as ChatList } from "./messages/ChatList";
+export { default as ReviewModal } from "./messages/ReviewModal";

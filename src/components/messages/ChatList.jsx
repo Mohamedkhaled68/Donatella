@@ -1,32 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import TextExpander from "../shared/TextExpander";
+import useGetMessages from "../../hooks/chat/useGetMessages";
+import toast from "react-hot-toast";
 
-const LoadingSkeleton = () => (
-    <div className="animate-pulse">
-        <div className="flex items-center gap-4 w-full p-4">
-            <div className="w-[50px] h-[50px] rounded-full bg-zinc-700"></div>
-            <div className="flex-1">
-                <div className="h-5 bg-zinc-700 rounded w-1/3 mb-2"></div>
-                <div className="h-4 bg-zinc-700 rounded w-1/2"></div>
-            </div>
-        </div>
-    </div>
-);
+const ChatList = ({ currentChat, setCurrentChat }) => {
+    const [messagesList, setMessagesList] = useState([]);
+    const { mutateAsync: getMessages } = useGetMessages();
 
-const ChatList = ({ currentChat, handleOpenChat, messagesList }) => {
-    const isLoading = !messagesList;
     const isEmpty = messagesList?.length === 0;
 
-    if (isLoading) {
-        return (
-            <div className="w-[30%] h-full rounded-lg bg-[#313131] overflow-y-auto custom-scrollbar">
-                {[...Array(5)].map((_, index) => (
-                    <LoadingSkeleton key={index} />
-                ))}
-            </div>
-        );
-    }
+    const handleOpenChat = (id) => {
+        const currentChat = messagesList.find((chat) => {
+            return chat.id === id;
+        });
+        setCurrentChat(currentChat);
+    };
+
+    useEffect(() => {
+        const fetchMessages = async () => {
+            try {
+                const data = await getMessages();
+                setMessagesList([...data.items]);
+            } catch (err) {
+                toast.error(err?.response?.data?.message);
+            }
+        };
+
+        // Initial fetch
+        fetchMessages();
+
+        // Set interval to fetch messages every 2 seconds
+        const intervalId = setInterval(fetchMessages, 2000);
+
+        // Cleanup: clear the interval when the component is unmounted
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []);
 
     if (isEmpty) {
         return (
@@ -47,25 +58,23 @@ const ChatList = ({ currentChat, handleOpenChat, messagesList }) => {
     return (
         <div className="w-[30%] h-full rounded-lg bg-[#313131] overflow-y-auto custom-scrollbar">
             {messagesList.map((chat) => {
-                // Check if chat is nested in an unexpected way
-                const chatData = Array.isArray(chat) ? chat[0] : chat;
-                console.log(chatData);
-
+                // const chatData = Array.isArray(chat) ? chat[0] : chat;
+                // console.log(chatData);
                 return (
                     <div
-                        key={chatData?.id}
-                        onClick={() => handleOpenChat(chatData?.id)}
+                        key={chat?.id}
+                        onClick={() => handleOpenChat(chat?.id)}
                         className={`flex items-center gap-4 w-full p-4 hover:bg-white-base/10 cursor-pointer duration-200 ${
-                            currentChat?.id === chatData?.id
+                            currentChat?.id === chat?.id
                                 ? "bg-white-base/10"
                                 : ""
                         }`}
                     >
                         <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full flex justify-center items-center bg-zinc-700">
-                            {chatData?.friend?.profilePicture ? (
+                            {chat?.friend?.profilePicture ? (
                                 <img
-                                    src={chatData.friend.profilePicture}
-                                    alt={chatData.friend.name}
+                                    src={chat.friend.profilePicture}
+                                    alt={chat.friend.name}
                                     className="max-w-full h-full object-cover"
                                     loading="lazy"
                                     onError={(e) => {
@@ -85,14 +94,12 @@ const ChatList = ({ currentChat, handleOpenChat, messagesList }) => {
                         <div className="flex justify-between items-center w-full">
                             <div className="flex flex-col">
                                 <h2 className="text-white-base font-display text-[20px] font-semibold">
-                                    {chatData?.friend?.name || "Unknown User"}
+                                    {chat?.friend?.name || "Unknown User"}
                                 </h2>
-                                {chatData?.latestMessage?.content && (
+                                {chat?.latestMessage?.content && (
                                     <p className="text-white-base/70 font-body text-sm font-extralight truncate max-w-[200px]">
                                         <TextExpander
-                                            text={
-                                                chatData.latestMessage.content
-                                            }
+                                            text={chat.latestMessage.content}
                                         />
                                     </p>
                                 )}

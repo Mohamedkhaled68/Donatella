@@ -76,3 +76,27 @@ export const getCountryByCode = (code) => {
     const country = countryEntries.find(([_, value]) => value === code);
     return country ? country[0] : undefined;
 };
+
+export const breakLongWords = (text, maxWordLength = 20) => {
+    if (!text) return "";
+    return text
+        .split(" ")
+        .map((word) =>
+            word.length > maxWordLength
+                ? word.match(new RegExp(`.{1,${maxWordLength}}`, "g")).join(" ")
+                : word
+        )
+        .join(" ");
+};
+
+export const formatChatDate = (isoDateString) => {
+    const date = new Date(isoDateString);
+
+    const options = {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+    };
+
+    return date.toLocaleString(undefined, options);
+};
