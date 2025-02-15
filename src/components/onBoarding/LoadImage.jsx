@@ -5,6 +5,8 @@ import { CiImageOn } from "react-icons/ci";
 import { MdOutlineAddBox } from "react-icons/md";
 import useUploadImage from "../../hooks/auth/useUploadImage";
 import useUploadVideo from "../../hooks/auth/useUploadVideo";
+import Loading from "../shared/ui/Loading";
+import toast from "react-hot-toast";
 
 const LoadImage = ({ label, inputId, onImageChange, className }) => {
     const [media, setMedia] = useState(null);
@@ -16,6 +18,17 @@ const LoadImage = ({ label, inputId, onImageChange, className }) => {
     const handleMediaChange = async (e) => {
         const file = e.target.files[0];
         if (
+            label.toLowerCase().startsWith("tik") &&
+            !file.type.startsWith("video/")
+        )
+            return toast.error("Please select a valid video file.");
+        if (
+            !label.toLowerCase().startsWith("tik") &&
+            !file.type.startsWith("image/")
+        )
+            return toast.error("Please select a valid image file.");
+            
+        if (
             file &&
             (file.type.startsWith("image/") ||
                 (inputId === "reel" && file.type.startsWith("video/")))
@@ -24,19 +37,37 @@ const LoadImage = ({ label, inputId, onImageChange, className }) => {
 
             // Handle video thumbnail generation
             if (file.type.startsWith("video/")) {
+                if (file.size > 1 * 1024 * 1024)
+                    return toast.error("File size exceeds 1MB limit.");
                 setLoading(true);
-                const thumbnail = await generateVideoThumbnail(mediaUrl);
-                const data = await uploadVideo(file);
-                setMedia(thumbnail);
-                onImageChange(inputId, data);
-                setLoading(false);
+                try {
+                    const thumbnail = await generateVideoThumbnail(mediaUrl);
+                    const data = await uploadVideo(file);
+                    setMedia(thumbnail);
+                    onImageChange(inputId, data);
+                } catch (err) {
+                    console.log(err);
+
+                    toast.error(err?.response?.data?.message[0]);
+                } finally {
+                    setLoading(false);
+                }
             } else {
-                const data = await uploadImage(file);
-                setMedia(mediaUrl);
-                onImageChange(inputId, data);
+                if (file.size > 1 * 1024 * 1024)
+                    return toast.error("File size exceeds 1MB limit.");
+                setLoading(true);
+                try {
+                    const data = await uploadImage(file);
+                    setMedia(mediaUrl);
+                    onImageChange(inputId, data);
+                } catch (err) {
+                    console.log(err);
+
+                    toast.error(err?.response?.data?.message[0]);
+                } finally {
+                    setLoading(false);
+                }
             }
-        } else {
-            alert("Please select a valid file (image or video).");
         }
     };
 
@@ -88,7 +119,9 @@ const LoadImage = ({ label, inputId, onImageChange, className }) => {
 
             <div className="flex-grow flex justify-center items-center">
                 {loading ? (
-                    <p className="text-gray-500">Loading...</p>
+                    <div className="w-full h-full flex justify-center items-center">
+                        <Loading />
+                    </div>
                 ) : media ? (
                     <img
                         src={media}
@@ -119,7 +152,7 @@ const LoadImage = ({ label, inputId, onImageChange, className }) => {
                                 type="file"
                                 accept={
                                     inputId === "reel"
-                                        ? "image/*,video/*"
+                                        ? "video/*"
                                         : "image/*"
                                 }
                                 onChange={handleMediaChange}
@@ -147,7 +180,7 @@ const LoadImage = ({ label, inputId, onImageChange, className }) => {
                             type="file"
                             accept={
                                 inputId === "reel"
-                                    ? "image/*,video/*"
+                                    ? "video/*"
                                     : "image/*"
                             }
                             onChange={handleMediaChange}

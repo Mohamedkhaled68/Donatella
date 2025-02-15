@@ -14,6 +14,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FaCheck } from "react-icons/fa6";
 import { useLocation, useNavigate } from "react-router-dom";
 
+const formatUrl = (url) => {
+    if (!url) return ""; // Handle empty input
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        return `https://${url}`;
+    }
+    return url;
+};
+
 const ExperienceFormSection = () => {
     const [formValues, setFormValues] = useState(initialExperienceFormValues);
     const [workExperience, setWorkExperience] = useState([
@@ -26,6 +34,25 @@ const ExperienceFormSection = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
+
+    const getCategory = (cate) => {
+        switch (cate) {
+            case "tour guide":
+                return "Tourism & Historical Advisor";
+            case "beautician":
+                return "Beauty and Cosmetics";
+            case "athlete":
+                return "Athletes & Sports Enthusiast"; // Fixed typo
+            case "artist":
+                return "Artists and Visuals";
+            case "fashionista": // Fixed case
+                return "Fashion and Jewelry Stylist";
+            case "musician":
+                return "Music & Sound Engineer";
+            default:
+                return cate;
+        }
+    };
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -51,7 +78,11 @@ const ExperienceFormSection = () => {
                 return [key, value];
             })
         );
-        console.log({ ...transformedFormValues, workExperience });
+        console.log({
+            ...transformedFormValues,
+            socialAccount: formatUrl(formValues.socialAccount),
+            workExperience,
+        });
 
         localStorage.setItem(
             "userData",
@@ -104,8 +135,8 @@ const ExperienceFormSection = () => {
                     <div className="grid grid-cols-4 my-4">
                         <BackButton size={30} />
                         <div className="col-span-2 flex flex-col justify-center items-center gap-[14px]">
-                            <h1 className="capitalize text-5xl font-display font-bold text-white-base">
-                                {category}
+                            <h1 className="capitalize text-5xl text-center font-display font-bold text-white-base">
+                                {getCategory(category)}
                             </h1>
                             <p className="text-sm text-white-base/40 w-[50%] mx-auto text-center">
                                 Highlight your specialty to attract the right
@@ -191,7 +222,11 @@ const ExperienceFormSection = () => {
                                             htmlFor="workExperience"
                                         >
                                             Where have you previously worked as
-                                            a {category}?
+                                            a{" "}
+                                            <span className="capitalize">
+                                                {category}
+                                            </span>
+                                            ?
                                         </label>
                                     </div>
 

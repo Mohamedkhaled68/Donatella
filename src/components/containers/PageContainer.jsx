@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useUserStore } from "../../store/userStore";
 import Navbar from "../Navbar";
+import { useLocation } from "react-router-dom";
 
 const pageVariants = {
     initial: { opacity: 0, x: -1000 },
@@ -11,7 +12,11 @@ const pageVariants = {
 };
 const PageContainer = ({ children, className, pathname }) => {
     const { userStatus } = useUserStore((state) => state);
+    const location = useLocation();
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
     return (
         <>
             {userStatus?.onboardingCompleted && <Navbar />}

@@ -49,6 +49,7 @@ const ChatList = ({ currentChat, handleOpenChat, messagesList }) => {
             {messagesList.map((chat) => {
                 // Check if chat is nested in an unexpected way
                 const chatData = Array.isArray(chat) ? chat[0] : chat;
+                console.log(chatData);
 
                 return (
                     <div

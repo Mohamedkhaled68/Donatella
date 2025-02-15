@@ -29,7 +29,7 @@ const Models = ({ modelsRef, talentsRef }) => {
         const userAgent =
             navigator.userAgent || navigator.vendor || window.opera;
         const mobileRegex =
-            /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
+            /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i;
 
         const conditions = [
             mobileRegex.test(userAgent.toLowerCase()),
@@ -121,7 +121,7 @@ const Models = ({ modelsRef, talentsRef }) => {
                                 }}
                                 className="font-display py-2"
                             >
-                                Sign is currently only available on desktop
+                                Sign in is currently only available on desktop
                             </p>
                         </div>
                     )}

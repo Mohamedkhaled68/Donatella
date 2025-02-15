@@ -10,7 +10,7 @@ const useGetMessages = () => {
         mutationKey: ["chat", "getMessages"],
         mutationFn: async () => {
             const response = await axios.get(
-                `${baseUrl}/chats?filter[searchKey]=&paginate[page]=1&paginate[limit]=5`,
+                `${baseUrl}/chats?paginate[page]=1&paginate[limit]=5`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

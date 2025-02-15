@@ -34,7 +34,7 @@ const Login = () => {
         const userAgent =
             navigator.userAgent || navigator.vendor || window.opera;
         const mobileRegex =
-            /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
+            /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i;
 
         const conditions = [
             mobileRegex.test(userAgent.toLowerCase()),

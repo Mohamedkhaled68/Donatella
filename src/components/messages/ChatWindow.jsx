@@ -44,6 +44,7 @@ const ChatWindow = ({
     error,
     messagesContainerRef,
     scrollToBottom,
+    setReviewModal,
 }) => {
     const inputRef = useRef(null);
     const userStatus = useUserStore((state) => state.userStatus);
@@ -91,31 +92,42 @@ const ChatWindow = ({
     return (
         <div className="w-[70%] relative overflow-hidden h-full p-4 rounded-lg bg-[#313131] flex flex-col">
             {/* Header */}
-            <div className="border-b-thin border-white-base flex items-center gap-3 pb-2">
-                <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full flex justify-center items-center bg-zinc-700">
-                    {currentChat.friend.profilePicture ? (
-                        <img
-                            src={currentChat.friend.profilePicture}
-                            alt={currentChat.friend.name}
-                            className="max-w-full h-full object-cover"
-                            loading="lazy"
-                            onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.style.display = "none";
-                            }}
-                        />
-                    ) : (
-                        <FaUser className="text-[#9e9e9ebd]" size={20} />
-                    )}
+            <div className="border-b-thin border-white-base flex justify-between items-center pb-2 w-full">
+                <div className="flex items-center  gap-3">
+                    <div className="relative w-[50px] h-[50px] overflow-hidden rounded-full flex justify-center items-center bg-zinc-700">
+                        {currentChat.friend.profilePicture ? (
+                            <img
+                                src={currentChat.friend.profilePicture}
+                                alt={currentChat.friend.name}
+                                className="max-w-full h-full object-cover"
+                                loading="lazy"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.style.display = "none";
+                                }}
+                            />
+                        ) : (
+                            <FaUser className="text-[#9e9e9ebd]" size={20} />
+                        )}
+                    </div>
+                    <div className="flex flex-col">
+                        <h2 className="text-white-base font-display text-[16px] font-bold">
+                            {currentChat.friend.name}
+                        </h2>
+                        <p className="text-white-base/70 font-body text-sm font-extralight">
+                            online
+                        </p>
+                    </div>
                 </div>
-                <div className="flex flex-col">
-                    <h2 className="text-white-base font-display text-[16px] font-bold">
-                        {currentChat.friend.name}
-                    </h2>
-                    <p className="text-white-base/70 font-body text-sm font-extralight">
-                        online
-                    </p>
-                </div>
+                {userStatus?.organization && (
+                    <button
+                        type="button"
+                        onClick={() => setReviewModal(true)}
+                        className="bg-background-dark rounded-3xl py-3 px-12 text-white-base"
+                    >
+                        Finish Job
+                    </button>
+                )}
             </div>
 
             {/* Messages */}

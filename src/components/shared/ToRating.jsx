@@ -24,7 +24,7 @@ const ToRating = ({ maxRating = 5, size = 20 }) => {
     // }, [rating]);
 
     return (
-        <div className="flex items-center">
+        <div className="flex items-center ">
             {Array.from({ length: maxRating }, (_, i) => {
                 return i < rating ? (
                     <FaStar
@@ -33,9 +33,9 @@ const ToRating = ({ maxRating = 5, size = 20 }) => {
                             console.log(rating);
                             mutateAsync({ ...song, userId: data?._id, rating });
                         }}
-                        className="text-white-base cursor-pointer"
+                        className="text-white-base cursor-pointer mr-1"
                         key={i}
-                        size={size}
+                        size={size - 2}
                     />
                 ) : (
                     <CiStar

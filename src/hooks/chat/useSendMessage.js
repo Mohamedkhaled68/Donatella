@@ -8,8 +8,16 @@ const useSendMessage = () => {
 
     return useMutation({
         mutationKey: ["chat", "send"],
-        mutationFn: async ({ chatId, message }) => {
-            const body = { content: message };
+        mutationFn: async ({ chatId, message, messageType, jobId }) => {
+            // if (!token) throw new Error("Unauthorized: No token found.");
+
+            let body = { content: message };
+            if (messageType === "REQUEST" && jobId) {
+                return (body = { ...body, jobId, messageType });
+            }
+
+            console.log("body :", body);
+
             const response = await axios.post(
                 `${baseUrl}/chats/${chatId}/messages`,
                 body,
@@ -20,15 +28,16 @@ const useSendMessage = () => {
                     },
                 }
             );
-            console.log(response.data.data);
             return response.data.data;
         },
-        onSuccess: () => {},
+        onSuccess: (data) => {
+            console.log("Message sent successfully:", data);
+        },
         onError: (error) => {
-            const errorMessage =
-                error.response?.data?.message ||
-                "An unexpected error occurred.";
-            throw new Error(errorMessage);
+            console.error(
+                "Error sending message:",
+                error.response?.data?.message || error.message
+            );
         },
     });
 };

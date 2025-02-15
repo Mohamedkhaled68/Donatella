@@ -3,6 +3,7 @@ import useUpdateMe from "../../hooks/user/useUpdateMe";
 import useUploadImage from "../../hooks/auth/useUploadImage";
 import { useUserStore } from "../../store/userStore";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const PortfolioGrid = ({ userStatus }) => {
     const { mutateAsync: updateMe } = useUpdateMe();
@@ -23,6 +24,8 @@ const PortfolioGrid = ({ userStatus }) => {
 
     const handleImageUpload = async (event, index) => {
         const file = event.target.files[0];
+        if (file.size > 1 * 1024 * 1024)
+            return toast.error("File size exceeds 1MB limit.");
 
         if (!file) return;
 
@@ -65,6 +68,7 @@ const PortfolioGrid = ({ userStatus }) => {
         } catch (err) {
             console.error("Error uploading image:", err);
             setError("Error uploading image, please try again.");
+            toast.error("Error uploading image, please try again.");
             setLoading(null);
         }
     };
@@ -104,7 +108,7 @@ const PortfolioGrid = ({ userStatus }) => {
                                         {loading === index ? (
                                             <div className="text-center text-white">
                                                 Uploading...
-                                            </div> // Display loading text
+                                            </div>
                                         ) : (
                                             <FaPlus size={25} />
                                         )}
@@ -147,11 +151,6 @@ const PortfolioGrid = ({ userStatus }) => {
                                 className="hidden"
                             />
                         </label>
-                    )}
-                    {error && (
-                        <div className="text-red-500 text-sm mt-2 text-center">
-                            {error}
-                        </div> // Display error message
                     )}
                 </div>
             ))}

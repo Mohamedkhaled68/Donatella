@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { ChatWindow, ChatList } from "../../components";
+import { ChatWindow, ChatList, Rating, ToRating } from "../../components";
 import useGetMessages from "../../hooks/chat/useGetMessages";
 import useGetChatMessages from "../../hooks/chat/useGetChatMessages";
 import useSendMessage from "../../hooks/chat/useSendMessage";
@@ -11,6 +11,7 @@ const Messages = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [input, setInput] = useState("");
+    const [reviewModal, setReviewModal] = useState(false);
 
     const messagesEndRef = useRef(null);
 
@@ -81,10 +82,9 @@ const Messages = () => {
 
     const handleOpenChat = (id) => {
         const currentChat = messagesList.find((chat) => {
-            const chatData = Array.isArray(chat) ? chat[0] : chat;
-            return chatData.id === id;
+            return chat.id === id;
         });
-        setCurrentChat(currentChat[0]);
+        setCurrentChat(currentChat);
     };
 
     useEffect(() => {
@@ -92,7 +92,7 @@ const Messages = () => {
             try {
                 const data = await getMessages();
                 console.log(data.items);
-                setMessagesList([data.items]);
+                setMessagesList([...data.items]);
             } catch (err) {
                 console.log(err);
             }
@@ -121,8 +121,52 @@ const Messages = () => {
         };
     }, [currentChat]); // Dependency array to run the effect when currentChat changes
 
+    useEffect(() => {
+        if (reviewModal) {
+            document.documentElement.style.overflowY = "hidden";
+        } else {
+            document.documentElement.style.overflowY = "unset";
+        }
+
+        return () => {
+            document.documentElement.style.overflowY = "unset";
+        };
+    }, [reviewModal]);
+
     return (
-        <section className="w-full h-[calc(100vh-60px)] flex justify-center items-center">
+        <section className="relative w-full h-[calc(100vh-60px)] flex justify-center items-center">
+            {reviewModal && (
+                <div className="absolute z-[100000] top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="w-[30%] p-4 bg-blue-600 text-white rounded-xl shadow-lg">
+                        <div className="flex justify-between items-center space-x-1 my-2">
+                            <div className="text-2xl font-bold">
+                                Review Client:
+                            </div>
+                            <ToRating maxRating={5} size={28} />
+                        </div>
+                        <div className="text-sm">$17/HR - Cairo - 7 Days</div>
+                        <textarea
+                            className="mt-2 text-black text-sm w-full resize-none rounded-md outline-none border-none p-2"
+                            rows={7}
+                        />
+                        <p className="mt-2 text-gray-300 text-xs">
+                            Sending a review will mark payment as complete,
+                            close, and end the contract.
+                        </p>
+                        <div className="mt-4 flex justify-between">
+                            <button
+                                className="bg-background-dark rounded-3xl py-2 px-12 text-white-base"
+                                onClick={() => setReviewModal(false)}
+                            >
+                                Back
+                            </button>
+                            <button className="bg-white-base rounded-3xl py-2 px-12 text-background-dark">
+                                Accept & Review
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className="container mx-auto py-5 h-full flex pt-5 gap-10">
                 <ChatList
                     currentChat={currentChat}
@@ -130,6 +174,7 @@ const Messages = () => {
                     handleOpenChat={handleOpenChat}
                 />
                 <ChatWindow
+                    setReviewModal={setReviewModal}
                     key={currentChat?.id}
                     currentChat={currentChat}
                     messagesEndRef={messagesEndRef}

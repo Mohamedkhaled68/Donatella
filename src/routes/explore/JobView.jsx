@@ -8,6 +8,7 @@ import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import useSendMessage from "../../hooks/chat/useSendMessage";
 import { motion } from "framer-motion";
 import useGetJob from "../../hooks/jobs/useGetJob";
+import toast from "react-hot-toast";
 
 function timeAgo(postedTime) {
     const now = new Date();
@@ -38,6 +39,7 @@ const JobView = () => {
     const { jobId } = useParams();
     const navigate = useNavigate();
     const [currentJob, setCurrentJob] = useState(null);
+    const [coverInp, setCoverInp] = useState("");
     const { mutateAsync: sendMessage } = useSendMessage();
     const [openForm, setOpenForm] = useState(false);
 
@@ -45,47 +47,79 @@ const JobView = () => {
 
     const handleNavigateToMessages = async () => {
         try {
+            console.log(currentJob?.id);
+
             await sendMessage({
                 chatId: currentJob?.organization?.id,
                 message: "from individual to organization",
             });
-        } catch (err) {
-            console.log(err);
-        } finally {
+            toast.success("Message sent successfully");
+
             navigate("/messages");
+        } catch (err) {
+            toast.error(
+                err?.response?.data?.message || "Failed to send message."
+            );
         }
     };
 
-    const handleApply = (e) => {
+    const handleApply = async (e) => {
         e.preventDefault();
-        setOpenForm(false);
+        try {
+            if (coverInp) {
+                await sendMessage({
+                    chatId: currentJob?.organization?.id,
+                    message: coverInp.trim(),
+                    messageType: "REQUEST",
+                    jobId,
+                });
+                toast.success("Application sent successfully");
+                navigate("/messages");
+            } else {
+                toast.error("Cover letter is required");
+            }
+        } catch (err) {
+            toast.error(
+                err?.response?.data?.message || "Failed to send message."
+            );
+        }
     };
 
     useEffect(() => {
-        const a = async () => {
+        const getCurrentJob = async () => {
             try {
                 const data = await getJob(jobId);
-                console.log(data);
                 setCurrentJob(data);
             } catch (err) {
                 console.log(err);
             }
         };
 
-        a();
+        getCurrentJob();
     }, [jobId]);
+
+    useEffect(() => {
+        if (openForm) {
+            document.documentElement.style.overflowY = "hidden";
+        } else {
+            document.documentElement.style.overflowY = "unset";
+        }
+        return () => {
+            document.documentElement.style.overflowY = "unset";
+        };
+    }, [openForm]);
 
     return (
         <section className="min-h-screen w-full relative">
             {openForm && (
-                <motion.div className="absolute w-full h-screen bg-[#0000005b]  top-0 left-0 flex justify-center items-center z-[100000]">
+                <motion.div className="absolute w-full h-full bg-[#0000005b]  top-0 left-0 pt-20 flex justify-center z-[100000]">
                     <motion.form
                         onSubmit={handleApply}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="w-[400px] p-[16px] bg-blue-primary text-white-base rounded-[15px] flex flex-col"
+                        className="w-[400px] p-[16px] bg-blue-primary text-white-base rounded-[15px] flex flex-col h-fit"
                     >
                         <h1 className="text-2xl font-bold font-body mb-[15px]">
                             Apply to job :
@@ -94,8 +128,12 @@ const JobView = () => {
 
                         <div className="flex flex-col gap-1">
                             <h1>Cover Letter:</h1>
-                            <input
-                                className="rounded-[10px] w-full outline-none border-none p-2 text-black"
+                            <textarea
+                                rows="5"
+                                draggable="false"
+                                value={coverInp}
+                                onChange={(e) => setCoverInp(e.target.value)}
+                                className="rounded-[10px] resize-none w-full outline-none border-none p-2 text-black"
                                 type="text"
                             />
                         </div>
@@ -106,7 +144,10 @@ const JobView = () => {
                             >
                                 Go Back
                             </button>
-                            <button className="w-full bg-white-base font-bold text-black rounded-full py-2">
+                            <button
+                                type="submit"
+                                className="w-full bg-white-base font-bold text-black rounded-full py-2"
+                            >
                                 Apply
                             </button>
                         </div>
@@ -171,7 +212,7 @@ const JobView = () => {
                                 <FaPhoneAlt size={25} />
                             </div>
                             <div
-                                onClick={handleNavigateToMessages} // Add onClick to navigate to /messages
+                                onClick={handleNavigateToMessages}
                                 className="w-1/2 py-[9px] bg-[#293038] rounded-lg flex justify-center items-center cursor-pointer"
                             >
                                 <FaEnvelope size={25} />

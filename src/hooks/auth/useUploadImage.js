@@ -23,9 +23,7 @@ const useUploadImage = () => {
             );
             return response.data.data;
         },
-        onSuccess: (data) => {
-            console.log(data);
-        },
+        onSuccess: () => {},
         onError: (error) => {
             const errorMessage =
                 error.response?.data?.data?.message ||

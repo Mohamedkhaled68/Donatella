@@ -154,9 +154,17 @@ const orgFilters = [
     },
 ];
 
-const SearchBar = ({ onSearch, setIsOpent, isOpen, userStatus }) => {
+const SearchBar = ({
+    onSearch,
+    setIsOpent,
+    isOpen,
+    userStatus,
+    setLoading,
+    cateSwitch,
+    setCateSwitch,
+}) => {
     return (
-        <div className="w-full rounded-3xl bg-[#27292C] grid grid-cols-5 gap-[55px] px-[30px] py-4">
+        <div className="w-full rounded-3xl bg-[#27292C] grid grid-cols-7 gap-[55px] px-[30px] py-4">
             {userStatus.role !== "INDIVIDUAL" && (
                 <div
                     onClick={() => setIsOpent((prev) => !prev)}
@@ -175,15 +183,35 @@ const SearchBar = ({ onSearch, setIsOpent, isOpen, userStatus }) => {
                 </div>
             )}
 
+            <select
+                value={cateSwitch}
+                onChange={async (e) => {
+                    try {
+                        setLoading(true);
+                        setCateSwitch(e.target.value);
+                        await new Promise((resolve) =>
+                            setTimeout(resolve, 2000)
+                        );
+                        setLoading(false);
+                    } catch (err) {}
+                }}
+                className="bg-transparent col-span-1 p-3 outline-none border-none text-white-base border border-white-base rounded-md cursor-pointer"
+                name="cateSwitch"
+                id="cateSwitch"
+            >
+                <option value="jobs">Jobs</option>
+                <option value="profiles">Profiles</option>
+            </select>
+
             <input
                 className={`grow px-[62px] py-2 text-center ${
-                    userStatus.role === "INDIVIDUAL" && "lg:col-span-4"
-                } col-span-3 placeholder:text-white-base/50 placeholder:text-sm placeholder:font-light bg-[#323335] rounded-2xl outline-none border-thin border-black text-white-base`}
+                    userStatus.role === "INDIVIDUAL" && "lg:col-span-5"
+                } col-span-4 placeholder:text-white-base/50 placeholder:text-sm placeholder:font-light bg-[#323335] rounded-2xl outline-none border-thin border-black text-white-base`}
                 placeholder="Search for a model you want to hire"
                 type="text"
                 onChange={(e) => onSearch(e.target.value)}
             />
-            <button className="xl:px-[62px] text-center py-3 border-2 col-span-1 border-blue-primary text-white-base rounded-lg">
+            <button className=" text-center py-3 border-2 col-span-1 border-blue-primary text-white-base rounded-lg">
                 Search
             </button>
         </div>
@@ -249,6 +277,7 @@ const Explore = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [filterValues, setFilterValues] = useState({});
     const [data, setData] = useState([]);
+    const [cateSwitch, setCateSwitch] = useState("");
     const [loading, setLoading] = useState(false);
 
     const { userStatus } = useUserStore((state) => state);
@@ -276,44 +305,48 @@ const Explore = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            try {
-                if (userStatus.role === "INDIVIDUAL") {
-                    // Fetch jobs for individuals
-                    const filtered = orgFilters.find((f) => f.id === orgFilter);
-                    const jobsData = await getJobs([
-                        filtered.category,
-                        searchTerm.toLocaleLowerCase(),
-                    ]);
-                    let filteredJobs = jobsData.items;
+            if (cateSwitch) {
+                try {
+                    if (cateSwitch === "jobs") {
+                        // Fetch jobs for individuals
+                        const filtered = orgFilters.find(
+                            (f) => f.id === orgFilter
+                        );
+                        const jobsData = await getJobs([
+                            filtered.category,
+                            searchTerm.toLocaleLowerCase(),
+                        ]);
+                        let filteredJobs = jobsData.items;
 
-                    setData(filteredJobs);
-                } else {
-                    // Fetch profiles for organizations
-                    const filtered = filters.find((f) => f.id === filter);
-                    const profilesData = await getIndividuals([
-                        filtered.category,
-                        searchTerm.toLocaleLowerCase(),
-                    ]);
-                    console.log(profilesData);
+                        setData(filteredJobs);
+                    } else {
+                        // Fetch profiles for organizations
+                        const filtered = filters.find((f) => f.id === filter);
+                        const profilesData = await getIndividuals([
+                            filtered.category,
+                            searchTerm.toLocaleLowerCase(),
+                        ]);
+                        console.log(profilesData);
 
-                    let filteredProfiles = profilesData.items;
+                        let filteredProfiles = profilesData.items;
 
-                    // Apply advanced filters
-                    Object.entries(filterValues).forEach(([key, value]) => {
-                        if (value) {
-                            filteredProfiles = filteredProfiles.filter(
-                                (profile) =>
-                                    profile.specialtyInfo[key] === value
-                            );
-                        }
-                    });
+                        // Apply advanced filters
+                        Object.entries(filterValues).forEach(([key, value]) => {
+                            if (value) {
+                                filteredProfiles = filteredProfiles.filter(
+                                    (profile) =>
+                                        profile.specialtyInfo[key] === value
+                                );
+                            }
+                        });
 
-                    setData(filteredProfiles);
+                        setData(filteredProfiles);
+                    }
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                } finally {
+                    setLoading(false);
                 }
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            } finally {
-                setLoading(false);
             }
         };
 
@@ -326,7 +359,16 @@ const Explore = () => {
         getIndividuals,
         getJobs,
         userStatus.role,
+        cateSwitch,
     ]);
+
+    useEffect(() => {
+        if (userStatus.role === "INDIVIDUAL") {
+            setCateSwitch("jobs");
+        } else {
+            setCateSwitch("profiles");
+        }
+    }, [userStatus.role]);
 
     return (
         <>
@@ -352,6 +394,9 @@ const Explore = () => {
                             setIsOpent={setOpenFilter}
                             onSearch={setSearchTerm}
                             isOpen={openFilter}
+                            setLoading={setLoading}
+                            cateSwitch={cateSwitch}
+                            setCateSwitch={setCateSwitch}
                         />
                     </div>
 
@@ -361,7 +406,7 @@ const Explore = () => {
                         onFilterChange={handleAdvancedFilterChange}
                     />
 
-                    {loading && (
+                    {loading  && (
                         <div className="w-full h-full py-20 flex justify-center items-center">
                             <Loading
                                 dimensions={{
@@ -388,7 +433,8 @@ const Explore = () => {
 
                     {!loading &&
                         data.length > 0 &&
-                        (userStatus.role === "INDIVIDUAL" ? (
+                        cateSwitch !== "" &&
+                        (cateSwitch === "jobs" ? (
                             <div className="flex flex-col gap-5">
                                 {data.map((job) => (
                                     <JobCard

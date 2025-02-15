@@ -5,9 +5,11 @@ import { MdOutlineAddBox } from "react-icons/md";
 import { Loading, LogoHeader, OrganizationProfileForm } from "../../components";
 import { CiImageOn } from "react-icons/ci";
 import useUploadImage from "../../hooks/auth/useUploadImage";
+import toast from "react-hot-toast";
 
 const OrgProfileForm = () => {
     const [loading, setLoading] = useState(false);
+    const [imageLoading, setImageLoading] = useState(false);
     const [media, setMedia] = useState(null); // Store the uploaded file
     const [previewUrl, setPreviewUrl] = useState(""); // Store preview URL
     const inputId = "media";
@@ -18,23 +20,27 @@ const OrgProfileForm = () => {
         const file = event.target.files[0];
         if (!file) return;
 
-        // Validate file size (e.g., max 5MB)
-        const maxFileSize = 5 * 1024 * 1024; // 5MB
-        // if (file.size > maxFileSize) {
-        //     alert("File size exceeds 5MB limit.");
-        //     return;
-        // }
+        if (file.size > 1 * 1024 * 1024)
+            return toast.error("File size exceeds 1MB limit.");
 
-        // Validate file type (image or video)
-        const validTypes = ["image/jpeg", "image/png", "image/gif"];
+        const validTypes = ["image/jpeg", "image/png"];
         if (!validTypes.includes(file.type)) {
-            alert("Invalid file type. Please upload an image or video.");
+            toast.error("Invalid file type. Please upload an image.");
             return;
         }
-        const data = await uploadImage(file);
-        setMedia(data);
+        setImageLoading(true);
+        try {
+            const data = await uploadImage(file);
+            setMedia(data);
 
-        setPreviewUrl(data); // Generate a preview URL
+            setPreviewUrl(data);
+        } catch (err) {
+            toast.error(
+                err?.response?.data?.message || "Failed to upload image."
+            );
+        } finally {
+            setImageLoading(false);
+        }
     };
 
     const handleRemoveMedia = () => {
@@ -62,20 +68,27 @@ const OrgProfileForm = () => {
                     {/* Left Side */}
                     <div className="w-full h-full flex justify-center items-center">
                         <div className="h-[80%] w-full flex flex-col gap-12 justify-center items-center">
-                            <div className="border-thin border-white-base/10 w-[400px] h-[400px] rounded-full overflow-hidden flex justify-center items-center">
-                                {previewUrl ? (
-                                    <img
-                                        src={previewUrl}
-                                        alt="Preview"
-                                        className="w-full h-full object-cover"
-                                    />
-                                ) : (
-                                    <CiImageOn
-                                        className="text-gray-500"
-                                        size={100}
-                                    />
-                                )}
-                            </div>
+                            {imageLoading ? (
+                                <div className="border-thin border-white-base/10 w-[400px] h-[400px] rounded-full overflow-hidden flex justify-center items-center">
+                                    <Loading />
+                                </div>
+                            ) : (
+                                <div className="border-thin border-white-base/10 w-[400px] h-[400px] rounded-full overflow-hidden flex justify-center items-center">
+                                    {previewUrl ? (
+                                        <img
+                                            src={previewUrl}
+                                            alt="Preview"
+                                            className="w-full h-full object-cover"
+                                        />
+                                    ) : (
+                                        <CiImageOn
+                                            className="text-gray-500"
+                                            size={100}
+                                        />
+                                    )}
+                                </div>
+                            )}
+
                             <div className="flex w-[30%] justify-center items-center rounded-md h-[50px] bg-black/60 px-[40px]">
                                 {media ? (
                                     <div className="w-full flex justify-between items-center">
@@ -90,7 +103,7 @@ const OrgProfileForm = () => {
                                             <input
                                                 id={inputId}
                                                 type="file"
-                                                accept="image/*,video/*"
+                                                accept="image/jpeg,image/png"
                                                 onChange={handleMediaChange}
                                                 className="hidden"
                                             />
@@ -114,7 +127,7 @@ const OrgProfileForm = () => {
                                         <input
                                             id={inputId}
                                             type="file"
-                                            accept="image/*,video/*"
+                                            accept="image/jpeg,image/png"
                                             onChange={handleMediaChange}
                                             className="hidden"
                                         />

@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import DropMenu from "./DropMenu";
 import { donatellaLogo } from "../assets";
 import { useUserStore } from "../store/userStore";
+import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {
     const [showDrop, setShowDrop] = useState(false);
@@ -67,26 +68,27 @@ const Navbar = () => {
                             className="w-[45px] h-[45px] flex justify-center items-center bg-slate-800 rounded-full hover:bg-white-base/20 cursor-pointer duration-300"
                         >
                             <div className="w-[40px] h-[40px] bg-slate-800 rounded-full overflow-hidden flex justify-center items-center">
-                                {userStatus?.role === "INDIVIDUAL" ? (
-                                    <img
-                                        className="w-full h-full object-cover"
-                                        src={
-                                            userStatus?.individual
-                                                ?.specialtyInfo
-                                                ?.profilePicture[0]
-                                        }
-                                        alt=""
-                                    />
-                                ) : (
-                                    <img
-                                        className="w-full h-full object-cover"
-                                        src={
-                                            userStatus?.organization
-                                                ?.logo
-                                        }
-                                        alt=""
-                                    />
-                                )}
+                                {(() => {
+                                    const profileImage =
+                                        userStatus?.role === "INDIVIDUAL"
+                                            ? userStatus?.individual
+                                                  ?.specialtyInfo
+                                                  ?.profilePicture?.[0]
+                                            : userStatus?.role ===
+                                              "ORGANIZATION"
+                                            ? userStatus?.organization?.logo
+                                            : null;
+
+                                    return profileImage ? (
+                                        <img
+                                            className="w-full h-full object-cover"
+                                            src={profileImage}
+                                            alt="Profile"
+                                        />
+                                    ) : (
+                                        <FaUser size={20} />
+                                    );
+                                })()}
                             </div>
                         </div>
                     </div>
