@@ -4,13 +4,21 @@ import { useUserStore } from "../../store/userStore";
 import useAcceptJob from "../../hooks/jobs/useAcceptJob";
 import useRejectJob from "../../hooks/jobs/useRejectJob";
 import toast from "react-hot-toast";
-import useResetJobStatus from "../../hooks/jobs/useResetJobStatus";
+import useFinishJob from "../../hooks/jobs/useFinishJob";
 
-const Message = ({ message, timestamp, isSender, type, jobRequest }) => {
+const Message = ({
+    message,
+    timestamp,
+    isSender,
+    type,
+    jobRequest,
+    setReviewModal,
+    setFinishedJob,
+}) => {
     const userStatus = useUserStore((state) => state.userStatus);
     const { mutateAsync: acceptJob } = useAcceptJob();
     const { mutateAsync: rejectJob } = useRejectJob();
-    const { mutateAsync: resetJobStatus } = useResetJobStatus();
+    const { mutateAsync: finishJob } = useFinishJob();
 
     const handleAcceptJob = async () => {
         if (!jobRequest) return;
@@ -19,11 +27,7 @@ const Message = ({ message, timestamp, isSender, type, jobRequest }) => {
                 jobId: jobRequest.job.id,
                 requestId: jobRequest.id,
             });
-            await resetJobStatus({
-                jobId: jobRequest.job.id,
-                requestId: jobRequest.id,
-                status: "accept",
-            });
+
             toast.success("Job accepted successfully!");
         } catch (err) {
             toast.error(err?.response?.data?.message);
@@ -37,12 +41,23 @@ const Message = ({ message, timestamp, isSender, type, jobRequest }) => {
                 jobId: jobRequest.job.id,
                 requestId: jobRequest.id,
             });
-            await resetJobStatus({
+
+            toast.success("Job rejected successfully!");
+        } catch (err) {
+            toast.error(err?.response?.data?.message);
+            console.log(err?.response?.data?.message);
+        }
+    };
+    const handleFinishJob = async () => {
+        if (!jobRequest) return;
+        try {
+            await finishJob({
                 jobId: jobRequest.job.id,
                 requestId: jobRequest.id,
-                status: "reject",
             });
-            toast.success("Job rejected successfully!");
+            toast.success("Job finished successfully!");
+            setFinishedJob(jobRequest);
+            setReviewModal(true);
         } catch (err) {
             toast.error(err?.response?.data?.message);
             console.log(err?.response?.data?.message);
@@ -88,21 +103,48 @@ const Message = ({ message, timestamp, isSender, type, jobRequest }) => {
                                 </>
                             ) : (
                                 <>
-                                    <div className="flex justify-between items-center gap-3 mt-3">
-                                        <button
-                                            onClick={handleRejectJob}
-                                            type="button"
-                                            className="bg-background-dark font-semibold rounded-3xl py-2 px-16 text-white-base"
-                                        >
-                                            Decline
-                                        </button>
-                                        <button
-                                            onClick={handleAcceptJob}
-                                            type="button"
-                                            className="bg-white-base font-semibold rounded-3xl py-2 px-16 text-background-dark"
-                                        >
-                                            Accept
-                                        </button>
+                                    <div className="flex justify-between items-center gap-3 mt-3 w-full">
+                                        {jobRequest?.requestStatus ===
+                                        "REJECTED" ? (
+                                            <div className="text-white-base capitalize text-center border border-white-base font-semibold rounded-3xl py-2 px-16 bg-transparent w-full">
+                                                {jobRequest?.requestStatus.toLowerCase()}
+                                            </div>
+                                        ) : jobRequest?.requestStatus ===
+                                          "APPROVED" ? (
+                                            <>
+                                                <button
+                                                    onClick={handleFinishJob}
+                                                    type="button"
+                                                    className="bg-background-dark font-semibold rounded-3xl py-2 px-16 text-white-base w-full"
+                                                >
+                                                    Finish Job
+                                                </button>
+                                            </>
+                                        ) : jobRequest?.requestStatus ===
+                                          "FINISHED" ? (
+                                            <>
+                                                <div className="text-white-base capitalize text-center border border-white-base font-semibold rounded-3xl py-2 px-16 bg-transparent w-full">
+                                                    {jobRequest?.requestStatus.toLowerCase()}
+                                                </div>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <button
+                                                    onClick={handleRejectJob}
+                                                    type="button"
+                                                    className="bg-background-dark font-semibold rounded-3xl py-2 px-16 text-white-base"
+                                                >
+                                                    Decline
+                                                </button>
+                                                <button
+                                                    onClick={handleAcceptJob}
+                                                    type="button"
+                                                    className="bg-white-base font-semibold rounded-3xl py-2 px-16 text-background-dark"
+                                                >
+                                                    Accept
+                                                </button>
+                                            </>
+                                        )}
                                     </div>
                                 </>
                             )}

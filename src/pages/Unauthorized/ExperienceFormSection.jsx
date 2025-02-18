@@ -10,17 +10,11 @@ import {
     ExperienceFormGroupData,
     initialExperienceFormValues,
 } from "../../utils/constants";
+import { formatUrl, isNotEmailOrLink } from "../../utils/helpers";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaCheck } from "react-icons/fa6";
 import { useLocation, useNavigate } from "react-router-dom";
-
-const formatUrl = (url) => {
-    if (!url) return ""; // Handle empty input
-    if (!url.startsWith("http://") && !url.startsWith("https://")) {
-        return `https://${url}`;
-    }
-    return url;
-};
+import toast from "react-hot-toast";
 
 const ExperienceFormSection = () => {
     const [formValues, setFormValues] = useState(initialExperienceFormValues);
@@ -42,10 +36,10 @@ const ExperienceFormSection = () => {
             case "beautician":
                 return "Beauty and Cosmetics";
             case "athlete":
-                return "Athletes & Sports Enthusiast"; // Fixed typo
+                return "Athletes & Sports Enthusiast";
             case "artist":
                 return "Artists and Visuals";
-            case "fashionista": // Fixed case
+            case "fashionista":
                 return "Fashion and Jewelry Stylist";
             case "musician":
                 return "Music & Sound Engineer";
@@ -78,6 +72,11 @@ const ExperienceFormSection = () => {
                 return [key, value];
             })
         );
+
+        if (isNotEmailOrLink(formValues.socialAccount)) {
+            toast.error("Please enter a valid URL or email address.");
+            return;
+        }
         console.log({
             ...transformedFormValues,
             socialAccount: formatUrl(formValues.socialAccount),

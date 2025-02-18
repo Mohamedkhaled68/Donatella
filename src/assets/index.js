@@ -16,16 +16,16 @@ export { default as login2 } from "./images/login-image2.jpeg";
 export { default as privacyImage } from "./images/privacy-image.png";
 export { default as contactImage } from "./images/contact-image.png";
 
-export { default as cate1 } from "./images/cate1.jpeg";
-export { default as cate2 } from "./images/cate2.jpeg";
+export { default as cate1 } from "./images/cate1.png";
+export { default as cate2 } from "./images/cate2.png";
 export { default as cate3 } from "./images/cate3.png";
 export { default as cate4 } from "./images/cate4.png";
-export { default as musicCate } from "./images/music-cate.jpg";
-export { default as artistCate } from "./images/artist-cate.jpg";
-export { default as tourismCate } from "./images/tourism-cate.jpg";
-export { default as beautyCate } from "./images/beauty-cate.jpg";
-export { default as athleteCate } from "./images/athlete-cate.jpg";
-export { default as fashionCate } from "./images/fashion-cate.jpg";
+export { default as musicCate } from "./images/music-cate.png";
+export { default as artistCate } from "./images/artist-cate.png";
+export { default as tourismCate } from "./images/tourism-cate.png";
+export { default as beautyCate } from "./images/beauty-cate.png";
+export { default as athleteCate } from "./images/athlete-cate.png";
+export { default as fashionCate } from "./images/fashion-cate.png";
 
 export { default as orgLogo } from "./images/organization-logo.png";
 

@@ -21,7 +21,8 @@ const ReelGrid = ({ userStatus }) => {
     const handleReelUpload = async (event, index) => {
         const file = event.target.files[0];
         if (!file) return;
-
+        if (file.size > 1 * 1024 * 1024)
+            return toast.error("File size exceeds 1MB limit.");
         setLoading(index);
         setError(null);
 

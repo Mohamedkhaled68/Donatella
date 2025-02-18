@@ -92,7 +92,7 @@ const AttributeItem = ({ attribute, profile, isModelView }) => (
 
 const IndividualCard = ({ className, filter, profile }) => {
     const isModelView = filter === "models";
-    const hourlyRate = profile?.hourlyRate || "54$/HR";
+    const hourlyRate = profile?.hourlyRate || "54$";
     const navigate = useNavigate();
 
     const handleNavigateToIndividual = () => {

@@ -6,9 +6,10 @@ import Message from "./Message";
 import useGetChatMessages from "../../hooks/chat/useGetChatMessages";
 import SendMessageContainer from "./SendMessageContainer";
 import ReviewModal from "./ReviewModal";
+import toast from "react-hot-toast";
 
-const ChatWindow = ({ currentChat, error, setReviewModal, reviewModal }) => {
-    const [jobRequest, setJobRequest] = useState([]);
+const ChatWindow = ({ currentChat, setReviewModal, reviewModal }) => {
+    const [FinishedJob, setFinishedJob] = useState(null);
     const [chatMessages, setChatMessages] = useState([]);
 
     const inputRef = useRef(null);
@@ -24,7 +25,9 @@ const ChatWindow = ({ currentChat, error, setReviewModal, reviewModal }) => {
             const chatData = await getChatMessages(currentChat?.id);
             setChatMessages(chatData?.items?.reverse());
         } catch (err) {
-            console.error("Error fetching messages:", err);
+            toast.error(
+                err?.response?.data?.message || "Error fetching messages"
+            );
         }
     };
 
@@ -52,30 +55,6 @@ const ChatWindow = ({ currentChat, error, setReviewModal, reviewModal }) => {
         };
     }, [currentChat]); // Dependency array to run the effect when currentChat changes
 
-    useEffect(() => {
-        if (chatMessages.length > 0) {
-            chatMessages.forEach((message) => {
-                if (message.messageType === "REQUEST" && message.jobRequest.requestStatus !== "PENDING") {
-                    setJobRequest((prevJobRequests) => {
-                        if (
-                            prevJobRequests.every(
-                                (req) =>
-                                    req.job.id !== message.jobRequest.job.id
-                            )
-                        ) {
-                            return [...prevJobRequests, message.jobRequest];
-                        }
-                        return prevJobRequests;
-                    });
-                }
-            });
-        }
-    }, [chatMessages]);
-
-    // useEffect(() => {
-    //     console.log(jobRequest);
-    // });
-
     if (!currentChat) {
         return (
             <div className="w-[70%] h-full flex justify-center items-center p-4 rounded-lg bg-[#313131]">
@@ -95,7 +74,12 @@ const ChatWindow = ({ currentChat, error, setReviewModal, reviewModal }) => {
 
     return (
         <>
-            {reviewModal && <ReviewModal setReviewModal={setReviewModal} jobRequest={jobRequest}/>}
+            {reviewModal && (
+                <ReviewModal
+                    setReviewModal={setReviewModal}
+                    FinishedJob={FinishedJob}
+                />
+            )}
             <div className="w-[70%] relative overflow-hidden h-full p-4 rounded-lg bg-[#313131] flex flex-col">
                 {/* Header */}
                 <div className="border-b-thin border-white-base flex justify-between items-center pb-2 w-full">
@@ -128,7 +112,7 @@ const ChatWindow = ({ currentChat, error, setReviewModal, reviewModal }) => {
                             </p>
                         </div>
                     </div>
-                    {userStatus?.organization && jobRequest.length === 0 && (
+                    {/* {userStatus?.organization && jobRequest.length === 0 && (
                         <button
                             type="button"
                             onClick={() => setReviewModal(true)}
@@ -136,7 +120,7 @@ const ChatWindow = ({ currentChat, error, setReviewModal, reviewModal }) => {
                         >
                             Finish Job
                         </button>
-                    )}
+                    )} */}
                 </div>
 
                 {/* Messages */}
@@ -145,11 +129,6 @@ const ChatWindow = ({ currentChat, error, setReviewModal, reviewModal }) => {
                     className="relative h-full w-full grow overflow-y-auto px-3 custom-scrollbar scroll-smooth"
                 >
                     <div className="flex w-full flex-col justify-end">
-                        {error && (
-                            <div className="text-red-500 text-center py-2 text-sm">
-                                {error}
-                            </div>
-                        )}
                         {chatMessages.map((message) => (
                             <Message
                                 key={message?.id}
@@ -158,11 +137,14 @@ const ChatWindow = ({ currentChat, error, setReviewModal, reviewModal }) => {
                                 isSender={message?.sender?.id === userStatus.id}
                                 type={message?.messageType}
                                 jobRequest={message?.jobRequest}
+                                setReviewModal={setReviewModal}
+                                setFinishedJob={setFinishedJob}
                             />
                         ))}
                         <div ref={messagesEndRef} />
                     </div>
                 </div>
+                {/* Message Input */}
                 <SendMessageContainer
                     inputRef={inputRef}
                     fetchMessages={fetchMessages}

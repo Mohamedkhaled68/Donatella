@@ -5,13 +5,12 @@ import { useUserStore } from "../../store/userStore";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const FullBodyGrid = ({ userStatus }) => {
+const AthleteFullbodyGrid = () => {
     const { mutateAsync: updateMe } = useUpdateMe();
     const { mutateAsync: uploadImage } = useUploadImage();
-    const { setUserStatus } = useUserStore((state) => state);
+    const { setUserStatus, userStatus } = useUserStore((state) => state);
     const [loading, setLoading] = useState(null);
-    const [error, setError] = useState(null);
-    const fullBody = userStatus?.individual?.specialtyInfo?.fullBodyShots || [];
+    const fullBody = userStatus?.individual?.specialtyInfo?.bodyPictures || [];
 
     const items = [...fullBody, ...Array(4 - fullBody.length).fill(null)];
 
@@ -22,7 +21,6 @@ const FullBodyGrid = ({ userStatus }) => {
         if (file.size > 1 * 1024 * 1024)
             return toast.error("File size exceeds 1MB limit.");
         setLoading(index);
-        setError(null);
 
         try {
             // Upload the image and get the URL or data
@@ -30,13 +28,13 @@ const FullBodyGrid = ({ userStatus }) => {
 
             // Create a new array with the updated image at the specified index
             const updatedFullBodyShots = [
-                ...userStatus.individual.specialtyInfo.fullBodyShots,
+                ...userStatus.individual.specialtyInfo.bodyPictures,
             ];
             updatedFullBodyShots[index] = data; // Replace the image at the specific index
 
             const updatedSpecialtyInfo = {
                 ...userStatus.individual.specialtyInfo,
-                fullBodyShots: updatedFullBodyShots,
+                bodyPictures: updatedFullBodyShots,
             };
 
             const updatedUserStatus = {
@@ -58,7 +56,6 @@ const FullBodyGrid = ({ userStatus }) => {
             toast.error(
                 err?.response?.data?.message || "Error uploading image"
             );
-            setError("Error uploading image, please try again.");
             setLoading(null);
         }
     };
@@ -126,15 +123,10 @@ const FullBodyGrid = ({ userStatus }) => {
                             />
                         </label>
                     )}
-                    {error && (
-                        <div className="text-red-500 text-sm mt-2 text-center">
-                            {error}
-                        </div> // Display error message
-                    )}
                 </div>
             ))}
         </div>
     );
 };
 
-export default FullBodyGrid;
+export default AthleteFullbodyGrid;

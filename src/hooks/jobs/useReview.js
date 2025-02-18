@@ -9,7 +9,7 @@ const useReview = () => {
     return useMutation({
         mutationKey: ["jobs", "review"],
         mutationFn: async ({ jobId, rating, comment }) => {
-            const response = await axios.patch(
+            const response = await axios.post(
                 `${baseUrl}/jobs/${jobId}/reviews`,
                 { rating, comment },
                 {

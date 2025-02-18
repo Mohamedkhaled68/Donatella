@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { initialEditorProfileFormValues } from "../../../utils/constants";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useOnboarding from "../../../hooks/auth/useOnboarding";
 import { motion } from "framer-motion";
 import FormButton from "../../shared/ui/FormButton";
 import TextInput from "../../shared/ui/TextInput";
+import toast from "react-hot-toast";
 
 const EditorProfileForm = ({ imageUrls, loading, setLoading }) => {
     const [formValues, setFormValues] = useState(
         initialEditorProfileFormValues
     );
     const [disabled, setDisabled] = useState(true);
-    const navigate = useNavigate();
 
     const { mutateAsync } = useOnboarding();
 
@@ -64,7 +64,9 @@ const EditorProfileForm = ({ imageUrls, loading, setLoading }) => {
                 },
             });
         } catch (error) {
-            console.log(error.message);
+            toast.error(
+                error?.response?.data?.message || "An unexpected error occurred"
+            );
         } finally {
             setLoading(false);
             setFormValues(initialEditorProfileFormValues);
@@ -79,9 +81,6 @@ const EditorProfileForm = ({ imageUrls, loading, setLoading }) => {
         const isImagesFilled = Object.values(imageUrls).every(
             (value) => value !== null
         );
-
-        // const errors = validateForm(formValues);
-        // setErrors(errors);
 
         setDisabled(!isInputsFilled || !isImagesFilled);
     }, [formValues, imageUrls]);
@@ -244,9 +243,9 @@ const EditorProfileForm = ({ imageUrls, loading, setLoading }) => {
                         className={"max-w-[250px] py-4"}
                     />
                     <p className="text-right text-sm text-[#64748B]">
-                        Don't have an account yet?{" "}
+                        Already have an account?{" "}
                         <Link className="text-blue-primary" to="/login">
-                            Click here to create one!
+                            Login
                         </Link>
                     </p>
                 </div>

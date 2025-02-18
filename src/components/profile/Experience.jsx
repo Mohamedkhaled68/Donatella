@@ -12,7 +12,7 @@ const formateDate = (d) => {
         .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 };
 
-const Experience = ({ userStatus }) => {
+const Experience = ({ userStatus, setLoading }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [disabled, setDisabled] = useState(true);
     const [experience, setExperience] = useState(
@@ -59,6 +59,7 @@ const Experience = ({ userStatus }) => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true);
         try {
             const { firstName, lastName, fullName, ...rest } =
                 userStatus.individual;
@@ -72,10 +73,12 @@ const Experience = ({ userStatus }) => {
                     workExperience: [...experience],
                 },
             });
-        } catch (err) {
-            console.error(err);
-        } finally {
+
             setIsEditing(false);
+        } catch (err) {
+            toast.error(err?.response?.data?.message || "Failed to update.");
+        } finally {
+            setLoading(false);
         }
     };
 

@@ -291,6 +291,58 @@ export const initialEditorProfileFormValues = {
     visualEffects: false,
     motionGraphics: false,
 };
+
+export const initialMusicianProfileFormValues = {
+    category: [],
+    majorProjects: "",
+    preferWorkingWith: [],
+    experienceHandlingHighProfileClients: "",
+    wonAwards: "",
+    portfolioUrl: "",
+};
+export const initialFashionProfileFormValues = {
+    category: [],
+    publications: "",
+    certificate: [],
+    // yearsOfExperience: 1,
+    workedWithCelebrities: "",
+    formalTrainingOrCertifications: "",
+    portfolio: "",
+};
+export const initialArtistProfileFormValues = {
+    category: [],
+    publications: "",
+    previousClients: "",
+    expertise: [], // max 3
+    portfolio: "",
+    previousWork: [],
+};
+export const initialAthleteProfileFormValues = {
+    category: [],
+    // yearsofExperience: 1,
+    AchievementsOrTitles: [],
+    affiliated: "",
+    portfolio: "",
+    bodyPictures: [],
+    trophiePictures: [],
+};
+export const initialBeautyProfileFormValues = {
+    expertise: [],
+    hasHighLevelExperience: "",
+    protofolio: "",
+    preferredBrands: [],
+    hasFormalTraining: "",
+};
+export const initialTourismProfileFormValues = {
+    specializations: [],
+    experienceManagingTravelLogistics: "",
+    // yearsofExperience: 1,
+    currentOrMostRecentEmployer: "",
+    license: "",
+    certificates: [],
+    otherLanguage: "",
+};
+
 export const initialOrgProfileFormValues = {
     bio: "",
     name: "",
@@ -379,6 +431,38 @@ export const initialRestImagesValues = {
     portfolio2: null,
     profile: null,
     reel: null,
+};
+
+export const initialMusicianImagesValues = {
+    profile: null,
+};
+export const initialFashionImagesValues = {
+    profile: null,
+    certificateProof: null,
+    previousWork1: null,
+    previousWork2: null,
+};
+
+export const initialArtistImagesValues = {
+    profile: null,
+    previousWork1: null,
+    previousWork2: null,
+};
+export const initialAthleteImagesValues = {
+    profile: null,
+    fullbody: null,
+    trophies: null,
+};
+
+export const initialBeatyImagesValues = {
+    profile: null,
+    certificateProof: null,
+    previousWork1: null,
+    previousWork2: null,
+};
+export const initialTourismImagesValues = {
+    profile: null,
+    certificateProof: null,
 };
 
 // EXPERIENCE FORM

@@ -5,38 +5,37 @@ import { useUserStore } from "../../store/userStore";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const FullBodyGrid = ({ userStatus }) => {
+const AthleteTrophieGrid = () => {
     const { mutateAsync: updateMe } = useUpdateMe();
     const { mutateAsync: uploadImage } = useUploadImage();
-    const { setUserStatus } = useUserStore((state) => state);
+    const { setUserStatus, userStatus } = useUserStore((state) => state);
     const [loading, setLoading] = useState(null);
-    const [error, setError] = useState(null);
-    const fullBody = userStatus?.individual?.specialtyInfo?.fullBodyShots || [];
+    const trophies =
+        userStatus?.individual?.specialtyInfo?.trophiePictures || [];
 
-    const items = [...fullBody, ...Array(4 - fullBody.length).fill(null)];
+    const items = [...trophies, ...Array(4 - trophies.length).fill(null)];
 
     const handleImageUpload = async (event, index) => {
         const file = event.target.files[0];
 
         if (!file) return;
+
         if (file.size > 1 * 1024 * 1024)
             return toast.error("File size exceeds 1MB limit.");
         setLoading(index);
-        setError(null);
-
         try {
             // Upload the image and get the URL or data
             const data = await uploadImage(file);
 
             // Create a new array with the updated image at the specified index
-            const updatedFullBodyShots = [
-                ...userStatus.individual.specialtyInfo.fullBodyShots,
+            const updatedTrophies = [
+                ...userStatus.individual.specialtyInfo.trophiePictures,
             ];
-            updatedFullBodyShots[index] = data; // Replace the image at the specific index
+            updatedTrophies[index] = data; // Replace the image at the specific index
 
             const updatedSpecialtyInfo = {
                 ...userStatus.individual.specialtyInfo,
-                fullBodyShots: updatedFullBodyShots,
+                trophiePictures: updatedTrophies,
             };
 
             const updatedUserStatus = {
@@ -58,35 +57,34 @@ const FullBodyGrid = ({ userStatus }) => {
             toast.error(
                 err?.response?.data?.message || "Error uploading image"
             );
-            setError("Error uploading image, please try again.");
             setLoading(null);
         }
     };
 
     return (
         <div className="grid grid-cols-4 gap-x-[7.5rem] justify-items-center h-full">
-            {items.map((fullBody, index) => (
+            {items.map((trophie, index) => (
                 <div
                     key={index}
                     className="flex flex-col justify-center items-center gap-6 w-[230px] min-h-[380px]"
                 >
-                    {fullBody ? (
+                    {trophie ? (
                         <div className="relative group w-full h-full overflow-hidden rounded-md border-thin border-white-base/30">
                             <img
                                 className="max-w-[100%] h-full object-cover"
-                                src={fullBody}
+                                src={trophie}
                                 alt="profileImage"
                             />
                             <div className="absolute bottom-0 left-0  w-full group-hover:opacity-100 opacity-0 duration-300">
                                 <label
                                     className="w-full h-full cursor-pointer"
-                                    htmlFor={`fullbody-upload-${index}`}
+                                    htmlFor={`trophie-upload-${index}`}
                                 >
                                     <div className="w-full overflow-hidden flex justify-center items-center rounded-md border-thin border-white-base/30 h-full p-2 bg-[#3B3B3B]">
                                         {loading === index ? (
                                             <div className="text-center text-white">
                                                 Uploading...
-                                            </div> // Display loading text
+                                            </div>
                                         ) : (
                                             <FaPlus size={25} />
                                         )}
@@ -96,7 +94,7 @@ const FullBodyGrid = ({ userStatus }) => {
                                             handleImageUpload(event, index)
                                         }
                                         type="file"
-                                        id={`fullbody-upload-${index}`}
+                                        id={`trophie-upload-${index}`}
                                         className="hidden"
                                     />
                                 </label>
@@ -105,13 +103,13 @@ const FullBodyGrid = ({ userStatus }) => {
                     ) : (
                         <label
                             className="w-full h-full cursor-pointer"
-                            htmlFor={`fullbody-upload-${index}`}
+                            htmlFor={`trophie-upload-${index}`}
                         >
                             <div className="w-full overflow-hidden flex justify-center items-center rounded-md border-thin border-white-base/30 h-full bg-[#3B3B3B]">
                                 {loading === index ? (
                                     <div className="text-center text-white">
                                         Uploading...
-                                    </div> // Display loading text
+                                    </div>
                                 ) : (
                                     <FaPlus size={75} />
                                 )}
@@ -121,15 +119,10 @@ const FullBodyGrid = ({ userStatus }) => {
                                     handleImageUpload(event, index)
                                 }
                                 type="file"
-                                id={`fullbody-upload-${index}`}
+                                id={`trophie-upload-${index}`}
                                 className="hidden"
                             />
                         </label>
-                    )}
-                    {error && (
-                        <div className="text-red-500 text-sm mt-2 text-center">
-                            {error}
-                        </div> // Display error message
                     )}
                 </div>
             ))}
@@ -137,4 +130,4 @@ const FullBodyGrid = ({ userStatus }) => {
     );
 };
 
-export default FullBodyGrid;
+export default AthleteTrophieGrid;

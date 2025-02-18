@@ -7,13 +7,13 @@ const Rating = ({ maxRating = 5, size = 20, rating }) => {
             {Array.from({ length: maxRating }, (_, i) => {
                 return i < rating ? (
                     <FaStar
-                        className="text-white-base cursor-pointer"
+                        className="text-white-base"
                         key={i}
                         size={size}
                     />
                 ) : (
                     <CiStar
-                        className="text-white-base cursor-pointer"
+                        className="text-white-base"
                         key={i}
                         size={size}
                     />

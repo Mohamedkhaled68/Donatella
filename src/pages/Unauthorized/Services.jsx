@@ -1,6 +1,17 @@
 import React from "react";
 import { BackButton, Footer } from "../../components";
-import { cate1, cate2, cate3, cate4 } from "../../assets";
+import {
+    artistCate,
+    athleteCate,
+    beautyCate,
+    cate1,
+    cate2,
+    cate3,
+    cate4,
+    fashionCate,
+    musicCate,
+    tourismCate,
+} from "../../assets";
 import { useNavigate } from "react-router-dom";
 
 const cards = [
@@ -32,6 +43,48 @@ const cards = [
         userBtn: "Join as Editor",
         image: cate4,
     },
+    {
+        title: "Tourism",
+        slogan: "Explore the World with the Best Guides",
+        orgBtn: "Look for your next Tour guide",
+        userBtn: "Join as Tour guide",
+        image: tourismCate,
+    },
+    {
+        title: "Visual Arts",
+        slogan: "Bringing Creativity to Life, One Stroke at a Time",
+        orgBtn: "Look for your next Visual Artist",
+        userBtn: "Join as Visual Artist",
+        image: artistCate,
+    },
+    {
+        title: "Music",
+        slogan: "Creating Harmonies That Inspire the Soul",
+        orgBtn: "Look for your next Musician",
+        userBtn: "Join as Musician",
+        image: musicCate,
+    },
+    {
+        title: "Fashion",
+        slogan: "Redefining Style, One Trend at a Time",
+        orgBtn: "Look for your next Fashionista",
+        userBtn: "Join as Fashionista",
+        image: fashionCate,
+    },
+    {
+        title: "Beauty",
+        slogan: "Enhancing Beauty with Expert Touch",
+        orgBtn: "Look for your next Beauty Expert",
+        userBtn: "Join as Beauty Expert",
+        image: beautyCate,
+    },
+    {
+        title: "Athletes",
+        slogan: "Pushing Limits, Achieving Greatness",
+        orgBtn: "Look for your next Sport Athlete",
+        userBtn: "Join as Sport Athlete",
+        image: athleteCate,
+    },
 ];
 
 const Services = () => {
@@ -52,7 +105,7 @@ const Services = () => {
                     <p className="text-xl font-[DM Sans] text-white/70 mt-2 w-[80%] mx-auto lg:w-full">
                         Redefine creativity and excellence.
                     </p>
-                    <div className="mt-12 grid grid-cols-1 gap-8 px-4">
+                    <div className="mt-12 grid grid-cols-2 gap-8 px-4">
                         {cards.map((card) => (
                             <div
                                 key={card.title}

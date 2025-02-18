@@ -33,12 +33,12 @@ export const dateFormat = (dateString) => {
     const currentDate = new Date();
 
     // Check if the date is in the current month and year
-    if (
-        date.getMonth() === currentDate.getMonth() &&
-        date.getFullYear() === currentDate.getFullYear()
-    ) {
-        return "Now";
-    }
+    // if (
+    //     date.getMonth() === currentDate.getMonth() &&
+    //     date.getFullYear() === currentDate.getFullYear()
+    // ) {
+    //     return "Now";
+    // }
 
     // Format the date to "Dec 2024"
     return date.toLocaleString("en-US", {
@@ -99,4 +99,65 @@ export const formatChatDate = (isoDateString) => {
     };
 
     return date.toLocaleString(undefined, options);
+};
+
+export const formatUrl = (url) => {
+    if (!url) return ""; // Handle empty input
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        return `https://${url}`;
+    }
+    return url;
+};
+
+export const formatReviewDate = (dateString) => {
+    const date = new Date(dateString);
+
+    const options = { month: "short", day: "numeric", year: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+
+    // Get the day and determine the correct suffix
+    const day = date.getDate();
+    const suffix =
+        day % 10 === 1 && day !== 11
+            ? "st"
+            : day % 10 === 2 && day !== 12
+            ? "nd"
+            : day % 10 === 3 && day !== 13
+            ? "rd"
+            : "th";
+
+    return formattedDate.replace(/\d+/, `${day}${suffix}`);
+};
+
+export const isNotEmailOrLink = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const urlRegex =
+        /^(https?:\/\/|HTTPS?:\/\/|Http?:\/\/|HTTP?:\/\/)?([\w-]+(\.[\w-]+)+.*)$/;
+
+    return !emailRegex.test(value) && !urlRegex.test(value);
+};
+
+export const timeAgo = (postedTime) => {
+    const now = new Date();
+    const postedDate = new Date(postedTime);
+    const diffInSeconds = Math.floor((now - postedDate) / 1000);
+
+    const intervals = {
+        year: 31536000, // 60 * 60 * 24 * 365
+        month: 2592000, // 60 * 60 * 24 * 30
+        week: 604800, // 60 * 60 * 24 * 7
+        day: 86400, // 60 * 60 * 24
+        hour: 3600, // 60 * 60
+        minute: 60,
+        second: 1,
+    };
+
+    for (const [key, seconds] of Object.entries(intervals)) {
+        const interval = Math.floor(diffInSeconds / seconds);
+        if (interval >= 1) {
+            return `${interval} ${key}${interval > 1 ? "s" : ""} ago`;
+        }
+    }
+
+    return "just now";
 };

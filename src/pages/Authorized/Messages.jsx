@@ -3,12 +3,14 @@ import { ChatWindow, ChatList } from "../../components";
 
 const Messages = () => {
     const [currentChat, setCurrentChat] = useState(null);
-    const [error, setError] = useState(null);
     const [reviewModal, setReviewModal] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
         document.documentElement.style.overflowY = "hidden";
+        return () => {
+            document.documentElement.style.overflowY = "unset";
+        };
     }, []);
 
     return (
@@ -23,7 +25,6 @@ const Messages = () => {
                     reviewModal={reviewModal}
                     key={currentChat?.id}
                     currentChat={currentChat}
-                    error={error}
                 />
             </div>
         </section>

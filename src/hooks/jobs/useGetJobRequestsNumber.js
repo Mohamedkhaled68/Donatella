@@ -3,15 +3,14 @@ import { baseUrl } from "../../utils/baseUrl";
 import axios from "axios";
 import useAuthStore from "../../store/userTokenStore";
 
-const useFinishJob = () => {
+const useGetJobRequestsNumber = () => {
     const token = useAuthStore((state) => state.authToken);
 
     return useMutation({
-        mutationKey: ["jobs", "finishJob"],
-        mutationFn: async ({ jobId, requestId }) => {
-            const response = await axios.patch(
-                `${baseUrl}/jobs/${jobId}/finish`,
-                { requestId },
+        mutationKey: ["jobs", "getJobRequestsNumber"],
+        mutationFn: async (jobId) => {
+            const response = await axios.get(
+                `${baseUrl}/jobs/${jobId}/job-requests/count`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -19,8 +18,6 @@ const useFinishJob = () => {
                     },
                 }
             );
-        console.log(response.data.data);
-        
             return response.data.data;
         },
         onSuccess: () => {},
@@ -33,4 +30,4 @@ const useFinishJob = () => {
     });
 };
 
-export default useFinishJob;
+export default useGetJobRequestsNumber;

@@ -282,6 +282,14 @@ const PostJob = () => {
                                     Videographer
                                 </option>
                                 <option value="EDITOR">Editor</option>
+                                <option value="TOURISM">Tour Guid</option>
+                                <option value="MUSIC_AND_SOUND_ENGINEER">
+                                    Musician
+                                </option>
+                                <option value="ATHLETE">Athlete</option>
+                                <option value="BEAUTY">Makeup Artist</option>
+                                <option value="ARTIST">Artist</option>
+                                <option value="FASHION">Fashionista</option>
                             </select>
                         </div>
 

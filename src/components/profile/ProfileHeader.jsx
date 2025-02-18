@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Rating from "../shared/Rating";
 import { FiEdit } from "react-icons/fi";
-import { FaTiktok, FaInstagram, FaCheck } from "react-icons/fa";
+import { FaTiktok, FaInstagram } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { CountryEnum } from "../../utils/constants";
@@ -106,18 +106,13 @@ const ProfileHeader = ({ data }) => {
                         ...userStatus.organization,
                         logo: data,
                     };
-
-                    // Update the backend
-
                     await updateMe(updatedOrganization);
 
                     const updatedUserStatus = {
                         ...userStatus,
                         organization: updatedOrganization,
                     };
-
                     setUserStatus(updatedUserStatus);
-                    console.log("Updated user status:", updatedUserStatus);
                     // setLoading(null);
                 } catch (err) {
                     console.error("Error uploading image:", err);
@@ -209,14 +204,19 @@ const ProfileHeader = ({ data }) => {
                         >
                             <div className="flex justify-center items-end relative">
                                 <div className="w-[115px] h-[115px] rounded-full bg-slate-400 overflow-hidden flex justify-center items-center">
-                                    <img
-                                        className="w-full h-full object-cover"
-                                        src={
-                                            data?.individual?.specialtyInfo
-                                                ?.profilePicture[0]
-                                        }
-                                        alt=""
-                                    />
+                                    {data?.individual?.specialtyInfo
+                                        ?.profilePicture ? (
+                                        <img
+                                            className="w-full h-full object-cover"
+                                            src={
+                                                data?.individual?.specialtyInfo
+                                                    ?.profilePicture[0]
+                                            }
+                                            alt=""
+                                        />
+                                    ) : (
+                                        <></>
+                                    )}
                                 </div>
                                 <div
                                     className="absolute bottom-0 -right-1 cursor-pointer"

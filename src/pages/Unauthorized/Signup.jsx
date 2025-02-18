@@ -20,24 +20,41 @@ const Signup = () => {
     };
 
     // Enhanced mobile detection using multiple methods
+    // const detectMobile = () => {
+    //     const userAgent =
+    //         navigator.userAgent || navigator.vendor || window.opera;
+    //     const mobileRegex =
+    //         /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i;
+
+    //     const conditions = [
+    //         mobileRegex.test(userAgent.toLowerCase()),
+    //         typeof window.orientation !== "undefined",
+    //         navigator.maxTouchPoints > 0,
+    //         // window.innerWidth <= 768,
+    //     ];
+
+    //     return conditions.some((condition) => condition);
+    // };
     const detectMobile = () => {
         const userAgent =
             navigator.userAgent || navigator.vendor || window.opera;
         const mobileRegex =
             /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i;
 
-        const conditions = [
-            mobileRegex.test(userAgent.toLowerCase()),
-            typeof window.orientation !== "undefined",
-            navigator.maxTouchPoints > 0,
-            window.innerWidth <= 768,
-        ];
+        const isMobileDevice = mobileRegex.test(userAgent.toLowerCase());
+        const isTouchScreen =
+            "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-        return conditions.some((condition) => condition);
+        return (
+            isMobileDevice ||
+            (isTouchScreen && typeof window.orientation !== "undefined")
+        );
     };
 
     useEffect(() => {
         // Initial check
+        // console.log(detectMobile());
+
         setIsMobile(detectMobile());
 
         // Add resize listener for responsive detection
