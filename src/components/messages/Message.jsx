@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { getCountryByCode } from "../../utils/helpers";
 import { useUserStore } from "../../store/userStore";
 import useAcceptJob from "../../hooks/jobs/useAcceptJob";
@@ -14,6 +14,7 @@ const Message = ({
     jobRequest,
     setReviewModal,
     setFinishedJob,
+    setJob,
 }) => {
     const userStatus = useUserStore((state) => state.userStatus);
     const { mutateAsync: acceptJob } = useAcceptJob();
@@ -63,6 +64,12 @@ const Message = ({
             console.log(err?.response?.data?.message);
         }
     };
+
+    useEffect(() => {
+        if (jobRequest) {
+            setJob(jobRequest?.job);
+        }
+    }, [jobRequest]);
 
     return (
         <>

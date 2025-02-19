@@ -1,15 +1,17 @@
 import { create } from "zustand";
 
 export const useUserStore = create((set) => ({
-    userStatus: {},
+    userStatus: null,
 
     setUserStatus: (user) => {
-        localStorage.setItem("userStatus", JSON.stringify(user));
+        localStorage.setItem("DONATELLA_USER_DATA", JSON.stringify(user));
         set(() => ({ userStatus: user }));
     },
 
     rehydrate: () => {
-        const storedUserStatus = JSON.parse(localStorage.getItem("userStatus"));
+        const storedUserStatus = JSON.parse(
+            localStorage.getItem("DONATELLA_USER_DATA")
+        );
         if (storedUserStatus) {
             set(() => ({ userStatus: storedUserStatus }));
         }

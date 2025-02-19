@@ -84,19 +84,32 @@ const ExperienceFormSection = () => {
         });
 
         localStorage.setItem(
-            "userData",
+            "USER_EXPERIENCE_FORM_DATA",
             JSON.stringify({ ...transformedFormValues, workExperience })
         );
 
         setFormValues(initialExperienceFormValues);
-        navigate("/profile-form", {
-            state: { category: location.state.category },
-        });
+        if (location.state?.category) {
+            navigate("/profile-form", {
+                state: { category: location.state.category },
+            });
+        } else {
+            const userCategory = localStorage.getItem("USER_ROLE");
+
+            navigate("/profile-form", {
+                state: { category: userCategory },
+            });
+        }
     };
 
     useEffect(() => {
-        setCategory(location.state.category.toLowerCase());
-    }, [location.state.category]);
+        const userCategory = localStorage.getItem("USER_ROLE");
+        if (userCategory) {
+            setCategory(userCategory);
+        } else {
+            setCategory(localStorage.location.state.category);
+        }
+    }, []);
 
     useEffect(() => {
         const isFilled = Object.values(formValues).every(
@@ -132,7 +145,7 @@ const ExperienceFormSection = () => {
                 <LogoHeader />
                 <div className="container mx-auto my-10">
                     <div className="grid grid-cols-4 my-4">
-                        <BackButton size={30} />
+                        <BackButton path={"/select-category"} size={30} />
                         <div className="col-span-2 flex flex-col justify-center items-center gap-[14px]">
                             <h1 className="capitalize text-5xl text-center font-display font-bold text-white-base">
                                 {getCategory(category)}

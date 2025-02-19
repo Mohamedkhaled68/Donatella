@@ -126,7 +126,10 @@ const ProfileFormSection = () => {
                 )}
                 <LogoHeader />
                 <div className="flex gap-[50px]">
-                    <BackButton className={"mt-10 ml-4"} />
+                    <BackButton
+                        path={"/experience-form"}
+                        className={"mt-10 ml-4"}
+                    />
                     <div className="container mx-auto grid grid-cols-2 gap-6 mt-10">
                         {role === "Model" && (
                             <ModelProfileForm

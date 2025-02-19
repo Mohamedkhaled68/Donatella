@@ -148,14 +148,20 @@ const Profile = () => {
                                     </form>
                                 )}
                             </div>
-                            <Border />
-                            {userStatus.individual && <Portfolio />}
-                            <Border />
                             {userStatus.individual && (
-                                <Experience
-                                    setLoading={setLoading}
-                                    userStatus={userStatus}
-                                />
+                                <>
+                                    <Border />
+                                    <Portfolio />
+                                </>
+                            )}
+                            {userStatus.individual && (
+                                <>
+                                    <Border />
+                                    <Experience
+                                        setLoading={setLoading}
+                                        userStatus={userStatus}
+                                    />
+                                </>
                             )}
                             {userStatus.individual && (
                                 <>

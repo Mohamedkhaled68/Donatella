@@ -16,7 +16,11 @@ const PageContainer = ({ children, className, pathname }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, [location]);
+    }, [location.pathname]);
+
+    useEffect(() => {
+        console.log(userStatus);
+    }, [location.pathname]);
     return (
         <>
             {userStatus?.onboardingCompleted && <Navbar />}

@@ -18,7 +18,7 @@ const IndividualRegisterForm = ({ role, loading, setLoading }) => {
     const [disabled, setDisabled] = useState(true);
     const [errors, setErrors] = useState({});
 
-    const { mutateAsync, isSuccess } = useRegister();
+    const { mutateAsync } = useRegister();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -43,7 +43,9 @@ const IndividualRegisterForm = ({ role, loading, setLoading }) => {
                 }
             )
             .catch((err) => {
-                console.error(err);
+                toast.error(
+                    err?.response?.data?.message || "Failed to register."
+                );
             })
             .finally(() => {
                 setFormValues(initialIndividualRegisterFormValues);

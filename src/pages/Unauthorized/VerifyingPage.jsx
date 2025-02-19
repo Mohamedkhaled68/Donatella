@@ -32,8 +32,11 @@ const VerifyingPage = ({ length = 4 }) => {
                     userId: userStatus.id,
                     otp: newOtp.join(""),
                 });
+                toast.success("OTP verified successfully!");
             } catch (error) {
-                console.log("An error occurred.");
+                toast.error(
+                    error?.response?.data?.message || "Failed to verify OTP."
+                );
             } finally {
                 setLoading(false);
             }
@@ -70,7 +73,9 @@ const VerifyingPage = ({ length = 4 }) => {
                 console.log(m);
             })
             .catch((err) => {
-                console.error(err);
+                toast.error(
+                    err?.response?.data?.message || "Failed to resend."
+                );
             })
             .finally(() => {
                 setLoading(false);

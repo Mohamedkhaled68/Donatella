@@ -77,7 +77,7 @@ const Login = () => {
             const screenHeight = window.screen.height;
             // console.log(screenWidth, screenHeight);
             if (screenWidth < 1023) return true;
-            if (screenHeight < 768) return true;
+            if (screenHeight < 700) return true;
 
             return false;
         }
@@ -108,7 +108,6 @@ const Login = () => {
 
     useEffect(() => {
         // Initial check
-
         setIsMobile(detectMobile());
 
         // Add resize listener for responsive detection
@@ -169,7 +168,6 @@ const Login = () => {
 
         setDisabled(!isFilled || Object.keys(errors).length !== 0);
     }, [formValues]);
-
 
     return (
         <>

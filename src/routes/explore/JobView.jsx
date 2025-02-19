@@ -3,13 +3,22 @@ import { useParams, useNavigate } from "react-router-dom";
 import Rating from "../../components/shared/Rating";
 import { FaTiktok, FaInstagram, FaUser } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
-import { BackButton, Footer, Loading } from "../../components";
+import {
+    BackButton,
+    Footer,
+    JobDurationContainer,
+    Loading,
+} from "../../components";
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import useSendMessage from "../../hooks/chat/useSendMessage";
 import { motion } from "framer-motion";
 import useGetJob from "../../hooks/jobs/useGetJob";
 import toast from "react-hot-toast";
-import { getCountryByCode, timeAgo } from "../../utils/helpers";
+import {
+    compareTimeUnits,
+    getCountryByCode,
+    timeAgo,
+} from "../../utils/helpers";
 import useGetJobRequestsNumber from "../../hooks/jobs/useGetJobRequestsNumber";
 
 const levels = [
@@ -138,7 +147,10 @@ const JobView = () => {
                                     <p className="mb-[20px]">
                                         ${currentJob?.salary} -{" "}
                                         {getCountryByCode(currentJob?.location)}
-                                        , {currentJob?.location} - 7 Days
+                                        , {currentJob?.location} -{" "}
+                                        <JobDurationContainer
+                                            job={currentJob}
+                                        />
                                     </p>
 
                                     <div className="flex flex-col gap-1">
@@ -403,6 +415,14 @@ const JobView = () => {
                                                         ? "Music & Sound Engineer"
                                                         : currentJob?.jobCategory.toLowerCase()}
                                                 </span>
+                                            </p>
+                                            <p className="text-sm">
+                                                <span className="font-bold">
+                                                    Job Duration:
+                                                </span>{" "}
+                                                <JobDurationContainer
+                                                    job={currentJob}
+                                                />
                                             </p>
                                         </div>
                                     </div>

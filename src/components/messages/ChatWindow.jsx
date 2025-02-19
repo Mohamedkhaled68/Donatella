@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 const ChatWindow = ({ currentChat, setReviewModal, reviewModal }) => {
     const [FinishedJob, setFinishedJob] = useState(null);
     const [chatMessages, setChatMessages] = useState([]);
+    const [job, setJob] = useState(null);
 
     const inputRef = useRef(null);
     const messagesEndRef = useRef(null);
@@ -78,6 +79,7 @@ const ChatWindow = ({ currentChat, setReviewModal, reviewModal }) => {
                 <ReviewModal
                     setReviewModal={setReviewModal}
                     FinishedJob={FinishedJob}
+                    job={job}
                 />
             )}
             <div className="w-[70%] relative overflow-hidden h-full p-4 rounded-lg bg-[#313131] flex flex-col">
@@ -139,6 +141,7 @@ const ChatWindow = ({ currentChat, setReviewModal, reviewModal }) => {
                                 jobRequest={message?.jobRequest}
                                 setReviewModal={setReviewModal}
                                 setFinishedJob={setFinishedJob}
+                                setJob={setJob}
                             />
                         ))}
                         <div ref={messagesEndRef} />
@@ -148,6 +151,8 @@ const ChatWindow = ({ currentChat, setReviewModal, reviewModal }) => {
                 <SendMessageContainer
                     inputRef={inputRef}
                     fetchMessages={fetchMessages}
+                    currentChat={currentChat}
+                    scrollToBottom={scrollToBottom}
                 />
             </div>
         </>

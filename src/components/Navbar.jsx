@@ -93,7 +93,7 @@ const Navbar = () => {
                         </div>
                     </div>
                 </div>
-                {showDrop && <DropMenu />}
+                {showDrop && <DropMenu setShowDrop={setShowDrop} />}
             </nav>
         </>
     );

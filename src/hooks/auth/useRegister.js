@@ -17,6 +17,7 @@ const useRegister = () => {
                 },
             });
             setUserStatus(response.data.data);
+            console.log(response);
             return response.data;
         },
         onSuccess: () => {

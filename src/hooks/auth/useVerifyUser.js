@@ -7,11 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const useVerifyUser = () => {
     const setToken = useAuthStore((state) => state.signIn);
-
     const { setUserStatus, userStatus } = useUserStore((state) => state);
-
     const navigate = useNavigate();
-
     return useMutation({
         mutationKey: ["auth", "verify"],
         mutationFn: async (data) => {

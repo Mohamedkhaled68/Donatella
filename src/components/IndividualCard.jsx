@@ -69,7 +69,7 @@ const attributeConfig = [
 // Attribute Item Component for better organization
 const AttributeItem = ({ attribute, profile, isModelView }) => (
     <span
-        className={`flex justify-center gap-5 items-center w-full ${
+        className={`flex justify-center gap-2 items-center w-full ${
             isModelView ? "col-span-2" : "col-span-1"
         }`}
     >
@@ -107,16 +107,9 @@ const IndividualCard = ({ className, filter, profile }) => {
             className={`bg-[#313131] border-thin min-w-[300px] max-w-full h-[508px] border-white-base/5 rounded-[20px] p-4 flex flex-col gap-4 ${className}`}
         >
             <div className="flex flex-col gap-2">
-                <div className="flex justify-between items-center">
-                    <h1 className="name || text-md font-bold text-white-base font-display">
-                        {`${profile?.firstName || ""} ${
-                            profile?.lastName || ""
-                        }`}
-                    </h1>
-                    <span className="text-sm font-bold text-white-base font-body">
-                        {hourlyRate}
-                    </span>
-                </div>
+                <h1 className="name || text-md font-bold text-white-base font-display capitalize">
+                    {`${profile?.firstName || ""} ${profile?.lastName || ""}`}
+                </h1>
                 <div className="flex justify-between items-center">
                     <p className="region || text-sm font-light text-white-base/50 font-body">
                         {profile?.specialtyInfo?.nationality &&

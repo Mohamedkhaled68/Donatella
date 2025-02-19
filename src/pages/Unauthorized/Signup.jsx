@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import LogoHeader from "../../components/shared/ui/LogoHeader";
-import { formVideo, girlImg } from "../../assets";
+import { formVideo } from "../../assets";
 import {
     BackButton,
     IndividualRegisterForm,
     Loading,
     OrganizationRegisterForm,
 } from "../../components";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Signup = () => {
     const [role, setRole] = useState("Individual");
@@ -66,7 +66,7 @@ const Signup = () => {
             const screenHeight = window.screen.height;
             // console.log(screenWidth, screenHeight);
             if (screenWidth < 1023) return true;
-            if (screenHeight < 768) return true;
+            if (screenHeight < 700) return true;
 
             return false;
         }
@@ -111,13 +111,6 @@ const Signup = () => {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
-
-    // if (isMobile) {
-    //     console.warn(
-    //         "Desktop Only: This feature is not available on mobile devices."
-    //     );
-    //     return <Navigate to={-1} replace />;
-    // }
 
     useEffect(() => {
         if (location.state?.role) {

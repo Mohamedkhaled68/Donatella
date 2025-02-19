@@ -69,15 +69,15 @@ const Reviews = () => {
                         <SwiperSlide className="" key={review.id}>
                             <div className="review rounded-[20px] bg-[#3B3B3B] w-full border-[2.5px] border-white-base/20 p-[17px] flex flex-col">
                                 <div className="flex flex-col mb-1">
-                                    <p className="font-bold font-body text-[24px] capitalize">
+                                    <p className="font-bold font-body text-[28px] capitalize">
                                         {review?.organizationName}
                                     </p>
-                                    <p className="font-light text-xs font-body text-white-base/50 -mt-[2px]">
+                                    <p className="font-light text-sm font-body text-white-base/50 -mt-[2px] mb-[5px]">
                                         {formatReviewDate(review.createdAt)}
                                     </p>
                                 </div>
-                                <div>
-                                    <Rating rating={review?.rating} />
+                                <div className="mb-[5px]">
+                                    <Rating size={25} rating={review?.rating} />
                                 </div>
                                 <p className="font-light text-base font-body text-white-base tracking-widest mt-2">
                                     {review?.comment}

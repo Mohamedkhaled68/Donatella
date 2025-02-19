@@ -34,6 +34,7 @@ const SelectCategory = () => {
 
     const handleRoleChange = useCallback((selectedRole) => {
         setRole(selectedRole);
+        localStorage.setItem("USER_ROLE", selectedRole);
     }, []);
 
     const navigateToForm = () => {

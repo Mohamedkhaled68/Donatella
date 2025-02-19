@@ -17,23 +17,87 @@ import {
     Services,
     Privacy,
 } from "./pages";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import {
+    Navigate,
+    Route,
+    Routes,
+    useLocation,
+    useNavigate,
+} from "react-router-dom";
 import { PageContainer } from "./components";
 import SelectCategory from "./components/onBoarding/SelectCategory";
 import { FaAnglesUp } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
-import { IndividualView, JobView, PostJob, ProtectedRoute } from "./routes";
+import {
+    ChangeEmail,
+    IndividualView,
+    JobView,
+    PostJob,
+    ProtectedRoute,
+} from "./routes";
+import { useUserStore } from "./store/userStore";
+import useAuthStore from "./store/userTokenStore";
 
 const App = () => {
     const location = useLocation();
     const [isVisible, setIsVisible] = useState(false);
+    const [popup, setPopup] = useState(false);
+    const { userStatus, clearUserStatus } = useUserStore((state) => state);
+    const { signOut } = useAuthStore((state) => state);
+    const navigate = useNavigate();
 
     const handleScrollToTop = () => {
         window.scrollTo({
             top: 0,
             behavior: "smooth",
         });
+    };
+
+    const cancelCompletion = () => {
+        setPopup(false);
+        clearUserStatus();
+        signOut();
+        localStorage.removeItem("DONATELLA_USER_DATA");
+        localStorage.removeItem("USER_EXPERIENCE_FORM_DATA");
+        localStorage.removeItem("USER_ROLE");
+    };
+
+    const continueOnboarding = () => {
+        if (!userStatus) return;
+        const userExperienceData = localStorage.getItem(
+            "USER_EXPERIENCE_FORM_DATA"
+        );
+        if (
+            userStatus?.verifiedEmail &&
+            !userStatus?.onboardingCompleted &&
+            !userExperienceData &&
+            userStatus?.role === "INDIVIDUAL"
+        ) {
+            navigate("/select-category", { replace: true });
+        } else if (
+            userStatus?.verifiedEmail &&
+            userExperienceData &&
+            !userStatus?.onboardingCompleted &&
+            userStatus?.role === "INDIVIDUAL"
+        ) {
+            const category = localStorage.getItem("USER_ROLE");
+            navigate("/profile-form", {
+                replace: true,
+                state: { category },
+            });
+        } else if (
+            userStatus?.verifiedEmail &&
+            !userStatus?.onboardingCompleted &&
+            userStatus?.role === "ORGANIZATION"
+        ) {
+            navigate("/organization-form", {
+                replace: true,
+            });
+        } else if (userStatus.unVerifiedEmail) {
+            navigate("/verifying-page");
+        }
+        setPopup(false);
     };
     useEffect(() => {
         const toggleVisibility = () => {
@@ -48,17 +112,62 @@ const App = () => {
         return () => window.removeEventListener("scroll", toggleVisibility);
     }, []);
 
+    useEffect(() => {
+        if (userStatus && location.pathname === "/landing") {
+            setPopup(!userStatus.onboardingCompleted);
+        }
+    }, [location.pathname, userStatus]);
+
+    useEffect(() => {
+        if (popup) {
+            document.documentElement.style.overflowY = "hidden";
+        } else {
+            document.documentElement.style.overflowY = "unset";
+        }
+        return () => {
+            document.documentElement.style.overflowY = "unset";
+        };
+    }, [popup]);
+
     return (
         <>
             <AnimatePresence mode="wait">
                 <PageContainer pathname={location.pathname}>
+                    {popup && (
+                        <>
+                            <div className=" w-full h-screen bg-black/70 absolute z-[50000] top-0 left-0 flex justify-center items-center">
+                                <div className="rounded-md bg-blue-primary p-4 flex flex-col gap-3 items-center text-center text-white-base">
+                                    <p className="text-lg font-body">
+                                        You did not complete the onboarding
+                                        <br />
+                                        Please complete the onboarding to
+                                        continue{" "}
+                                    </p>
+                                    <div className="flex justify-center items-center gap-2">
+                                        <button
+                                            onClick={continueOnboarding}
+                                            className="px-10 py-2 bg-background-dark text-white-base rounded-xl"
+                                        >
+                                            Complete
+                                        </button>
+                                        <button
+                                            onClick={cancelCompletion}
+                                            className="px-10 py-2 text-background-dark bg-white-base rounded-xl"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )}
                     <Routes location={location}>
                         {/* UNAUTHORIZED */}
                         <Route path="/about" element={<AboutUs />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/services" element={<Services />} />
                         <Route path="/privacy" element={<Privacy />} />
-                        
+
                         <Route path="/landing" element={<Landing />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
@@ -111,6 +220,10 @@ const App = () => {
                             />
                             <Route path="/messages" element={<Messages />} />
                             <Route path="/payments" element={<Payments />} />
+                            <Route
+                                path="/change-email"
+                                element={<ChangeEmail />}
+                            />
                         </Route>
                     </Routes>
                 </PageContainer>

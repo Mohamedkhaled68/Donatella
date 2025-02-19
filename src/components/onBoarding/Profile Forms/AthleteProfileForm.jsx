@@ -43,7 +43,7 @@ const AthleteProfileForm = ({ imageUrls, loading, setLoading }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const userProfile = JSON.parse(localStorage.getItem("userData"));
+        const userProfile = JSON.parse(localStorage.getItem("USER_EXPERIENCE_FORM_DATA"));
         try {
             const profile = imageUrls.profile;
             const fullbody = imageUrls.fullbody;

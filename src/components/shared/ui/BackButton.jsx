@@ -2,10 +2,10 @@ import React from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
-const BackButton = ({ size = 25, className }) => {
+const BackButton = ({ size = 25, className, path }) => {
     const navigate = useNavigate();
     const handleGoBack = () => {
-        return navigate(-1);
+        return navigate(path || -1);
     };
     return (
         <>

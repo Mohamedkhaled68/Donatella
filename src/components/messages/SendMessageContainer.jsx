@@ -2,9 +2,16 @@ import React, { useState } from "react";
 import { GrAttachment } from "react-icons/gr";
 import { IoSend } from "react-icons/io5";
 import useSendMessage from "../../hooks/chat/useSendMessage";
+import toast from "react-hot-toast";
 
-const SendMessageContainer = ({ inputRef, fetchMessages }) => {
+const SendMessageContainer = ({
+    inputRef,
+    fetchMessages,
+    currentChat,
+    scrollToBottom,
+}) => {
     const [input, setInput] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const { mutateAsync: sendMessage } = useSendMessage();
     const handleSendMessage = async (e) => {
@@ -12,7 +19,6 @@ const SendMessageContainer = ({ inputRef, fetchMessages }) => {
         const trimmedInput = input.trim();
         if (!trimmedInput) return;
         setIsLoading(true);
-        setError(null);
         try {
             setInput("");
             await sendMessage({
@@ -24,11 +30,11 @@ const SendMessageContainer = ({ inputRef, fetchMessages }) => {
                 })
                 .then(() => {
                     setTimeout(() => scrollToBottom(), 2000);
-                    console.log("scrolled");
                 });
         } catch (err) {
-            setError("Failed to send message. Please try again.");
-            console.error("Send message error:", err);
+            toast.error(
+                err?.response?.data?.message || "Failed to send message."
+            );
         } finally {
             setIsLoading(false);
         }
@@ -55,12 +61,12 @@ const SendMessageContainer = ({ inputRef, fetchMessages }) => {
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Type your message..."
                             className="grow text-black bg-transparent border-none outline-none mx-[20px]"
-                            // disabled={isLoading}
+                            disabled={isLoading}
                         />
                     </div>
                     <button
                         type="submit"
-                        // disabled={!input.trim()}
+                        disabled={!input.trim()}
                         className="bg-blue-primary rounded-[14px] p-3 cursor-pointer disabled:bg-slate-500 duration-300 hover:opacity-90"
                     >
                         <IoSend className="text-white-base" size={25} />

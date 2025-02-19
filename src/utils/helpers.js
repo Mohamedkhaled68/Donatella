@@ -161,3 +161,22 @@ export const timeAgo = (postedTime) => {
 
     return "just now";
 };
+
+export function compareTimeUnits(unit1, unit2, type) {
+    const order = ["DAY", "WEEK", "MONTH", "YEAR"];
+
+    const index1 = order.indexOf(unit1);
+    const index2 = order.indexOf(unit2);
+
+    if (index1 === -1 || index2 === -1) {
+        throw new Error("Invalid time unit");
+    }
+
+    if (index1 === index2) return unit1.toLowerCase();
+    if (type === "less")
+        return index1 < index2 ? unit1.toLowerCase() : unit2.toLowerCase();
+    if (type === "greater")
+        return index1 > index2 ? unit1.toLowerCase() : unit2.toLowerCase();
+
+    throw new Error("Invalid comparison type");
+}

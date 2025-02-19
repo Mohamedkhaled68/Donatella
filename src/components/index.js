@@ -24,6 +24,9 @@ export { default as Rating } from "./shared/Rating";
 
 export { default as Sidebar } from "./shared/ui/sidebar/Sidebar";
 
+//SHARED
+export { default as JobDurationContainer } from "./shared/JobDurationContainer";
+
 //AUTH & FORMS COMPONENTS
 export { default as OrganizationRegisterForm } from "./auth/registration/OrganizationRegisterForm";
 export { default as IndividualRegisterForm } from "./auth/registration/IndividualRegisterForm";

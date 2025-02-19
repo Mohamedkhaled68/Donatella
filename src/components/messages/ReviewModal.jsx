@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import ToRating from "../shared/ToRating";
 import useReview from "../../hooks/jobs/useReview";
 import toast from "react-hot-toast";
+import { getCountryByCode } from "../../utils/helpers";
+import JobDurationContainer from "../shared/JobDurationContainer";
 
-const ReviewModal = ({ setReviewModal, FinishedJob }) => {
+const ReviewModal = ({ setReviewModal, FinishedJob, job }) => {
     const [comment, setComment] = useState("");
     const [rating, setRating] = useState(0);
     const { mutateAsync: review } = useReview();
@@ -48,7 +50,10 @@ const ReviewModal = ({ setReviewModal, FinishedJob }) => {
                             size={28}
                         />
                     </div>
-                    <div className="text-sm">$17/HR - Cairo - 7 Days</div>
+                    <div className="text-sm">
+                        {job?.salary}$ - {getCountryByCode(job?.location)}{" "}
+                        {job?.location} - <JobDurationContainer job={job} />
+                    </div>
                     <textarea
                         onChange={(e) => setComment(e.target.value)}
                         value={comment}
