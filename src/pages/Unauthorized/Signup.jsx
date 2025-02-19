@@ -36,25 +36,67 @@ const Signup = () => {
     //     return conditions.some((condition) => condition);
     // };
     const detectMobile = () => {
-        const userAgent =
-            navigator.userAgent || navigator.vendor || window.opera;
-        const mobileRegex =
-            /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i;
-
-        const isMobileDevice = mobileRegex.test(userAgent.toLowerCase());
-        const isTouchScreen =
-            "ontouchstart" in window || navigator.maxTouchPoints > 0;
-
-        return (
-            isMobileDevice ||
-            (isTouchScreen && typeof window.orientation !== "undefined")
+        // First check for any CSS media features that indicate mobile/tablet
+        const mediaQuery = window.matchMedia(
+            "(hover: none) and (pointer: coarse)"
         );
+        const hasMobileTouch = mediaQuery.matches;
+
+        // Use navigator.userAgentData if available (modern browsers)
+        if (navigator.userAgentData) {
+            const platform = navigator.userAgentData.platform.toLowerCase();
+            const mobile = navigator.userAgentData.mobile;
+
+            // If browser reports it's mobile, trust that
+            // if (mobile) return true;
+
+            // Check for known mobile/tablet platforms
+            // if (platform === "android" || platform === "ios") return true;
+
+            // If we got here and have mobile touch, check screen size
+            // if (hasMobileTouch) {
+            //     const screenWidth = window.screen.width;
+            //     const screenHeight = window.screen.height;
+            //     const minDimension = Math.min(screenWidth, screenHeight);
+            //     // Most tablets are under 1200px in their smallest dimension
+            //     return minDimension < 1300;
+            // }
+
+            const screenWidth = window.screen.width;
+            const screenHeight = window.screen.height;
+            // console.log(screenWidth, screenHeight);
+            if (screenWidth < 1023) return true;
+            if (screenHeight < 768) return true;
+
+            return false;
+        }
+
+        // Fallback for browsers that don't support userAgentData
+        const userAgent = navigator.userAgent.toLowerCase();
+
+        // More precise regex patterns
+        const mobilePattern = /android.*mobile|ip(hone|od)|windows phone/i;
+        const tabletPattern = /ipad|android(?!.*mobile)/i;
+
+        // Check if it matches known mobile/tablet patterns
+        if (mobilePattern.test(userAgent) || tabletPattern.test(userAgent)) {
+            return true;
+        }
+
+        // For iOS 13+ iPads which report as desktop Safari
+        if (
+            navigator.maxTouchPoints &&
+            navigator.maxTouchPoints > 1 &&
+            /macintosh/i.test(userAgent)
+        ) {
+            return true;
+        }
+
+        return false;
     };
 
     useEffect(() => {
         // Initial check
-        // console.log(detectMobile());
-
         setIsMobile(detectMobile());
 
         // Add resize listener for responsive detection

@@ -47,24 +47,68 @@ const Login = () => {
     // };
 
     const detectMobile = () => {
-        const userAgent =
-            navigator.userAgent || navigator.vendor || window.opera;
-        const mobileRegex =
-            /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i;
-
-        const isMobileDevice = mobileRegex.test(userAgent.toLowerCase());
-        const isTouchScreen =
-            "ontouchstart" in window || navigator.maxTouchPoints > 0;
-
-        return (
-            isMobileDevice ||
-            (isTouchScreen && typeof window.orientation !== "undefined")
+        // First check for any CSS media features that indicate mobile/tablet
+        const mediaQuery = window.matchMedia(
+            "(hover: none) and (pointer: coarse)"
         );
+        const hasMobileTouch = mediaQuery.matches;
+
+        // Use navigator.userAgentData if available (modern browsers)
+        if (navigator.userAgentData) {
+            const platform = navigator.userAgentData.platform.toLowerCase();
+            const mobile = navigator.userAgentData.mobile;
+
+            // If browser reports it's mobile, trust that
+            // if (mobile) return true;
+
+            // Check for known mobile/tablet platforms
+            // if (platform === "android" || platform === "ios") return true;
+
+            // If we got here and have mobile touch, check screen size
+            // if (hasMobileTouch) {
+            //     const screenWidth = window.screen.width;
+            //     const screenHeight = window.screen.height;
+            //     const minDimension = Math.min(screenWidth, screenHeight);
+            //     // Most tablets are under 1200px in their smallest dimension
+            //     return minDimension < 1300;
+            // }
+
+            const screenWidth = window.screen.width;
+            const screenHeight = window.screen.height;
+            // console.log(screenWidth, screenHeight);
+            if (screenWidth < 1023) return true;
+            if (screenHeight < 768) return true;
+
+            return false;
+        }
+
+        // Fallback for browsers that don't support userAgentData
+        const userAgent = navigator.userAgent.toLowerCase();
+
+        // More precise regex patterns
+        const mobilePattern = /android.*mobile|ip(hone|od)|windows phone/i;
+        const tabletPattern = /ipad|android(?!.*mobile)/i;
+
+        // Check if it matches known mobile/tablet patterns
+        if (mobilePattern.test(userAgent) || tabletPattern.test(userAgent)) {
+            return true;
+        }
+
+        // For iOS 13+ iPads which report as desktop Safari
+        if (
+            navigator.maxTouchPoints &&
+            navigator.maxTouchPoints > 1 &&
+            /macintosh/i.test(userAgent)
+        ) {
+            return true;
+        }
+
+        return false;
     };
 
     useEffect(() => {
         // Initial check
-        
+
         setIsMobile(detectMobile());
 
         // Add resize listener for responsive detection
@@ -126,151 +170,165 @@ const Login = () => {
         setDisabled(!isFilled || Object.keys(errors).length !== 0);
     }, [formValues]);
 
-    if (isMobile) {
-        return <Navigate to="/" replace />;
-    }
+
     return (
         <>
-            <div className="h-screen flex items-center relative">
-                {loading && (
-                    <div className="absolute w-full h-full flex justify-center items-center z-[10000] bg-black/50">
-                        <Loading />
+            {isMobile ? (
+                <div className="relative w-full h-screen flex justify-center items-center">
+                    <div className="absolute top-10 left-10">
+                        <BackButton />
                     </div>
-                )}
-                <div className="relative h-full w-1/3">
-                    <img
-                        className="w-full h-full object-cover filter grayscale"
-                        src={login1}
-                        alt="theme"
-                    />
-                    <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-[#101010] to-[#00000011]" />
+                    <h1 className="text-2xl text-center italic leading-10 font-display font-bold text-white-base">
+                        Desktop Only: This feature is not available on mobile
+                        devices.
+                    </h1>
                 </div>
-                <div className="w-2/3 h-full bg-[#121417] text-white">
-                    <LogoHeader />
-                    <div className="container mx-auto pt-6">
-                        <div className="flex flex-col items-center gap-3 mb-[8px] relative">
-                            <div className="absolute top-[10%] left-[5%]">
-                                <BackButton />
-                            </div>
-                            <h1 className="text-[40px] font-bold font-display">
-                                Good To See You Again
-                            </h1>
-                            <p className="text-medium text-white-base/60 font-extralight w-[50%] text-center">
-                                Welcome back! Let’s dive back into your creative
-                                journey.
-                            </p>
+            ) : (
+                <div className="h-screen flex items-center relative">
+                    {loading && (
+                        <div className="absolute w-full h-full flex justify-center items-center z-[10000] bg-black/50">
+                            <Loading />
                         </div>
-
-                        <form
-                            onSubmit={handleSubmit}
-                            className="w-[60%] mx-auto"
-                        >
-                            <div className="flex flex-col gap-3">
-                                <h2 className="text-xl font-semibold font-display">
-                                    Login As:
-                                </h2>
-                                <div className="flex justify-center items-center gap-5 w-full relative">
-                                    {/* Organization Button */}
-                                    <div className="relative group w-1/2">
-                                        <button
-                                            key={"Organization"}
-                                            type="button"
-                                            onClick={() =>
-                                                handleRoleChange("Organization")
-                                            }
-                                            className={`${
-                                                role === "Organization"
-                                                    ? "bg-white-base text-gray-deep"
-                                                    : "bg-[#27292C] text-white-base"
-                                            } w-full px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
-                                        >
-                                            Organization
-                                        </button>
-                                        <div className="absolute w-[300px] bottom-full left-[0] transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md">
-                                            Log in as an organization to hire
-                                            top talents in different fields for
-                                            your job or project.
-                                        </div>
-                                    </div>
-
-                                    {/* Individual Button */}
-                                    <div className="relative group w-1/2">
-                                        <button
-                                            key={"Individual"}
-                                            type="button"
-                                            onClick={() =>
-                                                handleRoleChange("Individual")
-                                            }
-                                            className={`${
-                                                role === "Individual"
-                                                    ? "bg-white-base text-gray-deep"
-                                                    : "bg-[#27292C] text-white-base"
-                                            } w-full px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
-                                        >
-                                            Individual
-                                        </button>
-                                        <div className="absolute w-[350px] bottom-full -right-[190%] z-[1000] transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md duration-300">
-                                            Log in as an individual to showcase
-                                            your talent, connect with
-                                            businesses, and launch your career
-                                            on a trusted platform.
-                                        </div>
-                                    </div>
+                    )}
+                    <div className="relative h-full w-1/3">
+                        <img
+                            className="w-full h-full object-cover filter grayscale"
+                            src={login1}
+                            alt="theme"
+                        />
+                        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-[#101010] to-[#00000011]" />
+                    </div>
+                    <div className="w-2/3 h-full bg-[#121417] text-white">
+                        <LogoHeader />
+                        <div className="container mx-auto pt-6">
+                            <div className="flex flex-col items-center gap-3 mb-[8px] relative">
+                                <div className="absolute top-[10%] left-[5%]">
+                                    <BackButton />
                                 </div>
-
-                                <div className="flex flex-col gap-5 mt-[20px]">
-                                    <FormGroup
-                                        label={"Email"}
-                                        type="email"
-                                        name="email"
-                                        id="email"
-                                        placeholder="i.e. davon@mail.com"
-                                        value={formValues.email}
-                                        onChange={handleInputChange}
-                                        error={errors.email}
-                                        validate={true}
-                                    />
-                                    <FormGroup
-                                        label={"Password"}
-                                        type="password"
-                                        name="password"
-                                        id="password"
-                                        placeholder="********"
-                                        value={formValues.password}
-                                        onChange={handleInputChange}
-                                        error={errors.password}
-                                        validate={true}
-                                    />
-                                </div>
-                            </div>
-                            <div className="flex flex-col justify-center items-center gap-2 mt-8">
-                                <FormButton
-                                    loading={loading}
-                                    disabled={disabled}
-                                    text={"Login"}
-                                />
-                                <p className="text-medium text-white-base/40">
-                                    Don't have an account?{" "}
-                                    <NavLink
-                                        className={"text-blue-primary"}
-                                        to="/signup"
-                                    >
-                                        Create free account
-                                    </NavLink>
+                                <h1 className="text-[40px] font-bold font-display">
+                                    Good To See You Again
+                                </h1>
+                                <p className="text-medium text-white-base/60 font-extralight w-[50%] text-center">
+                                    Welcome back! Let’s dive back into your
+                                    creative journey.
                                 </p>
                             </div>
-                        </form>
+
+                            <form
+                                onSubmit={handleSubmit}
+                                className="w-[60%] mx-auto"
+                            >
+                                <div className="flex flex-col gap-3">
+                                    <h2 className="text-xl font-semibold font-display">
+                                        Login As:
+                                    </h2>
+                                    <div className="flex justify-center items-center gap-5 w-full relative">
+                                        {/* Organization Button */}
+                                        <div className="relative group w-1/2">
+                                            <button
+                                                key={"Organization"}
+                                                type="button"
+                                                onClick={() =>
+                                                    handleRoleChange(
+                                                        "Organization"
+                                                    )
+                                                }
+                                                className={`${
+                                                    role === "Organization"
+                                                        ? "bg-white-base text-gray-deep"
+                                                        : "bg-[#27292C] text-white-base"
+                                                } w-full px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
+                                            >
+                                                Organization
+                                            </button>
+                                            <div className="absolute w-[300px] bottom-full left-[0] transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md">
+                                                Log in as an organization to
+                                                hire top talents in different
+                                                fields for your job or project.
+                                            </div>
+                                        </div>
+
+                                        {/* Individual Button */}
+                                        <div className="relative group w-1/2">
+                                            <button
+                                                key={"Individual"}
+                                                type="button"
+                                                onClick={() =>
+                                                    handleRoleChange(
+                                                        "Individual"
+                                                    )
+                                                }
+                                                className={`${
+                                                    role === "Individual"
+                                                        ? "bg-white-base text-gray-deep"
+                                                        : "bg-[#27292C] text-white-base"
+                                                } w-full px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
+                                            >
+                                                Individual
+                                            </button>
+                                            <div className="absolute w-[350px] bottom-full -right-[190%] z-[1000] transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md duration-300">
+                                                Log in as an individual to
+                                                showcase your talent, connect
+                                                with businesses, and launch your
+                                                career on a trusted platform.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col gap-5 mt-[20px]">
+                                        <FormGroup
+                                            label={"Email"}
+                                            type="email"
+                                            name="email"
+                                            id="email"
+                                            placeholder="i.e. davon@mail.com"
+                                            value={formValues.email}
+                                            onChange={handleInputChange}
+                                            error={errors.email}
+                                            validate={true}
+                                        />
+                                        <FormGroup
+                                            label={"Password"}
+                                            type="password"
+                                            name="password"
+                                            id="password"
+                                            placeholder="********"
+                                            value={formValues.password}
+                                            onChange={handleInputChange}
+                                            error={errors.password}
+                                            validate={true}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex flex-col justify-center items-center gap-2 mt-8">
+                                    <FormButton
+                                        loading={loading}
+                                        disabled={disabled}
+                                        text={"Login"}
+                                    />
+                                    <p className="text-medium text-white-base/40">
+                                        Don't have an account?{" "}
+                                        <NavLink
+                                            className={"text-blue-primary"}
+                                            to="/signup"
+                                        >
+                                            Create free account
+                                        </NavLink>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div className="relative h-full w-1/3">
+                        <img
+                            className="w-full h-full object-cover filter grayscale"
+                            src={login2}
+                            alt="theme"
+                        />
+                        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-[#101010] to-[#00000049]" />
                     </div>
                 </div>
-                <div className="relative h-full w-1/3">
-                    <img
-                        className="w-full h-full object-cover filter grayscale"
-                        src={login2}
-                        alt="theme"
-                    />
-                    <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-[#101010] to-[#00000049]" />
-                </div>
-            </div>
+            )}
         </>
     );
 };
