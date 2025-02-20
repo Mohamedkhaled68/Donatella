@@ -1,13 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { donatellaLogo } from "../../../assets";
+import { Link } from "react-router-dom";
 
 const LogoHeader = () => {
     return (
         <div className="relative w-full h-14 flex justify-center items-center bg-transparent ">
-            <div>
+            <Link to="/landing">
                 <img className="w-[150px]" src={donatellaLogo} alt="logo" />
-            </div>
+            </Link>
             <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}

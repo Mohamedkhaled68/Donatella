@@ -213,8 +213,8 @@ const ProfileFormSection = () => {
                         )}
                         {role && (
                             <>
-                                {role === "model" && (
-                                    <div className="grid grid-cols-2 gap-6 justify-items-center self-start">
+                                {role === "Model" && (
+                                    <div className="grid grid-cols-2 gap-6 justify-items-center self-start h-full">
                                         {modelImagesInputs.map((input) => (
                                             <LoadImage
                                                 onImageChange={

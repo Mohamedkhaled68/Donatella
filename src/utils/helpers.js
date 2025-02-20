@@ -180,3 +180,11 @@ export function compareTimeUnits(unit1, unit2, type) {
 
     throw new Error("Invalid comparison type");
 }
+
+export function textExpander(text) {
+    const words = text.split(" ");
+    if (words.length > 50) {
+        return words.slice(0, 7).join(" ");
+    }
+    return text;
+}

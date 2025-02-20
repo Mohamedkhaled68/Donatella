@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import CustomSelect from "./CustomSelect";
@@ -18,6 +18,9 @@ const SearchContainer = ({
     cateSwitch,
     setCateSwitch,
 }) => {
+    useEffect(() => {
+        if (cateSwitch === "jobs") setIsOpent(false);
+    }, [cateSwitch]);
     return (
         <div className="w-full rounded-3xl bg-[#27292C] grid grid-cols-7 gap-[55px] px-[30px] py-4">
             {cateSwitch === "profiles" && (
@@ -26,7 +29,7 @@ const SearchContainer = ({
                     className="px-2 cursor-pointer col-span-1 py-3 flex itmes-center gap-3  items-center border-thin border-white-base text-white-base rounded-lg"
                 >
                     <IoMenu size={20} className="text-white-base" />
-                    <div className="flex items-center gap-[5px]">
+                    <div className="flex items-center justify-between gap-[5px] w-full ">
                         <p>Filters</p>
                         <motion.div
                             initial="up"

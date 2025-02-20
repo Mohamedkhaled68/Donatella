@@ -145,16 +145,16 @@ const App = () => {
                                     </p>
                                     <div className="flex justify-center items-center gap-2">
                                         <button
-                                            onClick={continueOnboarding}
-                                            className="px-10 py-2 bg-background-dark text-white-base rounded-xl"
-                                        >
-                                            Complete
-                                        </button>
-                                        <button
                                             onClick={cancelCompletion}
                                             className="px-10 py-2 text-background-dark bg-white-base rounded-xl"
                                         >
                                             Cancel
+                                        </button>
+                                        <button
+                                            onClick={continueOnboarding}
+                                            className="px-10 py-2 bg-background-dark text-white-base rounded-xl"
+                                        >
+                                            Complete
                                         </button>
                                     </div>
                                 </div>

@@ -56,8 +56,8 @@ const Hero = () => {
                             Capture Your Story.
                         </h1>
                         <p className="text-white-base/75 text-[22px] italic font-extralight leading-[33.907px]">
-                            Find models, photographers, videographers, and
-                            editors who can tell it best.
+                            Not because the world says so, but because it was
+                            always inside.
                         </p>
                     </div>
                 </div>

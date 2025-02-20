@@ -9,6 +9,7 @@ import { FiEdit } from "react-icons/fi";
 import EditSpecialtyInfo from "./EditSpecialtyInfo";
 import AthleteFullbodyGrid from "./AthleteFullbodyGrid";
 import AthleteTrophieGrid from "./AthleteTrophieGrid";
+import TourismCertificationGrid from "./TourismCertificationGrid";
 
 const Portfolio = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -32,6 +33,8 @@ const Portfolio = () => {
                         <h1 className="text-[38px] font-bold font-display">
                             {userStatus.individual.role === "ATHLETE"
                                 ? "Trophies"
+                                : userStatus.individual.role === "TOURISM"
+                                ? "Certificates"
                                 : "Portfolio"}
                         </h1>
                         {userStatus.individual.role === "MODEL" && (
@@ -44,6 +47,9 @@ const Portfolio = () => {
                     </div>
                     {userStatus.individual.role === "ATHLETE" && userStatus ? (
                         <AthleteTrophieGrid />
+                    ) : userStatus.individual.role === "TOURISM" &&
+                      userStatus ? (
+                        <TourismCertificationGrid userStatus={userStatus} />
                     ) : (
                         <PortfolioImages />
                     )}

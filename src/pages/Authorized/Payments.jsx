@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Footer, JobCard, Rating } from "../../components";
 import { orgLogo } from "../../assets";
+import { HiMiniEye } from "react-icons/hi2";
+import { HiMiniEyeSlash } from "react-icons/hi2";
 
 const jobs = [
     // {
@@ -224,6 +226,8 @@ const PAGE_SIZE = 10;
 const Payments = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [balance, setBalance] = useState(true);
+    const [deposit, setDeposit] = useState(true);
+    const [withdraw, setWithdraw] = useState(true);
 
     // Calculate the jobs to display for the current page
     const startIndex = (currentPage - 1) * PAGE_SIZE;
@@ -263,15 +267,49 @@ const Payments = () => {
                                     Projects Completed
                                 </p>
                             </div>
-                            <div className="text-center border-x-thin border-black grow h-full flex flex-col justify-center items-center">
+                            <div className="relative text-center border-x-thin border-black grow h-full flex flex-col justify-center items-center">
+                                <span className="absolute top-0 right-0 p-3">
+                                    {deposit ? (
+                                        <HiMiniEyeSlash
+                                            className="cursor-pointer"
+                                            size={25}
+                                            onClick={() => setDeposit(!deposit)}
+                                        />
+                                    ) : (
+                                        <HiMiniEye
+                                            className="cursor-pointer"
+                                            size={25}
+                                            onClick={() => setDeposit(!deposit)}
+                                        />
+                                    )}
+                                </span>
                                 <h3 className="text-[46px] font-bold">
-                                    ${balance ? "0" : "*****"}
+                                    ${deposit ? "0" : "*****"}
                                 </h3>
                                 <p className="text-sm font-light">Earnings</p>
                             </div>
-                            <div className="text-center grow h-full flex flex-col justify-center items-center">
+                            <div className="relative text-center grow h-full flex flex-col justify-center items-center">
+                                <span className="absolute top-0 right-0 p-3">
+                                    {withdraw ? (
+                                        <HiMiniEyeSlash
+                                            className="cursor-pointer"
+                                            size={25}
+                                            onClick={() =>
+                                                setWithdraw(!withdraw)
+                                            }
+                                        />
+                                    ) : (
+                                        <HiMiniEye
+                                            className="cursor-pointer"
+                                            size={25}
+                                            onClick={() =>
+                                                setWithdraw(!withdraw)
+                                            }
+                                        />
+                                    )}
+                                </span>
                                 <h3 className="text-[46px] font-bold">
-                                    ${balance ? "0" : "*****"}
+                                    ${withdraw ? "0" : "*****"}
                                 </h3>
                                 <p className="text-sm font-light">
                                     Available to Withdraw
@@ -279,14 +317,11 @@ const Payments = () => {
                             </div>
                         </div>
                         <div className="flex flex-col justify-center items-center gap-2">
-                            <button
-                                onClick={hideBalance}
-                                className="w-full bg-transparent border-thin text-[20px] font-light border-blue-primary  text-white px-[55px] py-[21px] rounded-lg"
-                            >
-                                {balance ? "Hide" : "Show"} Balance
+                            <button className="w-full bg-transparent border-thin text-[20px] font-light border-blue-primary  text-white px-[55px] py-[21px] rounded-lg">
+                                Deposit
                             </button>
                             <button className="w-full bg-white-base text-[20px] font-bold  text-[#121417] px-[55px] py-[21px] rounded-lg">
-                                Get Paid
+                                Withdraw
                             </button>
                         </div>
                     </div>

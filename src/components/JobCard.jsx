@@ -2,6 +2,7 @@ import React from "react";
 import { orgLogo } from "../assets";
 import Rating from "./shared/Rating";
 import { useNavigate } from "react-router-dom";
+import JobDurationContainer from "./shared/JobDurationContainer";
 
 const JobCard = ({ job }) => {
     const { organization, tags, id, jobDuration, location, title, salary } =
@@ -12,7 +13,7 @@ const JobCard = ({ job }) => {
     const handleNavigateToJob = () => {
         navigate(`/explore/jobs/${id}`);
     };
-    
+
     return (
         <>
             <div className="flex items-center bg-[#313131] text-white border-thin border-white-base rounded-lg p-6 gap-5 space-x-4 shadow-lg ">
@@ -47,14 +48,11 @@ const JobCard = ({ job }) => {
                         ))}
                     </div>
                 </div>
-
                 <div className="flex flex-col justify-center items-center gap-3">
                     <p className="text-[20px] font-bold">{`${salary}$`}</p>
-                    <p className="text-sm text-gray-400 capitalize">{`${
-                        jobDuration?.minimum
-                    } ~ ${
-                        jobDuration?.maximum
-                    } ${jobDuration?.minimumPrefix.toLowerCase()}`}</p>
+                    <p className="text-sm text-gray-400 capitalize">
+                        <JobDurationContainer job={job} />
+                    </p>
                     <button
                         onClick={handleNavigateToJob}
                         className="bg-blue-primary hover:bg-blue-600 duration-200 text-white py-3 px-[60px] rounded-[46px] text-md font-bold"
