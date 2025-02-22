@@ -3,7 +3,7 @@ import useGetIndividual from "../../hooks/explore/useGetIndividual";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CountryEnum } from "../../utils/constants";
-import { BackButton, Rating } from "../../components";
+import { BackButton, Footer, Loading, Rating } from "../../components";
 import Border from "../../components/profile/Border";
 import { dateFormat, splitText } from "../../utils/helpers";
 import { FaTransgender, FaArrowsAltV, FaTape } from "react-icons/fa";
@@ -91,7 +91,11 @@ const IndividualView = () => {
     }, [individual]);
 
     if (!individual) {
-        return <div>Loading...</div>;
+        return (
+            <div className="w-full h-screen flex justify-center items-center">
+                <Loading />
+            </div>
+        );
     }
 
     return (
@@ -110,7 +114,7 @@ const IndividualView = () => {
                                         className="w-full h-full object-cover"
                                         src={
                                             individual?.specialtyInfo
-                                                ?.profilePicture[0]
+                                                ?.profilePicture
                                         }
                                         alt=""
                                     />
@@ -135,7 +139,10 @@ const IndividualView = () => {
                             )}
                         </div>
                         <div className="text-base font-light font-body text-center w-[210px] capitalize rounded-lg bg-[#197FE540] px-[5px] py-2">
-                            {individual?.role?.toLowerCase()}
+                            {individual?.role?.toLowerCase() ===
+                            "music_and_sound_engineer"
+                                ? "Music & Sound Engineer"
+                                : individual?.role.toLowerCase()}
                         </div>
                     </div>
 
@@ -144,48 +151,6 @@ const IndividualView = () => {
                         <p className="font-body text-white-base/50 text-base font-light">
                             0 Projects Completed
                         </p>
-                        {/* <div
-                            onClick={() => setOpen(!open)}
-                            className="cursor-pointer relative text-lg font-bold font-body text-center w-full rounded-[46px] bg-blue-primary px-[35px] py-[15px] flex justify-center items-center gap-[10px]"
-                        >
-                            <span>Profile Visibility</span>
-                            <FaAngleDown size={20} />
-
-                            <AnimatePresence>
-                                {open && (
-                                    <motion.div
-                                        initial={{ height: 0 }}
-                                        animate={{
-                                            height: open ? "50px" : 0,
-                                        }}
-                                        exit={{ height: 0 }}
-                                        className="cursor-default overflow-hidden absolute w-full bg-slate-600 text-white-base rounded-md px-2 h-[50px] -bottom-14"
-                                    >
-                                        <div className="flex items-center justify-between mt-[12px] cursor-pointer">
-                                            <p>Private</p>
-                                            <div className="flex justify-center items-center w-[45px]">
-                                                <div
-                                                    className={`relative w-full h-[25px] rounded-full border-white-base border-[1px] cursor-pointer ${
-                                                        isOn
-                                                            ? "bg-blue-500"
-                                                            : "bg-gray-300"
-                                                    }`}
-                                                    onClick={toggleSwitch}
-                                                >
-                                                    <div
-                                                        className={`absolute w-[22px] h-[22px] bg-white-base rounded-full transition-transform duration-200 ${
-                                                            isOn
-                                                                ? "translate-x-[22px]"
-                                                                : "translate-x-0"
-                                                        }`}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div> */}
                     </div>
                 </div>
                 <Border />
@@ -614,6 +579,7 @@ const IndividualView = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     );
 };

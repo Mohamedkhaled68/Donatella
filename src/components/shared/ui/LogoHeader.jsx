@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const LogoHeader = () => {
     return (
-        <div className="relative w-full h-14 flex justify-center items-center bg-transparent ">
+        <div className="relative w-full h-[60px] flex justify-center items-center bg-transparent ">
             <Link to="/landing">
                 <img className="w-[150px]" src={donatellaLogo} alt="logo" />
             </Link>

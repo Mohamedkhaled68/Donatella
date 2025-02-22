@@ -36,6 +36,8 @@ const DropMenu = ({ setShowDrop }) => {
         try {
             setShowDrop(false);
             await logout();
+            localStorage.removeItem("DONATELLA_USER_DATA");
+            localStorage.removeItem("USER_ROLE");
         } catch (err) {
             toast.error(err?.response?.data?.message || "Failed to logout");
         }

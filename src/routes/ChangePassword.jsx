@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { BackButton, FormButton, Loading, OtpContainer } from "../components";
-import { useUserStore } from "../store/userStore";
 import toast from "react-hot-toast";
 import useSendOtp from "../hooks/auth/useSendOtp";
-const EmailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-const ChangeEmail = () => {
-    const [loading, setLoading] = useState(false);
-    const [disabled, setDisabled] = useState(true);
+
+const passwordRegex =
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+const ChangePassword = () => {
     const [otp, setOtp] = useState(new Array(4).fill(""));
     const [otpView, setOtpView] = useState(false);
     const [input, setinput] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [disabled, setDisabled] = useState(true);
     const { mutateAsync: sendOtp } = useSendOtp();
-
-    const { userStatus } = useUserStore((state) => state);
 
     const handleInputChange = (e) => {
         setinput(e.target.value);
@@ -21,23 +21,23 @@ const ChangeEmail = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!input.trim()) return;
-        const validateEmail = (email) => {
-            return EmailRegex.test(email);
+        const validatePassword = (password) => {
+            return passwordRegex.test(password);
         };
 
-        if (!validateEmail(input.trim())) {
+        if (!validatePassword(input.trim())) {
             toast.error(
-                "Invalid email address. Please enter a valid email address."
+                "Password must be at least 8 characters long and include at least one uppercase letter, one number, and one special character (@$!%*?&)."
             );
             return;
         } else {
             try {
-                await sendOtp("UPDATE_EMAIL");
+                const otpData = await sendOtp("RESET_PASSWORD");
                 localStorage.setItem("NEW_USER_ENTITY", input.trim());
                 setOtpView(true);
             } catch (err) {
                 toast.error(
-                    err?.response?.data?.message || "Failed to change email."
+                    err?.response?.data?.message || "Failed to change password."
                 );
             } finally {
                 setLoading(false);
@@ -52,6 +52,7 @@ const ChangeEmail = () => {
             setDisabled(true);
         }
     }, [input]);
+
     return (
         <>
             <section className="h-[calc(100vh-60px)] relative">
@@ -65,7 +66,7 @@ const ChangeEmail = () => {
                         <OtpContainer
                             otp={otp}
                             setOtp={setOtp}
-                            useCase={"RESET_EMAIL"}
+                            useCase={"RESET_PASSWORD"}
                             setOtpView={setOtpView}
                         />
                     </div>
@@ -75,12 +76,9 @@ const ChangeEmail = () => {
                         <BackButton />
                     </div>
                     <div className="flex justify-center mb-5">
-                        <div
-                            className="flex flex-col col-span-2
-                         justify-center items-center gap-3"
-                        >
+                        <div className="flex flex-col col-span-2 justify-center items-center gap-3">
                             <h1 className="font-display text-[46px] font-bold text-center">
-                                Enter Email Address
+                                Enter Password
                             </h1>
                             <p className="font-body text-center text-[#94A3B8] w-[70%] mx-auto text-md font-light">
                                 Welcome back! Let’s dive back into your creative
@@ -96,16 +94,16 @@ const ChangeEmail = () => {
                             <input
                                 value={input}
                                 onChange={handleInputChange}
-                                type="text"
+                                type="password"
                                 className="w-full outline-none text-4xl border-b-2 border-white-base bg-transparent text-center pb-2"
-                                placeholder={userStatus?.verifiedEmail}
+                                placeholder="Enter New Password"
                             />
                         </div>
                         <div className="mt-12 flex justify-center">
                             <FormButton
                                 loading={loading}
                                 disabled={loading || disabled}
-                                text={"Change Email"}
+                                text={"Change Password"}
                             />
                         </div>
                     </form>
@@ -115,4 +113,4 @@ const ChangeEmail = () => {
     );
 };
 
-export default ChangeEmail;
+export default ChangePassword;

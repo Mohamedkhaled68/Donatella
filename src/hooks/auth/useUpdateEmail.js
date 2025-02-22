@@ -1,35 +1,32 @@
 import { useMutation } from "@tanstack/react-query";
 import { baseUrl } from "../../utils/baseUrl";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/userTokenStore";
 import { useUserStore } from "../../store/userStore";
+import { useNavigate } from "react-router-dom";
 
-const useOnboarding = () => {
+const useUpdateEmail = () => {
     const token = useAuthStore((state) => state.authToken);
     const { setUserStatus } = useUserStore((state) => state);
-
     const navigate = useNavigate();
-
     return useMutation({
-        mutationKey: ["user", "onboarding"],
+        mutationKey: ["auth", "update-email"],
         mutationFn: async (data) => {
             const response = await axios.patch(
-                `${baseUrl}/users/onboarding`,
+                `${baseUrl}/auth/update-email`,
                 data,
                 {
                     headers: {
+                        "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
                     },
                 }
             );
-            setUserStatus(response.data.data);
-            console.log(response.data.data);
-            return response.data;
+            setUserStatus(response.data.data.user);
+            return response.data.data;
         },
         onSuccess: () => {
-            localStorage.removeItem("USER_EXPERIENCE_FORM_DATA");
-            navigate("/", { replace: true });
+            navigate("/");
         },
         onError: (error) => {
             const errorMessage =
@@ -40,4 +37,4 @@ const useOnboarding = () => {
     });
 };
 
-export default useOnboarding;
+export default useUpdateEmail;

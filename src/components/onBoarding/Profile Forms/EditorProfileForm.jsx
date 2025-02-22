@@ -31,7 +31,9 @@ const EditorProfileForm = ({ imageUrls, loading, setLoading }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const userProfile = JSON.parse(localStorage.getItem("USER_EXPERIENCE_FORM_DATA"));
+        const userProfile = JSON.parse(
+            localStorage.getItem("USER_EXPERIENCE_FORM_DATA")
+        );
         try {
             const portfolio1 = imageUrls.portfolio1;
             const portfolio2 = imageUrls.portfolio2;
@@ -45,7 +47,7 @@ const EditorProfileForm = ({ imageUrls, loading, setLoading }) => {
                     specialtyInfo: {
                         ...formValues,
                         portfolioPictures: [portfolio1, portfolio2],
-                        profilePicture: [profile],
+                        profilePicture: profile,
                         reels: [reel],
                     },
                 },
@@ -58,7 +60,7 @@ const EditorProfileForm = ({ imageUrls, loading, setLoading }) => {
                     specialtyInfo: {
                         ...formValues,
                         portfolioPictures: [portfolio1, portfolio2],
-                        profilePicture: [profile],
+                        profilePicture: profile,
                         reels: [reel],
                     },
                 },

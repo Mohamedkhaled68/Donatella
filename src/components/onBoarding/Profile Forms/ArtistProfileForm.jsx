@@ -63,7 +63,7 @@ const FashionProfileForm = ({ imageUrls, loading, setLoading }) => {
                     ...userProfile,
                     specialtyInfo: {
                         ...formValues,
-                        // profilePicture: [profile],
+                        profilePicture: profile,
                         previousWork: [previousWork1, previousWork2],
                     },
                 },
@@ -75,7 +75,7 @@ const FashionProfileForm = ({ imageUrls, loading, setLoading }) => {
                     ...userProfile,
                     specialtyInfo: {
                         ...formValues,
-                        // profilePicture: [profile],
+                        profilePicture: profile,
                         previousWork: [previousWork1, previousWork2],
                     },
                 },

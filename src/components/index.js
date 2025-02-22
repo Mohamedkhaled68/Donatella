@@ -26,6 +26,7 @@ export { default as Sidebar } from "./shared/ui/sidebar/Sidebar";
 
 //SHARED
 export { default as JobDurationContainer } from "./shared/JobDurationContainer";
+export { default as OtpContainer } from "./shared/OtpContainer";
 
 //AUTH & FORMS COMPONENTS
 export { default as OrganizationRegisterForm } from "./auth/registration/OrganizationRegisterForm";

@@ -76,7 +76,7 @@ export const organizationRegisterFormGroupData = [
 // PROFILES FORM
 
 export const initialModelProfileFormValues = {
-    birthDate: "",
+    birthDate: "2000-01-01",
     gender: "",
     nationality: "",
     skinToneEnum: "",
@@ -303,7 +303,6 @@ export const initialMusicianProfileFormValues = {
 export const initialFashionProfileFormValues = {
     category: [],
     publications: "",
-    certificate: [],
     // yearsOfExperience: 1,
     workedWithCelebrities: "",
     formalTrainingOrCertifications: "",

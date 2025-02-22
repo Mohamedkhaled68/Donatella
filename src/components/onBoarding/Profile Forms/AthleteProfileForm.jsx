@@ -43,7 +43,9 @@ const AthleteProfileForm = ({ imageUrls, loading, setLoading }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const userProfile = JSON.parse(localStorage.getItem("USER_EXPERIENCE_FORM_DATA"));
+        const userProfile = JSON.parse(
+            localStorage.getItem("USER_EXPERIENCE_FORM_DATA")
+        );
         try {
             const profile = imageUrls.profile;
             const fullbody = imageUrls.fullbody;
@@ -54,7 +56,7 @@ const AthleteProfileForm = ({ imageUrls, loading, setLoading }) => {
                     ...userProfile,
                     specialtyInfo: {
                         ...formValues,
-                        // profilePicture: [profile],
+                        profilePicture: profile,
                         bodyPictures: [fullbody],
                         trophiePictures: [trophies],
                     },
@@ -69,7 +71,7 @@ const AthleteProfileForm = ({ imageUrls, loading, setLoading }) => {
                         ...formValues,
                         AchievementsOrTitles: [formValues.AchievementsOrTitles],
                         yearsofExperience: 1,
-                        // profilePicture: [profile]
+                        profilePicture: profile,
                         bodyPictures: [fullbody],
                         trophiePictures: [trophies],
                     },

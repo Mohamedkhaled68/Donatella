@@ -2,7 +2,7 @@ import React from "react";
 import Rating from "./shared/Rating";
 import { profileGirl } from "../assets";
 import { IoMaleFemaleSharp } from "react-icons/io5";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaUser } from "react-icons/fa";
 import { PiDressBold } from "react-icons/pi";
 import { GiRunningShoe } from "react-icons/gi";
 import { VscColorMode } from "react-icons/vsc";
@@ -139,12 +139,15 @@ const IndividualCard = ({ className, filter, profile }) => {
                         </div>
                     </div>
                 )}
-
-                <img
-                    className="object-cover w-full h-full"
-                    src={profileGirl}
-                    alt={`${profile?.firstName || "Profile"} image`}
-                />
+                {profile?.specialtyInfo?.profilePicture ? (
+                    <img
+                        className="object-cover w-full h-full"
+                        src={profile?.specialtyInfo?.profilePicture}
+                        alt={`${profile?.firstName || "Profile"} image`}
+                    />
+                ) : (
+                    <FaUser />
+                )}
             </div>
             <button
                 onClick={handleNavigateToIndividual}

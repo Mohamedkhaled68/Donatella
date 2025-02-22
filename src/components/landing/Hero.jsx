@@ -3,8 +3,10 @@ import { donatellaLogo, headerVideo } from "../../assets";
 import { NavLink } from "react-router-dom";
 import Button from "../shared/ui/Button";
 import Sidebar from "../shared/ui/sidebar/Sidebar";
+import useAuthStore from "../../store/userTokenStore";
 
 const Hero = () => {
+    const token = useAuthStore((state) => state.authToken);
     return (
         <>
             <section className="pb-10 relative">
@@ -31,23 +33,25 @@ const Hero = () => {
                                     loading="lazy"
                                 />
                             </div>
-                            <div className="hidden lg:flex items-center justify-end gap-10">
-                                <NavLink
-                                    className={"text-white/75 text-sm"}
-                                    to={"/login"}
-                                >
-                                    Login
-                                </NavLink>
-                                <NavLink to={"/signup"}>
-                                    <Button
-                                        className={
-                                            "border-thin border-white-base"
-                                        }
+                            {!token && (
+                                <div className="hidden lg:flex items-center justify-end gap-10">
+                                    <NavLink
+                                        className={"text-white/75 text-sm"}
+                                        to={"/login"}
                                     >
-                                        Get Started
-                                    </Button>
-                                </NavLink>
-                            </div>
+                                        Login
+                                    </NavLink>
+                                    <NavLink to={"/signup"}>
+                                        <Button
+                                            className={
+                                                "border-thin border-white-base"
+                                            }
+                                        >
+                                            Get Started
+                                        </Button>
+                                    </NavLink>
+                                </div>
+                            )}
                         </div>
                     </nav>
 

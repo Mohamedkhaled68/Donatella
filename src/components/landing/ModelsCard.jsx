@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../shared/ui/Button";
 import { FaX } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ModelsCard = ({
     title,
@@ -12,6 +13,7 @@ const ModelsCard = ({
     setOpenNote,
     openNote,
     cardId,
+    token,
 }) => {
     const navigate = useNavigate();
     const handleOpenNote = () => {
@@ -20,6 +22,8 @@ const ModelsCard = ({
                 ...prev,
                 [cardId]: true,
             }));
+        } else if (token) {
+            toast.error("You are already logged in");
         } else {
             navigate("/signup");
         }

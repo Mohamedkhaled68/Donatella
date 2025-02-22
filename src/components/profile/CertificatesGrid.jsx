@@ -2,25 +2,24 @@ import { FaPlus } from "react-icons/fa";
 import useUpdateMe from "../../hooks/user/useUpdateMe";
 import useUploadImage from "../../hooks/auth/useUploadImage";
 import { useUserStore } from "../../store/userStore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
-const PortfolioGrid = ({ userStatus }) => {
+const CertificatesGrid = ({ userStatus }) => {
     const { mutateAsync: updateMe } = useUpdateMe();
     const { mutateAsync: uploadImage } = useUploadImage();
     const { setUserStatus } = useUserStore((state) => state);
     const [loading, setLoading] = useState(null);
-    const [error, setError] = useState(null);
 
     // Get the reels array or use an empty array if undefined
-    const portfolio =
-        userStatus?.individual?.specialtyInfo?.portfolioPictures || [];
+    const certificates =
+        userStatus?.individual?.specialtyInfo?.certificates || [];
 
     // Ensure there are always 4 items by adding placeholders for missing items
-    const items =
-        userStatus?.individual?.role === "MODEL"
-            ? [...portfolio, ...Array(3 - portfolio.length).fill(null)]
-            : [...portfolio, ...Array(4 - portfolio.length).fill(null)];
+    const items = [
+        ...certificates,
+        ...Array(4 - certificates.length).fill(null),
+    ];
 
     const handleImageUpload = async (event, index) => {
         const file = event.target.files[0];
@@ -30,21 +29,20 @@ const PortfolioGrid = ({ userStatus }) => {
         if (!file) return;
 
         setLoading(index);
-        setError(null);
 
         try {
             // Upload the image and get the URL or data
             const data = await uploadImage(file);
 
             // Create a new array with the updated image at the specified index
-            const updatedPortfolioPictures = [
-                ...userStatus.individual.specialtyInfo.portfolioPictures,
+            const updatedCertificate = [
+                ...userStatus.individual.specialtyInfo.certificates,
             ];
-            updatedPortfolioPictures[index] = data; // Replace the image at the specific index
+            updatedCertificate[index] = data; // Replace the image at the specific index
 
             const updatedSpecialtyInfo = {
                 ...userStatus.individual.specialtyInfo,
-                portfolioPictures: updatedPortfolioPictures,
+                certificates: updatedCertificate,
             };
 
             const updatedUserStatus = {
@@ -55,54 +53,36 @@ const PortfolioGrid = ({ userStatus }) => {
                 },
             };
 
-            console.log(updatedUserStatus);
-
             // Update the backend
             const { firstName, lastName, fullName, ...rest } =
                 updatedUserStatus.individual;
             await updateMe({ ...rest });
 
             setUserStatus(updatedUserStatus);
-            console.log("Updated user status:", updatedUserStatus);
             setLoading(null);
         } catch (err) {
-            console.error("Error uploading image:", err);
-            setError("Error uploading image, please try again.");
             toast.error("Error uploading image, please try again.");
             setLoading(null);
         }
     };
 
     return (
-        <div
-            className={`w-full h-full grid ${
-                userStatus?.individual?.role === "MODEL"
-                    ? "grid-cols-3 gap-x-[7.3rem]"
-                    : "grid-cols-4 gap-6"
-            } justify-items-center`}
-        >
-            {items.map((portfolio, index) => (
-                <div
-                    key={index}
-                    className={`${
-                        userStatus?.individual?.role === "MODEL"
-                            ? "w-full h-[450px]"
-                            : "col-span-2 h-[220px] w-full"
-                    }`}
-                >
-                    {portfolio ? (
+        <div className={`w-full grid grid-cols-4 gap-6 justify-items-center`}>
+            {items.map((certificate, index) => (
+                <div key={index} className={`col-span-2 h-[220px] w-full`}>
+                    {certificate ? (
                         <div
                             className={`relative group max-w-full overflow-hidden h-full flex justify-center items-center rounded-md border-thin border-white-base/30`}
                         >
                             <img
                                 className="w-[100%] h-full object-cover"
-                                src={portfolio}
+                                src={certificate}
                                 alt="profileImage"
                             />
                             <div className="absolute bottom-0 left-0 w-full group-hover:opacity-100 opacity-0 duration-300">
                                 <label
                                     className="w-full h-full cursor-pointer"
-                                    htmlFor={`portfolio-upload-${index}`}
+                                    htmlFor={`certificate-upload-${index}`}
                                 >
                                     <div className="w-full overflow-hidden flex justify-center items-center rounded-md border-thin border-white-base/30 h-full p-2 bg-[#3B3B3B]">
                                         {loading === index ? (
@@ -118,7 +98,7 @@ const PortfolioGrid = ({ userStatus }) => {
                                             handleImageUpload(event, index)
                                         }
                                         type="file"
-                                        id={`portfolio-upload-${index}`}
+                                        id={`certificate-upload-${index}`}
                                         className="hidden"
                                     />
                                 </label>
@@ -126,12 +106,8 @@ const PortfolioGrid = ({ userStatus }) => {
                         </div>
                     ) : (
                         <label
-                            className={`${
-                                userStatus?.individual?.role === "MODEL"
-                                    ? "h-full"
-                                    : "col-span-2"
-                            } cursor-pointer relative max-w-full overflow-hidden h-full flex justify-center items-center rounded-md border-thin border-white-base/30`}
-                            htmlFor={`portfolio-upload-${index}`}
+                            className={`col-span-2 cursor-pointer relative max-w-full overflow-hidden h-full flex justify-center items-center rounded-md border-thin border-white-base/30`}
+                            htmlFor={`certificate-upload-${index}`}
                         >
                             <div className="w-full overflow-hidden flex justify-center items-center rounded-md border-thin border-white-base/30 h-full bg-[#3B3B3B]">
                                 {loading === index ? (
@@ -147,7 +123,7 @@ const PortfolioGrid = ({ userStatus }) => {
                                     handleImageUpload(event, index)
                                 }
                                 type="file"
-                                id={`portfolio-upload-${index}`}
+                                id={`certificate-upload-${index}`}
                                 className="hidden"
                             />
                         </label>
@@ -158,4 +134,4 @@ const PortfolioGrid = ({ userStatus }) => {
     );
 };
 
-export default PortfolioGrid;
+export default CertificatesGrid;

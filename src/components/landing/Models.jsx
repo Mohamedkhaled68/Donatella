@@ -4,8 +4,11 @@ import { manModel, talent1, talent2, talent3, womanModel } from "../../assets";
 import Button from "../shared/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { FaX } from "react-icons/fa6";
+import useAuthStore from "../../store/userTokenStore";
+import toast from "react-hot-toast";
 
 const Models = ({ modelsRef, talentsRef }) => {
+    const token = useAuthStore((state) => state.authToken);
     const [isMobile, setIsMobile] = useState(false);
     const [openNote, setOpenNote] = useState({
         men: false,
@@ -20,6 +23,8 @@ const Models = ({ modelsRef, talentsRef }) => {
                 ...prev,
                 talent: true,
             }));
+        } else if (token) {
+            toast.error("You are already logged in");
         } else {
             navigate("/signup", { state: { role: r } });
         }
@@ -115,6 +120,7 @@ const Models = ({ modelsRef, talentsRef }) => {
                     isMobile={isMobile}
                     setOpenNote={setOpenNote}
                     openNote={openNote.men}
+                    token={token}
                 />
                 <ModelsCard
                     cardId="women"
@@ -125,6 +131,7 @@ const Models = ({ modelsRef, talentsRef }) => {
                     isMobile={isMobile}
                     setOpenNote={setOpenNote}
                     openNote={openNote.women}
+                    token={token}
                 />
 
                 <div

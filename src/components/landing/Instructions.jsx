@@ -5,7 +5,9 @@ import {
     instructionImg3,
 } from "../../assets";
 import Button from "../shared/ui/Button";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useAuthStore from "../../store/userTokenStore";
+import toast from "react-hot-toast";
 const InstructionsData = [
     {
         btn: "Create Account",
@@ -31,6 +33,15 @@ const InstructionsData = [
 ];
 
 const Instructions = () => {
+    const token = useAuthStore((state) => state.authToken);
+    const navigate = useNavigate();
+    const handleBtn = () => {
+        if (token) {
+            toast.error("You are already logged in");
+        } else {
+            navigate("/signup");
+        }
+    };
     return (
         <>
             <section className="py-12 container mx-auto mb-10">
@@ -66,8 +77,8 @@ const Instructions = () => {
                                     <p className="text-sm font-body text-white-base/60 font-normal">
                                         {description}
                                     </p>
-                                    <Link
-                                        to={"/signup"}
+                                    <div
+                                        onClick={handleBtn}
                                         className="flex items-center gap-5 mt-8"
                                     >
                                         <Button
@@ -77,7 +88,7 @@ const Instructions = () => {
                                         >
                                             {btn}
                                         </Button>
-                                    </Link>
+                                    </div>
                                 </div>
                             </div>
                         )

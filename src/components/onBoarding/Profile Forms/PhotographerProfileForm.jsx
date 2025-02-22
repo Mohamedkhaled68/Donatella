@@ -8,6 +8,7 @@ import useOnboarding from "../../../hooks/auth/useOnboarding";
 import { motion } from "framer-motion";
 import FormButton from "../../shared/ui/FormButton";
 import FormGroup from "../../shared/ui/FormGroup";
+import toast from "react-hot-toast";
 
 const PhotographerProfileForm = ({ imageUrls, loading, setLoading, role }) => {
     const [formValues, setFormValues] = useState(
@@ -27,7 +28,9 @@ const PhotographerProfileForm = ({ imageUrls, loading, setLoading, role }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const userProfile = JSON.parse(localStorage.getItem("USER_EXPERIENCE_FORM_DATA"));
+        const userProfile = JSON.parse(
+            localStorage.getItem("USER_EXPERIENCE_FORM_DATA")
+        );
         try {
             const portfolio1 = imageUrls.portfolio1;
             const portfolio2 = imageUrls.portfolio2;
@@ -41,7 +44,7 @@ const PhotographerProfileForm = ({ imageUrls, loading, setLoading, role }) => {
                     specialtyInfo: {
                         ...formValues,
                         portfolioPictures: [portfolio1, portfolio2],
-                        profilePicture: [profile],
+                        profilePicture: profile,
                         reels: [reel],
                     },
                 },
@@ -54,19 +57,21 @@ const PhotographerProfileForm = ({ imageUrls, loading, setLoading, role }) => {
                     specialtyInfo: {
                         ...formValues,
                         portfolioPictures: [portfolio1, portfolio2],
-                        profilePicture: [profile],
+                        profilePicture: profile,
                         reels: [reel],
                     },
                 },
             });
 
-            return new Promise((resolve) => setTimeout(resolve, 3000));
+            toast.success("Profile created successfully.");
+            navigate("/");
         } catch (error) {
-            console.log(error.message);
+            toast.error(
+                error?.response?.data?.message || "Failed to create profile."
+            );
         } finally {
             setLoading(false);
             setFormValues(initialPhotographerProfileFormValues);
-            navigate("/");
         }
     };
 

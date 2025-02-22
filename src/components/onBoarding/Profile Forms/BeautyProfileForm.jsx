@@ -51,7 +51,9 @@ const BeautyProfileForm = ({ imageUrls, loading, setLoading }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const userProfile = JSON.parse(localStorage.getItem("USER_EXPERIENCE_FORM_DATA"));
+        const userProfile = JSON.parse(
+            localStorage.getItem("USER_EXPERIENCE_FORM_DATA")
+        );
         try {
             const profile = imageUrls.profile;
             const certificateProof = imageUrls.certificateProof;
@@ -63,7 +65,7 @@ const BeautyProfileForm = ({ imageUrls, loading, setLoading }) => {
                     ...userProfile,
                     specialtyInfo: {
                         ...formValues,
-                        // profilePicture: [profile],
+                        profilePicture: profile,
                         certificates: [certificateProof],
                         previousWork: [previousWork1, previousWork2],
                     },
@@ -76,7 +78,7 @@ const BeautyProfileForm = ({ imageUrls, loading, setLoading }) => {
                     ...userProfile,
                     specialtyInfo: {
                         ...formValues,
-                        // profilePicture: [profile],
+                        profilePicture: profile,
                         certificates: [certificateProof],
                         previousWork: [previousWork1, previousWork2],
                     },

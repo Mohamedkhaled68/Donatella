@@ -11,8 +11,8 @@ import toast from "react-hot-toast";
 
 const Profile = () => {
     const [bio, setBio] = useState([]);
-    const [isEditing, setIsEditing] = useState(false); // State to toggle form visibility
-    const [editedBio, setEditedBio] = useState(""); // State to handle input value
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedBio, setEditedBio] = useState("");
     const [loading, setLoading] = useState(false);
     const { userStatus, setUserStatus } = useUserStore((state) => state);
 
@@ -148,25 +148,27 @@ const Profile = () => {
                                     </form>
                                 )}
                             </div>
+                            <Border />
+                            {userStatus.individual &&
+                                userStatus.individual.role !==
+                                    "MUSIC_AND_SOUND_ENGINEER" && (
+                                    <>
+                                        <Portfolio />
+                                        <Border />
+                                    </>
+                                )}
                             {userStatus.individual && (
                                 <>
-                                    <Border />
-                                    <Portfolio />
-                                </>
-                            )}
-                            {userStatus.individual && (
-                                <>
-                                    <Border />
                                     <Experience
                                         setLoading={setLoading}
                                         userStatus={userStatus}
                                     />
+
+                                    <Border />
                                 </>
                             )}
                             {userStatus.individual && (
                                 <>
-                                    <Border />
-
                                     <div className="py-5 flex flex-col gap-6 my-8">
                                         <div className="w-full flex justify-between items-center">
                                             <h1 className="text-[38px] font-bold font-display">

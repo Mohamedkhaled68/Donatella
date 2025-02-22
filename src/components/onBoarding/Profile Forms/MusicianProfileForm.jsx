@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { initialMusicianProfileFormValues } from "../../../utils/constants";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { isNotEmailOrLink } from "../../../utils/helpers";
+import { Link, useLocation } from "react-router-dom";
 import useOnboarding from "../../../hooks/auth/useOnboarding";
 import { motion } from "framer-motion";
 import FormButton from "../../shared/ui/FormButton";
 import TextInput from "../../shared/ui/TextInput";
 import toast from "react-hot-toast";
-
 const typeOfClients = [
     { id: "Record Labels & Artists" },
     { id: "Audio Post-Production Specialist" },
@@ -17,7 +17,7 @@ const typeOfClients = [
 const professionalCategory = [
     { id: "Music Producer" },
     { id: "Sound Engineer" },
-    { id: "Audio Post-Production Specialist" },
+    { id: "Audio Post-Production specialist" },
     { id: "Composer / Music Arranger" },
     { id: "Voiceover / Podcast Editor" },
     { id: "DJ & Live Performance Engineer" },
@@ -49,8 +49,14 @@ const MusicianProfileForm = ({ imageUrls, loading, setLoading }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (isNotEmailOrLink(formValues.portfolioUrl)) {
+            toast.error("Please enter a valid URL or email address.");
+            return;
+        }
         setLoading(true);
-        const userProfile = JSON.parse(localStorage.getItem("USER_EXPERIENCE_FORM_DATA"));
+        const userProfile = JSON.parse(
+            localStorage.getItem("USER_EXPERIENCE_FORM_DATA")
+        );
         try {
             const profile = imageUrls.profile;
             console.log({
@@ -59,7 +65,7 @@ const MusicianProfileForm = ({ imageUrls, loading, setLoading }) => {
                     ...userProfile,
                     specialtyInfo: {
                         ...formValues,
-                        profilePicture: [profile],
+                        profilePicture: profile,
                     },
                 },
             });
@@ -70,7 +76,7 @@ const MusicianProfileForm = ({ imageUrls, loading, setLoading }) => {
                     ...userProfile,
                     specialtyInfo: {
                         ...formValues,
-                        // profilePicture: [profile],
+                        profilePicture: profile,
                     },
                 },
             });

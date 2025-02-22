@@ -18,7 +18,7 @@ export const useUserStore = create((set) => ({
     },
 
     clearUserStatus: () => {
-        localStorage.removeItem("userStatus");
+        localStorage.removeItem("DONATELLA_USER_DATA");
         set(() => ({ userStatus: null }));
     },
 }));

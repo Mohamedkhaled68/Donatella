@@ -2,34 +2,26 @@ import { useMutation } from "@tanstack/react-query";
 import { baseUrl } from "../../utils/baseUrl";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../store/userTokenStore";
-import { useUserStore } from "../../store/userStore";
 
-const useOnboarding = () => {
-    const token = useAuthStore((state) => state.authToken);
-    const { setUserStatus } = useUserStore((state) => state);
-
+const useResetPassword = () => {
     const navigate = useNavigate();
 
     return useMutation({
-        mutationKey: ["user", "onboarding"],
+        mutationKey: ["auth", "reset-password"],
         mutationFn: async (data) => {
             const response = await axios.patch(
-                `${baseUrl}/users/onboarding`,
+                `${baseUrl}/auth/reset-password`,
                 data,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
                     },
                 }
             );
-            setUserStatus(response.data.data);
-            console.log(response.data.data);
-            return response.data;
+            return response.data.data;
         },
         onSuccess: () => {
-            localStorage.removeItem("USER_EXPERIENCE_FORM_DATA");
-            navigate("/", { replace: true });
+            navigate("/");
         },
         onError: (error) => {
             const errorMessage =
@@ -40,4 +32,4 @@ const useOnboarding = () => {
     });
 };
 
-export default useOnboarding;
+export default useResetPassword;

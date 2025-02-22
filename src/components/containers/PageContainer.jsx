@@ -30,7 +30,7 @@ const PageContainer = ({ children, className, pathname }) => {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                className={`w-full min-h-screen overflow-x-hidden ${className}`}
+                className={`w-full min-h-[calc(100vh-60px] overflow-x-hidden ${className}`}
             >
                 {children}
             </motion.div>

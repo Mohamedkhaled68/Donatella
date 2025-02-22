@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { initialFashionProfileFormValues } from "../../../utils/constants";
 import { Link, useLocation } from "react-router-dom";
 import useOnboarding from "../../../hooks/auth/useOnboarding";
@@ -41,7 +41,9 @@ const FashionProfileForm = ({ imageUrls, loading, setLoading }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const userProfile = JSON.parse(localStorage.getItem("USER_EXPERIENCE_FORM_DATA"));
+        const userProfile = JSON.parse(
+            localStorage.getItem("USER_EXPERIENCE_FORM_DATA")
+        );
         try {
             const profile = imageUrls.profile;
             const certificateProof = imageUrls.certificateProof;
@@ -53,9 +55,9 @@ const FashionProfileForm = ({ imageUrls, loading, setLoading }) => {
                     ...userProfile,
                     specialtyInfo: {
                         ...formValues,
-                        // profilePicture: [profile],
-                        certificate: [certificateProof],
-                        // prevWork: [previousWork1, previousWork2],
+                        profilePicture: profile,
+                        certificates: [certificateProof],
+                        previousWork: [previousWork1, previousWork2],
                     },
                 },
             });
@@ -67,9 +69,9 @@ const FashionProfileForm = ({ imageUrls, loading, setLoading }) => {
                     specialtyInfo: {
                         ...formValues,
                         yearsOfExperience: 1,
-                        // profilePicture: [profile],
-                        certificate: [certificateProof],
-                        // prevWork: [previousWork1, previousWork2],
+                        profilePicture: profile,
+                        certificates: [certificateProof],
+                        previousWork: [previousWork1, previousWork2],
                     },
                 },
             });

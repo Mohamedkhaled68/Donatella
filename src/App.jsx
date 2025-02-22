@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-    DeleteUsers,
     ExperienceFormSection,
     Explore,
     Landing,
@@ -31,6 +30,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 import {
     ChangeEmail,
+    ChangePassword,
     IndividualView,
     JobView,
     PostJob,
@@ -167,8 +167,8 @@ const App = () => {
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/services" element={<Services />} />
                         <Route path="/privacy" element={<Privacy />} />
-
                         <Route path="/landing" element={<Landing />} />
+
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route
@@ -194,8 +194,6 @@ const App = () => {
                             element={<OrgProfileForm />}
                         />
 
-                        <Route path="/delete-users" element={<DeleteUsers />} />
-
                         {/* AUTHORIZED */}
                         <Route
                             element={<ProtectedRoute redirectPath="/landing" />}
@@ -211,7 +209,7 @@ const App = () => {
                                 element={<PostJob />}
                             />
                             <Route
-                                path="//explore/jobs/:jobId"
+                                path="/explore/jobs/:jobId"
                                 element={<JobView />}
                             />
                             <Route
@@ -223,6 +221,10 @@ const App = () => {
                             <Route
                                 path="/change-email"
                                 element={<ChangeEmail />}
+                            />
+                            <Route
+                                path="/change-password"
+                                element={<ChangePassword />}
                             />
                         </Route>
                     </Routes>

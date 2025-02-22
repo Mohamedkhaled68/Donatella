@@ -9,6 +9,8 @@ import FormGroup from "../../shared/ui/FormGroup";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import useOnboarding from "../../../hooks/auth/useOnboarding";
+import toast from "react-hot-toast";
+import { isValidAge } from "../../../utils/helpers";
 
 const ModelProfileForm = ({ imageUrls, loading, setLoading }) => {
     const [formValues, setFormValues] = useState(initialModelProfileFormValues);
@@ -28,12 +30,20 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const userProfile = JSON.parse(localStorage.getItem("USER_EXPERIENCE_FORM_DATA"));
+        const userProfile = JSON.parse(
+            localStorage.getItem("USER_EXPERIENCE_FORM_DATA")
+        );
         try {
             const profile = imageUrls.profile;
             const portfolio = imageUrls.portfolio;
             const headshot = imageUrls.headshot;
             const fullBody = imageUrls.fullBody;
+
+            const isUserAgeValid = isValidAge(formValues.birthDate);
+            if (!isUserAgeValid) {
+                toast.error("Please enter a valid age.");
+                return;
+            }
 
             mutateAsync({
                 individualProfile: {
@@ -41,29 +51,19 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading }) => {
                     ...userProfile,
                     specialtyInfo: {
                         ...formValues,
-                        profilePicture: [profile],
+                        profilePicture: profile,
                         portfolioPictures: [portfolio],
                         headShots: [headshot],
                         fullBodyShots: [fullBody],
                     },
                 },
             });
-
-            console.log({
-                individualProfile: {
-                    role: "MODEL",
-                    ...userProfile,
-                    specialtyInfo: {
-                        ...formValues,
-                        profilePicture: [profile],
-                        portfolio: [portfolio],
-                        headshot: [headshot],
-                        fullBody: [fullBody],
-                    },
-                },
-            });
         } catch (error) {
-            console.log(error.message);
+            toast.error(
+                error.message ||
+                    error.response.data.message ||
+                    "Failed to create profile."
+            );
         } finally {
             setLoading(false);
             setFormValues(initialModelProfileFormValues);
@@ -78,9 +78,6 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading }) => {
         const isImagesFilled = Object.values(imageUrls).every(
             (value) => value !== null
         );
-
-        // const errors = validateForm(formValues);
-        // setErrors(errors);
 
         setDisabled(!isInputsFilled || !isImagesFilled);
     }, [formValues, imageUrls]);
@@ -196,7 +193,7 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading }) => {
                     <div className="flex flex-col mt-10 gap-4">
                         <FormButton
                             text={"Create Account"}
-                            disabled={disabled}
+                            disabled={disabled || loading}
                             loading={loading}
                             className={"max-w-[250px] py-4"}
                         />

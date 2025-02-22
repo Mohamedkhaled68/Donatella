@@ -118,7 +118,7 @@ const ProfileFormSection = () => {
 
     return (
         <>
-            <section className="min-h-screen w-full text-white pb-10">
+            <section className="min-h-screen h-[100%] w-full text-white pb-10">
                 {loading && (
                     <div className="absolute w-full h-full flex justify-center items-center z-[10000] bg-black/50">
                         <Loading />
@@ -214,7 +214,7 @@ const ProfileFormSection = () => {
                         {role && (
                             <>
                                 {role === "Model" && (
-                                    <div className="grid grid-cols-2 gap-6 justify-items-center self-start h-full">
+                                    <div className="grid grid-cols-2 gap-6 justify-items-center self-start h-full px-4">
                                         {modelImagesInputs.map((input) => (
                                             <LoadImage
                                                 onImageChange={

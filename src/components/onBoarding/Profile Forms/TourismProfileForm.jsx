@@ -56,7 +56,7 @@ const TourismProfileForm = ({ imageUrls, loading, setLoading }) => {
                     ...userProfile,
                     specialtyInfo: {
                         ...formValues,
-                        // profilePicture: [profile],
+                        profilePicture: profile,
                         certificates: [certificateProof],
                     },
                 },
@@ -69,7 +69,7 @@ const TourismProfileForm = ({ imageUrls, loading, setLoading }) => {
                     specialtyInfo: {
                         ...formValues,
                         yearsofExperience: 1,
-                        // profilePicture: [profile],
+                        profilePicture: profile,
                         certificates: [certificateProof],
                     },
                 },

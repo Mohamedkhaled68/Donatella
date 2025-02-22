@@ -17,5 +17,3 @@ export { default as Privacy } from "./Unauthorized/Privacy";
 export { default as Contact } from "./Unauthorized/Contact";
 export { default as Services } from "./Unauthorized/Services";
 
-//TO DELETED
-export { default as DeleteUsers } from "./DeleteUsers";

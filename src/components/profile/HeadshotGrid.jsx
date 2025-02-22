@@ -69,7 +69,7 @@ const HeadshotGrid = ({ userStatus }) => {
             {items.map((headShot, index) => (
                 <div
                     key={index}
-                    className="flex flex-col justify-center items-center gap-6 w-[228px]"
+                    className="flex flex-col justify-center items-center gap-6 w-[228px] h-[350px]"
                 >
                     {headShot ? (
                         <div className="h-full flex flex-col justify-center items-center gap-6 w-[320px]">
@@ -107,7 +107,7 @@ const HeadshotGrid = ({ userStatus }) => {
                         </div>
                     ) : (
                         <label
-                            className="flex flex-col justify-center items-center gap-6 w-[320px] h-full"
+                            className="flex flex-col justify-center items-center gap-6 w-[320px] h-full cursor-pointer"
                             htmlFor={`headShot-upload-${index}`}
                         >
                             <div className="w-full overflow-hidden flex justify-center items-center rounded-[90px] border-thin border-white-base/30 h-full bg-[#3B3B3B]">

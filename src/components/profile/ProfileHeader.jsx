@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Rating from "../shared/Rating";
 import { FiEdit } from "react-icons/fi";
-import { FaTiktok, FaInstagram } from "react-icons/fa";
+import { FaTiktok, FaInstagram, FaUser } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { CountryEnum } from "../../utils/constants";
@@ -10,6 +10,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
 import useUpdateMe from "../../hooks/user/useUpdateMe";
 import useUploadImage from "../../hooks/auth/useUploadImage";
+import toast from "react-hot-toast";
 
 const ProfileHeader = ({ data }) => {
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ const ProfileHeader = ({ data }) => {
     const { mutateAsync: uploadImage } = useUploadImage();
 
     const fileInputRef = useRef();
+    const dropdownRef = useRef(null);
 
     const { mutateAsync: updateMe } = useUpdateMe();
 
@@ -37,23 +39,22 @@ const ProfileHeader = ({ data }) => {
     const toggleSwitch = async () => {
         setIsOn((prev) => {
             const newValue = !prev;
-            m(newValue); // Pass the updated value to the function
+            updateVisibaltyStatus(newValue);
             return newValue;
         });
     };
 
-    const m = async (isVisible) => {
+    const updateVisibaltyStatus = async (isVisible) => {
         try {
             const { firstName, lastName, fullName, ...rest } =
                 userStatus.individual;
-            console.log({ ...rest, isVisible });
             await updateMe({ ...rest, isVisible });
             setUserStatus({
                 ...userStatus,
                 individual: { ...userStatus.individual, isVisible },
             });
         } catch (err) {
-            console.log(err);
+            toast.error(err?.response?.data?.message || "Failed to update.");
         }
     };
 
@@ -124,15 +125,32 @@ const ProfileHeader = ({ data }) => {
     };
 
     useEffect(() => {
-        setIsOn(data?.individual?.isVisible);
-        console.log(data);
+        if (data) {
+            setIsOn(data?.individual?.isVisible);
+        }
     }, [userStatus]);
 
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target)
+            ) {
+                setOpen(false);
+            }
+        }
+
+        if (open) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [open]);
     if (!data) {
         return;
     }
-
-    console.log(data);
 
     return (
         <>
@@ -210,12 +228,17 @@ const ProfileHeader = ({ data }) => {
                                             className="w-full h-full object-cover"
                                             src={
                                                 data?.individual?.specialtyInfo
-                                                    ?.profilePicture[0]
+                                                    ?.profilePicture
                                             }
                                             alt=""
                                         />
                                     ) : (
-                                        <></>
+                                        <>
+                                            <FaUser
+                                                size={50}
+                                                className="text-white-base"
+                                            />
+                                        </>
                                     )}
                                 </div>
                                 <div
@@ -228,8 +251,8 @@ const ProfileHeader = ({ data }) => {
                                     type="file"
                                     ref={fileInputRef}
                                     onChange={handleFileChange}
-                                    style={{ display: "none" }} // Hide the file input
-                                    accept="image/*" // Optional: Restrict to image files only
+                                    style={{ display: "none" }}
+                                    accept="image/*"
                                 />
                             </div>
                         </div>
@@ -248,7 +271,7 @@ const ProfileHeader = ({ data }) => {
                                         : "-mt-[7px]"
                                 }`}
                             >
-                                {data.individual.fullName}
+                                {data?.individual?.fullName}
                             </h1>
                             {userStatus.individual.role === "MODEL" && (
                                 <p className="font-body text-white-base/50 text-base font-light capitalize mt-[-10px] mb-[13px]">
@@ -272,7 +295,10 @@ const ProfileHeader = ({ data }) => {
                             )}
 
                             <div className="text-base font-light font-body text-center w-[210px] capitalize rounded-lg bg-[#197FE540] px-[5px] py-2">
-                                {data?.individual?.role?.toLowerCase()}
+                                {data?.individual?.role ===
+                                "MUSIC_AND_SOUND_ENGINEER"
+                                    ? "Music & Sound Engineer"
+                                    : data?.individual?.role.toLowerCase()}
                             </div>
                         </div>
                     </>
@@ -283,6 +309,7 @@ const ProfileHeader = ({ data }) => {
                         <Rating rating={3} size={30} maxRating={5} />
 
                         <div
+                            ref={dropdownRef}
                             onClick={() => setOpen(!open)}
                             className="cursor-pointer relative text-lg font-bold font-body text-center w-full rounded-[46px] bg-blue-primary px-[35px] py-[15px] flex justify-center items-center gap-[10px]"
                         >
@@ -293,16 +320,14 @@ const ProfileHeader = ({ data }) => {
                                 {open && (
                                     <motion.div
                                         initial={{ y: -10, opacity: 0 }}
-                                        animate={{
-                                            y: open ? 0 : -10,
-                                            opacity: open ? 1 : 0,
-                                        }}
+                                        animate={{ y: 0, opacity: 1 }}
                                         exit={{
                                             y: -10,
                                             opacity: 0,
-                                            transition: { delay: 0.3 },
+                                            transition: { delay: 0.1 },
                                         }}
                                         className="cursor-default overflow-hidden absolute w-full bg-slate-600 text-white-base rounded-md px-2 h-[50px] -bottom-14"
+                                        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
                                     >
                                         <div className="flex items-center justify-between mt-[12px] cursor-pointer">
                                             <p>Private</p>
@@ -313,7 +338,10 @@ const ProfileHeader = ({ data }) => {
                                                             ? "bg-blue-500"
                                                             : "bg-gray-300"
                                                     }`}
-                                                    onClick={toggleSwitch}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation(); // Prevent affecting parent
+                                                        toggleSwitch();
+                                                    }}
                                                 >
                                                     <div
                                                         className={`absolute w-[22px] h-[22px] bg-white-base rounded-full transition-transform duration-200 ${

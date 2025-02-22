@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import LogoHeader from "../shared/ui/LogoHeader";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
     cate1,
     cate2,
@@ -13,7 +13,7 @@ import {
     beautyCate,
     artistCate,
 } from "../../assets";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
     { title: "Model", image: cate1 },
@@ -45,9 +45,9 @@ const SelectCategory = () => {
 
     return (
         <>
-            <div className="absolute w-full top-0 left-0 z-[50] min-h-screen bg-[#121417]">
-                <LogoHeader />
-                <div className="relative container mx-auto pb-5">
+            <LogoHeader />
+            <div className="w-full h-[calc(100vh-60px)] flex flex-col items-center justify-center">
+                <div className="relative container mx-auto pt-3 2xl:h-[90%] flex flex-col justify-around items-center">
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -59,7 +59,7 @@ const SelectCategory = () => {
                                 ease: "easeInOut",
                             },
                         }}
-                        className="w-full flex justify-center items-center my-5"
+                        className="w-full flex justify-center items-center"
                     >
                         <div className="flex flex-col justify-center items-center gap-[14px]">
                             <h1 className="text-3xl font-display font-bold text-white-base">
@@ -71,9 +71,8 @@ const SelectCategory = () => {
                             </p>
                         </div>
                     </motion.div>
-
-                    <div className="flex flex-col justify-center items-center">
-                        <div className="grid grid-cols-5 justify-items-center gap-[1rem] w-full">
+                    <div className="flex flex-col justify-center items-center pt-3 grow">
+                        <div className="grid grid-cols-5 justify-items-center gap-[1rem] w-full h-full">
                             {categories.map(({ title, image }) => (
                                 <div
                                     key={title}
@@ -82,7 +81,7 @@ const SelectCategory = () => {
                                         role === title
                                             ? "shadow-lg shadow-white-base"
                                             : ""
-                                    } relative max-h-[250px] w-full bg-blue-300 flex justify-center items-center border-thin border-white-base rounded-2xl text-white-base font-display overflow-hidden group cursor-pointer`}
+                                    } relative max-h-[250px] 2xl:max-h-[350px] w-full bg-blue-300 flex justify-center items-center border-thin border-white-base rounded-2xl text-white-base font-display overflow-hidden group cursor-pointer`}
                                 >
                                     <img
                                         className={`h-full w-full object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-110 ${
@@ -108,29 +107,19 @@ const SelectCategory = () => {
                                 </div>
                             ))}
                         </div>
-
-                        <div className="flex flex-col justify-center items-center gap-3 mt-7">
-                            <button
-                                onClick={navigateToForm}
-                                disabled={!role}
-                                className={`${
-                                    !role
-                                        ? "cursor-not-allowed bg-[#494B4E]"
-                                        : "bg-blue-primary"
-                                } button text-white-base px-[80px] py-3 text-medium font-semibold transition-colors cursor-pointer duration-200`}
-                            >
-                                Next
-                            </button>
-                            <p className="text-medium text-white-base/40">
-                                Already have an account?{" "}
-                                <NavLink
-                                    className={"text-blue-primary"}
-                                    to="/login"
-                                >
-                                    Login
-                                </NavLink>
-                            </p>
-                        </div>
+                    </div>
+                    <div className="flex flex-col justify-center items-center gap-3 mt-5">
+                        <button
+                            onClick={navigateToForm}
+                            disabled={!role}
+                            className={`${
+                                !role
+                                    ? "cursor-not-allowed bg-[#494B4E]"
+                                    : "bg-blue-primary"
+                            } button text-white-base px-[80px] py-3 text-medium font-semibold transition-colors cursor-pointer duration-200`}
+                        >
+                            Next
+                        </button>
                     </div>
                 </div>
             </div>
