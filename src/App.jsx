@@ -15,6 +15,8 @@ import {
     Contact,
     Services,
     Privacy,
+    ForgotPassword,
+    VerifyForgotOTP,
 } from "./pages";
 import {
     Navigate,
@@ -35,6 +37,7 @@ import {
     JobView,
     PostJob,
     ProtectedRoute,
+    SendChangeOTP,
 } from "./routes";
 import { useUserStore } from "./store/userStore";
 import useAuthStore from "./store/userTokenStore";
@@ -168,7 +171,16 @@ const App = () => {
                         <Route path="/services" element={<Services />} />
                         <Route path="/privacy" element={<Privacy />} />
                         <Route path="/landing" element={<Landing />} />
+                        <Route
+                            path="/forgot-password"
+                            element={<ForgotPassword />}
+                        />
+                        <Route
+                            path="/verify-otp"
+                            element={<VerifyForgotOTP />}
 
+                        />
+                        
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route
@@ -226,6 +238,10 @@ const App = () => {
                                 path="/change-password"
                                 element={<ChangePassword />}
                             />
+                            <Route
+                                path="/send-change-otp"
+                                element={<SendChangeOTP />}
+                            />
                         </Route>
                     </Routes>
                 </PageContainer>
@@ -247,7 +263,10 @@ const App = () => {
                     <FaAnglesUp size={25} />
                 </motion.div>
             )}
+            <div className="absolute z-[9999999]">
+
             <Toaster position="top-center" reverseOrder={false} />
+            </div>
         </>
     );
 };

@@ -8,7 +8,6 @@ import { splitText } from "../../utils/helpers";
 import Border from "../../components/profile/Border";
 import useUpdateMe from "../../hooks/user/useUpdateMe";
 import toast from "react-hot-toast";
-
 const Profile = () => {
     const [bio, setBio] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
@@ -99,11 +98,13 @@ const Profile = () => {
                                     <h1 className="text-[38px] font-bold font-display">
                                         About
                                     </h1>
-                                    <FiEdit
-                                        size={20}
-                                        onClick={handleEditClick}
-                                        className="cursor-pointer"
-                                    />
+                                    {userStatus.individual && (
+                                        <FiEdit
+                                            size={20}
+                                            onClick={handleEditClick}
+                                            className="cursor-pointer"
+                                        />
+                                    )}
                                 </div>
                                 {!isEditing ? (
                                     <div className="font-body flex flex-col gap-3 text-md font-light text-white-base">
@@ -148,11 +149,11 @@ const Profile = () => {
                                     </form>
                                 )}
                             </div>
-                            <Border />
                             {userStatus.individual &&
                                 userStatus.individual.role !==
                                     "MUSIC_AND_SOUND_ENGINEER" && (
                                     <>
+                                        <Border />
                                         <Portfolio />
                                         <Border />
                                     </>

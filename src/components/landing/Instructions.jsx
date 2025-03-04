@@ -58,7 +58,7 @@ const Instructions = () => {
                                 <div
                                     className={`w-full lg:w-[80%] ${
                                         index == 1 && "flex justify-end"
-                                    } h-full overflow-hidden rounded-br-3 border-[3px] border-black/20`}
+                                    } h-full overflow-hidden rounded-br-3 border-[3px] border-[#fcfcfc]/20`}
                                 >
                                     <img
                                         className="filter grayscale w-full object-cover h-full"

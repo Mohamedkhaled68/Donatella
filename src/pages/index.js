@@ -7,6 +7,8 @@ export { default as Payments } from "./Authorized/Payments";
 //UNAUTHORIZED
 export { default as Landing } from "./Unauthorized/Landing";
 export { default as Login } from "./Unauthorized/Login";
+export { default as ForgotPassword } from "./Unauthorized/ForgotPassword";
+export { default as VerifyForgotOTP } from "./Unauthorized/VerifyForgotOTP";
 export { default as Signup } from "./Unauthorized/Signup";
 export { default as VerifyingPage } from "./Unauthorized/VerifyingPage";
 export { default as ProfileFormSection } from "./Unauthorized/ProfileFormSection";

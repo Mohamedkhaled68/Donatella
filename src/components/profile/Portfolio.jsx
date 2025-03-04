@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Border from "./Border";
 import PortfolioImages from "./PortfolioImages";
 import { useUserStore } from "../../store/userStore";
@@ -6,19 +6,42 @@ import ReelGrid from "./ReelGrid";
 import FullBodyGrid from "./FullBodyGrid";
 import HeadshotGrid from "./HeadshotGrid";
 import { FiEdit } from "react-icons/fi";
-import EditSpecialtyInfo from "./EditSpecialtyInfo";
+import ModelEditSpecialtyInfo from "./ModelEditSpecialtyInfo";
 import AthleteFullbodyGrid from "./AthleteFullbodyGrid";
 import AthleteTrophieGrid from "./AthleteTrophieGrid";
 import CertificatesGrid from "./CertificatesGrid";
 import PreviousWorkGrid from "./PreviousWorkGrid";
+import VideographerEditSpecialtyInfo from "./VideographerEditSpecialtyInfo";
+import { useModal } from "../../store/useModal";
+import PhotographerEditSpecialtyInfo from "./PhotographerEditSpecialtyInfo";
+import EditorEditSpecialtyInfo from "./EditorEditSpecialtyInfo";
 
 const Portfolio = () => {
     const [isEditing, setIsEditing] = useState(false);
     const userStatus = useUserStore((state) => state.userStatus);
+    const setModal = useModal((state) => state.setModal);
 
     const handleEditClick = () => {
         setIsEditing(true);
     };
+
+    useEffect(() => {
+        if (isEditing && userStatus.individual.role === "MODEL") {
+            setModal(<ModelEditSpecialtyInfo setIsEditing={setIsEditing} />);
+        } else if (isEditing && userStatus.individual.role === "VIDEOGRAPHER") {
+            setModal(
+                <VideographerEditSpecialtyInfo setIsEditing={setIsEditing} />
+            );
+        } else if (isEditing && userStatus.individual.role === "PHOTOGRAPHER") {
+            setModal(
+                <PhotographerEditSpecialtyInfo setIsEditing={setIsEditing} />
+            );
+        } else if (isEditing && userStatus.individual.role === "EDITOR") {
+            setModal(<EditorEditSpecialtyInfo setIsEditing={setIsEditing} />);
+        } else {
+            setModal(null);
+        }
+    }, [isEditing]);
 
     const check =
         userStatus.individual.role === "MODEL" ||
@@ -29,22 +52,21 @@ const Portfolio = () => {
 
     return (
         <>
-            {isEditing && (
-                <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[1000]" />
-            )}
             <>
                 {/* PORTFOLIO */}
                 <div className="py-5 flex flex-col gap-6 my-8 relative">
-                    {isEditing && (
-                        <EditSpecialtyInfo setIsEditing={setIsEditing} />
-                    )}
                     <div className="w-full flex justify-between items-center">
                         <h1 className="text-[38px] font-bold font-display">
                             {userStatus.individual.role === "ATHLETE"
                                 ? "Trophies"
                                 : "Portfolio"}
                         </h1>
-                        {userStatus.individual.role === "MODEL" && (
+                        {[
+                            "MODEL",
+                            "VIDEOGRAPHER",
+                            "PHOTOGRAPHER",
+                            "EDITOR",
+                        ].includes(userStatus.individual.role) && (
                             <FiEdit
                                 size={20}
                                 onClick={handleEditClick}

@@ -11,18 +11,23 @@ import { AnimatePresence, motion } from "framer-motion";
 import useUpdateMe from "../../hooks/user/useUpdateMe";
 import useUploadImage from "../../hooks/auth/useUploadImage";
 import toast from "react-hot-toast";
+import { useModal } from "../../store/useModal";
+import EditOrgProfile from "./EditOrgProfile";
+import useGetStars from "../../hooks/individuals/useGetStars";
 
 const ProfileHeader = ({ data }) => {
     const navigate = useNavigate();
-    const { userStatus, setUserStatus } = useUserStore((state) => state);
     const [open, setOpen] = useState(false);
     const [isOn, setIsOn] = useState(null);
+    const [stars, setStars] = useState(0);
     const { mutateAsync: uploadImage } = useUploadImage();
+    const { mutateAsync: updateMe } = useUpdateMe();
+    const { mutateAsync: getStars } = useGetStars();
+    const setModal = useModal((state) => state.setModal);
+    const { userStatus, setUserStatus } = useUserStore((state) => state);
 
     const fileInputRef = useRef();
     const dropdownRef = useRef(null);
-
-    const { mutateAsync: updateMe } = useUpdateMe();
 
     const handleNavigate = (role) => {
         if (role === "ORGANIZATION") {
@@ -72,7 +77,7 @@ const ProfileHeader = ({ data }) => {
 
                     const updatedSpecialtyInfo = {
                         ...userStatus.individual.specialtyInfo,
-                        profilePicture: [data],
+                        profilePicture: data,
                     };
 
                     const updatedUserStatus = {
@@ -82,8 +87,6 @@ const ProfileHeader = ({ data }) => {
                             specialtyInfo: updatedSpecialtyInfo,
                         },
                     };
-
-                    console.log(updatedUserStatus);
 
                     // Update the backend
                     const { firstName, lastName, fullName, ...rest } =
@@ -124,6 +127,15 @@ const ProfileHeader = ({ data }) => {
         }
     };
 
+    const getUserStars = async (id) => {
+        try {
+            const starsData = await getStars(id);
+            setStars(starsData.stars);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     useEffect(() => {
         if (data) {
             setIsOn(data?.individual?.isVisible);
@@ -148,6 +160,11 @@ const ProfileHeader = ({ data }) => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [open]);
+
+    useEffect(() => {
+        if (!userStatus) return;
+        getUserStars(userStatus.id);
+    }, [userStatus]);
     if (!data) {
         return;
     }
@@ -157,30 +174,16 @@ const ProfileHeader = ({ data }) => {
             <div className="w-full flex justify-around items-start gap-[170px] my-8">
                 {data.role === "ORGANIZATION" ? (
                     <>
-                        <div className="flex flex-col justify-center items-center gap-5">
+                        <div className="flex flex-col justify-center items-center gap-5 ">
                             <div className="flex justify-center items-start relative">
-                                <div className="w-[100px] h-[100px] rounded-full bg-slate-400 overflow-hidden flex justify-center items-center">
+                                <div className="w-[150px] h-[150px] rounded-full bg-slate-400 overflow-hidden flex justify-center items-center">
                                     <img
                                         className="w-full h-full object-cover"
                                         src={data?.organization?.logo}
                                         alt=""
                                     />
                                 </div>
-                                <div
-                                    className="absolute bottom-0 -right-1 cursor-pointer"
-                                    onClick={handleEditClick}
-                                >
-                                    <FiEdit size={18} />
-                                </div>
-                                <input
-                                    type="file"
-                                    ref={fileInputRef}
-                                    onChange={handleFileChange}
-                                    style={{ display: "none" }} // Hide the file input
-                                    accept="image/*" // Optional: Restrict to image files only
-                                />
                             </div>
-                            <Rating rating={4} size={30} maxRating={5} />
                         </div>
                         <div className="flex flex-col items-center -mt-[7px]">
                             {/* <div className="flex flex-col justify-center items-center"> */}
@@ -306,7 +309,7 @@ const ProfileHeader = ({ data }) => {
 
                 {data.role === "INDIVIDUAL" ? (
                     <div className="flex flex-col items-center justify-between gap-[27px]">
-                        <Rating rating={3} size={30} maxRating={5} />
+                        <Rating rating={stars} size={30} maxRating={5} />
 
                         <div
                             ref={dropdownRef}
@@ -330,7 +333,7 @@ const ProfileHeader = ({ data }) => {
                                         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
                                     >
                                         <div className="flex items-center justify-between mt-[12px] cursor-pointer">
-                                            <p>Private</p>
+                                            <p>Public</p>
                                             <div className="flex justify-center items-center w-[45px]">
                                                 <div
                                                     className={`relative w-full h-[25px] rounded-full border-white-base border-[1px] cursor-pointer ${
@@ -361,10 +364,11 @@ const ProfileHeader = ({ data }) => {
                 ) : (
                     <div className="flex flex-col items-center gap-[35px]">
                         <button
+                            onClick={() => setModal(<EditOrgProfile />)}
                             type="button"
                             className="text-lg font-bold font-body text-center w-full rounded-[46px] bg-[#293038] px-[73px] py-[15px]"
                         >
-                            Edit Profile
+                            Edit Account
                         </button>
                         <button
                             type="button"

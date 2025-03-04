@@ -205,14 +205,14 @@ const Models = ({ modelsRef, talentsRef }) => {
                         <div className="w-[calc(100%-4px)] h-[calc(100%-4px)] bg-black/70 group-hover:bg-black/0 duration-400 rounded-[100px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white flex justify-center items-center">
                             <div className="flex flex-col gap-10 items-center">
                                 <h1 className="text-[30px] xl:text-6xl leading-[45px] lg:leading-[65px] font-display w-[70%] mx-auto font-extrabold text-center">
-                                    Access to top industry professionals
+                                    Find top industry professionals
                                 </h1>
-                                <p className="hidden md:block text-large text-white-base/75 font-display w-[60%] mx-auto font-[400] text-center">
-                                    Connecting with experienced talent on our
-                                    platform empowers you with valuable insights
-                                    and mentorship, helping you elevate your
-                                    creative career and unlock new
-                                    opportunities.
+                                <p className="hidden md:block text-large text-white-base/75 font-body w-[60%] mx-auto font-extralight text-center">
+                                    Connecting your organization with top
+                                    industry talent across 10 creative sectors,
+                                    our platform streamlines the hiring process
+                                    to help you find the perfect experts for
+                                    your projects and business needs
                                 </p>
                             </div>
                         </div>

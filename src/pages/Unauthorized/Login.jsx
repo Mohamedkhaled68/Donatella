@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { login1, login2 } from "../../assets";
 import LogoHeader from "../../components/shared/ui/LogoHeader";
-import { Navigate, NavLink } from "react-router-dom";
+import { Link, Navigate, NavLink } from "react-router-dom";
 import useLogin from "../../hooks/auth/useLogin";
 import { BackButton, FormButton, FormGroup, Loading } from "../../components";
 import { validateForm } from "../../utils/validators";
@@ -188,6 +188,7 @@ const Login = () => {
                             <Loading />
                         </div>
                     )}
+                    {/* left side*/}
                     <div className="relative h-full w-1/3">
                         <img
                             className="w-full h-full object-cover filter grayscale"
@@ -196,115 +197,125 @@ const Login = () => {
                         />
                         <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-[#101010] to-[#00000011]" />
                     </div>
-                    <div className="w-2/3 h-full bg-[#121417] text-white">
+
+                    <div className="w-2/3 bg-[#121417] text-white">
                         <LogoHeader />
-                        <div className="container mx-auto pt-6">
-                            <div className="flex flex-col items-center gap-3 mb-[8px] relative">
-                                <div className="absolute top-[10%] left-[5%]">
+                        <div className="container mx-auto h-[calc(100vh-60px)]">
+                            <div className="flex flex-col items-center gap-1 relative 2xl:pt-3 h-[15%]">
+                                <div className="absolute top-[10%] 2xl:top-[15%] left-[5%]">
                                     <BackButton />
                                 </div>
-                                <h1 className="text-[40px] font-bold font-display">
+                                <h1 className="text-[30px] 2xl:text-[40px] font-bold font-display">
                                     Good To See You Again
                                 </h1>
-                                <p className="text-medium text-white-base/60 font-extralight w-[50%] text-center">
+                                <p className="text-[14px] 2xl:text-medium text-white-base/60 font-extralight w-[50%] text-center">
                                     Welcome back! Let’s dive back into your
                                     creative journey.
                                 </p>
                             </div>
-
                             <form
                                 onSubmit={handleSubmit}
-                                className="w-[60%] mx-auto"
+                                className="w-[60%] mx-auto flex flex-col justify-between h-[80%]"
                             >
-                                <div className="flex flex-col gap-3">
-                                    <h2 className="text-xl font-semibold font-display">
-                                        Login As:
-                                    </h2>
-                                    <div className="flex justify-center items-center gap-5 w-full relative">
-                                        {/* Organization Button */}
-                                        <div className="relative group w-1/2">
-                                            <button
-                                                key={"Organization"}
-                                                type="button"
-                                                onClick={() =>
-                                                    handleRoleChange(
-                                                        "Organization"
-                                                    )
-                                                }
-                                                className={`${
-                                                    role === "Organization"
-                                                        ? "bg-white-base text-gray-deep"
-                                                        : "bg-[#27292C] text-white-base"
-                                                } w-full px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
-                                            >
-                                                Organization
-                                            </button>
-                                            <div className="absolute w-[300px] bottom-full left-[0] transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md">
-                                                Log in as an organization to
-                                                hire top talents in different
-                                                fields for your job or project.
+                                <div className="flex flex-col justify-between gap-5 h-[50%]">
+                                    <div className="flex flex-col gap-1">
+                                        <h2 className="text-medium 2xl:text-xl font-semibold font-display">
+                                            Login As:
+                                        </h2>
+                                        <div className="flex justify-center items-center gap-5 w-full relative">
+                                            <div className="relative group w-1/2">
+                                                <button
+                                                    key={"Organization"}
+                                                    type="button"
+                                                    onClick={() =>
+                                                        handleRoleChange(
+                                                            "Organization"
+                                                        )
+                                                    }
+                                                    className={`${
+                                                        role === "Organization"
+                                                            ? "bg-white-base text-gray-deep"
+                                                            : "bg-[#27292C] text-white-base"
+                                                    } w-full py-3 2xl:py-4 border-medium border-white-base text-[14px] 2xl:text-medium font-bold rounded-xl transition-all duration-300`}
+                                                >
+                                                    Organization
+                                                </button>
+                                                <div className="absolute w-[300px] bottom-full left-[0] transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md">
+                                                    Log in as an organization to
+                                                    hire top talents in
+                                                    different fields for your
+                                                    job or project.
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        {/* Individual Button */}
-                                        <div className="relative group w-1/2">
-                                            <button
-                                                key={"Individual"}
-                                                type="button"
-                                                onClick={() =>
-                                                    handleRoleChange(
-                                                        "Individual"
-                                                    )
-                                                }
-                                                className={`${
-                                                    role === "Individual"
-                                                        ? "bg-white-base text-gray-deep"
-                                                        : "bg-[#27292C] text-white-base"
-                                                } w-full px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
-                                            >
-                                                Individual
-                                            </button>
-                                            <div className="absolute w-[350px] bottom-full -right-[190%] z-[1000] transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md duration-300">
-                                                Log in as an individual to
-                                                showcase your talent, connect
-                                                with businesses, and launch your
-                                                career on a trusted platform.
+                                            <div className="relative group w-1/2">
+                                                <button
+                                                    key={"Individual"}
+                                                    type="button"
+                                                    onClick={() =>
+                                                        handleRoleChange(
+                                                            "Individual"
+                                                        )
+                                                    }
+                                                    className={`${
+                                                        role === "Individual"
+                                                            ? "bg-white-base text-gray-deep"
+                                                            : "bg-[#27292C] text-white-base"
+                                                    } w-full py-3 px-5 2xl:py-4 border-medium border-white-base text-[14px] 2xl:text-medium font-bold rounded-xl transition-all duration-300`}
+                                                >
+                                                    Individual
+                                                </button>
+                                                <div className="absolute w-[350px] bottom-full -right-[190%] z-[1000] transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md duration-300">
+                                                    Log in as an individual to
+                                                    showcase your talent,
+                                                    connect with businesses, and
+                                                    launch your career on a
+                                                    trusted platform.
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="flex flex-col gap-5 mt-[20px]">
-                                        <FormGroup
-                                            label={"Email"}
-                                            type="email"
-                                            name="email"
-                                            id="email"
-                                            placeholder="i.e. davon@mail.com"
-                                            value={formValues.email}
-                                            onChange={handleInputChange}
-                                            error={errors.email}
-                                            validate={true}
-                                        />
-                                        <FormGroup
-                                            label={"Password"}
-                                            type="password"
-                                            name="password"
-                                            id="password"
-                                            placeholder="********"
-                                            value={formValues.password}
-                                            onChange={handleInputChange}
-                                            error={errors.password}
-                                            validate={true}
-                                        />
+                                    <div className="flex flex-col gap-1">
+                                        <div className="flex flex-col gap-5">
+                                            <FormGroup
+                                                label={"Email"}
+                                                type="email"
+                                                name="email"
+                                                id="email"
+                                                placeholder="i.e. davon@mail.com"
+                                                value={formValues.email}
+                                                onChange={handleInputChange}
+                                                error={errors.email}
+                                                validate={true}
+                                            />
+                                            <FormGroup
+                                                label={"Password"}
+                                                type="password"
+                                                name="password"
+                                                id="password"
+                                                placeholder="********"
+                                                value={formValues.password}
+                                                onChange={handleInputChange}
+                                                error={errors.password}
+                                                validate={true}
+                                            />
+                                        </div>
+                                        <Link
+                                            className="text-blue-primary text-sm"
+                                            to="/forgot-password"
+                                        >
+                                            Forgot your password?
+                                        </Link>
                                     </div>
                                 </div>
-                                <div className="flex flex-col justify-center items-center gap-2 mt-8">
+                                <div className="flex flex-col justify-center items-center gap-2">
                                     <FormButton
                                         loading={loading}
                                         disabled={disabled}
                                         text={"Login"}
                                     />
-                                    <p className="text-medium text-white-base/40">
+                                    <p className="text-white-base/40 text-sm">
                                         Don't have an account?{" "}
                                         <NavLink
                                             className={"text-blue-primary"}
@@ -317,6 +328,8 @@ const Login = () => {
                             </form>
                         </div>
                     </div>
+
+                    {/* Right Side */}
                     <div className="relative h-full w-1/3">
                         <img
                             className="w-full h-full object-cover filter grayscale"

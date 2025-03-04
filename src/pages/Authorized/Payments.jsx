@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Footer, JobCard, Rating } from "../../components";
 import { orgLogo } from "../../assets";
 import { HiMiniEye } from "react-icons/hi2";
 import { HiMiniEyeSlash } from "react-icons/hi2";
+import useGetBalance from "../../hooks/payments/useGetBalance";
+import toast from "react-hot-toast";
 
 const jobs = [
     // {
@@ -228,6 +230,7 @@ const Payments = () => {
     const [balance, setBalance] = useState(true);
     const [deposit, setDeposit] = useState(true);
     const [withdraw, setWithdraw] = useState(true);
+    const { mutateAsync: getBalance } = useGetBalance();
 
     // Calculate the jobs to display for the current page
     const startIndex = (currentPage - 1) * PAGE_SIZE;
@@ -251,6 +254,16 @@ const Payments = () => {
             setCurrentPage((prev) => prev - 1);
         }
     };
+
+    const getUserBalance = async () => {
+        const balanceData = await getBalance();
+        console.log(balanceData);
+    };
+
+    useEffect(() => {
+        getUserBalance();
+    }, []);
+
     return (
         <>
             <div className="p-6 px-[5rem] space-y-6 text-white min-h-screen">
@@ -317,10 +330,24 @@ const Payments = () => {
                             </div>
                         </div>
                         <div className="flex flex-col justify-center items-center gap-2">
-                            <button className="w-full bg-transparent border-thin text-[20px] font-light border-blue-primary  text-white px-[55px] py-[21px] rounded-lg">
+                            <button
+                                onClick={() =>
+                                    toast.error("Comming Soon", {
+                                        icon: "🚧",
+                                    })
+                                }
+                                className="w-full bg-transparent border-thin text-[20px] font-light border-blue-primary  text-white px-[55px] py-[21px] rounded-lg"
+                            >
                                 Deposit
                             </button>
-                            <button className="w-full bg-white-base text-[20px] font-bold  text-[#121417] px-[55px] py-[21px] rounded-lg">
+                            <button
+                                onClick={() =>
+                                    toast.error("Comming Soon", {
+                                        icon: "🚧",
+                                    })
+                                }
+                                className="w-full bg-white-base text-[20px] font-bold  text-[#121417] px-[55px] py-[21px] rounded-lg"
+                            >
                                 Withdraw
                             </button>
                         </div>

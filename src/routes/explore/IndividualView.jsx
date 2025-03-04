@@ -15,12 +15,17 @@ import { VscColorMode } from "react-icons/vsc";
 import { PiDressBold } from "react-icons/pi";
 import { blueHeadIcon } from "../../assets";
 import { MdOutlineCameraAlt } from "react-icons/md";
+import useGetStars from "../../hooks/individuals/useGetStars";
 const IndividualView = () => {
     const [individual, setIndividual] = useState(null);
     const [specialtyInfo, setSpecialtyInfo] = useState(null);
+        const [stars, setStars] = useState(0);
+    
     const [bio, setBio] = useState([]);
     const { individualId } = useParams();
     const { mutateAsync: getIndividual } = useGetIndividual();
+    const { mutateAsync: getStars } = useGetStars();
+
 
     const formattedDate = specialtyInfo?.birthDate
         ? new Date(specialtyInfo?.birthDate).toLocaleDateString("en-GB")
@@ -54,6 +59,18 @@ const IndividualView = () => {
             setBio(splitedBio);
         }
     }, [individual]);
+    const getIndividualStars = async (id) => {
+        try {
+            const starsData = await getStars(id);
+            setStars(starsData.stars);
+        } catch (err) {
+            toast.error(err?.response?.data?.message || "Failed to get stars");
+        }
+    };
+
+    useEffect(() => {
+        getIndividualStars(individualId);
+    }, [individualId]);
 
     useEffect(() => {
         if (individual?.role === "MODEL") {
@@ -147,7 +164,7 @@ const IndividualView = () => {
                     </div>
 
                     <div className="flex flex-col items-center justify-between gap-2">
-                        <Rating rating={3} size={30} maxRating={5} />
+                        <Rating rating={stars} size={30} maxRating={5} />
                         <p className="font-body text-white-base/50 text-base font-light">
                             0 Projects Completed
                         </p>

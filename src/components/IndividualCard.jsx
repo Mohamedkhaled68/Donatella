@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Rating from "./shared/Rating";
 import { profileGirl } from "../assets";
 import { IoMaleFemaleSharp } from "react-icons/io5";
@@ -9,6 +9,8 @@ import { VscColorMode } from "react-icons/vsc";
 import { headIcon } from "../assets";
 import { getCountryByCode } from "../utils/helpers";
 import { useNavigate } from "react-router-dom";
+import useGetStars from "../hooks/individuals/useGetStars";
+import toast from "react-hot-toast";
 
 // Define attribute types for better organization and type safety
 const AttributeTypes = {
@@ -92,16 +94,27 @@ const AttributeItem = ({ attribute, profile, isModelView }) => (
 
 const IndividualCard = ({ className, filter, profile }) => {
     const isModelView = filter === "models";
-    const hourlyRate = profile?.hourlyRate || "54$";
     const navigate = useNavigate();
+    const [stars, setStars] = useState(0);
+    const { mutateAsync: getStars } = useGetStars();
 
     const handleNavigateToIndividual = () => {
         const { id } = profile;
-        console.log(id);
-
         navigate(`/explore/individuals/${id}`);
     };
 
+    const getIndividualStars = async (id) => {
+        try {
+            const starsData = await getStars(id);
+            setStars(starsData.stars);
+        } catch (err) {
+            toast.error(err?.response?.data?.message || "Failed to get stars");
+        }
+    };
+
+    useEffect(() => {
+        getIndividualStars(profile.id);
+    }, [profile]);
     return (
         <div
             className={`bg-[#313131] border-thin min-w-[300px] max-w-full h-[508px] border-white-base/5 rounded-[20px] p-4 flex flex-col gap-4 ${className}`}
@@ -117,7 +130,7 @@ const IndividualCard = ({ className, filter, profile }) => {
                                 profile.specialtyInfo.nationality
                             )}, ${profile.specialtyInfo.nationality}`}
                     </p>
-                    <Rating maxRating={5} />
+                    <Rating rating={stars} maxRating={5} />
                 </div>
             </div>
             <div className="rounded-md h-full w-full relative group hover:border-white-base/70 duration-200 border-thin overflow-hidden border-white-base/5">
@@ -146,7 +159,9 @@ const IndividualCard = ({ className, filter, profile }) => {
                         alt={`${profile?.firstName || "Profile"} image`}
                     />
                 ) : (
-                    <FaUser />
+                    <div className="flex justify-center items-center w-full h-full">
+                        <FaUser size={100} className="text-white-base " />
+                    </div>
                 )}
             </div>
             <button

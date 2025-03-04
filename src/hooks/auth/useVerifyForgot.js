@@ -1,31 +1,27 @@
 import { useMutation } from "@tanstack/react-query";
 import { baseUrl } from "../../utils/baseUrl";
 import axios from "axios";
-import { useUserStore } from "../../store/userStore";
+import { useNavigate } from "react-router-dom";
 
-const useSendOtp = () => {
-    const { userStatus } = useUserStore((state) => state);
-
+const useVerfiyForgot = () => {
+    const navigate = useNavigate();
     return useMutation({
-        mutationKey: ["otp", "send-otp"],
-        mutationFn: async (useCase) => {
-            const response = await axios.post(
-                `${baseUrl}/otp`,
-                {
-                    userId: userStatus.id,
-                    useCase,
-                },
+        mutationKey: ["auth", "verify-forget-password"],
+        mutationFn: async (data) => {
+            const response = await axios.patch(
+                `${baseUrl}/auth/verify-forgot-password`,
+                data,
                 {
                     headers: {
                         "Content-Type": "application/json",
                     },
                 }
             );
-            console.log(response.data);
-
-            return response.data;
+            return response.data.data;
         },
-        onSuccess: () => {},
+        onSuccess: () => {
+            navigate("/");
+        },
         onError: (error) => {
             const errorMessage =
                 error.response?.data?.data?.message ||
@@ -35,4 +31,4 @@ const useSendOtp = () => {
     });
 };
 
-export default useSendOtp;
+export default useVerfiyForgot;

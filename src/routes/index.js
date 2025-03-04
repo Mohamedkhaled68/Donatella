@@ -4,3 +4,4 @@ export { default as IndividualView } from "./explore/IndividualView";
 export { default as ProtectedRoute } from "./ProtectedRoute";
 export { default as ChangeEmail } from "./ChangeEmail";
 export { default as ChangePassword } from "./ChangePassword";
+export { default as SendChangeOTP } from "./SendChangeOTP";

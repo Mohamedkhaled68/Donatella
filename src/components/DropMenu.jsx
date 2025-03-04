@@ -61,7 +61,7 @@ const DropMenu = ({ setShowDrop }) => {
                 </div>
                 <div
                     onClick={() => {
-                        navigate("/change-email");
+                        navigate("/send-change-otp", { state: "changeEmail" });
                         setShowDrop(false);
                     }}
                     className="text-white-base flex items-center gap-3 text-sm font-body font-normal py-3 px-3 hover:bg-slate-800 duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
@@ -71,7 +71,7 @@ const DropMenu = ({ setShowDrop }) => {
                 </div>
                 <div
                     onClick={() => {
-                        navigate("/change-password");
+                        navigate("/send-change-otp", { state: "changePassword" });
                         setShowDrop(false);
                     }}
                     className="text-white-base flex items-center gap-3 text-sm font-body font-normal py-3 px-3 hover:bg-slate-800 duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"

@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import {
     CountryEnum,
     initialOrgProfileFormValues,
-    OrgProfileFormGroupData,
 } from "../../../utils/constants";
-import FormGroup from "../../shared/ui/FormGroup";
 import FormButton from "../../shared/ui/FormButton";
 import useOnboarding from "../../../hooks/auth/useOnboarding";
 import toast from "react-hot-toast";
 import TextInput from "../../shared/ui/TextInput";
 import { countryCodes } from "../../../utils/CountryCodes";
 const formatUrl = (url) => {
-    if (!url) return ""; // Handle empty input
+    if (!url) return "";
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
         return `https://${url}`;
     }
@@ -50,18 +47,29 @@ const OrganizationProfileForm = ({
             formValues.phone = formValues.phone.slice(1);
         }
 
+        const tikTokUrl = formatUrl(formValues.tiktok);
+        const instagramUrl = formatUrl(formValues.instagram);
+        const websiteUrl = formatUrl(formValues.website);
+
+        
         try {
+            if (!tikTokUrl.includes("tiktok.com")) {
+                toast.error("Please enter a valid TikTok URL.");
+                return;
+            }
+    
+            if (!instagramUrl.includes("instagram.com")) {
+                toast.error("Please enter a valid Instagram URL.");
+                return;
+            }
             const updatedFormValues = {
                 ...formValues,
                 instagram: formatUrl(formValues.instagram),
-                website: formValues.website
-                    ? formatUrl(formValues.website)
-                    : "",
+                website: websiteUrl,
                 tiktok: formatUrl(formValues.tiktok),
                 phone: `${conCode}${formValues.phone}`,
             };
 
-            // Call your mutation here if needed
             await mutateAsync({
                 organizationProfile: {
                     ...updatedFormValues,
@@ -69,10 +77,10 @@ const OrganizationProfileForm = ({
                 },
             });
 
+            toast.success("Profile created successfully!");
             setFormValues(initialOrgProfileFormValues);
             setPreviewUrl(null);
             setMedia(null);
-            toast.success("Profile created successfully!");
         } catch (error) {
             toast.error(
                 error?.response?.data?.message || "Something went wrong!"

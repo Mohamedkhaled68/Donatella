@@ -204,3 +204,48 @@ export function isValidAge(birthDateString) {
 
     return age >= 18;
 }
+
+// Duration validation utilities
+export const convertToDays = (value, prefix) => {
+    switch (prefix) {
+        case "DAY":
+            return value;
+        case "WEEK":
+            return value * 7;
+        case "MONTH":
+            return value * 30; // Using 30 days as approximate month length
+        case "YEAR":
+            return value * 365;
+        default:
+            return 0;
+    }
+};
+
+export const isValidDurationRange = (
+    minDuration,
+    minPrefix,
+    maxDuration,
+    maxPrefix
+) => {
+    // First check if all required fields are filled
+    if (!minDuration || !minPrefix || !maxDuration || !maxPrefix) {
+        return false;
+    }
+
+    // Convert both durations to days for accurate comparison
+    const minInDays = convertToDays(minDuration, minPrefix);
+    const maxInDays = convertToDays(maxDuration, maxPrefix);
+
+    return minInDays <= maxInDays;
+};
+
+export const formatLink = (url) => {
+    try {
+        const { hostname } = new URL(url);
+        const domain = hostname.split(".").slice(-2).join(".");
+        return { domain, fullUrl: url };
+    } catch (error) {
+        console.error("Invalid URL:", error);
+        return null;
+    }
+};

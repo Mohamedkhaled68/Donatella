@@ -57,11 +57,11 @@ const Hero = () => {
 
                     <div className="px-[6px] md:w-[70%] pt-[66px] mx-auto text-center flex flex-col justify-center items-center gap-1 text-white-base z-50">
                         <h1 className="drop-shadow text-[45px] md:text-[86px] italic font-semibold font-display">
-                            Capture Your Story.
+                            Capture Your Story
                         </h1>
                         <p className="text-white-base/75 text-[22px] italic font-extralight leading-[33.907px]">
                             Not because the world says so, but because it was
-                            always inside.
+                            always inside
                         </p>
                     </div>
                 </div>

@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { BackButton, FormButton, Loading, OtpContainer } from "../components";
+import { BackButton, FormButton, Loading } from "../components";
 import { useUserStore } from "../store/userStore";
 import toast from "react-hot-toast";
-import useSendOtp from "../hooks/auth/useSendOtp";
+import useUpdateEmail from "../hooks/auth/useUpdateEmail";
+import { useNavigate } from "react-router-dom";
 const EmailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const ChangeEmail = () => {
     const [loading, setLoading] = useState(false);
     const [disabled, setDisabled] = useState(true);
-    const [otp, setOtp] = useState(new Array(4).fill(""));
-    const [otpView, setOtpView] = useState(false);
     const [input, setinput] = useState("");
-    const { mutateAsync: sendOtp } = useSendOtp();
-
+    const { mutateAsync: updateEmail } = useUpdateEmail();
     const { userStatus } = useUserStore((state) => state);
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         setinput(e.target.value);
@@ -31,10 +30,15 @@ const ChangeEmail = () => {
             );
             return;
         } else {
+            setLoading(true);
             try {
-                await sendOtp("UPDATE_EMAIL");
-                localStorage.setItem("NEW_USER_ENTITY", input.trim());
-                setOtpView(true);
+                await updateEmail({
+                    newEmail: input.trim(),
+                    otp: localStorage.getItem("OTP"),
+                });
+                localStorage.removeItem("OTP");
+                toast.success("Email changed successfully.");
+                navigate("/");
             } catch (err) {
                 toast.error(
                     err?.response?.data?.message || "Failed to change email."
@@ -60,16 +64,7 @@ const ChangeEmail = () => {
                         <Loading />
                     </div>
                 )}
-                {otpView && (
-                    <div className="absolute w-full h-full flex justify-center items-center z-[10000] bg-black/50">
-                        <OtpContainer
-                            otp={otp}
-                            setOtp={setOtp}
-                            useCase={"RESET_EMAIL"}
-                            setOtpView={setOtpView}
-                        />
-                    </div>
-                )}
+
                 <div className="container mx-auto pt-20 text-white-base h-full relative">
                     <div className="absolute top-10 bottom-5">
                         <BackButton />

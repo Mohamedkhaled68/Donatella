@@ -5,74 +5,185 @@ import { FaCheck } from "react-icons/fa";
 import { useUserStore } from "../../store/userStore";
 import usePostJob from "../../hooks/jobs/usePostJobs";
 import useGetTags from "../../hooks/explore/useGetTags";
-import { CountryEnum } from "../../utils/constants";
+import { CountryEnum, initialJobPostFormValues } from "../../utils/constants";
+import { isValidDurationRange } from "../../utils/helpers";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 
-const initialJobPostFormValues = {
-    title: "",
-    jobCategory: "",
-    requiredExperience: {
-        minimum: "",
-        maximum: "",
+const initialRequirements = [
+    {
+        id: "requirement-1",
+        content: "",
     },
-    careerLevel: "",
-    jobDuration: {
-        minimum: 1,
-        minimumPrefix: "",
-        maximum: 2,
-        maximumPrefix: "",
+    {
+        id: "requirement-2",
+        content: "",
     },
-    location: "",
-    salary: "",
-    description: "",
-    requirements: "",
-    educationLevel: "",
-    tags: [],
+    {
+        id: "requirement-3",
+        content: "",
+    },
+    {
+        id: "requirement-4",
+        content: "",
+    },
+];
+
+const RequirementsWindow = ({ formValues, setFormValues, setInputWindow }) => {
+    const [requirements, setRequirements] = useState(initialRequirements);
+    const [disabled, setDisabled] = useState(false);
+
+    const handleInputsChange = (e) => {
+        const { id, value } = e.target;
+        const index = parseInt(id.split("-")[1]) - 1; // Extract index from id
+
+        setRequirements((prevRequirements) =>
+            prevRequirements.map((requirement, i) =>
+                i === index ? { ...requirement, content: value } : requirement
+            )
+        );
+    };
+    const handleSubmit = () => {
+        setFormValues({
+            ...formValues,
+            requirements: JSON.stringify(requirements),
+        });
+    };
+
+    useEffect(() => {
+        const isFilled = requirements.every(
+            (requirement) => requirement.content
+        );
+        if (isFilled) {
+            setDisabled(false);
+        } else {
+            setDisabled(true);
+        }
+    }, [requirements]);
+
+    useEffect(() => {
+        if (formValues.requirements) {
+            const reqs = JSON.parse(formValues.requirements);
+            setRequirements(reqs);
+        }
+    }, []);
+
+    return (
+        <>
+            <div className="w-[50%] mx-auto rounded-md bg-gray-900 p-8 text-white-base">
+                <div className="bg-gray-800 rounded-md p-4 flex flex-col items-center">
+                    <label htmlFor="description" className="text-xl">
+                        Add Requirements
+                    </label>
+
+                    {requirements.map((requirement, index) => (
+                        <input
+                            key={requirement.id}
+                            onChange={handleInputsChange}
+                            value={requirement.content}
+                            className="w-full my-3 rounded-md bg-gray-700 text-white p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            type="text"
+                            id={`requirement-${index + 1}`}
+                        />
+                    ))}
+
+                    <div className="flex items-center gap-5">
+                        <button
+                            onClick={() => {
+                                setInputWindow({ status: false, type: "" });
+                            }}
+                            className={`bg-red-500 button text-white-base px-[72px] py-3 text-medium font-semibold transition-colors cursor-pointer duration-200`}
+                        >
+                            Close
+                        </button>
+                        <button
+                            onClick={() => {
+                                handleSubmit();
+                                setInputWindow({ status: false, type: "" });
+                            }}
+                            disabled={disabled}
+                            className={`${
+                                disabled
+                                    ? "cursor-not-allowed bg-[#494B4E] pointer-events-none"
+                                    : "bg-blue-primary"
+                            } button text-white-base px-[72px] py-3 text-medium font-semibold transition-colors cursor-pointer duration-200`}
+                        >
+                            Done
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 };
-
-// Duration validation utilities
-const convertToDays = (value, prefix) => {
-    switch (prefix) {
-        case "DAY":
-            return value;
-        case "WEEK":
-            return value * 7;
-        case "MONTH":
-            return value * 30; // Using 30 days as approximate month length
-        case "YEAR":
-            return value * 365;
-        default:
-            return 0;
-    }
-};
-
-const isValidDurationRange = (
-    minDuration,
-    minPrefix,
-    maxDuration,
-    maxPrefix
-) => {
-    // First check if all required fields are filled
-    if (!minDuration || !minPrefix || !maxDuration || !maxPrefix) {
-        return false;
-    }
-
-    // Convert both durations to days for accurate comparison
-    const minInDays = convertToDays(minDuration, minPrefix);
-    const maxInDays = convertToDays(maxDuration, maxPrefix);
-
-    return minInDays <= maxInDays;
+const DescriptionWindow = ({
+    formValues,
+    handleInputChange,
+    setInputWindow,
+}) => {
+    const [disabled, setDisabled] = useState(false);
+    useEffect(() => {
+        if (formValues.description) {
+            setDisabled(false);
+        } else {
+            setDisabled(true);
+        }
+    }, [formValues.description]);
+    return (
+        <>
+            <div className="w-[50%] mx-auto rounded-md bg-gray-900 p-8 text-white-base">
+                <div className="bg-gray-800 rounded-md p-4 flex flex-col items-center">
+                    <label htmlFor="description" className="text-xl slef-start">
+                        Add Description
+                    </label>
+                    <textarea
+                        className="w-full my-3 rounded-md bg-gray-700 text-white p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        name="description"
+                        id="description"
+                        cols="30"
+                        rows="10"
+                        value={formValues.description}
+                        onChange={handleInputChange}
+                        placeholder="Enter job description"
+                    ></textarea>
+                    <div className="flex items-center gap-5">
+                        <button
+                            onClick={() => {
+                                setInputWindow({ status: false, type: "" });
+                            }}
+                            className={`bg-red-500 button text-white-base px-[72px] py-3 text-medium font-semibold transition-colors cursor-pointer duration-200`}
+                        >
+                            Close
+                        </button>
+                        <button
+                            onClick={() => {
+                                setInputWindow({ status: false, type: "" });
+                            }}
+                            disabled={disabled}
+                            className={`${
+                                disabled
+                                    ? "cursor-not-allowed bg-[#494B4E] pointer-events-none"
+                                    : "bg-blue-primary"
+                            } button text-white-base px-[72px] py-3 text-medium font-semibold transition-colors cursor-pointer duration-200`}
+                        >
+                            Done
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 };
 
 const PostJob = () => {
     const [formValues, setFormValues] = useState(initialJobPostFormValues);
-
     const [tags, setTags] = useState([]);
     const [isInputVisible, setIsInputVisible] = useState(false);
     const [selectedTags, setSelectedTags] = useState([]);
     const [loading, setLoading] = useState(false);
     const [disabled, setDisabled] = useState(true);
     const [check, setCheck] = useState(false);
+    const [inputWindow, setInputWindow] = useState({ status: false, type: "" });
 
     const navigate = useNavigate();
     const { userStatus } = useUserStore((state) => state);
@@ -82,18 +193,15 @@ const PostJob = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-
         if (name !== "salary") {
             if (Number(value)) {
                 toast.error(`Please include charachters in ${name} field `);
                 return;
             }
         }
-
         // Explicitly check for an empty string
         const parsedValue =
             value === "" ? "" : isNaN(value) ? value : Number(value);
-
         setFormValues((prevValues) => ({
             ...prevValues,
             [name]: parsedValue,
@@ -102,9 +210,7 @@ const PostJob = () => {
 
     const handleNumberInputChange = (e, field) => {
         const { name, value } = e.target;
-
         const numericValue = value ? parseFloat(value) : "";
-
         setFormValues((prevValues) => ({
             ...prevValues,
             [field]: {
@@ -201,7 +307,6 @@ const PostJob = () => {
         const isFilled = Object.values(formValues).every(
             (value) => value !== "" && value !== 0
         );
-
         if (
             isFilled &&
             check &&
@@ -216,12 +321,47 @@ const PostJob = () => {
         }
     }, [formValues, check, selectedTags]);
 
+    useEffect(() => {
+        if (inputWindow.status) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
+        }
+
+        return () => {
+            document.body.style.overflow = "unset";
+        };
+    }, [inputWindow.status]);
+
     return (
         <section className="relative w-full h-full">
             {loading && (
                 <div className="absolute top-0 left-0 w-full h-full bg-black/50 z-[1000] flex justify-center items-center">
                     <Loading />
                 </div>
+            )}
+            {inputWindow.status && (
+                <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1, transition: { duration: 0.3 } }}
+                    exit={{ scale: 0 }}
+                    className="absolute top-0 left-0 w-full h-full bg-black/50 z-[1000] flex justify-center items-center"
+                >
+                    {inputWindow.type === "description" && (
+                        <DescriptionWindow
+                            formValues={formValues}
+                            handleInputChange={handleInputChange}
+                            setInputWindow={setInputWindow}
+                        />
+                    )}
+                    {inputWindow.type === "requirements" && (
+                        <RequirementsWindow
+                            formValues={formValues}
+                            setInputWindow={setInputWindow}
+                            setFormValues={setFormValues}
+                        />
+                    )}
+                </motion.div>
             )}
 
             <div className="container mx-auto py-5">
@@ -555,14 +695,19 @@ const PostJob = () => {
                             >
                                 Description
                             </label>
-                            <input
-                                id="description"
-                                name="description"
-                                value={formValues.description}
-                                onChange={handleInputChange}
-                                className="rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-[#94A3B8] text-medium font-body px-[18px] py-[14px] w-full mt-2"
-                                placeholder="Enter job description"
-                            />
+                            <button
+                                onClick={() =>
+                                    setInputWindow({
+                                        ...inputWindow,
+                                        status: true,
+                                        type: "description",
+                                    })
+                                }
+                                type="button"
+                                className="rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-white-base text-medium text-center font-body px-[18px] py-[14px] w-full mt-2 hover:bg-blue-primary duration-300"
+                            >
+                                Add Description
+                            </button>
                         </div>
 
                         {/* Requirements */}
@@ -573,14 +718,19 @@ const PostJob = () => {
                             >
                                 Requirements
                             </label>
-                            <input
-                                id="requirements"
-                                name="requirements"
-                                value={formValues.requirements}
-                                onChange={handleInputChange}
-                                className="rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-[#94A3B8] text-medium font-body px-[18px] py-[14px] w-full mt-2"
-                                placeholder="Enter job requirements"
-                            />
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    setInputWindow({
+                                        ...inputWindow,
+                                        status: true,
+                                        type: "requirements",
+                                    })
+                                }
+                                className="rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-white-base text-medium text-center font-body px-[18px] py-[14px] w-full mt-2 hover:bg-blue-primary duration-300"
+                            >
+                                Add Requirements
+                            </button>
                         </div>
                     </div>
                     <TagInput

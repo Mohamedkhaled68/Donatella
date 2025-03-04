@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { BackButton, FormButton, Loading, OtpContainer } from "../components";
+import { BackButton, FormButton, Loading } from "../components";
 import toast from "react-hot-toast";
-import useSendOtp from "../hooks/auth/useSendOtp";
+import useResetPassword from "../hooks/auth/useResetPassword";
+import { useUserStore } from "../store/userStore";
+import { useNavigate } from "react-router-dom";
 
 const passwordRegex =
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 const ChangePassword = () => {
-    const [otp, setOtp] = useState(new Array(4).fill(""));
-    const [otpView, setOtpView] = useState(false);
     const [input, setinput] = useState("");
     const [loading, setLoading] = useState(false);
     const [disabled, setDisabled] = useState(true);
-    const { mutateAsync: sendOtp } = useSendOtp();
+    const { mutateAsync: resetPassword } = useResetPassword();
+    const userStatus = useUserStore((state) => state.userStatus);
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         setinput(e.target.value);
@@ -31,10 +33,16 @@ const ChangePassword = () => {
             );
             return;
         } else {
+            setLoading(true);
             try {
-                const otpData = await sendOtp("RESET_PASSWORD");
-                localStorage.setItem("NEW_USER_ENTITY", input.trim());
-                setOtpView(true);
+                await resetPassword({
+                    userId: userStatus.id,
+                    password: input.trim(),
+                    otp: localStorage.getItem("OTP"),
+                });
+                toast.success("Password changed successfully!");
+                localStorage.removeItem("OTP");
+                navigate("/");
             } catch (err) {
                 toast.error(
                     err?.response?.data?.message || "Failed to change password."
@@ -61,16 +69,6 @@ const ChangePassword = () => {
                         <Loading />
                     </div>
                 )}
-                {otpView && (
-                    <div className="absolute w-full h-full flex justify-center items-center z-[10000] bg-black/50">
-                        <OtpContainer
-                            otp={otp}
-                            setOtp={setOtp}
-                            useCase={"RESET_PASSWORD"}
-                            setOtpView={setOtpView}
-                        />
-                    </div>
-                )}
                 <div className="container mx-auto pt-20 text-white-base h-full relative">
                     <div className="absolute top-10 bottom-5">
                         <BackButton />
@@ -78,7 +76,7 @@ const ChangePassword = () => {
                     <div className="flex justify-center mb-5">
                         <div className="flex flex-col col-span-2 justify-center items-center gap-3">
                             <h1 className="font-display text-[46px] font-bold text-center">
-                                Enter Password
+                                Enter New Password
                             </h1>
                             <p className="font-body text-center text-[#94A3B8] w-[70%] mx-auto text-md font-light">
                                 Welcome back! Let’s dive back into your creative

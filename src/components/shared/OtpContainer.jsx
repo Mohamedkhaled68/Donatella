@@ -3,12 +3,14 @@ import toast from "react-hot-toast";
 import { useUserStore } from "../../store/userStore";
 import useResetPassword from "../../hooks/auth/useResetPassword";
 import useUpdateEmail from "../../hooks/auth/useUpdateEmail";
+import useVerfiyForgot from "../../hooks/auth/useVerifyForgot";
 
 const OtpContainer = ({ length = 4, otp, setOtp, useCase, setOtpView }) => {
     const inputRefs = useRef([]);
     const { userStatus } = useUserStore((state) => state);
     const { mutateAsync: resetPassword } = useResetPassword();
     const { mutateAsync: updateEmail } = useUpdateEmail();
+    const { mutateAsync: verifyForgot } = useVerfiyForgot();
 
     const handleChange = async (value, index) => {
         if (value === " ") return;
@@ -37,6 +39,23 @@ const OtpContainer = ({ length = 4, otp, setOtp, useCase, setOtpView }) => {
                     setOtpView(false);
                     localStorage.removeItem("NEW_USER_ENTITY");
                     localStorage.removeItem("OTP");
+                } catch (error) {
+                    toast.error(
+                        error?.response?.data?.message ||
+                            "Failed to verify OTP."
+                    );
+                }
+            } else if (useCase === "FORGOT_PASSWORD") {
+                try {
+                    await verifyForgot({
+                        email: localStorage.getItem("USER_EMAIL"),
+                        otp: newOtp.join(""),
+                        password: localStorage.getItem("NEW_USER_PASSWORD"),
+                    });
+
+                    toast.success("Password changed successfully!");
+                    localStorage.removeItem("NEW_USER_PASSWORD");
+                    localStorage.removeItem("USER_EMAIL");
                 } catch (error) {
                     toast.error(
                         error?.response?.data?.message ||

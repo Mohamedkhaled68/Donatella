@@ -10,8 +10,8 @@ import toast from "react-hot-toast";
 const OrgProfileForm = () => {
     const [loading, setLoading] = useState(false);
     const [imageLoading, setImageLoading] = useState(false);
-    const [media, setMedia] = useState(null); // Store the uploaded file
-    const [previewUrl, setPreviewUrl] = useState(""); // Store preview URL
+    const [media, setMedia] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState("");
     const inputId = "media";
 
     const { mutateAsync: uploadImage } = useUploadImage();

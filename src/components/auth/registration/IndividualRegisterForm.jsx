@@ -33,7 +33,10 @@ const IndividualRegisterForm = ({ role, loading, setLoading }) => {
                 mutateAsync({ ...formValues, role: role.toUpperCase() }),
                 {
                     loading: "Registering...",
-                    success: "Registered successfully!",
+                    success: () => {
+                        setFormValues(initialIndividualRegisterFormValues);
+                        return "Registered successfully!";
+                    },
                     error: (err) => err?.response?.data?.message,
                 },
                 {
@@ -48,7 +51,6 @@ const IndividualRegisterForm = ({ role, loading, setLoading }) => {
                 );
             })
             .finally(() => {
-                setFormValues(initialIndividualRegisterFormValues);
                 setLoading(false);
             });
     };

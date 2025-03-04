@@ -1,6 +1,5 @@
 import React from "react";
 import { orgLogo } from "../assets";
-import Rating from "./shared/Rating";
 import { useNavigate } from "react-router-dom";
 import JobDurationContainer from "./shared/JobDurationContainer";
 
@@ -21,9 +20,8 @@ const JobCard = ({ job }) => {
                     <img
                         src={organization?.logo || orgLogo}
                         alt={`${organization?.name} logo`}
-                        className="w-[120px] h-[120px] rounded-full"
+                        className="w-[150px] h-[150px] rounded-full"
                     />
-                    <Rating size={15} rating={3} />
                 </div>
                 <div className="flex-1 grow">
                     <h3 className="font-bold border-b border-white-base/10 pb-3 w-[50%]">
