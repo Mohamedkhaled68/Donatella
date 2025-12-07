@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaBuilding, FaBriefcase, FaCheckCircle, FaSearch } from "react-icons/fa";
+import { useUserStore } from "../../store/userStore";
+import useGetOrganizationJobs from "../../hooks/organization/useGetOrganizationJobs";
 
 const filterAnimationVariants = {
     open: { height: "auto" },
@@ -16,13 +18,35 @@ const proposalStatusOptions = [
 ];
 
 const MessageFilterDropdown = ({ isOpen, onFilterChange, chats = [] }) => {
+    const { userStatus } = useUserStore((state) => state);
     const [organizationId, setOrganizationId] = useState("");
     const [jobName, setJobName] = useState("");
     const [proposalStatus, setProposalStatus] = useState("");
     const [searchKey, setSearchKey] = useState("");
+    const [organizationJobs, setOrganizationJobs] = useState([]);
+    
+    const { mutateAsync: getOrganizationJobs } = useGetOrganizationJobs();
+    const isOrganization = userStatus?.role === "ORGANIZATION";
 
-    // Extract unique organizations from chats
+    // Fetch organization jobs when component mounts and user is an organization
+    useEffect(() => {
+        if (isOrganization) {
+            const fetchJobs = async () => {
+                try {
+                    const jobs = await getOrganizationJobs();
+                    setOrganizationJobs(jobs || []);
+                } catch (error) {
+                    console.error("Failed to fetch organization jobs:", error);
+                    setOrganizationJobs([]);
+                }
+            };
+            fetchJobs();
+        }
+    }, [isOrganization, getOrganizationJobs]);
+
+    // Extract unique organizations from chats (only for individuals)
     const uniqueOrganizations = React.useMemo(() => {
+        if (isOrganization) return [];
         const orgsMap = new Map();
         chats.forEach((chat) => {
             if (chat.friend?.organization?.id && chat.friend?.organization?.name) {
@@ -35,7 +59,24 @@ const MessageFilterDropdown = ({ isOpen, onFilterChange, chats = [] }) => {
             }
         });
         return Array.from(orgsMap.values());
-    }, [chats]);
+    }, [chats, isOrganization]);
+
+    // Extract unique job names from chats (for individuals) or use organization jobs (for organizations)
+    const uniqueJobNames = React.useMemo(() => {
+        if (isOrganization && organizationJobs.length > 0) {
+            // For organizations: use all their jobs
+            return organizationJobs.map((job) => job.title);
+        } else {
+            // For individuals: extract from chats
+            const jobNamesSet = new Set();
+            chats.forEach((chat) => {
+                if (chat.latestMessage?.jobRequest?.job?.title) {
+                    jobNamesSet.add(chat.latestMessage.jobRequest.job.title);
+                }
+            });
+            return Array.from(jobNamesSet);
+        }
+    }, [chats, isOrganization, organizationJobs]);
 
     // Notify parent of filter changes
     useEffect(() => {
@@ -68,8 +109,8 @@ const MessageFilterDropdown = ({ isOpen, onFilterChange, chats = [] }) => {
                     />
                 </div>
 
-                {/* Organization Filter */}
-                {uniqueOrganizations.length > 0 && (
+                {/* Organization Filter - Only for individuals */}
+                {!isOrganization && uniqueOrganizations.length > 0 && (
                     <div className="flex items-center gap-2">
                         <FaBuilding color="#197FE5" size={16} />
                         <select
@@ -90,13 +131,18 @@ const MessageFilterDropdown = ({ isOpen, onFilterChange, chats = [] }) => {
                 {/* Job Name Filter */}
                 <div className="flex items-center gap-2">
                     <FaBriefcase color="#197FE5" size={16} />
-                    <input
-                        type="text"
-                        placeholder="Job Name"
-                        className="bg-transparent p-2 outline-none border-none text-white-base placeholder-white-base/50 min-w-[150px] text-sm"
+                    <select
+                        className="bg-transparent p-2 outline-none border-none text-white-base min-w-[150px] text-sm"
                         value={jobName}
                         onChange={(e) => setJobName(e.target.value)}
-                    />
+                    >
+                        <option value="">All Jobs</option>
+                        {uniqueJobNames.map((name, index) => (
+                            <option key={index} value={name}>
+                                {name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 {/* Proposal Status Filter */}

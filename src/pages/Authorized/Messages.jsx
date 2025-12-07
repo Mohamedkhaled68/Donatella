@@ -48,8 +48,8 @@ const Messages = () => {
         };
     }, [location.pathname]); // Run on route change
 
-    // Only show filters for individuals
-    const showFilters = userStatus?.role === "INDIVIDUAL";
+    // Show filters for both individuals and organizations
+    const showFilters = userStatus?.role === "INDIVIDUAL" || userStatus?.role === "ORGANIZATION";
 
     return (
         <section className="relative w-full h-screen flex justify-center">

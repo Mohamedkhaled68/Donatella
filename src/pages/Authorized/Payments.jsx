@@ -1,250 +1,70 @@
-import React, { useEffect, useState } from "react";
-import { Footer, JobCard, Rating } from "../../components";
+import { useEffect, useState } from "react";
+import { Footer } from "../../components";
 import { orgLogo } from "../../assets";
 import { HiMiniEye } from "react-icons/hi2";
 import { HiMiniEyeSlash } from "react-icons/hi2";
+import { FaBriefcase, FaCheckCircle, FaSearch } from "react-icons/fa";
+import { FaAngleDown } from "react-icons/fa6";
+import { motion } from "framer-motion";
 import useGetBalance from "../../hooks/payments/useGetBalance";
+import useGetJobHistory from "../../hooks/organization/useGetJobHistory";
+import JobDurationContainer from "../../components/shared/JobDurationContainer";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-const jobs = [
-    // {
-    //     name: "EMG Models",
-    //     location: "New York, USA",
-    //     description:
-    //         "Seeking a Talented Fashion Model for an Urban Photoshoot to Showcase Our Latest Collection",
-    //     rate: "$12/HR",
-    //     duration: "1-2 months",
-    //     tags: ["Fashion", "Photoshoot", "Model", "Urban"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-    // {
-    //     name: "United Models",
-    //     location: "Los Angeles, USA",
-    //     description:
-    //         "Looking for an Experienced Photographer to Capture the Magic of a Luxury Wedding Celebration",
-    //     rate: "$18/HR",
-    //     duration: "2-3 months",
-    //     tags: ["Wedding", "Photography", "Luxury", "Experience"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 4,
-    // },
-    // {
-    //     name: "Every Inch",
-    //     location: "San Francisco, USA",
-    //     description:
-    //         "Searching for a Creative Model to Bring Our Short Film Vision to Life with Stunning Visuals",
-    //     rate: "$10/HR",
-    //     duration: "1-2 weeks",
-    //     tags: ["Film", "Visuals", "Creativity", "Model"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-    // {
-    //     name: "Vibrant Vision",
-    //     location: "Seattle, USA",
-    //     description:
-    //         "Charismatic Fashion Model for a High-End Photoshoot of Our Exclusive Collection",
-    //     rate: "$20/HR",
-    //     duration: "3 months",
-    //     tags: ["Fashion", "Charisma", "Photoshoot", "High-End"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-    // {
-    //     name: "Capture Dreams",
-    //     location: "Chicago, USA",
-    //     description:
-    //         "Talented Photographer Wanted for a Large-Scale Corporate Event Coverage",
-    //     rate: "$25/HR",
-    //     duration: "2 weeks",
-    //     tags: ["Corporate", "Photography", "Event", "Professional"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 4,
-    // },
-    // {
-    //     name: "Visionary Shoots",
-    //     location: "Miami, USA",
-    //     description: "Lifestyle Photographer for a Casual Beach Photoshoot",
-    //     rate: "$15/HR",
-    //     duration: "1 week",
-    //     tags: ["Lifestyle", "Beach", "Photography", "Relaxed"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-    // {
-    //     name: "Starlight Studios",
-    //     location: "Austin, USA",
-    //     description:
-    //         "Seeking a Unique Model for Our Sci-Fi Inspired Magazine Cover Shoot",
-    //     rate: "$30/HR",
-    //     duration: "1-2 months",
-    //     tags: ["Sci-Fi", "Model", "Magazine", "Unique"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-    // {
-    //     name: "Eventful Moments",
-    //     location: "Boston, USA",
-    //     description:
-    //         "Energetic Photographer Needed for a Marathon Event Coverage",
-    //     rate: "$22/HR",
-    //     duration: "1 week",
-    //     tags: ["Event", "Marathon", "Photography", "Energy"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 4,
-    // },
-    // {
-    //     name: "Classic Capture",
-    //     location: "Dallas, USA",
-    //     description:
-    //         "Experienced Wedding Photographer to Document a Romantic Destination Wedding",
-    //     rate: "$28/HR",
-    //     duration: "1 month",
-    //     tags: ["Wedding", "Photography", "Romantic", "Destination"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-    // {
-    //     name: "Urban Edge",
-    //     location: "Houston, USA",
-    //     description: "Seeking a Male Model for an Edgy Urban Wear Campaign",
-    //     rate: "$18/HR",
-    //     duration: "2 months",
-    //     tags: ["Urban", "Male", "Model", "Fashion"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 4,
-    // },
-    // {
-    //     name: "Sunset Shoots",
-    //     location: "Phoenix, USA",
-    //     description: "Model Needed for a Golden Hour Beach Photoshoot",
-    //     rate: "$15/HR",
-    //     duration: "2 weeks",
-    //     tags: ["Beach", "Golden Hour", "Model", "Photography"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-    // {
-    //     name: "Timeless Tales",
-    //     location: "Orlando, USA",
-    //     description:
-    //         "Looking for an Artistic Photographer to Capture Timeless Moments",
-    //     rate: "$26/HR",
-    //     duration: "3 weeks",
-    //     tags: ["Artistic", "Photography", "Timeless", "Creativity"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 4,
-    // },
-    // {
-    //     name: "Fresh Frames",
-    //     location: "Denver, USA",
-    //     description: "Model Required for a High-Energy Athletic Wear Campaign",
-    //     rate: "$20/HR",
-    //     duration: "1 month",
-    //     tags: ["Athletic", "Energy", "Model", "Campaign"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-    // {
-    //     name: "Elegant Edits",
-    //     location: "Nashville, USA",
-    //     description: "Fashion Photographer Needed for a Runway Show Coverage",
-    //     rate: "$35/HR",
-    //     duration: "1 day",
-    //     tags: ["Runway", "Fashion", "Photography", "Professional"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-    // {
-    //     name: "Modern Muse",
-    //     location: "Portland, USA",
-    //     description:
-    //         "Creative Director and Photographer for a Lifestyle Brand Photoshoot",
-    //     rate: "$40/HR",
-    //     duration: "2 months",
-    //     tags: ["Creative", "Lifestyle", "Photography", "Director"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-    // {
-    //     name: "Golden Glimpse",
-    //     location: "Las Vegas, USA",
-    //     description:
-    //         "Experienced Event Photographer for a Grand Casino Night Event",
-    //     rate: "$30/HR",
-    //     duration: "2 days",
-    //     tags: ["Event", "Casino", "Photography", "Grand"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 4,
-    // },
-    // {
-    //     name: "Vivid Visions",
-    //     location: "San Diego, USA",
-    //     description:
-    //         "Talented Model Needed for a Vibrant Summerwear Collection",
-    //     rate: "$18/HR",
-    //     duration: "3 weeks",
-    //     tags: ["Summer", "Fashion", "Model", "Vibrant"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-    // {
-    //     name: "Prime Pixels",
-    //     location: "Charlotte, USA",
-    //     description:
-    //         "Creative Photographer Required for a Product Photography Session",
-    //     rate: "$25/HR",
-    //     duration: "1 week",
-    //     tags: ["Product", "Photography", "Creative", "Session"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-    // {
-    //     name: "Studio Solace",
-    //     location: "San Jose, USA",
-    //     description:
-    //         "Photographer Needed for a Cozy Indoor Lifestyle Photoshoot",
-    //     rate: "$22/HR",
-    //     duration: "1 month",
-    //     tags: ["Lifestyle", "Cozy", "Photography", "Indoor"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 4,
-    // },
-    // {
-    //     name: "Cinematic Frames",
-    //     location: "Atlanta, USA",
-    //     description: "Lead Photographer for a Cinematic Short Film Project",
-    //     rate: "$50/HR",
-    //     duration: "2-3 months",
-    //     tags: ["Cinematic", "Film", "Photography", "Lead"],
-    //     logo: "https://via.placeholder.com/50",
-    //     rating: 5,
-    // },
-];
 
 const PAGE_SIZE = 10;
 
+const filterAnimationVariants = {
+    open: { height: "auto" },
+    closed: { height: 0 },
+    up: { rotate: "180deg" },
+    down: { rotate: 0 },
+};
+
+const jobStatusOptions = [
+    { value: "", label: "All Statuses" },
+    { value: "OPEN", label: "Open" },
+    { value: "CLOSED", label: "Closed" },
+    { value: "ACCEPTED", label: "Accepted" },
+    { value: "FINISHED", label: "Finished" },
+];
+
 const Payments = () => {
+    const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [balance, setBalance] = useState(true);
     const [deposit, setDeposit] = useState(true);
     const [withdraw, setWithdraw] = useState(true);
+    const [jobHistory, setJobHistory] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [openFilter, setOpenFilter] = useState(false);
+    const [filters, setFilters] = useState({});
     const { mutateAsync: getBalance } = useGetBalance();
+    const { mutateAsync: getJobHistory } = useGetJobHistory();
 
-    // Calculate the jobs to display for the current page
-    const startIndex = (currentPage - 1) * PAGE_SIZE;
-    const endIndex = startIndex + PAGE_SIZE;
-    const currentJobs = jobs.length !== 0 && jobs.slice(startIndex, endIndex);
+    const getJobStatusColor = (status) => {
+        switch (status) {
+            case "OPEN":
+                return "bg-green-500/20 text-green-400 border-green-500/50";
+            case "CLOSED":
+                return "bg-gray-500/20 text-gray-400 border-gray-500/50";
+            case "ACCEPTED":
+                return "bg-blue-500/20 text-blue-400 border-blue-500/50";
+            case "FINISHED":
+                return "bg-purple-500/20 text-purple-400 border-purple-500/50";
+            default:
+                return "bg-gray-500/20 text-gray-400 border-gray-500/50";
+        }
+    };
 
-    const totalPages = Math.ceil(jobs.length / PAGE_SIZE);
-
-    const hideBalance = () => {
-        setBalance(!balance);
+    const formatJobStatus = (status) => {
+        if (!status) return "Unknown";
+        return status.charAt(0) + status.slice(1).toLowerCase();
     };
 
     const handleNextPage = () => {
-        if (currentPage < totalPages) {
+        if (jobHistory?.pageInfo?.hasNext) {
             setCurrentPage((prev) => prev + 1);
         }
     };
@@ -260,9 +80,29 @@ const Payments = () => {
         console.log(balanceData);
     };
 
+    const fetchJobHistory = async () => {
+        try {
+            setLoading(true);
+            const data = await getJobHistory({ 
+                page: currentPage, 
+                limit: PAGE_SIZE,
+                filters 
+            });
+            setJobHistory(data);
+        } catch (error) {
+            toast.error(error?.message || "Failed to fetch job history");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         getUserBalance();
     }, []);
+
+    useEffect(() => {
+        fetchJobHistory();
+    }, [currentPage, filters]);
 
     return (
         <>
@@ -354,81 +194,166 @@ const Payments = () => {
                     </div>
                 </div>
 
-                {/* Button */}
-
                 {/* Job History Section */}
                 <div className="space-y-6">
-                    <h1 className="text-[38px] font-bold font-display mb-5">
-                        Job History
-                    </h1>
-                    {currentJobs ? (
-                        currentJobs.map((job, idx) => (
-                            <div
-                                key={idx}
-                                className="flex items-center bg-[#313131] text-white border-thin border-white-base rounded-lg p-6 gap-5 space-x-4 shadow-lg "
-                            >
-                                <div className="flex flex-col justify-center items-center gap-2">
-                                    <img
-                                        src={orgLogo}
-                                        alt={`${job.name} logo`}
-                                        className="w-[120px] h-[120px] rounded-full"
-                                    />
-                                    <Rating size={15} rating={job.rating} />
-                                </div>
-                                <div className="flex-1 grow">
-                                    <h3 className="font-bold border-b border-white-base/10 pb-3 w-[50%]">
-                                        <span className="text-white-base text-md font-bold font-display capitalize">
-                                            {job.name}{" "}
-                                        </span>
-                                        <span className="text-sm text-gray-400">
-                                            - {job.location}
-                                        </span>
-                                    </h3>
-                                    <p className="text-[22px] font-bold text-white-base w-[80%] mt-2">
-                                        {job.description}
-                                    </p>
-                                    <div className="flex flex-wrap gap-2 mt-3">
-                                        {job.tags.map((tag, index) => (
+                    <div className="flex items-center justify-between mb-5">
+                        <h1 className="text-[38px] font-bold font-display">
+                            Job History
+                        </h1>
+                        <div
+                            onClick={() => setOpenFilter((prev) => !prev)}
+                            className="px-4 cursor-pointer py-2 flex items-center gap-3 border-thin border-white-base text-white-base rounded-lg"
+                        >
+                            <FaBriefcase size={20} className="text-white-base" />
+                            <div className="flex items-center justify-between gap-[5px]">
+                                <p>Filters</p>
+                                <motion.div
+                                    initial="down"
+                                    animate={openFilter ? "up" : "down"}
+                                    variants={filterAnimationVariants}
+                                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                                    className="flex justify-center items-center"
+                                >
+                                    <FaAngleDown />
+                                </motion.div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Filter Dropdown */}
+                    <motion.div
+                        initial="closed"
+                        animate={openFilter ? "open" : "closed"}
+                        variants={filterAnimationVariants}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden mb-4"
+                    >
+                        <div className="w-full rounded-lg bg-[#27292C] flex flex-wrap justify-between items-center gap-4 px-4 py-3">
+                            {/* Job Name Filter */}
+                            <div className="flex items-center gap-2">
+                                <FaSearch color="#197FE5" size={16} />
+                                <input
+                                    type="text"
+                                    placeholder="Search by job name..."
+                                    className="bg-transparent p-2 outline-none border-none text-white-base min-w-[200px] text-sm placeholder-gray-400"
+                                    value={filters.jobName || ""}
+                                    onChange={(e) => {
+                                        setFilters((prev) => ({
+                                            ...prev,
+                                            jobName: e.target.value || undefined,
+                                        }));
+                                        setCurrentPage(1); // Reset to first page when filter changes
+                                    }}
+                                />
+                            </div>
+
+                            {/* Job Status Filter */}
+                            <div className="flex items-center gap-2">
+                                <FaCheckCircle color="#197FE5" size={16} />
+                                <select
+                                    className="bg-transparent p-2 outline-none border-none text-white-base min-w-[200px] text-sm"
+                                    value={filters.jobStatus || ""}
+                                    onChange={(e) => {
+                                        setFilters((prev) => ({
+                                            ...prev,
+                                            jobStatus: e.target.value || undefined,
+                                        }));
+                                        setCurrentPage(1); // Reset to first page when filter changes
+                                    }}
+                                >
+                                    {jobStatusOptions.map((option) => (
+                                        <option key={option.value} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    </motion.div>
+                    {loading ? (
+                        <div className="flex items-center justify-center text-[#fcfcfcbf] rounded-lg p-6 gap-5 space-x-4 font-display text-[20px]">
+                            Loading job history...
+                        </div>
+                    ) : jobHistory?.items && jobHistory.items.length > 0 ? (
+                        <>
+                            {jobHistory.items.map((job) => (
+                                <div
+                                    key={job.id}
+                                    className="flex items-center bg-[#313131] text-white border-thin border-white-base rounded-lg p-6 gap-5 space-x-4 shadow-lg"
+                                >
+                                    <div className="flex flex-col justify-center items-center gap-2">
+                                        <img
+                                            src={job.organization?.logo || orgLogo}
+                                            alt={`${job.organization?.name || "Organization"} logo`}
+                                            className="w-[120px] h-[120px] rounded-full object-cover"
+                                        />
+                                    </div>
+                                    <div className="flex-1 grow">
+                                        <div className="flex items-center justify-between mb-2">
+                                            <h3 className="font-bold border-b border-white-base/10 pb-3 w-[50%]">
+                                                <span className="text-white-base text-md font-bold font-display capitalize">
+                                                    {job.title}
+                                                </span>
+                                                <span className="text-sm text-gray-400 ml-2">
+                                                    - {job.location}
+                                                </span>
+                                            </h3>
                                             <span
-                                                key={index}
-                                                className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full"
+                                                className={`px-3 py-1 rounded-full text-xs font-semibold border ${getJobStatusColor(
+                                                    job.jobStatus
+                                                )}`}
                                             >
-                                                {tag}
+                                                {formatJobStatus(job.jobStatus)}
                                             </span>
-                                        ))}
+                                        </div>
+                                        <div className="flex flex-wrap gap-2 mt-3">
+                                            {job.tags && job.tags.length > 0 ? (
+                                                job.tags.map((tag, index) => (
+                                                    <span
+                                                        key={index}
+                                                        className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full"
+                                                    >
+                                                        {tag}
+                                                    </span>
+                                                ))
+                                            ) : null}
+                                        </div>
+                                        <div className="flex items-center gap-4 mt-3">
+                                            <p className="text-sm text-gray-400">
+                                                Salary: ${job.salary}/hr
+                                            </p>
+                                            {job.jobDuration && (
+                                                <p className="text-sm text-gray-400">
+                                                    Duration: <JobDurationContainer job={job} />
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col justify-center items-center gap-3">
+                                        <button
+                                            onClick={() => navigate(`/explore/jobs/${job.id}`)}
+                                            className="bg-blue-primary hover:bg-blue-600 duration-200 text-white py-3 px-[60px] rounded-[46px] text-md font-bold"
+                                        >
+                                            View Job
+                                        </button>
                                     </div>
                                 </div>
-
-                                <div className="flex flex-col justify-center items-center gap-3">
-                                    <p className="text-[20px] font-bold">{`${job.rate}`}</p>
-                                    <p className="text-sm text-gray-400 capitalize">
-                                        {job.duration}
-                                    </p>
-                                    <button
-                                        // onClick={handleNavigateToJob}
-                                        className="bg-blue-primary hover:bg-blue-600 duration-200 text-white py-3 px-[60px] rounded-[46px] text-md font-bold"
-                                    >
-                                        View Job
-                                    </button>
-                                </div>
-                            </div>
-                        ))
-                    ) : (
-                        <>
-                            <div className="flex items-center justify-center text-[#fcfcfcbf] rounded-lg p-6 gap-5 space-x-4 font-display text-[20px]">
-                                Any jobs you finish in the future will show
-                                up in here.
-                            </div>
+                            ))}
                         </>
+                    ) : (
+                        <div className="flex items-center justify-center text-[#fcfcfcbf] rounded-lg p-6 gap-5 space-x-4 font-display text-[20px]">
+                            Any jobs you publish in the future will show up in here.
+                        </div>
                     )}
                 </div>
-                {currentJobs && (
+                {jobHistory?.pageInfo && (
                     <div className="mt-4 flex justify-between items-center">
                         <button
                             onClick={handlePreviousPage}
-                            disabled={currentPage === 1}
+                            disabled={!jobHistory.pageInfo.hasBefore || loading}
                             className={`px-4 py-2 rounded ${
-                                currentPage === 1
+                                !jobHistory.pageInfo.hasBefore || loading
                                     ? "bg-gray-600 cursor-not-allowed"
                                     : "bg-blue-600 hover:bg-blue-700"
                             } text-white`}
@@ -436,13 +361,14 @@ const Payments = () => {
                             Previous
                         </button>
                         <p className="text-sm text-gray-400">
-                            Page {currentPage} of {totalPages}
+                            Page {jobHistory.pageInfo.page} of{" "}
+                            {Math.ceil(jobHistory.pageInfo.totalCount / jobHistory.pageInfo.limit)}
                         </p>
                         <button
                             onClick={handleNextPage}
-                            disabled={currentPage === totalPages}
+                            disabled={!jobHistory.pageInfo.hasNext || loading}
                             className={`px-4 py-2 rounded ${
-                                currentPage === totalPages
+                                !jobHistory.pageInfo.hasNext || loading
                                     ? "bg-gray-600 cursor-not-allowed"
                                     : "bg-blue-600 hover:bg-blue-700"
                             } text-white`}

@@ -18,6 +18,7 @@ import useGetJobRequestsNumber from "../../hooks/jobs/useGetJobRequestsNumber";
 import { useModal } from "../../store/useModal";
 import { IoIosCopy } from "react-icons/io";
 import { MdOutlineAlternateEmail } from "react-icons/md";
+import { useUserStore } from "../../store/userStore";
 
 const levels = [
     { value: "ENTRY_LEVEL", text: "Entry Level" },
@@ -202,6 +203,10 @@ const JobView = () => {
     const [reqNumber, SetReqNumber] = useState(0);
     const [requirements, SetRequirements] = useState(null);
     const { setModal } = useModal((state) => state);
+    const { userStatus } = useUserStore((state) => state);
+    
+    // Check if user is an individual (only individuals can apply for jobs)
+    const isIndividual = userStatus?.role === "INDIVIDUAL";
 
     const { mutateAsync: getJob } = useGetJob();
     const { mutateAsync: getJobRequests } = useGetJobRequestsNumber();
@@ -214,7 +219,30 @@ const JobView = () => {
                 console.log(data);
 
                 setCurrentJob(data);
-                SetRequirements(JSON.parse(data?.requirements));
+                
+                // Safely parse requirements
+                if (data?.requirements) {
+                    try {
+                        const parsed = typeof data.requirements === 'string' 
+                            ? JSON.parse(data.requirements) 
+                            : data.requirements;
+                        
+                        // Ensure it's an array
+                        if (Array.isArray(parsed)) {
+                            SetRequirements(parsed);
+                        } else {
+                            // If it's not an array, convert to array format or set empty array
+                            SetRequirements([]);
+                        }
+                    } catch (parseError) {
+                        // If parsing fails, set empty array
+                        console.error('Failed to parse requirements:', parseError);
+                        SetRequirements([]);
+                    }
+                } else {
+                    SetRequirements([]);
+                }
+                
                 SetReqNumber(reqNumberData?.count);
             } catch (err) {
                 toast.error(
@@ -322,7 +350,7 @@ const JobView = () => {
                                         <FaEnvelope size={25} />
                                     </div>
                                 </div>
-                                {currentJob?.jobStatus === "OPEN" ? (
+                                {currentJob?.jobStatus === "OPEN" && isIndividual ? (
                                     <button
                                         onClick={() =>
                                             setModal(
@@ -336,6 +364,14 @@ const JobView = () => {
                                         className="text-lg font-bold font-body text-center w-full rounded-[46px] bg-blue-primary px-[73px] py-[15px]"
                                     >
                                         Apply For Job
+                                    </button>
+                                ) : currentJob?.jobStatus === "OPEN" && !isIndividual ? (
+                                    <button
+                                        type="button"
+                                        disabled
+                                        className="text-lg font-bold font-body text-center w-full rounded-[46px] bg-gray-600 px-[73px] py-[15px] cursor-not-allowed"
+                                    >
+                                        Only Individuals Can Apply
                                     </button>
                                 ) : (
                                     <button
@@ -512,12 +548,15 @@ const JobView = () => {
                                         Job Requirements
                                     </h2>
                                     <ul className="list-disc pl-5 space-y-2 text-sm text-gray-300">
-                                        {requirements &&
-                                            requirements.map((requirement) => (
-                                                <li key={requirement.id}>
-                                                    {requirement.content}
+                                        {requirements && Array.isArray(requirements) && requirements.length > 0 ? (
+                                            requirements.map((requirement, index) => (
+                                                <li key={requirement.id || index}>
+                                                    {requirement.content || requirement}
                                                 </li>
-                                            ))}
+                                            ))
+                                        ) : (
+                                            <li className="text-gray-500">No requirements specified</li>
+                                        )}
                                     </ul>
                                 </div>
                             </div>
