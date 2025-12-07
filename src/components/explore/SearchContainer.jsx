@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import CustomSelect from "./CustomSelect";
@@ -18,12 +18,9 @@ const SearchContainer = ({
     cateSwitch,
     setCateSwitch,
 }) => {
-    useEffect(() => {
-        if (cateSwitch === "jobs") setIsOpent(false);
-    }, [cateSwitch]);
     return (
         <div className="w-full rounded-3xl bg-[#27292C] grid grid-cols-7 gap-[55px] px-[30px] py-4">
-            {cateSwitch === "profiles" && (
+            {(cateSwitch === "profiles" || cateSwitch === "jobs") && (
                 <div
                     onClick={() => setIsOpent((prev) => !prev)}
                     className="px-2 cursor-pointer col-span-1 py-3 flex itmes-center gap-3  items-center border-thin border-white-base text-white-base rounded-lg"
@@ -52,9 +49,9 @@ const SearchContainer = ({
 
             <input
                 className={`grow px-[62px] py-2 text-center ${
-                    cateSwitch !== "profiles" && "lg:col-span-5"
+                    (cateSwitch !== "profiles" && cateSwitch !== "jobs") && "lg:col-span-5"
                 } col-span-4 placeholder:text-white-base/50 placeholder:text-sm placeholder:font-light bg-[#323335] rounded-2xl outline-none border-thin border-black text-white-base`}
-                placeholder="Search for a model you want to hire"
+                placeholder={cateSwitch === "jobs" ? "Search for jobs" : "Search for a model you want to hire"}
                 type="text"
                 onChange={(e) => onSearch(e.target.value)}
             />

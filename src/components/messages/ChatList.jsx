@@ -4,7 +4,7 @@ import TextExpander from "../shared/TextExpander";
 import useGetMessages from "../../hooks/chat/useGetMessages";
 import toast from "react-hot-toast";
 
-const ChatList = ({ currentChat, setCurrentChat }) => {
+const ChatList = ({ currentChat, setCurrentChat, filters = {}, onChatsUpdate }) => {
     const [messagesList, setMessagesList] = useState([]);
     const { mutateAsync: getMessages } = useGetMessages();
 
@@ -20,8 +20,11 @@ const ChatList = ({ currentChat, setCurrentChat }) => {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const data = await getMessages();
+                const data = await getMessages(filters);
                 setMessagesList([...data.items]);
+                if (onChatsUpdate) {
+                    onChatsUpdate(data.items);
+                }
             } catch (err) {
                 toast.error(err?.response?.data?.message);
             }
@@ -37,7 +40,7 @@ const ChatList = ({ currentChat, setCurrentChat }) => {
         return () => {
             clearInterval(intervalId);
         };
-    }, []);
+    }, [filters, onChatsUpdate]);
 
     if (isEmpty) {
         return (
@@ -92,10 +95,29 @@ const ChatList = ({ currentChat, setCurrentChat }) => {
                             )}
                         </div>
                         <div className="flex justify-between items-center w-full">
-                            <div className="flex flex-col">
-                                <h2 className="text-white-base font-display text-[20px] font-semibold">
-                                    {chat?.friend?.name || "Unknown User"}
-                                </h2>
+                            <div className="flex flex-col flex-1">
+                                <div className="flex items-center gap-2">
+                                    <h2 className="text-white-base font-display text-[20px] font-semibold">
+                                        {chat?.friend?.name || "Unknown User"}
+                                    </h2>
+                                    {chat?.latestMessage?.jobRequest?.requestStatus && (
+                                        <span
+                                            className={`text-xs font-semibold px-2 py-0.5 rounded-full border capitalize ${
+                                                chat.latestMessage.jobRequest.requestStatus === "PENDING"
+                                                    ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/50"
+                                                    : chat.latestMessage.jobRequest.requestStatus === "APPROVED"
+                                                    ? "bg-green-500/20 text-green-400 border-green-500/50"
+                                                    : chat.latestMessage.jobRequest.requestStatus === "REJECTED"
+                                                    ? "bg-red-500/20 text-red-400 border-red-500/50"
+                                                    : chat.latestMessage.jobRequest.requestStatus === "FINISHED"
+                                                    ? "bg-blue-500/20 text-blue-400 border-blue-500/50"
+                                                    : "bg-gray-500/20 text-gray-400 border-gray-500/50"
+                                            }`}
+                                        >
+                                            {chat.latestMessage.jobRequest.requestStatus.toLowerCase()}
+                                        </span>
+                                    )}
+                                </div>
                                 {chat?.latestMessage?.content && (
                                     <p className="text-white-base/70 font-body text-sm font-extralight truncate max-w-[200px]">
                                         <TextExpander

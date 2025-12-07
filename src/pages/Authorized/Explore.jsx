@@ -12,6 +12,7 @@ import { useUserStore } from "../../store/userStore";
 import useGetIndividuals from "../../hooks/explore/useGetIndividuals";
 import useGetJobs from "../../hooks/explore/useGetJobs";
 import toast from "react-hot-toast";
+import JobFilterDropdown from "../../components/explore/JobFilterDropdown";
 
 const Explore = () => {
     const [filter, setFilter] = useState("MODEL");
@@ -21,6 +22,7 @@ const Explore = () => {
     const [openFilter, setOpenFilter] = useState(false);
     const [loading, setLoading] = useState(false);
     const [filterValues, setFilterValues] = useState({});
+    const [jobFilters, setJobFilters] = useState({});
     const { userStatus } = useUserStore((state) => state);
     const { mutateAsync: getIndividuals } = useGetIndividuals();
     const { mutateAsync: getJobs } = useGetJobs();
@@ -33,6 +35,22 @@ const Explore = () => {
         }));
     };
 
+    // Handle job filter changes - only update if values actually changed
+    const handleJobFilterChange = React.useCallback((filters) => {
+        setJobFilters((prev) => {
+            // Only update if filters actually changed
+            if (
+                prev.organizationId !== filters.organizationId ||
+                prev.jobName !== filters.jobName ||
+                prev.proposalStatus !== filters.proposalStatus ||
+                prev.jobStatus !== filters.jobStatus
+            ) {
+                return filters;
+            }
+            return prev;
+        });
+    }, []);
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -42,6 +60,7 @@ const Explore = () => {
                         const jobsData = await getJobs([
                             filter,
                             searchTerm.trim(),
+                            jobFilters,
                         ]);
                         let filteredJobs = jobsData.items;
 
@@ -78,7 +97,8 @@ const Explore = () => {
         };
 
         fetchData();
-    }, [filter, searchTerm, filterValues, cateSwitch]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filter, searchTerm, filterValues, jobFilters, cateSwitch]);
 
     useEffect(() => {
         if (userStatus.role === "INDIVIDUAL") {
@@ -107,10 +127,18 @@ const Explore = () => {
                         />
                     </div>
 
-                    <FilterDropdown
-                        isOpen={openFilter}
-                        onFilterChange={handleAdvancedFilterChange}
-                    />
+                    {cateSwitch === "jobs" ? (
+                        <JobFilterDropdown
+                            isOpen={openFilter}
+                            onFilterChange={handleJobFilterChange}
+                            jobs={data}
+                        />
+                    ) : (
+                        <FilterDropdown
+                            isOpen={openFilter}
+                            onFilterChange={handleAdvancedFilterChange}
+                        />
+                    )}
 
                     {loading && (
                         <div className="w-full h-full py-20 flex justify-center items-center">

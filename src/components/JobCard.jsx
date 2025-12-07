@@ -4,13 +4,28 @@ import { useNavigate } from "react-router-dom";
 import JobDurationContainer from "./shared/JobDurationContainer";
 
 const JobCard = ({ job }) => {
-    const { organization, tags, id, jobDuration, location, title, salary } =
+    const { organization, tags, id, jobDuration, location, title, salary, proposalStatus } =
         job;
 
     const navigate = useNavigate();
 
     const handleNavigateToJob = () => {
         navigate(`/explore/jobs/${id}`);
+    };
+
+    const getProposalStatusColor = (status) => {
+        switch (status) {
+            case "PENDING":
+                return "bg-yellow-500/20 text-yellow-400 border-yellow-500/50";
+            case "APPROVED":
+                return "bg-green-500/20 text-green-400 border-green-500/50";
+            case "REJECTED":
+                return "bg-red-500/20 text-red-400 border-red-500/50";
+            case "FINISHED":
+                return "bg-blue-500/20 text-blue-400 border-blue-500/50";
+            default:
+                return "bg-gray-500/20 text-gray-400 border-gray-500/50";
+        }
     };
 
     return (
@@ -24,14 +39,25 @@ const JobCard = ({ job }) => {
                     />
                 </div>
                 <div className="flex-1 grow">
-                    <h3 className="font-bold border-b border-white-base/10 pb-3 w-[50%]">
-                        <span className="text-white-base text-md font-bold font-display capitalize">
-                            {organization?.name}{" "}
-                        </span>
-                        <span className="text-sm text-gray-400">
-                            - {location}
-                        </span>
-                    </h3>
+                    <div className="flex items-center justify-between w-[50%] pb-3 border-b border-white-base/10">
+                        <h3 className="font-bold">
+                            <span className="text-white-base text-md font-bold font-display capitalize">
+                                {organization?.name}{" "}
+                            </span>
+                            <span className="text-sm text-gray-400">
+                                - {location}
+                            </span>
+                        </h3>
+                        {proposalStatus && (
+                            <span
+                                className={`text-xs font-semibold px-3 py-1 rounded-full border capitalize ${getProposalStatusColor(
+                                    proposalStatus
+                                )}`}
+                            >
+                                {proposalStatus.toLowerCase()}
+                            </span>
+                        )}
+                    </div>
                     <p className="text-[22px] font-bold text-white-base w-[80%] mt-2">
                         {title}
                     </p>

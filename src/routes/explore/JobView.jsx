@@ -353,9 +353,28 @@ const JobView = () => {
                             <div className="grid grid-cols-5 gap-6">
                                 {/* Details */}
                                 <div className="p-6 col-span-2 bg-[#313131] rounded-lg border-2 border-white/15">
-                                    <h2 className="text-xl font-bold mb-2">
-                                        Details
-                                    </h2>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <h2 className="text-xl font-bold">
+                                            Details
+                                        </h2>
+                                        {currentJob?.proposalStatus && (
+                                            <span
+                                                className={`text-xs font-semibold px-3 py-1 rounded-full border capitalize ${
+                                                    currentJob.proposalStatus === "PENDING"
+                                                        ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/50"
+                                                        : currentJob.proposalStatus === "APPROVED"
+                                                        ? "bg-green-500/20 text-green-400 border-green-500/50"
+                                                        : currentJob.proposalStatus === "REJECTED"
+                                                        ? "bg-red-500/20 text-red-400 border-red-500/50"
+                                                        : currentJob.proposalStatus === "FINISHED"
+                                                        ? "bg-blue-500/20 text-blue-400 border-blue-500/50"
+                                                        : "bg-gray-500/20 text-gray-400 border-gray-500/50"
+                                                }`}
+                                            >
+                                                {currentJob.proposalStatus.toLowerCase()}
+                                            </span>
+                                        )}
+                                    </div>
                                     <p className="text-lg">
                                         {currentJob?.title}
                                     </p>
