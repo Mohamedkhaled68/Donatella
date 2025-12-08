@@ -8,6 +8,8 @@ import { FaAngleDown } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import useGetBalance from "../../hooks/payments/useGetBalance";
 import useGetJobHistory from "../../hooks/organization/useGetJobHistory";
+import useGetIndividualJobHistory from "../../hooks/individual/useGetIndividualJobHistory";
+import { useUserStore } from "../../store/userStore";
 import JobDurationContainer from "../../components/shared/JobDurationContainer";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -30,8 +32,20 @@ const jobStatusOptions = [
     { value: "FINISHED", label: "Finished" },
 ];
 
+const proposalStatusOptions = [
+    { value: "", label: "All Statuses" },
+    { value: "PENDING", label: "Pending" },
+    { value: "APPROVED", label: "Approved" },
+    { value: "REJECTED", label: "Rejected" },
+    { value: "FINISHED", label: "Finished" },
+];
+
 const Payments = () => {
     const navigate = useNavigate();
+    const { userStatus } = useUserStore((state) => state);
+    const isIndividual = userStatus?.role === "INDIVIDUAL";
+    const isOrganization = userStatus?.role === "ORGANIZATION";
+    
     const [currentPage, setCurrentPage] = useState(1);
     const [balance, setBalance] = useState(true);
     const [deposit, setDeposit] = useState(true);
@@ -42,6 +56,7 @@ const Payments = () => {
     const [filters, setFilters] = useState({});
     const { mutateAsync: getBalance } = useGetBalance();
     const { mutateAsync: getJobHistory } = useGetJobHistory();
+    const { mutateAsync: getIndividualJobHistory } = useGetIndividualJobHistory();
 
     const getJobStatusColor = (status) => {
         switch (status) {
@@ -58,7 +73,27 @@ const Payments = () => {
         }
     };
 
+    const getProposalStatusColor = (status) => {
+        switch (status) {
+            case "PENDING":
+                return "bg-yellow-500/20 text-yellow-400 border-yellow-500/50";
+            case "APPROVED":
+                return "bg-green-500/20 text-green-400 border-green-500/50";
+            case "REJECTED":
+                return "bg-red-500/20 text-red-400 border-red-500/50";
+            case "FINISHED":
+                return "bg-purple-500/20 text-purple-400 border-purple-500/50";
+            default:
+                return "bg-gray-500/20 text-gray-400 border-gray-500/50";
+        }
+    };
+
     const formatJobStatus = (status) => {
+        if (!status) return "Unknown";
+        return status.charAt(0) + status.slice(1).toLowerCase();
+    };
+
+    const formatProposalStatus = (status) => {
         if (!status) return "Unknown";
         return status.charAt(0) + status.slice(1).toLowerCase();
     };
@@ -83,7 +118,8 @@ const Payments = () => {
     const fetchJobHistory = async () => {
         try {
             setLoading(true);
-            const data = await getJobHistory({ 
+            const hookToUse = isIndividual ? getIndividualJobHistory : getJobHistory;
+            const data = await hookToUse({ 
                 page: currentPage, 
                 limit: PAGE_SIZE,
                 filters 
@@ -247,21 +283,30 @@ const Payments = () => {
                                 />
                             </div>
 
-                            {/* Job Status Filter */}
+                            {/* Status Filter - Job Status for Organizations, Proposal Status for Individuals */}
                             <div className="flex items-center gap-2">
                                 <FaCheckCircle color="#197FE5" size={16} />
                                 <select
                                     className="bg-transparent p-2 outline-none border-none text-white-base min-w-[200px] text-sm"
-                                    value={filters.jobStatus || ""}
+                                    value={isIndividual ? (filters.proposalStatus || "") : (filters.jobStatus || "")}
                                     onChange={(e) => {
-                                        setFilters((prev) => ({
-                                            ...prev,
-                                            jobStatus: e.target.value || undefined,
-                                        }));
+                                        if (isIndividual) {
+                                            setFilters((prev) => ({
+                                                ...prev,
+                                                proposalStatus: e.target.value || undefined,
+                                                jobStatus: undefined, // Clear jobStatus if it exists
+                                            }));
+                                        } else {
+                                            setFilters((prev) => ({
+                                                ...prev,
+                                                jobStatus: e.target.value || undefined,
+                                                proposalStatus: undefined, // Clear proposalStatus if it exists
+                                            }));
+                                        }
                                         setCurrentPage(1); // Reset to first page when filter changes
                                     }}
                                 >
-                                    {jobStatusOptions.map((option) => (
+                                    {(isIndividual ? proposalStatusOptions : jobStatusOptions).map((option) => (
                                         <option key={option.value} value={option.value}>
                                             {option.label}
                                         </option>
@@ -299,11 +344,16 @@ const Payments = () => {
                                                 </span>
                                             </h3>
                                             <span
-                                                className={`px-3 py-1 rounded-full text-xs font-semibold border ${getJobStatusColor(
-                                                    job.jobStatus
-                                                )}`}
+                                                className={`px-3 py-1 rounded-full text-xs font-semibold border ${
+                                                    isIndividual 
+                                                        ? getProposalStatusColor(job.proposalStatus)
+                                                        : getJobStatusColor(job.jobStatus)
+                                                }`}
                                             >
-                                                {formatJobStatus(job.jobStatus)}
+                                                {isIndividual 
+                                                    ? formatProposalStatus(job.proposalStatus)
+                                                    : formatJobStatus(job.jobStatus)
+                                                }
                                             </span>
                                         </div>
                                         <div className="flex flex-wrap gap-2 mt-3">
@@ -320,7 +370,9 @@ const Payments = () => {
                                         </div>
                                         <div className="flex items-center gap-4 mt-3">
                                             <p className="text-sm text-gray-400">
-                                                Salary: ${job.salary}/hr
+                                                {job.salary 
+                                                    ? `Salary: $${job.salary}/hr` 
+                                                    : "Cost: Negotiable"}
                                             </p>
                                             {job.jobDuration && (
                                                 <p className="text-sm text-gray-400">
@@ -343,7 +395,10 @@ const Payments = () => {
                         </>
                     ) : (
                         <div className="flex items-center justify-center text-[#fcfcfcbf] rounded-lg p-6 gap-5 space-x-4 font-display text-[20px]">
-                            Any jobs you publish in the future will show up in here.
+                            {isIndividual 
+                                ? "Any jobs you apply to in the future will show up in here."
+                                : "Any jobs you publish in the future will show up in here."
+                            }
                         </div>
                     )}
                 </div>

@@ -8,14 +8,16 @@ const useSendMessage = () => {
 
     return useMutation({
         mutationKey: ["chat", "send"],
-        mutationFn: async ({ chatId, message, messageType, jobId }) => {
+        mutationFn: async ({ chatId, message, messageType, jobId, proposedCost }) => {
             // if (!token) throw new Error("Unauthorized: No token found.");
 
             let body = { content: message };
 
             if (messageType === "REQUEST" && jobId) {
-                body = { ...body, jobId, messageType }
-                
+                body = { ...body, jobId, messageType };
+                if (proposedCost) {
+                    body.proposedCost = proposedCost;
+                }
             }
 
 

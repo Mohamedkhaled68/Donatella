@@ -91,7 +91,11 @@ const Message = ({
                                 New Contract:
                             </h1>
                             <p>
-                                {jobRequest?.job?.salary}/HR -{" "}
+                                {jobRequest?.job?.salary 
+                                    ? `${jobRequest?.job?.salary}/HR` 
+                                    : jobRequest?.proposedCost 
+                                        ? `$${jobRequest?.proposedCost} (Proposed)` 
+                                        : "Cost to be negotiated"} -{" "}
                                 {getCountryByCode(jobRequest?.job?.location)} -{" "}
                                 {jobRequest?.job?.jobDuration?.minimum} ~{" "}
                                 {jobRequest?.job?.jobDuration?.maximum}{" "}

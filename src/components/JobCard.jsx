@@ -73,7 +73,9 @@ const JobCard = ({ job }) => {
                     </div>
                 </div>
                 <div className="flex flex-col justify-center items-center gap-3">
-                    <p className="text-[20px] font-bold">{`${salary}$`}</p>
+                    <p className="text-[20px] font-bold">
+                        {salary ? `${salary}$` : "Negotiable"}
+                    </p>
                     <p className="text-sm text-gray-400 capitalize">
                         <JobDurationContainer job={job} />
                     </p>

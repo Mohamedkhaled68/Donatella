@@ -184,6 +184,7 @@ const PostJob = () => {
     const [disabled, setDisabled] = useState(true);
     const [check, setCheck] = useState(false);
     const [inputWindow, setInputWindow] = useState({ status: false, type: "" });
+    const [noFixedSalary, setNoFixedSalary] = useState(false);
 
     const navigate = useNavigate();
     const { userStatus } = useUserStore((state) => state);
@@ -267,11 +268,13 @@ const PostJob = () => {
                 return;
             }
 
-            console.log({ ...formValues, tags: selectedTags });
-            await mutateAsync({
-                ...formValues,
-                tags: selectedTags,
-            });
+            const submitData = { ...formValues, tags: selectedTags };
+            // If no fixed salary is selected, don't send salary field
+            if (noFixedSalary) {
+                delete submitData.salary;
+            }
+            console.log(submitData);
+            await mutateAsync(submitData);
             setFormValues(initialJobPostFormValues);
             setSelectedTags([]);
             toast.success("Job posted successfully");
@@ -304,22 +307,27 @@ const PostJob = () => {
     }, []);
 
     useEffect(() => {
-        const isFilled = Object.values(formValues).every(
-            (value) => value !== "" && value !== 0
-        );
+        const isFilled = Object.entries(formValues).every(([key, value]) => {
+            // Skip salary validation if noFixedSalary is true
+            if (key === "salary" && noFixedSalary) {
+                return true;
+            }
+            return value !== "" && value !== 0;
+        });
         if (
             isFilled &&
             check &&
             !loading &&
             selectedTags.length !== 0 &&
             formValues.jobDuration.maximumPrefix !== "" &&
-            formValues.jobDuration.minimumPrefix !== ""
+            formValues.jobDuration.minimumPrefix !== "" &&
+            (noFixedSalary || formValues.salary !== "")
         ) {
             setDisabled(false);
         } else {
             setDisabled(true);
         }
-    }, [formValues, check, selectedTags]);
+    }, [formValues, check, selectedTags, noFixedSalary]);
 
     useEffect(() => {
         if (inputWindow.status) {
@@ -649,15 +657,55 @@ const PostJob = () => {
                             >
                                 Salary
                             </label>
-                            <input
-                                type="number"
-                                id="salary"
-                                name="salary"
-                                value={formValues.salary}
-                                onChange={handleInputChange}
-                                className="rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-[#94A3B8] text-medium font-body px-[18px] py-[14px] w-full mt-2"
-                                placeholder="Job Salary in $USD"
-                            />
+                            <div className="flex items-center gap-2 mt-2">
+                                <input
+                                    type="number"
+                                    id="salary"
+                                    name="salary"
+                                    value={formValues.salary}
+                                    onChange={handleInputChange}
+                                    disabled={noFixedSalary}
+                                    className={`rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-[#94A3B8] text-medium font-body px-[18px] py-[14px] w-full ${
+                                        noFixedSalary ? "opacity-50 cursor-not-allowed" : ""
+                                    }`}
+                                    placeholder="Job Salary in $USD"
+                                />
+                            </div>
+                            <div className="flex items-center gap-2 mt-2">
+                                <div
+                                    onClick={() => {
+                                        setNoFixedSalary(!noFixedSalary);
+                                        if (!noFixedSalary) {
+                                            setFormValues({
+                                                ...formValues,
+                                                salary: "",
+                                            });
+                                        }
+                                    }}
+                                    className={`w-5 h-5 rounded-[5px] ${
+                                        noFixedSalary
+                                            ? "bg-blue-primary"
+                                            : "bg-white-base/50"
+                                    } flex justify-center items-center transition-colors cursor-pointer duration-200`}
+                                >
+                                    <FaCheck className="text-white-base" />
+                                </div>
+                                <label
+                                    htmlFor="noFixedSalary"
+                                    className="text-sm text-white-base/70 font-medium cursor-pointer"
+                                    onClick={() => {
+                                        setNoFixedSalary(!noFixedSalary);
+                                        if (!noFixedSalary) {
+                                            setFormValues({
+                                                ...formValues,
+                                                salary: "",
+                                            });
+                                        }
+                                    }}
+                                >
+                                    Let talent specify cost in proposal
+                                </label>
+                            </div>
                         </div>
 
                         {/* Education Level */}

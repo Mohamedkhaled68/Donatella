@@ -118,25 +118,32 @@ const EmailModal = ({ currentJob, setModal }) => {
 
 const FormModal = ({ currentJob, setModal }) => {
     const [coverInp, setCoverInp] = useState("");
+    const [proposedCost, setProposedCost] = useState("");
     const { mutateAsync: sendMessage } = useSendMessage();
     const navigate = useNavigate();
+    const hasNoFixedSalary = !currentJob?.salary;
 
     const handleApply = async (e) => {
         e.preventDefault();
         try {
-            if (coverInp) {
-                await sendMessage({
-                    chatId: currentJob?.organization?.id,
-                    message: coverInp.trim(),
-                    messageType: "REQUEST",
-                    jobId: currentJob?.id,
-                });
-                toast.success("Application sent successfully");
-                setModal(null);
-                navigate("/messages");
-            } else {
+            if (!coverInp.trim()) {
                 toast.error("Cover letter is required");
+                return;
             }
+            if (hasNoFixedSalary && (!proposedCost || parseFloat(proposedCost) <= 0)) {
+                toast.error("Please specify your proposed cost");
+                return;
+            }
+            await sendMessage({
+                chatId: currentJob?.organization?.id,
+                message: coverInp.trim(),
+                messageType: "REQUEST",
+                jobId: currentJob?.id,
+                ...(hasNoFixedSalary && { proposedCost: parseFloat(proposedCost) }),
+            });
+            toast.success("Application sent successfully");
+            setModal(null);
+            navigate("/messages");
         } catch (err) {
             if (err?.response?.data?.message === "NOT_ALLOWED") {
                 toast.error("You have already applied for this job.");
@@ -163,10 +170,26 @@ const FormModal = ({ currentJob, setModal }) => {
                 Apply to job :
             </h1>
             <p className="mb-[20px]">
-                ${currentJob?.salary} - {getCountryByCode(currentJob?.location)}
+                {currentJob?.salary ? `$${currentJob?.salary}` : "Cost to be specified"} - {getCountryByCode(currentJob?.location)}
                 , {currentJob?.location} -{" "}
                 <JobDurationContainer job={currentJob} />
             </p>
+
+            {hasNoFixedSalary && (
+                <div className="flex flex-col gap-1 mb-4">
+                    <h1>Your Proposed Cost ($USD):</h1>
+                    <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value={proposedCost}
+                        onChange={(e) => setProposedCost(e.target.value)}
+                        className="rounded-[10px] w-full outline-none border-none p-2 text-black"
+                        placeholder="Enter your proposed cost"
+                        required
+                    />
+                </div>
+            )}
 
             <div className="flex flex-col gap-1">
                 <h1>Cover Letter:</h1>
@@ -177,11 +200,13 @@ const FormModal = ({ currentJob, setModal }) => {
                     onChange={(e) => setCoverInp(e.target.value)}
                     className="rounded-[10px] resize-none w-full outline-none border-none p-2 text-black"
                     type="text"
+                    required
                 />
             </div>
             <div className="flex items-center mt-[16px] gap-[10px]">
                 <button
                     onClick={() => setModal(null)}
+                    type="button"
                     className="w-full text-white-base border font-bold border-white-base bg-black rounded-full py-2"
                 >
                     Go Back
