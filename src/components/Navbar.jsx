@@ -4,6 +4,7 @@ import DropMenu from "./DropMenu";
 import { donatellaLogo } from "../assets";
 import { useUserStore } from "../store/userStore";
 import { FaUser } from "react-icons/fa";
+import NotificationIcon from "./notifications/NotificationIcon";
 
 const ProfilePicture = ({ userStatus }) => {
     const profileImage = useMemo(() => {
@@ -93,7 +94,8 @@ const Navbar = () => {
                             Profile
                         </NavLink>
                     </ul>
-                    <div className="flex justify-end items-center col-span-2">
+                    <div className="flex justify-end items-center col-span-2 gap-3">
+                        <NotificationIcon />
                         <div
                             onClick={() => setShowDrop(!showDrop)}
                             className="w-[45px] h-[45px] flex justify-center items-center bg-slate-800 rounded-full hover:bg-white-base/20 cursor-pointer duration-300"
