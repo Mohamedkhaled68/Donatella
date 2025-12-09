@@ -3,16 +3,15 @@ import { Navigate, Outlet } from "react-router-dom";
 import useAuthStore from "../store/userTokenStore";
 import { useUserStore } from "../store/userStore";
 
-const ProtectedRoute = ({ redirectPath = "/" }) => {
+const AdminProtectedRoute = ({ redirectPath = "/login" }) => {
     const token = useAuthStore((state) => state.authToken);
     const { userStatus } = useUserStore((state) => state);
 
-    // Exclude admin users from normal user routes
-    if (userStatus?.role === "ADMIN") {
-        return <Navigate to="/admin/dashboard" replace />;
+    if (!token) {
+        return <Navigate to={redirectPath} replace />;
     }
 
-    if (!token || !userStatus?.onboardingCompleted) {
+    if (!userStatus || userStatus.role !== "ADMIN") {
         return <Navigate to={redirectPath} replace />;
     }
 
@@ -23,4 +22,4 @@ const ProtectedRoute = ({ redirectPath = "/" }) => {
     );
 };
 
-export default ProtectedRoute;
+export default AdminProtectedRoute;

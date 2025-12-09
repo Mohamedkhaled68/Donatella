@@ -35,10 +35,10 @@ const NotificationItem = ({ notification }) => {
             <div className="flex items-start gap-3">
                 <div className="flex-1">
                     <h4 className="text-white-base font-semibold text-sm mb-1">
-                        {notification.enTitle}
+                        {notification.title}
                     </h4>
                     <p className="text-white-base/70 text-xs mb-2">
-                        {notification.enBody}
+                        {notification.body}
                     </p>
                     <span className="text-white-base/50 text-xs">
                         {timeAgo}

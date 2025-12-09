@@ -21,8 +21,13 @@ const useLogin = () => {
             setToken(response.data.data.token);
             return response.data;
         },
-        onSuccess: () => {
-            navigate("/", { replace: true });
+        onSuccess: (data) => {
+            const user = data?.data?.user;
+            if (user?.role === "ADMIN") {
+                navigate("/admin/dashboard", { replace: true });
+            } else {
+                navigate("/", { replace: true });
+            }
         },
         onError: (error) => {
             const errorMessage =

@@ -17,6 +17,11 @@ import {
     Privacy,
     ForgotPassword,
     VerifyForgotOTP,
+    Dashboard,
+    Users,
+    UserEdit,
+    CreateUser,
+    Notifications,
 } from "./pages";
 import {
     Navigate,
@@ -37,6 +42,7 @@ import {
     JobView,
     PostJob,
     ProtectedRoute,
+    AdminProtectedRoute,
     SendChangeOTP,
 } from "./routes";
 import { useUserStore } from "./store/userStore";
@@ -68,6 +74,14 @@ const App = () => {
 
     const continueOnboarding = () => {
         if (!userStatus) return;
+        
+        // Redirect admins to dashboard
+        if (userStatus?.role === "ADMIN") {
+            navigate("/admin/dashboard", { replace: true });
+            setPopup(false);
+            return;
+        }
+
         const userExperienceData = localStorage.getItem(
             "USER_EXPERIENCE_FORM_DATA"
         );
@@ -241,6 +255,27 @@ const App = () => {
                             <Route
                                 path="/send-change-otp"
                                 element={<SendChangeOTP />}
+                            />
+                        </Route>
+
+                        {/* ADMIN */}
+                        <Route element={<AdminProtectedRoute />}>
+                            <Route
+                                path="/admin/dashboard"
+                                element={<Dashboard />}
+                            />
+                            <Route path="/admin/users" element={<Users />} />
+                            <Route
+                                path="/admin/users/create"
+                                element={<CreateUser />}
+                            />
+                            <Route
+                                path="/admin/users/:id/edit"
+                                element={<UserEdit />}
+                            />
+                            <Route
+                                path="/admin/notifications"
+                                element={<Notifications />}
                             />
                         </Route>
                     </Routes>
