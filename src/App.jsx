@@ -22,6 +22,8 @@ import {
     UserEdit,
     CreateUser,
     Notifications,
+    Payouts,
+    PayoutDetail,
 } from "./pages";
 import {
     Navigate,
@@ -276,6 +278,14 @@ const App = () => {
                             <Route
                                 path="/admin/notifications"
                                 element={<Notifications />}
+                            />
+                            <Route
+                                path="/admin/payouts"
+                                element={<Payouts />}
+                            />
+                            <Route
+                                path="/admin/payouts/:id"
+                                element={<PayoutDetail />}
                             />
                         </Route>
                     </Routes>

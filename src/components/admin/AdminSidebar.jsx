@@ -22,6 +22,7 @@ const AdminSidebar = () => {
         { path: "/admin/dashboard", label: "Dashboard", icon: "📊" },
         { path: "/admin/users", label: "Users", icon: "👥" },
         { path: "/admin/notifications", label: "Notifications", icon: "🔔" },
+        { path: "/admin/payouts", label: "Payouts", icon: "💰" },
     ];
 
     return (
@@ -58,3 +59,4 @@ const AdminSidebar = () => {
 };
 
 export default AdminSidebar;
+

@@ -37,3 +37,4 @@ const useSendNotification = () => {
 };
 
 export default useSendNotification;
+

@@ -3,13 +3,14 @@ import axios from "axios";
 import { baseUrl } from "../../utils/baseUrl";
 import useAuthStore from "../../store/userTokenStore";
 
-const useGetOrganizationJobs = () => {
+const useCreateWithdrawal = () => {
     const token = useAuthStore((state) => state.authToken);
     return useMutation({
-        mutationKey: ["organization", "jobs"],
-        mutationFn: async () => {
-            const response = await axios.get(
-                `${baseUrl}/organization/me/jobs`,
+        mutationKey: ["payments", "create-withdrawal"],
+        mutationFn: async (data) => {
+            const response = await axios.post(
+                `${baseUrl}/payments/withdraw`,
+                data,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -24,12 +25,10 @@ const useGetOrganizationJobs = () => {
             return (
                 error?.message ||
                 error?.response?.data?.message ||
-                "Failed to get organization jobs"
+                "Failed to create withdrawal request"
             );
         },
     });
 };
 
-export default useGetOrganizationJobs;
-
-
+export default useCreateWithdrawal;

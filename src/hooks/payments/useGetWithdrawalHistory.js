@@ -1,15 +1,16 @@
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { baseUrl } from "../../utils/baseUrl";
 import useAuthStore from "../../store/userTokenStore";
 
-const useGetOrganizationJobs = () => {
+const useGetWithdrawalHistory = (withdrawalId) => {
     const token = useAuthStore((state) => state.authToken);
-    return useMutation({
-        mutationKey: ["organization", "jobs"],
-        mutationFn: async () => {
+    
+    return useQuery({
+        queryKey: ["withdrawal-history", withdrawalId],
+        queryFn: async () => {
             const response = await axios.get(
-                `${baseUrl}/organization/me/jobs`,
+                `${baseUrl}/payments/withdraw/${withdrawalId}/history`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -20,16 +21,11 @@ const useGetOrganizationJobs = () => {
 
             return response.data.data;
         },
+        enabled: !!withdrawalId,
         onError: (error) => {
-            return (
-                error?.message ||
-                error?.response?.data?.message ||
-                "Failed to get organization jobs"
-            );
+            console.error("Failed to fetch withdrawal history:", error);
         },
     });
 };
 
-export default useGetOrganizationJobs;
-
-
+export default useGetWithdrawalHistory;

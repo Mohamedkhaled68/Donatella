@@ -3,24 +3,22 @@ import axios from "axios";
 import { baseUrl } from "../../utils/baseUrl";
 import useAuthStore from "../../store/userTokenStore";
 
-const useGetUnreadCount = () => {
+const useGetWithdrawals = () => {
     const token = useAuthStore((state) => state.authToken);
-
     return useQuery({
-        queryKey: ["notifications", "unreadCount"],
+        queryKey: ["payments", "withdrawals"],
         queryFn: async () => {
-            const { data } = await axios.get(`${baseUrl}/notifications/unread-count`, {
+            const response = await axios.get(`${baseUrl}/payments/withdraw`, {
                 headers: {
+                    "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
             });
-            return data.data.count;
+
+            return response.data.data;
         },
-        staleTime: 1000 * 30, // Cache for 30 seconds
-        refetchInterval: 1000 * 60, // Refetch every minute
-        retry: 1,
+        enabled: !!token,
     });
 };
 
-export default useGetUnreadCount;
-
+export default useGetWithdrawals;

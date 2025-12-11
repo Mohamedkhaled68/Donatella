@@ -9,8 +9,13 @@ import { motion } from "framer-motion";
 import useGetBalance from "../../hooks/payments/useGetBalance";
 import useGetJobHistory from "../../hooks/organization/useGetJobHistory";
 import useGetIndividualJobHistory from "../../hooks/individual/useGetIndividualJobHistory";
+import useGetPaymentHistory from "../../hooks/payments/useGetPaymentHistory";
+import useGetWithdrawals from "../../hooks/payments/useGetWithdrawals";
 import { useUserStore } from "../../store/userStore";
 import JobDurationContainer from "../../components/shared/JobDurationContainer";
+import DepositModal from "../../components/payments/DepositModal";
+import WithdrawalModal from "../../components/payments/WithdrawalModal";
+import WithdrawalDetail from "../../components/payments/WithdrawalDetail";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -47,16 +52,23 @@ const Payments = () => {
     const isOrganization = userStatus?.role === "ORGANIZATION";
     
     const [currentPage, setCurrentPage] = useState(1);
-    const [balance, setBalance] = useState(true);
-    const [deposit, setDeposit] = useState(true);
-    const [withdraw, setWithdraw] = useState(true);
+    const [balanceVisible, setBalanceVisible] = useState(true);
+    const [depositVisible, setDepositVisible] = useState(true);
+    const [withdrawVisible, setWithdrawVisible] = useState(true);
     const [jobHistory, setJobHistory] = useState(null);
     const [loading, setLoading] = useState(false);
     const [openFilter, setOpenFilter] = useState(false);
     const [filters, setFilters] = useState({});
+    const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
+    const [isWithdrawalModalOpen, setIsWithdrawalModalOpen] = useState(false);
+    const [selectedWithdrawal, setSelectedWithdrawal] = useState(null);
+    const [isWithdrawalDetailOpen, setIsWithdrawalDetailOpen] = useState(false);
+    const [userBalance, setUserBalance] = useState(0);
     const { mutateAsync: getBalance } = useGetBalance();
     const { mutateAsync: getJobHistory } = useGetJobHistory();
     const { mutateAsync: getIndividualJobHistory } = useGetIndividualJobHistory();
+    const { data: paymentHistory } = useGetPaymentHistory();
+    const { data: withdrawals, refetch: refetchWithdrawals } = useGetWithdrawals();
 
     const getJobStatusColor = (status) => {
         switch (status) {
@@ -110,9 +122,20 @@ const Payments = () => {
         }
     };
 
+    const [reservedBalance, setReservedBalance] = useState(0);
+
     const getUserBalance = async () => {
-        const balanceData = await getBalance();
-        console.log(balanceData);
+        try {
+            const balanceData = await getBalance();
+            const totalBalance = balanceData?.balance || 0;
+            const availableBalance = balanceData?.availableBalance ?? totalBalance;
+            const reserved = balanceData?.reservedBalance || 0;
+            
+            setUserBalance(availableBalance);
+            setReservedBalance(reserved);
+        } catch (error) {
+            console.error("Failed to fetch balance:", error);
+        }
     };
 
     const fetchJobHistory = async () => {
@@ -140,6 +163,11 @@ const Payments = () => {
         fetchJobHistory();
     }, [currentPage, filters]);
 
+    const handleWithdrawalSuccess = () => {
+        getUserBalance();
+        refetchWithdrawals();
+    };
+
     return (
         <>
             <div className="p-6 px-[5rem] space-y-6 text-white min-h-screen">
@@ -158,33 +186,33 @@ const Payments = () => {
                             </div>
                             <div className="relative text-center border-x-thin border-black grow h-full flex flex-col justify-center items-center">
                                 <span className="absolute top-0 right-0 p-3">
-                                    {deposit ? (
+                                    {depositVisible ? (
                                         <HiMiniEyeSlash
                                             className="cursor-pointer"
                                             size={25}
-                                            onClick={() => setDeposit(!deposit)}
+                                            onClick={() => setDepositVisible(!depositVisible)}
                                         />
                                     ) : (
                                         <HiMiniEye
                                             className="cursor-pointer"
                                             size={25}
-                                            onClick={() => setDeposit(!deposit)}
+                                            onClick={() => setDepositVisible(!depositVisible)}
                                         />
                                     )}
                                 </span>
                                 <h3 className="text-[46px] font-bold">
-                                    ${deposit ? "0" : "*****"}
+                                    ${depositVisible ? (userBalance + reservedBalance).toFixed(2) : "*****"}
                                 </h3>
-                                <p className="text-sm font-light">Earnings</p>
+                                <p className="text-sm font-light">Total Earnings</p>
                             </div>
                             <div className="relative text-center grow h-full flex flex-col justify-center items-center">
                                 <span className="absolute top-0 right-0 p-3">
-                                    {withdraw ? (
+                                    {withdrawVisible ? (
                                         <HiMiniEyeSlash
                                             className="cursor-pointer"
                                             size={25}
                                             onClick={() =>
-                                                setWithdraw(!withdraw)
+                                                setWithdrawVisible(!withdrawVisible)
                                             }
                                         />
                                     ) : (
@@ -192,37 +220,34 @@ const Payments = () => {
                                             className="cursor-pointer"
                                             size={25}
                                             onClick={() =>
-                                                setWithdraw(!withdraw)
+                                                setWithdrawVisible(!withdrawVisible)
                                             }
                                         />
                                     )}
                                 </span>
                                 <h3 className="text-[46px] font-bold">
-                                    ${withdraw ? "0" : "*****"}
+                                    ${withdrawVisible ? userBalance.toFixed(2) : "*****"}
                                 </h3>
                                 <p className="text-sm font-light">
                                     Available to Withdraw
                                 </p>
+                                {reservedBalance > 0 && withdrawVisible && (
+                                    <p className="text-xs text-yellow-400 mt-1">
+                                        ${reservedBalance.toFixed(2)} pending
+                                    </p>
+                                )}
                             </div>
                         </div>
                         <div className="flex flex-col justify-center items-center gap-2">
                             <button
-                                onClick={() =>
-                                    toast.error("Comming Soon", {
-                                        icon: "🚧",
-                                    })
-                                }
-                                className="w-full bg-transparent border-thin text-[20px] font-light border-blue-primary  text-white px-[55px] py-[21px] rounded-lg"
+                                onClick={() => setIsDepositModalOpen(true)}
+                                className="w-full bg-transparent border-thin text-[20px] font-light border-blue-primary  text-white px-[55px] py-[21px] rounded-lg hover:bg-blue-primary/10 transition"
                             >
                                 Deposit
                             </button>
                             <button
-                                onClick={() =>
-                                    toast.error("Comming Soon", {
-                                        icon: "🚧",
-                                    })
-                                }
-                                className="w-full bg-white-base text-[20px] font-bold  text-[#121417] px-[55px] py-[21px] rounded-lg"
+                                onClick={() => setIsWithdrawalModalOpen(true)}
+                                className="w-full bg-white-base text-[20px] font-bold  text-[#121417] px-[55px] py-[21px] rounded-lg hover:bg-gray-200 transition"
                             >
                                 Withdraw
                             </button>
@@ -432,7 +457,154 @@ const Payments = () => {
                         </button>
                     </div>
                 )}
+
+                {/* Payment History Section */}
+                {paymentHistory && paymentHistory.length > 0 && (
+                    <div className="space-y-6 mt-8">
+                        <h1 className="text-[38px] font-bold font-display">
+                            Payment History
+                        </h1>
+                        <div className="space-y-4">
+                            {paymentHistory.map((payment) => (
+                                <div
+                                    key={payment.id}
+                                    className="bg-[#313131] text-white border-thin border-white-base rounded-lg p-6 shadow-lg"
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h3 className="font-bold text-lg">
+                                                {payment.type === "DEPOSIT"
+                                                    ? "Deposit"
+                                                    : "Withdrawal"}
+                                            </h3>
+                                            <p className="text-sm text-gray-400">
+                                                {new Date(
+                                                    payment.createdAt
+                                                ).toLocaleDateString()}
+                                            </p>
+                                        </div>
+                                        <div className="text-right">
+                                            <p
+                                                className={`text-lg font-bold ${
+                                                    payment.type === "DEPOSIT"
+                                                        ? "text-green-400"
+                                                        : "text-red-400"
+                                                }`}
+                                            >
+                                                {payment.type === "DEPOSIT"
+                                                    ? "+"
+                                                    : "-"}
+                                                ${parseFloat(payment.totalAmount || 0).toFixed(2)}
+                                            </p>
+                                            <span
+                                                className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                                                    payment.state === "SUCCESS"
+                                                        ? "bg-green-500/20 text-green-400 border border-green-500/50"
+                                                        : payment.state ===
+                                                          "PENDING"
+                                                        ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/50"
+                                                        : "bg-red-500/20 text-red-400 border border-red-500/50"
+                                                }`}
+                                            >
+                                                {payment.state}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* Withdrawal Requests Section */}
+                {withdrawals && withdrawals.length > 0 && (
+                    <div className="space-y-6 mt-8">
+                        <h1 className="text-[38px] font-bold font-display">
+                            Withdrawal Requests
+                        </h1>
+                        <div className="space-y-4">
+                            {withdrawals.map((withdrawal) => (
+                                <div
+                                    key={withdrawal.id}
+                                    className="bg-[#313131] text-white border-thin border-white-base rounded-lg p-6 shadow-lg cursor-pointer hover:bg-[#3a3a3a] transition"
+                                    onClick={() => {
+                                        setSelectedWithdrawal(withdrawal);
+                                        setIsWithdrawalDetailOpen(true);
+                                    }}
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h3 className="font-bold text-lg">
+                                                Withdrawal Request
+                                            </h3>
+                                            <p className="text-sm text-gray-400">
+                                                {new Date(
+                                                    withdrawal.createdAt
+                                                ).toLocaleDateString()}
+                                            </p>
+                                            <p className="text-sm text-gray-400 mt-1">
+                                                IBAN:{" "}
+                                                {withdrawal.iban
+                                                    .replace(
+                                                        /(.{4})/g,
+                                                        "$1 "
+                                                    )
+                                                    .trim()
+                                                    .slice(0, -1) +
+                                                    "****"}
+                                            </p>
+                                            <p className="text-xs text-blue-400 mt-2">
+                                                Click to view details and history
+                                            </p>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="text-lg font-bold text-red-400">
+                                                -${parseFloat(withdrawal.amount || 0).toFixed(2)}
+                                            </p>
+                                            <span
+                                                className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                                                    withdrawal.status ===
+                                                    "PROCESSED"
+                                                        ? "bg-green-500/20 text-green-400 border border-green-500/50"
+                                                        : withdrawal.status ===
+                                                          "APPROVED"
+                                                        ? "bg-blue-500/20 text-blue-400 border border-blue-500/50"
+                                                        : withdrawal.status ===
+                                                          "REJECTED"
+                                                        ? "bg-red-500/20 text-red-400 border border-red-500/50"
+                                                        : "bg-yellow-500/20 text-yellow-400 border border-yellow-500/50"
+                                                }`}
+                                            >
+                                                {withdrawal.status}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
+            <DepositModal
+                isOpen={isDepositModalOpen}
+                onClose={() => {
+                    setIsDepositModalOpen(false);
+                    getUserBalance();
+                }}
+            />
+            <WithdrawalModal
+                isOpen={isWithdrawalModalOpen}
+                onClose={() => setIsWithdrawalModalOpen(false)}
+                onSuccess={handleWithdrawalSuccess}
+            />
+            <WithdrawalDetail
+                withdrawal={selectedWithdrawal}
+                isOpen={isWithdrawalDetailOpen}
+                onClose={() => {
+                    setIsWithdrawalDetailOpen(false);
+                    setSelectedWithdrawal(null);
+                }}
+            />
             <Footer />
         </>
     );

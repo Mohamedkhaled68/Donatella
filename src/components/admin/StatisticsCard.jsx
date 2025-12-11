@@ -16,3 +16,4 @@ const StatisticsCard = ({ title, value, subtitle, icon }) => {
 };
 
 export default StatisticsCard;
+

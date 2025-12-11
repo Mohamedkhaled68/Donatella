@@ -1,15 +1,16 @@
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { baseUrl } from "../../utils/baseUrl";
 import useAuthStore from "../../store/userTokenStore";
 
-const useGetOrganizationJobs = () => {
+const useAdminGetWithdrawal = (withdrawalId) => {
     const token = useAuthStore((state) => state.authToken);
-    return useMutation({
-        mutationKey: ["organization", "jobs"],
-        mutationFn: async () => {
+
+    return useQuery({
+        queryKey: ["admin", "withdrawal", withdrawalId],
+        queryFn: async () => {
             const response = await axios.get(
-                `${baseUrl}/organization/me/jobs`,
+                `${baseUrl}/admin/payments/withdraw/${withdrawalId}`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -20,16 +21,8 @@ const useGetOrganizationJobs = () => {
 
             return response.data.data;
         },
-        onError: (error) => {
-            return (
-                error?.message ||
-                error?.response?.data?.message ||
-                "Failed to get organization jobs"
-            );
-        },
+        enabled: !!token && !!withdrawalId,
     });
 };
 
-export default useGetOrganizationJobs;
-
-
+export default useAdminGetWithdrawal;
