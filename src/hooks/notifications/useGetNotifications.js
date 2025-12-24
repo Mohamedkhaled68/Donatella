@@ -24,3 +24,5 @@ const useGetNotifications = (page = 1, limit = 15) => {
 
 export default useGetNotifications;
 
+
+

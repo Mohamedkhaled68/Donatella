@@ -24,3 +24,5 @@ const AdminProtectedRoute = ({ redirectPath = "/login" }) => {
 
 export default AdminProtectedRoute;
 
+
+

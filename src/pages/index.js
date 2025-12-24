@@ -3,6 +3,7 @@ export { default as Profile } from "./Authorized/Profile";
 export { default as Explore } from "./Authorized/Explore";
 export { default as Messages } from "./Authorized/Messages";
 export { default as Payments } from "./Authorized/Payments";
+export { default as PaymentCallback } from "./Authorized/PaymentCallback";
 
 //UNAUTHORIZED
 export { default as Landing } from "./Unauthorized/Landing";
@@ -21,4 +22,5 @@ export { default as Services } from "./Unauthorized/Services";
 
 //ADMIN
 export { Dashboard, Users, UserEdit, CreateUser, Notifications, Payouts, PayoutDetail } from "./Admin";
+export { default as Categories } from "./Admin/Categories";
 

@@ -11,6 +11,7 @@ import {
     Messages,
     OrgProfileForm,
     Payments,
+    PaymentCallback,
     AboutUs,
     Contact,
     Services,
@@ -24,6 +25,7 @@ import {
     Notifications,
     Payouts,
     PayoutDetail,
+    Categories,
 } from "./pages";
 import {
     Navigate,
@@ -247,6 +249,10 @@ const App = () => {
                             <Route path="/messages" element={<Messages />} />
                             <Route path="/payments" element={<Payments />} />
                             <Route
+                                path="/payments/callback/:checkoutId"
+                                element={<PaymentCallback />}
+                            />
+                            <Route
                                 path="/change-email"
                                 element={<ChangeEmail />}
                             />
@@ -286,6 +292,10 @@ const App = () => {
                             <Route
                                 path="/admin/payouts/:id"
                                 element={<PayoutDetail />}
+                            />
+                            <Route
+                                path="/admin/categories"
+                                element={<Categories />}
                             />
                         </Route>
                     </Routes>

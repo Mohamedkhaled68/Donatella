@@ -67,7 +67,7 @@ const Payments = () => {
     const { mutateAsync: getBalance } = useGetBalance();
     const { mutateAsync: getJobHistory } = useGetJobHistory();
     const { mutateAsync: getIndividualJobHistory } = useGetIndividualJobHistory();
-    const { data: paymentHistory } = useGetPaymentHistory();
+    const { data: paymentHistory, refetch: refetchPaymentHistory } = useGetPaymentHistory();
     const { data: withdrawals, refetch: refetchWithdrawals } = useGetWithdrawals();
 
     const getJobStatusColor = (status) => {
@@ -157,6 +157,7 @@ const Payments = () => {
 
     useEffect(() => {
         getUserBalance();
+        refetchPaymentHistory();
     }, []);
 
     useEffect(() => {
@@ -166,6 +167,11 @@ const Payments = () => {
     const handleWithdrawalSuccess = () => {
         getUserBalance();
         refetchWithdrawals();
+    };
+
+    const handleDepositSuccess = () => {
+        getUserBalance();
+        refetchPaymentHistory();
     };
 
     return (
@@ -201,7 +207,7 @@ const Payments = () => {
                                     )}
                                 </span>
                                 <h3 className="text-[46px] font-bold">
-                                    ${depositVisible ? (userBalance + reservedBalance).toFixed(2) : "*****"}
+                                    {depositVisible ? `${(userBalance + reservedBalance).toFixed(2)} SAR` : "*****"}
                                 </h3>
                                 <p className="text-sm font-light">Total Earnings</p>
                             </div>
@@ -226,14 +232,14 @@ const Payments = () => {
                                     )}
                                 </span>
                                 <h3 className="text-[46px] font-bold">
-                                    ${withdrawVisible ? userBalance.toFixed(2) : "*****"}
+                                    {withdrawVisible ? `${userBalance.toFixed(2)} SAR` : "*****"}
                                 </h3>
                                 <p className="text-sm font-light">
                                     Available to Withdraw
                                 </p>
                                 {reservedBalance > 0 && withdrawVisible && (
                                     <p className="text-xs text-yellow-400 mt-1">
-                                        ${reservedBalance.toFixed(2)} pending
+                                        {reservedBalance.toFixed(2)} SAR pending
                                     </p>
                                 )}
                             </div>
@@ -396,7 +402,7 @@ const Payments = () => {
                                         <div className="flex items-center gap-4 mt-3">
                                             <p className="text-sm text-gray-400">
                                                 {job.salary 
-                                                    ? `Salary: $${job.salary}/hr` 
+                                                    ? `Salary: ${job.salary} SAR/hr` 
                                                     : "Cost: Negotiable"}
                                             </p>
                                             {job.jobDuration && (
@@ -494,7 +500,7 @@ const Payments = () => {
                                                 {payment.type === "DEPOSIT"
                                                     ? "+"
                                                     : "-"}
-                                                ${parseFloat(payment.totalAmount || 0).toFixed(2)}
+                                                {parseFloat(payment.totalAmount || 0).toFixed(2)} SAR
                                             </p>
                                             <span
                                                 className={`px-3 py-1 rounded-full text-xs font-semibold ${
@@ -559,7 +565,7 @@ const Payments = () => {
                                         </div>
                                         <div className="text-right">
                                             <p className="text-lg font-bold text-red-400">
-                                                -${parseFloat(withdrawal.amount || 0).toFixed(2)}
+                                                -{parseFloat(withdrawal.amount || 0).toFixed(2)} SAR
                                             </p>
                                             <span
                                                 className={`px-3 py-1 rounded-full text-xs font-semibold ${
@@ -589,7 +595,7 @@ const Payments = () => {
                 isOpen={isDepositModalOpen}
                 onClose={() => {
                     setIsDepositModalOpen(false);
-                    getUserBalance();
+                    handleDepositSuccess();
                 }}
             />
             <WithdrawalModal

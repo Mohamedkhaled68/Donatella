@@ -51,3 +51,5 @@ const DeleteUserModal = ({ isOpen, onClose, onConfirm, isLoading }) => {
 
 export default DeleteUserModal;
 
+
+

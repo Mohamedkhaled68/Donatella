@@ -38,3 +38,5 @@ const useMarkNotificationAsRead = () => {
 
 export default useMarkNotificationAsRead;
 
+
+

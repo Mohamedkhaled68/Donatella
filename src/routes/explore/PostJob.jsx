@@ -5,6 +5,7 @@ import { FaCheck } from "react-icons/fa";
 import { useUserStore } from "../../store/userStore";
 import usePostJob from "../../hooks/jobs/usePostJobs";
 import useGetTags from "../../hooks/explore/useGetTags";
+import { useGetEnabledCategories } from "../../hooks/explore/useGetEnabledCategories";
 import { CountryEnum, initialJobPostFormValues } from "../../utils/constants";
 import { isValidDurationRange } from "../../utils/helpers";
 import toast from "react-hot-toast";
@@ -191,6 +192,7 @@ const PostJob = () => {
 
     const { mutateAsync } = usePostJob();
     const { mutateAsync: getTags } = useGetTags();
+    const { data: categories, isLoading: categoriesLoading } = useGetEnabledCategories();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -422,22 +424,11 @@ const PostJob = () => {
                                 id="jobCategory"
                             >
                                 <option value="">Choose a category</option>
-                                <option value="MODEL">Model</option>
-                                <option value="PHOTOGRAPHER">
-                                    Photographer
-                                </option>
-                                <option value="VIDEOGRAPHER">
-                                    Videographer
-                                </option>
-                                <option value="EDITOR">Editor</option>
-                                <option value="TOURISM">Tour Guide</option>
-                                <option value="MUSIC_AND_SOUND_ENGINEER">
-                                    Musician
-                                </option>
-                                <option value="ATHLETE">Athlete</option>
-                                <option value="BEAUTY">Makeup Artist</option>
-                                <option value="ARTIST">Artist</option>
-                                <option value="FASHION">Fashionista</option>
+                                {categories?.map((category) => (
+                                    <option key={category.id} value={category.name}>
+                                        {category.displayName}
+                                    </option>
+                                ))}
                             </select>
                         </div>
 

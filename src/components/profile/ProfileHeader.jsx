@@ -172,7 +172,7 @@ const ProfileHeader = ({ data }) => {
     return (
         <>
             <div className="w-full flex justify-around items-start gap-[170px] my-8">
-                {data.role === "ORGANIZATION" ? (
+                {data?.role === "ORGANIZATION" && data?.organization ? (
                     <>
                         <div className="flex flex-col justify-center items-center gap-5 ">
                             <div className="flex justify-center items-start relative">
@@ -188,19 +188,19 @@ const ProfileHeader = ({ data }) => {
                         <div className="flex flex-col items-center -mt-[7px]">
                             {/* <div className="flex flex-col justify-center items-center"> */}
                             <h1 className="font-display text-2xl font-black capitalize mb-[10px]">
-                                {data.organization.name}
+                                {data?.organization?.name || ""}
                             </h1>
                             <p className="mb-[10px] font-body text-white-base/50 text-base font-light capitalize">
                                 {/* Los Angeles, CA, USA */}
                                 {getKeyByValue(
                                     CountryEnum.enums,
-                                    data?.organization.location
+                                    data?.organization?.location
                                 )}
-                                , {""} {data?.organization.location}
+                                , {""} {data?.organization?.location || ""}
                             </p>
                             {/* </div> */}
                             <div className="mb-[15px] text-base font-light font-body text-center w-[210px] capitalize rounded-lg bg-[#197FE540] px-[5px] py-2">
-                                {data.role.toLowerCase()}
+                                {data?.role?.toLowerCase() || ""}
                             </div>
                             <div className="w-full flex items-center justify-around">
                                 <IconLink

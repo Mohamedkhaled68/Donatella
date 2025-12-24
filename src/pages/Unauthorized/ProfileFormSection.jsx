@@ -15,6 +15,7 @@ import {
     TourismProfileForm,
     VideographerProfileForm,
 } from "../../components";
+import GenericProfileForm from "../../components/onBoarding/Profile Forms/GenericProfileForm";
 import LoadImage from "../../components/onBoarding/LoadImage";
 import {
     initialModelImagesValues,
@@ -25,6 +26,7 @@ import {
     initialAthleteImagesValues,
     initialBeatyImagesValues,
     initialTourismImagesValues,
+    initialGenericImagesValues,
 } from "../../utils/constants";
 
 const modelImagesInputs = [
@@ -69,8 +71,43 @@ const tourismImagesInputs = [
     { id: "profile", label: "Profile Picture" },
 ];
 
+const genericImagesInputs = [
+    { id: "profile", label: "Profile Picture" },
+    { id: "portfolio1", label: "Portfolio - 1" },
+    { id: "portfolio2", label: "Portfolio - 2" },
+];
+
+// Predefined category display names
+const predefinedCategoryDisplayNames = [
+    "Model",
+    "Videographer",
+    "Photographer",
+    "Editor",
+    "Musician",
+    "Fashionista",
+    "Artist",
+    "Athlete",
+    "Beautician",
+    "Tour Guide",
+];
+
+// Predefined category names (enum values from backend)
+const predefinedCategoryNames = [
+    "MODEL",
+    "VIDEOGRAPHER",
+    "PHOTOGRAPHER",
+    "EDITOR",
+    "MUSIC_AND_SOUND_ENGINEER",
+    "FASHION",
+    "ARTIST",
+    "ATHLETE",
+    "BEAUTY",
+    "TOURISM",
+];
+
 const ProfileFormSection = () => {
     const [role, setRole] = useState("");
+    const [categoryName, setCategoryName] = useState("");
     const [imageUrls, setImageUrls] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -90,9 +127,17 @@ const ProfileFormSection = () => {
         } else {
             console.log(location.state.category);
             setRole(location.state.category);
+            setCategoryName(location.state.categoryName || location.state.category);
         }
 
-        if (location.state.category === "Model") {
+        // Check if it's a dynamic category (not in predefined list)
+        // Check by category name if available, otherwise by display name
+        const catName = location.state?.categoryName || localStorage.getItem("USER_ROLE") || "";
+        const isDynamicCategory = catName && !predefinedCategoryNames.includes(catName);
+
+        if (isDynamicCategory) {
+            setImageUrls(initialGenericImagesValues);
+        } else if (location.state.category === "Model") {
             setImageUrls(initialModelImagesValues);
         } else if (
             location.state.category === "Videographer" ||
@@ -211,6 +256,18 @@ const ProfileFormSection = () => {
                                 role={role}
                             />
                         )}
+                        {(() => {
+                            const catName = categoryName || localStorage.getItem("USER_ROLE") || "";
+                            const isDynamic = catName && !predefinedCategoryNames.includes(catName);
+                            return isDynamic && (
+                                <GenericProfileForm
+                                    imageUrls={imageUrls}
+                                    loading={loading}
+                                    setLoading={setLoading}
+                                    role={catName}
+                                />
+                            );
+                        })()}
                         {role && (
                             <>
                                 {role === "Model" && (
@@ -384,6 +441,31 @@ const ProfileFormSection = () => {
                                         ))}
                                     </div>
                                 )}
+                                {(() => {
+                                    const catName = categoryName || localStorage.getItem("USER_ROLE") || "";
+                                    const isDynamic = catName && !predefinedCategoryNames.includes(catName);
+                                    return isDynamic && (
+                                        <div className="grid grid-cols-2 gap-6 justify-items-center self-start px-4">
+                                            {genericImagesInputs.map((input) => (
+                                                <LoadImage
+                                                    key={input.id}
+                                                    label={input.label}
+                                                    inputId={`${input.id}`}
+                                                    onImageChange={
+                                                        handleImageChange
+                                                    }
+                                                    className={
+                                                        input.id.startsWith(
+                                                            "portfolio"
+                                                        )
+                                                            ? "col-span-2 h-[150px]"
+                                                            : "col-span-1 max-w-[250px] h-[320px]"
+                                                    }
+                                                />
+                                            ))}
+                                        </div>
+                                    );
+                                })()}
                             </>
                         )}
                     </div>

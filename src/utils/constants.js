@@ -431,6 +431,14 @@ export const initialRestImagesValues = {
     profile: null,
     reel: null,
 };
+export const initialGenericImagesValues = {
+    profile: null,
+    portfolio1: null,
+    portfolio2: null,
+};
+export const initialGenericProfileFormValues = {
+    description: "",
+};
 
 export const initialMusicianImagesValues = {
     profile: null,

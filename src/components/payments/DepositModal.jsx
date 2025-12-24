@@ -3,13 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import useCreateDeposit from "../../hooks/payments/useCreateDeposit";
 import toast from "react-hot-toast";
 import { useUserStore } from "../../store/userStore";
+import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../../utils/baseUrl";
 
 const DepositModal = ({ isOpen, onClose }) => {
     const { userStatus } = useUserStore((state) => state);
+    const navigate = useNavigate();
     const { mutateAsync: createDeposit, isPending } = useCreateDeposit();
     const [formData, setFormData] = useState({
         amount: "",
-        paymentMethod: "MASTERCARD",
+        paymentMethod: "VISA", // Default to credit card (VISA/MASTERCARD share same entityId)
         email: userStatus?.verifiedEmail || "",
         givenName: "",
         surname: "",
@@ -18,14 +21,30 @@ const DepositModal = ({ isOpen, onClose }) => {
         state: "",
         country: "SA",
         postcode: "",
-        currency: "USD",
+        currency: "SAR",
     });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Validate form data before submitting
         if (!formData.amount || parseFloat(formData.amount) <= 0) {
             toast.error("Please enter a valid amount");
+            return;
+        }
+
+        if (!formData.email || !formData.email.includes('@')) {
+            toast.error("Please enter a valid email address");
+            return;
+        }
+
+        if (!formData.givenName || !formData.surname) {
+            toast.error("Please enter your full name");
+            return;
+        }
+
+        if (!formData.street || !formData.city || !formData.state || !formData.postcode) {
+            toast.error("Please complete all billing address fields");
             return;
         }
 
@@ -36,16 +55,46 @@ const DepositModal = ({ isOpen, onClose }) => {
             });
 
             if (response?.status && response?.data?.id) {
-                // Redirect to payment iframe
-                const iframeUrl = `${window.location.origin}/api/v1/payments/iframe/${response.data.id}`;
-                window.open(iframeUrl, "_blank", "width=800,height=600");
+                const checkoutId = response.data.id;
+                
+                // Store payment method in localStorage for callback page
+                localStorage.setItem(`paymentMethod_${checkoutId}`, formData.paymentMethod);
+                
+                // Redirect to payment iframe - use backend URL
+                // Extract base URL from baseUrl (remove /api/v1)
+                const backendBaseUrl = baseUrl.replace('/api/v1', '');
+                const iframeUrl = `${backendBaseUrl}/api/v1/payments/iframe/${checkoutId}`;
+                const paymentWindow = window.open(
+                    iframeUrl,
+                    "_blank",
+                    "width=800,height=600,scrollbars=yes"
+                );
+
+                if (!paymentWindow) {
+                    toast.error("Please allow popups to proceed with payment");
+                    return;
+                }
+
+                // Monitor if payment window is closed
+                const checkClosed = setInterval(() => {
+                    if (paymentWindow.closed) {
+                        clearInterval(checkClosed);
+                        // Navigate to callback page to check status
+                        navigate(`/payments/callback/${checkoutId}?status=pending`);
+                    }
+                }, 1000);
+
                 toast.success("Redirecting to payment...");
                 onClose();
             } else {
                 toast.error(response?.message || "Failed to create deposit");
             }
         } catch (error) {
-            toast.error(error?.message || "Failed to create deposit");
+            const errorMessage = error?.response?.data?.message || 
+                                error?.message || 
+                                "Failed to create deposit. Please try again.";
+            toast.error(errorMessage);
+            console.error("Deposit error:", error);
         }
     };
 
@@ -81,7 +130,7 @@ const DepositModal = ({ isOpen, onClose }) => {
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label className="block text-sm font-medium mb-2">
-                                Amount ($)
+                                Amount (SAR)
                             </label>
                             <input
                                 type="number"
@@ -96,22 +145,6 @@ const DepositModal = ({ isOpen, onClose }) => {
                             />
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-medium mb-2">
-                                Payment Method
-                            </label>
-                            <select
-                                name="paymentMethod"
-                                value={formData.paymentMethod}
-                                onChange={handleChange}
-                                required
-                                className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
-                            >
-                                <option value="MASTERCARD">Mastercard</option>
-                                <option value="VISA">Visa</option>
-                                <option value="MADA">MADA</option>
-                            </select>
-                        </div>
 
                         <div>
                             <label className="block text-sm font-medium mb-2">

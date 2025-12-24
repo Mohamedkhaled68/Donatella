@@ -44,6 +44,7 @@ export { default as TourismProfileForm } from "./onBoarding/Profile Forms/Touris
 
 export { default as OrganizationProfileForm } from "./onBoarding/Profile Forms/OrganizationProfileForm";
 export { default as EditorProfileForm } from "./onBoarding/Profile Forms/EditorProfileForm";
+export { default as GenericProfileForm } from "./onBoarding/Profile Forms/GenericProfileForm";
 export { default as WorkExperienceForm } from "./onBoarding/WorkExperienceForm";
 export { default as TagInput } from "./explore/Tag";
 
