@@ -15,7 +15,7 @@ const PaymentCallback = () => {
     const queryClient = useQueryClient();
     
     const initialStatus = searchParams.get("status");
-    const paymentMethod = localStorage.getItem(`paymentMethod_${checkoutId}`) || "MASTERCARD";
+    const paymentMethod = localStorage.getItem(`paymentMethod_${checkoutId}`) || "MADA";
     
     const [paymentStatus, setPaymentStatus] = useState(initialStatus || "pending");
     const [polling, setPolling] = useState(initialStatus === "pending" || !initialStatus);
@@ -52,8 +52,9 @@ const PaymentCallback = () => {
             // Result codes starting with '100.3' or '100.4' are rejections/failures
             if (resultCode.startsWith("000")) {
                 // Additional validation: ensure payment was actually processed
-                const paymentType = result.paymentType;
-                const amount = result.amount;
+                // paymentType and amount are at the root level of statusData, not inside result
+                const paymentType = statusData?.paymentType;
+                const amount = statusData?.amount;
                 
                 if (paymentType && amount) {
                     newStatus = "success";

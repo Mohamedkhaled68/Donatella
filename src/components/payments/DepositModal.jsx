@@ -12,7 +12,7 @@ const DepositModal = ({ isOpen, onClose }) => {
     const { mutateAsync: createDeposit, isPending } = useCreateDeposit();
     const [formData, setFormData] = useState({
         amount: "",
-        paymentMethod: "VISA", // Default to credit card (VISA/MASTERCARD share same entityId)
+        paymentMethod: "MADA", // Default to MADA (first payment option per Saudi Payments requirements)
         email: userStatus?.verifiedEmail || "",
         givenName: "",
         surname: "",
@@ -28,10 +28,14 @@ const DepositModal = ({ isOpen, onClose }) => {
         e.preventDefault();
 
         // Validate form data before submitting
-        if (!formData.amount || parseFloat(formData.amount) <= 0) {
+        const amountValue = parseFloat(formData.amount);
+        if (!formData.amount || amountValue <= 0) {
             toast.error("Please enter a valid amount");
             return;
         }
+        
+        // Round amount to ensure whole numbers (xx.00) for test server
+        const roundedAmount = Math.round(amountValue * 100) / 100;
 
         if (!formData.email || !formData.email.includes('@')) {
             toast.error("Please enter a valid email address");
@@ -51,7 +55,7 @@ const DepositModal = ({ isOpen, onClose }) => {
         try {
             const response = await createDeposit({
                 ...formData,
-                amount: parseFloat(formData.amount),
+                amount: roundedAmount,
             });
 
             if (response?.status && response?.data?.id) {
@@ -87,12 +91,28 @@ const DepositModal = ({ isOpen, onClose }) => {
                 toast.success("Redirecting to payment...");
                 onClose();
             } else {
-                toast.error(response?.message || "Failed to create deposit");
+                // Ensure message is a string, not an object
+                const errorMsg = typeof response?.message === 'string' 
+                    ? response.message 
+                    : "Failed to create deposit";
+                toast.error(errorMsg);
+                console.error("Deposit creation failed:", response);
             }
         } catch (error) {
-            const errorMessage = error?.response?.data?.message || 
-                                error?.message || 
-                                "Failed to create deposit. Please try again.";
+            // Extract error message properly - handle object responses
+            let errorMessage = "Failed to create deposit. Please try again.";
+            
+            // Check if the error response has a data.message (from our backend)
+            if (error?.response?.data?.data?.message) {
+                const msg = error.response.data.data.message;
+                errorMessage = typeof msg === 'string' ? msg : JSON.stringify(msg);
+            } else if (error?.response?.data?.message) {
+                const msg = error.response.data.message;
+                errorMessage = typeof msg === 'string' ? msg : JSON.stringify(msg);
+            } else if (error?.message) {
+                errorMessage = typeof error.message === 'string' ? error.message : String(error.message);
+            }
+            
             toast.error(errorMessage);
             console.error("Deposit error:", error);
         }
@@ -130,6 +150,67 @@ const DepositModal = ({ isOpen, onClose }) => {
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label className="block text-sm font-medium mb-2">
+                                Payment Method
+                            </label>
+                            <div className="space-y-2">
+                                {/* MADA - First option per Saudi Payments requirements */}
+                                <label className="flex items-center p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 transition">
+                                    <input
+                                        type="radio"
+                                        name="paymentMethod"
+                                        value="MADA"
+                                        checked={formData.paymentMethod === "MADA"}
+                                        onChange={handleChange}
+                                        className="mr-3"
+                                    />
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-12 h-8 bg-gradient-to-r from-green-600 to-green-700 rounded flex items-center justify-center text-white font-bold text-xs">
+                                            MADA
+                                        </div>
+                                        <span className="text-white">MADA</span>
+                                    </div>
+                                </label>
+                                
+                                {/* VISA */}
+                                <label className="flex items-center p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 transition">
+                                    <input
+                                        type="radio"
+                                        name="paymentMethod"
+                                        value="VISA"
+                                        checked={formData.paymentMethod === "VISA"}
+                                        onChange={handleChange}
+                                        className="mr-3"
+                                    />
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-12 h-8 bg-blue-600 rounded flex items-center justify-center">
+                                            <span className="text-white font-bold text-xs">VISA</span>
+                                        </div>
+                                        <span className="text-white">VISA</span>
+                                    </div>
+                                </label>
+                                
+                                {/* MASTER */}
+                                <label className="flex items-center p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 transition">
+                                    <input
+                                        type="radio"
+                                        name="paymentMethod"
+                                        value="MASTERCARD"
+                                        checked={formData.paymentMethod === "MASTERCARD"}
+                                        onChange={handleChange}
+                                        className="mr-3"
+                                    />
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-12 h-8 bg-gradient-to-r from-red-500 to-orange-500 rounded flex items-center justify-center">
+                                            <span className="text-white font-bold text-xs">MC</span>
+                                        </div>
+                                        <span className="text-white">MasterCard</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium mb-2">
                                 Amount (SAR)
                             </label>
                             <input
@@ -138,13 +219,13 @@ const DepositModal = ({ isOpen, onClose }) => {
                                 value={formData.amount}
                                 onChange={handleChange}
                                 min="1"
-                                step="0.01"
+                                step="1"
                                 required
                                 className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
-                                placeholder="Enter amount"
+                                placeholder="Enter amount (whole numbers only)"
                             />
+                            <p className="text-xs text-gray-400 mt-1">Amount should be in whole numbers (e.g., 100.00)</p>
                         </div>
-
 
                         <div>
                             <label className="block text-sm font-medium mb-2">
