@@ -91,13 +91,13 @@ const ExperienceFormSection = () => {
         setFormValues(initialExperienceFormValues);
         if (location.state?.category) {
             navigate("/profile-form", {
-                state: { category: location.state.category },
+                state: { category: location.state.category, categoryName: location.state.categoryName },
             });
         } else {
             const userCategory = localStorage.getItem("USER_ROLE");
 
             navigate("/profile-form", {
-                state: { category: userCategory },
+                state: { category: userCategory, categoryName: getCategory(userCategory) },
             });
         }
     };
@@ -256,11 +256,10 @@ const ExperienceFormSection = () => {
                                 <div className="flex items-center gap-3">
                                     <div
                                         onClick={() => setCheck(!check)}
-                                        className={`w-6 h-6 rounded-[5px] ${
-                                            check
-                                                ? "bg-blue-primary"
-                                                : "bg-white-base/50"
-                                        } flex justify-center items-center transition-colors cursor-pointer duration-200`}
+                                        className={`w-6 h-6 rounded-[5px] ${check
+                                            ? "bg-blue-primary"
+                                            : "bg-white-base/50"
+                                            } flex justify-center items-center transition-colors cursor-pointer duration-200`}
                                     >
                                         <FaCheck className="text-white-base" />
                                     </div>

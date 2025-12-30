@@ -61,8 +61,8 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading }) => {
         } catch (error) {
             toast.error(
                 error.message ||
-                    error.response.data.message ||
-                    "Failed to create profile."
+                error.response.data.message ||
+                "Failed to create profile."
             );
         } finally {
             setLoading(false);
@@ -156,10 +156,10 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading }) => {
                                                                     key={`${idx}-${valueIdx}`}
                                                                     value={
                                                                         id ===
-                                                                        "nationality"
+                                                                            "nationality"
                                                                             ? myValues[
-                                                                                  valueIdx
-                                                                              ]
+                                                                            valueIdx
+                                                                            ]
                                                                             : value
                                                                     }
                                                                     className="text-white-base font-normal capitalize"
@@ -168,14 +168,13 @@ const ModelProfileForm = ({ imageUrls, loading, setLoading }) => {
                                                                         value
                                                                     )
                                                                         ? // Display the value as-is if it's not a number
-                                                                          value
+                                                                        value
                                                                         : // Append the unit based on the field ID
-                                                                          `${value}${
-                                                                              id ===
-                                                                              "weight"
-                                                                                  ? "kg"
-                                                                                  : "cm"
-                                                                          }`}
+                                                                        `${value}${id ===
+                                                                            "weight"
+                                                                            ? "kg"
+                                                                            : "cm"
+                                                                        }`}
                                                                 </option>
                                                             )
                                                         )}

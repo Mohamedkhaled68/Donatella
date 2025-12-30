@@ -125,8 +125,7 @@ const ProfileFormSection = () => {
         if (!location.state) {
             navigate("/experience-form");
         } else {
-            console.log(location.state.category);
-            setRole(location.state.category);
+            setRole(location.state.categoryName);
             setCategoryName(location.state.categoryName || location.state.category);
         }
 
@@ -137,25 +136,25 @@ const ProfileFormSection = () => {
 
         if (isDynamicCategory) {
             setImageUrls(initialGenericImagesValues);
-        } else if (location.state.category === "Model") {
+        } else if (location.state.categoryName === "MODEL") {
             setImageUrls(initialModelImagesValues);
         } else if (
-            location.state.category === "Videographer" ||
-            location.state.category === "Photographer" ||
-            location.state.category === "Editor"
+            location.state.categoryName === "VIDEOGRAPHER" ||
+            location.state.categoryName === "PHOTOGRAPHER" ||
+            location.state.categoryName === "EDITOR"
         ) {
             setImageUrls(initialRestImagesValues);
-        } else if (location.state.category === "Musician") {
+        } else if (location.state.categoryName === "MUSIC_AND_SOUND_ENGINEER") {
             setImageUrls(initialMusicianImagesValues);
-        } else if (location.state.category === "Fashionista") {
+        } else if (location.state.categoryName === "FASHION") {
             setImageUrls(initialFashionImagesValues);
-        } else if (location.state.category === "Artist") {
+        } else if (location.state.categoryName === "ARTIST") {
             setImageUrls(initialArtistImagesValues);
-        } else if (location.state.category === "Athlete") {
+        } else if (location.state.categoryName === "ATHLETE") {
             setImageUrls(initialAthleteImagesValues);
-        } else if (location.state.category === "Beautician") {
+        } else if (location.state.categoryName === "BEAUTY") {
             setImageUrls(initialBeatyImagesValues);
-        } else if (location.state.category === "Tour Guide") {
+        } else if (location.state.categoryName === "TOURISM") {
             setImageUrls(initialTourismImagesValues);
         }
     }, []);
@@ -176,7 +175,7 @@ const ProfileFormSection = () => {
                         className={"mt-10 ml-4"}
                     />
                     <div className="container mx-auto grid grid-cols-2 gap-6 mt-10">
-                        {role === "Model" && (
+                        {role === "MODEL" && (
                             <ModelProfileForm
                                 imageUrls={imageUrls}
                                 loading={loading}
@@ -184,7 +183,7 @@ const ProfileFormSection = () => {
                                 role={role}
                             />
                         )}
-                        {role === "Videographer" && (
+                        {role === "VIDEOGRAPHER" && (
                             <VideographerProfileForm
                                 imageUrls={imageUrls}
                                 loading={loading}
@@ -192,7 +191,7 @@ const ProfileFormSection = () => {
                                 role={role}
                             />
                         )}
-                        {role === "Photographer" && (
+                        {role === "PHOTOGRAPHER" && (
                             <PhotographerProfileForm
                                 imageUrls={imageUrls}
                                 loading={loading}
@@ -200,7 +199,7 @@ const ProfileFormSection = () => {
                                 role={role}
                             />
                         )}
-                        {role === "Editor" && (
+                        {role === "EDITOR" && (
                             <EditorProfileForm
                                 imageUrls={imageUrls}
                                 loading={loading}
@@ -208,7 +207,7 @@ const ProfileFormSection = () => {
                                 role={role}
                             />
                         )}
-                        {role === "Musician" && (
+                        {role === "MUSIC_AND_SOUND_ENGINEER" && (
                             <MusicianProfileForm
                                 imageUrls={imageUrls}
                                 loading={loading}
@@ -216,7 +215,7 @@ const ProfileFormSection = () => {
                                 role={role}
                             />
                         )}
-                        {role === "Fashionista" && (
+                        {role === "FASHION" && (
                             <FashionProfileForm
                                 imageUrls={imageUrls}
                                 loading={loading}
@@ -224,7 +223,7 @@ const ProfileFormSection = () => {
                                 role={role}
                             />
                         )}
-                        {role === "Artist" && (
+                        {role === "ARTIST" && (
                             <ArtistProfileForm
                                 imageUrls={imageUrls}
                                 loading={loading}
@@ -232,7 +231,7 @@ const ProfileFormSection = () => {
                                 role={role}
                             />
                         )}
-                        {role === "Athlete" && (
+                        {role === "ATHLETE" && (
                             <AthleteProfileForm
                                 imageUrls={imageUrls}
                                 loading={loading}
@@ -240,7 +239,7 @@ const ProfileFormSection = () => {
                                 role={role}
                             />
                         )}
-                        {role === "Beautician" && (
+                        {role === "BEAUTY" && (
                             <BeautyProfileForm
                                 imageUrls={imageUrls}
                                 loading={loading}
@@ -248,7 +247,7 @@ const ProfileFormSection = () => {
                                 role={role}
                             />
                         )}
-                        {role === "Tour Guide" && (
+                        {role === "TOURISM" && (
                             <TourismProfileForm
                                 imageUrls={imageUrls}
                                 loading={loading}
@@ -270,7 +269,7 @@ const ProfileFormSection = () => {
                         })()}
                         {role && (
                             <>
-                                {role === "Model" && (
+                                {role === "MODEL" && (
                                     <div className="grid grid-cols-2 gap-6 justify-items-center self-start h-full px-4">
                                         {modelImagesInputs.map((input) => (
                                             <LoadImage
@@ -285,7 +284,7 @@ const ProfileFormSection = () => {
                                     </div>
                                 )}
 
-                                {role === "Videographer" && (
+                                {role === "VIDEOGRAPHER" && (
                                     <div className="grid grid-cols-2 gap-6 justify-items-center self-start">
                                         {restImagesInputs.map((input) => (
                                             <LoadImage
@@ -306,7 +305,7 @@ const ProfileFormSection = () => {
                                         ))}
                                     </div>
                                 )}
-                                {role === "Photographer" && (
+                                {role === "PHOTOGRAPHER" && (
                                     <div className="grid grid-cols-2 gap-6 justify-items-center self-start">
                                         {restImagesInputs.map((input) => (
                                             <LoadImage
@@ -327,7 +326,7 @@ const ProfileFormSection = () => {
                                         ))}
                                     </div>
                                 )}
-                                {role === "Editor" && (
+                                {role === "EDITOR" && (
                                     <div className="grid grid-cols-2 gap-6 justify-items-center self-start">
                                         {restImagesInputs.map((input) => (
                                             <LoadImage
@@ -349,7 +348,7 @@ const ProfileFormSection = () => {
                                     </div>
                                 )}
 
-                                {role === "Musician" && (
+                                {role === "MUSIC_AND_SOUND_ENGINEER" && (
                                     <div className="w-[50%] mx-auto">
                                         {musicianImagesInputs.map((input) => (
                                             <LoadImage
@@ -365,7 +364,7 @@ const ProfileFormSection = () => {
                                     </div>
                                 )}
 
-                                {role === "Fashionista" && (
+                                {role === "FASHION" && (
                                     <div className="grid grid-cols-2 gap-6 justify-items-center self-start px-4">
                                         {fashionImagesInputs.map((input) => (
                                             <LoadImage
@@ -381,7 +380,7 @@ const ProfileFormSection = () => {
                                     </div>
                                 )}
 
-                                {role === "Artist" && (
+                                {role === "ARTIST" && (
                                     <div className="grid grid-cols-2 gap-6 justify-items-center self-start px-4">
                                         {artistImagesInputs.map((input) => (
                                             <LoadImage
@@ -396,7 +395,7 @@ const ProfileFormSection = () => {
                                         ))}
                                     </div>
                                 )}
-                                {role === "Athlete" && (
+                                {role === "ATHLETE" && (
                                     <div className="grid grid-cols-2 gap-6 justify-items-center self-start px-4">
                                         {athleteImagesInputs.map((input) => (
                                             <LoadImage
@@ -411,7 +410,7 @@ const ProfileFormSection = () => {
                                         ))}
                                     </div>
                                 )}
-                                {role === "Beautician" && (
+                                {role === "BEAUTY" && (
                                     <div className="grid grid-cols-2 gap-6 justify-items-center self-start px-4">
                                         {beautyImagesInputs.map((input) => (
                                             <LoadImage
@@ -426,7 +425,7 @@ const ProfileFormSection = () => {
                                         ))}
                                     </div>
                                 )}
-                                {role === "Tour Guide" && (
+                                {role === "TOURISM" && (
                                     <div className="grid grid-cols-2 gap-6 justify-items-center self-start px-4">
                                         {tourismImagesInputs.map((input) => (
                                             <LoadImage
