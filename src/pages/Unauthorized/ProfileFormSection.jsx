@@ -259,7 +259,7 @@ const ProfileFormSection = () => {
                         {(() => {
                             const catName = categoryName || localStorage.getItem("USER_ROLE") || "";
                             const isDynamic = catName && !predefinedCategoryNames.includes(catName);
-                            return isDynamic && (
+                            return isDynamic && imageUrls && (
                                 <GenericProfileForm
                                     imageUrls={imageUrls}
                                     loading={loading}
