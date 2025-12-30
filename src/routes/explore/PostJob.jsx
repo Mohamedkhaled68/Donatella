@@ -103,11 +103,10 @@ const RequirementsWindow = ({ formValues, setFormValues, setInputWindow }) => {
                                 setInputWindow({ status: false, type: "" });
                             }}
                             disabled={disabled}
-                            className={`${
-                                disabled
+                            className={`${disabled
                                     ? "cursor-not-allowed bg-[#494B4E] pointer-events-none"
                                     : "bg-blue-primary"
-                            } button text-white-base px-[72px] py-3 text-medium font-semibold transition-colors cursor-pointer duration-200`}
+                                } button text-white-base px-[72px] py-3 text-medium font-semibold transition-colors cursor-pointer duration-200`}
                         >
                             Done
                         </button>
@@ -161,11 +160,10 @@ const DescriptionWindow = ({
                                 setInputWindow({ status: false, type: "" });
                             }}
                             disabled={disabled}
-                            className={`${
-                                disabled
+                            className={`${disabled
                                     ? "cursor-not-allowed bg-[#494B4E] pointer-events-none"
                                     : "bg-blue-primary"
-                            } button text-white-base px-[72px] py-3 text-medium font-semibold transition-colors cursor-pointer duration-200`}
+                                } button text-white-base px-[72px] py-3 text-medium font-semibold transition-colors cursor-pointer duration-200`}
                         >
                             Done
                         </button>
@@ -656,10 +654,9 @@ const PostJob = () => {
                                     value={formValues.salary}
                                     onChange={handleInputChange}
                                     disabled={noFixedSalary}
-                                    className={`rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-[#94A3B8] text-medium font-body px-[18px] py-[14px] w-full ${
-                                        noFixedSalary ? "opacity-50 cursor-not-allowed" : ""
-                                    }`}
-                                    placeholder="Job Salary in $USD"
+                                    className={`rounded-[28px] bg-transparent border-extra-thin border-[#94A3B8] text-[#94A3B8] text-medium font-body px-[18px] py-[14px] w-full ${noFixedSalary ? "opacity-50 cursor-not-allowed" : ""
+                                        }`}
+                                    placeholder="Job Salary in SAR"
                                 />
                             </div>
                             <div className="flex items-center gap-2 mt-2">
@@ -673,11 +670,10 @@ const PostJob = () => {
                                             });
                                         }
                                     }}
-                                    className={`w-5 h-5 rounded-[5px] ${
-                                        noFixedSalary
+                                    className={`w-5 h-5 rounded-[5px] ${noFixedSalary
                                             ? "bg-blue-primary"
                                             : "bg-white-base/50"
-                                    } flex justify-center items-center transition-colors cursor-pointer duration-200`}
+                                        } flex justify-center items-center transition-colors cursor-pointer duration-200`}
                                 >
                                     <FaCheck className="text-white-base" />
                                 </div>
@@ -784,11 +780,10 @@ const PostJob = () => {
                             <div className="flex items-center gap-3">
                                 <div
                                     onClick={() => setCheck(!check)}
-                                    className={`w-6 h-6 rounded-[5px] ${
-                                        check
+                                    className={`w-6 h-6 rounded-[5px] ${check
                                             ? "bg-blue-primary"
                                             : "bg-white-base/50"
-                                    } flex justify-center items-center transition-colors cursor-pointer duration-200`}
+                                        } flex justify-center items-center transition-colors cursor-pointer duration-200`}
                                 >
                                     <FaCheck className="text-white-base" />
                                 </div>

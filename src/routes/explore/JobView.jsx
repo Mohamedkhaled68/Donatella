@@ -177,7 +177,7 @@ const FormModal = ({ currentJob, setModal }) => {
 
             {hasNoFixedSalary && (
                 <div className="flex flex-col gap-1 mb-4">
-                    <h1>Your Proposed Cost ($USD):</h1>
+                    <h1>Your Proposed Cost (SAR):</h1>
                     <input
                         type="number"
                         min="0"
@@ -229,7 +229,7 @@ const JobView = () => {
     const [requirements, SetRequirements] = useState(null);
     const { setModal } = useModal((state) => state);
     const { userStatus } = useUserStore((state) => state);
-    
+
     // Check if user is an individual (only individuals can apply for jobs)
     const isIndividual = userStatus?.role === "INDIVIDUAL";
 
@@ -244,14 +244,14 @@ const JobView = () => {
                 console.log(data);
 
                 setCurrentJob(data);
-                
+
                 // Safely parse requirements
                 if (data?.requirements) {
                     try {
-                        const parsed = typeof data.requirements === 'string' 
-                            ? JSON.parse(data.requirements) 
+                        const parsed = typeof data.requirements === 'string'
+                            ? JSON.parse(data.requirements)
                             : data.requirements;
-                        
+
                         // Ensure it's an array
                         if (Array.isArray(parsed)) {
                             SetRequirements(parsed);
@@ -267,7 +267,7 @@ const JobView = () => {
                 } else {
                     SetRequirements([]);
                 }
-                
+
                 SetReqNumber(reqNumberData?.count);
             } catch (err) {
                 toast.error(
@@ -420,17 +420,16 @@ const JobView = () => {
                                         </h2>
                                         {currentJob?.proposalStatus && (
                                             <span
-                                                className={`text-xs font-semibold px-3 py-1 rounded-full border capitalize ${
-                                                    currentJob.proposalStatus === "PENDING"
+                                                className={`text-xs font-semibold px-3 py-1 rounded-full border capitalize ${currentJob.proposalStatus === "PENDING"
                                                         ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/50"
                                                         : currentJob.proposalStatus === "APPROVED"
-                                                        ? "bg-green-500/20 text-green-400 border-green-500/50"
-                                                        : currentJob.proposalStatus === "REJECTED"
-                                                        ? "bg-red-500/20 text-red-400 border-red-500/50"
-                                                        : currentJob.proposalStatus === "FINISHED"
-                                                        ? "bg-blue-500/20 text-blue-400 border-blue-500/50"
-                                                        : "bg-gray-500/20 text-gray-400 border-gray-500/50"
-                                                }`}
+                                                            ? "bg-green-500/20 text-green-400 border-green-500/50"
+                                                            : currentJob.proposalStatus === "REJECTED"
+                                                                ? "bg-red-500/20 text-red-400 border-red-500/50"
+                                                                : currentJob.proposalStatus === "FINISHED"
+                                                                    ? "bg-blue-500/20 text-blue-400 border-blue-500/50"
+                                                                    : "bg-gray-500/20 text-gray-400 border-gray-500/50"
+                                                    }`}
                                             >
                                                 {currentJob.proposalStatus.toLowerCase()}
                                             </span>
@@ -507,7 +506,7 @@ const JobView = () => {
                                             </span>{" "}
                                             {levels.map((level) =>
                                                 currentJob?.careerLevel ===
-                                                level.value
+                                                    level.value
                                                     ? level.text
                                                     : null
                                             )}
@@ -518,7 +517,7 @@ const JobView = () => {
                                             </span>{" "}
                                             {educationLevels.map((level) =>
                                                 currentJob?.educationLevel ===
-                                                level.value
+                                                    level.value
                                                     ? level.text
                                                     : null
                                             )}
@@ -541,7 +540,7 @@ const JobView = () => {
                                             </span>{" "}
                                             <span className="capitalize">
                                                 {currentJob?.jobCategory ===
-                                                "MUSIC_AND_SOUND_ENGINEER"
+                                                    "MUSIC_AND_SOUND_ENGINEER"
                                                     ? "Music & Sound Engineer"
                                                     : currentJob?.jobCategory.toLowerCase()}
                                             </span>
