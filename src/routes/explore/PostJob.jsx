@@ -16,34 +16,35 @@ const initialRequirements = [
         id: "requirement-1",
         content: "",
     },
-    {
-        id: "requirement-2",
-        content: "",
-    },
-    {
-        id: "requirement-3",
-        content: "",
-    },
-    {
-        id: "requirement-4",
-        content: "",
-    },
 ];
 
 const RequirementsWindow = ({ formValues, setFormValues, setInputWindow }) => {
     const [requirements, setRequirements] = useState(initialRequirements);
     const [disabled, setDisabled] = useState(false);
 
-    const handleInputsChange = (e) => {
-        const { id, value } = e.target;
-        const index = parseInt(id.split("-")[1]) - 1; // Extract index from id
-
-        setRequirements((prevRequirements) =>
-            prevRequirements.map((requirement, i) =>
-                i === index ? { ...requirement, content: value } : requirement
-            )
+    const handleInputsChange = (e, index) => {
+        const { value } = e.target;
+        setRequirements((prev) =>
+            prev.map((req, i) => (i === index ? { ...req, content: value } : req))
         );
     };
+
+    const addRequirement = () => {
+        setRequirements((prev) => [
+            ...prev,
+            {
+                id: `requirement-${Date.now()}`, // Unique ID
+                content: "",
+            },
+        ]);
+    };
+
+    const removeRequirement = (index) => {
+        if (requirements.length > 1) {
+            setRequirements((prev) => prev.filter((_, i) => i !== index));
+        }
+    };
+
     const handleSubmit = () => {
         setFormValues({
             ...formValues,
@@ -53,9 +54,9 @@ const RequirementsWindow = ({ formValues, setFormValues, setInputWindow }) => {
 
     useEffect(() => {
         const isFilled = requirements.every(
-            (requirement) => requirement.content
+            (requirement) => requirement.content.trim() !== ""
         );
-        if (isFilled) {
+        if (isFilled && requirements.length > 0) {
             setDisabled(false);
         } else {
             setDisabled(true);
@@ -64,8 +65,14 @@ const RequirementsWindow = ({ formValues, setFormValues, setInputWindow }) => {
 
     useEffect(() => {
         if (formValues.requirements) {
-            const reqs = JSON.parse(formValues.requirements);
-            setRequirements(reqs);
+            try {
+                const reqs = JSON.parse(formValues.requirements);
+                if (Array.isArray(reqs) && reqs.length > 0) {
+                    setRequirements(reqs);
+                }
+            } catch (e) {
+                console.error("Failed to parse requirements", e);
+            }
         }
     }, []);
 
@@ -73,22 +80,41 @@ const RequirementsWindow = ({ formValues, setFormValues, setInputWindow }) => {
         <>
             <div className="w-[50%] mx-auto rounded-md bg-gray-900 p-8 text-white-base">
                 <div className="bg-gray-800 rounded-md p-4 flex flex-col items-center">
-                    <label htmlFor="description" className="text-xl">
+                    <label htmlFor="description" className="text-xl mb-4">
                         Add Requirements
                     </label>
 
-                    {requirements.map((requirement, index) => (
-                        <input
-                            key={requirement.id}
-                            onChange={handleInputsChange}
-                            value={requirement.content}
-                            className="w-full my-3 rounded-md bg-gray-700 text-white p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            type="text"
-                            id={`requirement-${index + 1}`}
-                        />
-                    ))}
+                    <div className="w-full space-y-3 max-h-[60vh] overflow-y-auto">
+                        {requirements.map((requirement, index) => (
+                            <div key={requirement.id} className="flex gap-2 items-center">
+                                <input
+                                    onChange={(e) => handleInputsChange(e, index)}
+                                    value={requirement.content}
+                                    className="flex-1 rounded-md bg-gray-700 text-white p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    type="text"
+                                    placeholder={`Requirement ${index + 1}`}
+                                />
+                                {requirements.length > 1 && (
+                                    <button
+                                        onClick={() => removeRequirement(index)}
+                                        className="bg-red-500/80 hover:bg-red-500 text-white p-3 rounded-md transition-colors"
+                                        title="Remove requirement"
+                                    >
+                                        ✕
+                                    </button>
+                                )}
+                            </div>
+                        ))}
+                    </div>
 
-                    <div className="flex items-center gap-5">
+                    <button
+                        onClick={addRequirement}
+                        className="mt-4 text-blue-400 hover:text-blue-300 text-sm font-semibold transition-colors flex items-center gap-1"
+                    >
+                        + Add another requirement
+                    </button>
+
+                    <div className="flex items-center gap-5 mt-6">
                         <button
                             onClick={() => {
                                 setInputWindow({ status: false, type: "" });
@@ -104,8 +130,8 @@ const RequirementsWindow = ({ formValues, setFormValues, setInputWindow }) => {
                             }}
                             disabled={disabled}
                             className={`${disabled
-                                    ? "cursor-not-allowed bg-[#494B4E] pointer-events-none"
-                                    : "bg-blue-primary"
+                                ? "cursor-not-allowed bg-[#494B4E] pointer-events-none"
+                                : "bg-blue-primary"
                                 } button text-white-base px-[72px] py-3 text-medium font-semibold transition-colors cursor-pointer duration-200`}
                         >
                             Done
@@ -161,8 +187,8 @@ const DescriptionWindow = ({
                             }}
                             disabled={disabled}
                             className={`${disabled
-                                    ? "cursor-not-allowed bg-[#494B4E] pointer-events-none"
-                                    : "bg-blue-primary"
+                                ? "cursor-not-allowed bg-[#494B4E] pointer-events-none"
+                                : "bg-blue-primary"
                                 } button text-white-base px-[72px] py-3 text-medium font-semibold transition-colors cursor-pointer duration-200`}
                         >
                             Done
@@ -671,8 +697,8 @@ const PostJob = () => {
                                         }
                                     }}
                                     className={`w-5 h-5 rounded-[5px] ${noFixedSalary
-                                            ? "bg-blue-primary"
-                                            : "bg-white-base/50"
+                                        ? "bg-blue-primary"
+                                        : "bg-white-base/50"
                                         } flex justify-center items-center transition-colors cursor-pointer duration-200`}
                                 >
                                     <FaCheck className="text-white-base" />
@@ -781,8 +807,8 @@ const PostJob = () => {
                                 <div
                                     onClick={() => setCheck(!check)}
                                     className={`w-6 h-6 rounded-[5px] ${check
-                                            ? "bg-blue-primary"
-                                            : "bg-white-base/50"
+                                        ? "bg-blue-primary"
+                                        : "bg-white-base/50"
                                         } flex justify-center items-center transition-colors cursor-pointer duration-200`}
                                 >
                                     <FaCheck className="text-white-base" />
