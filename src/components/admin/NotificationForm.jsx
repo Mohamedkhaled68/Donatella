@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import FormGroup from "../shared/ui/FormGroup";
 import FormButton from "../shared/ui/FormButton";
+import { useAdminGetCategories } from "../../hooks/admin/useAdminCategories";
 
 const NotificationForm = ({ onSubmit }) => {
+    const { data: categories } = useAdminGetCategories();
     const [formData, setFormData] = useState({
         target: "SPECIFIC_USER",
         email: "",
@@ -28,7 +30,7 @@ const NotificationForm = ({ onSubmit }) => {
             data.email = formData.email;
         } else if (formData.target === "BY_USER_ROLE") {
             data.userRole = formData.userRole;
-        } else         if (formData.target === "BY_INDIVIDUAL_CATEGORY") {
+        } else if (formData.target === "BY_INDIVIDUAL_CATEGORY") {
             data.individualCategory = formData.individualCategory;
         }
 
@@ -98,18 +100,11 @@ const NotificationForm = ({ onSubmit }) => {
                         required
                     >
                         <option value="">Select Category</option>
-                        <option value="MODEL">Model</option>
-                        <option value="PHOTOGRAPHER">Photographer</option>
-                        <option value="VIDEOGRAPHER">Videographer</option>
-                        <option value="EDITOR">Editor</option>
-                        <option value="BEAUTY">Beauty</option>
-                        <option value="TOURISM">Tourism</option>
-                        <option value="ATHLETE">Athlete</option>
-                        <option value="ARTIST">Artist</option>
-                        <option value="FASHION">Fashion</option>
-                        <option value="MUSIC_AND_SOUND_ENGINEER">
-                            Music & Sound Engineer
-                        </option>
+                        {categories?.map((category) => (
+                            <option key={category.id} value={category.name}>
+                                {category.displayName}
+                            </option>
+                        ))}
                     </select>
                 </div>
             )}
