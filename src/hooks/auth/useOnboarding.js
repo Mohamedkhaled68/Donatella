@@ -24,7 +24,6 @@ const useOnboarding = () => {
                 }
             );
             setUserStatus(response.data.data);
-            console.log(response.data.data);
             return response.data;
         },
         onSuccess: () => {
@@ -33,7 +32,7 @@ const useOnboarding = () => {
         },
         onError: (error) => {
             const errorMessage =
-                error.response?.data?.data?.message ||
+                error.response?.data?.message ||
                 "An unexpected error occurred.";
             throw new Error(errorMessage);
         },

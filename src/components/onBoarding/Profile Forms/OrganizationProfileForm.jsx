@@ -51,17 +51,25 @@ const OrganizationProfileForm = ({
         const instagramUrl = formatUrl(formValues.instagram);
         const websiteUrl = formatUrl(formValues.website);
 
-        
+
         try {
             if (!tikTokUrl.includes("tiktok.com")) {
                 toast.error("Please enter a valid TikTok URL.");
                 return;
             }
-    
+
             if (!instagramUrl.includes("instagram.com")) {
                 toast.error("Please enter a valid Instagram URL.");
                 return;
             }
+            console.log(formValues.phone);
+
+
+            if (!/^\d{7,15}$/.test(formValues.phone)) {
+                toast.error("Please enter a valid phone number.");
+                return;
+            }
+
             const updatedFormValues = {
                 ...formValues,
                 instagram: formatUrl(formValues.instagram),
@@ -82,8 +90,11 @@ const OrganizationProfileForm = ({
             setPreviewUrl(null);
             setMedia(null);
         } catch (error) {
+            const message = error?.message;
             toast.error(
-                error?.response?.data?.message || "Something went wrong!"
+                Array.isArray(message)
+                    ? message[0]
+                    : message || "Something went wrong!"
             );
         } finally {
             setLoading(false);
