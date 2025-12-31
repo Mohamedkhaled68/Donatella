@@ -527,7 +527,7 @@ export const ExperienceFormGroupData = [
         // error: (errors) => errors.legallyWorking,
     },
     {
-        label: "Do you have tattoos?",
+        label: "Do you have Bachelor's degree?",
         type: "select",
         name: "holdingBachelors",
         id: "holdingBachelors",
