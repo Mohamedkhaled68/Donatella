@@ -21,8 +21,10 @@ const Categories = () => {
     const [editingCategory, setEditingCategory] = useState(null);
     const [formData, setFormData] = useState({
         name: "",
-        displayName: "",
-        description: "",
+        displayNameEn: "",
+        displayNameAr: "",
+        descriptionEn: "",
+        descriptionAr: "",
         imageUrl: "",
         isEnabled: true,
         order: 0,
@@ -31,8 +33,10 @@ const Categories = () => {
     const handleCreateClick = () => {
         setFormData({
             name: "",
-            displayName: "",
-            description: "",
+            displayNameEn: "",
+            displayNameAr: "",
+            descriptionEn: "",
+            descriptionAr: "",
             imageUrl: "",
             isEnabled: true,
             order: categories?.length || 0,
@@ -43,8 +47,10 @@ const Categories = () => {
     const handleEditClick = (category) => {
         setFormData({
             name: category.name,
-            displayName: category.displayName,
-            description: category.description || "",
+            displayNameEn: category.displayNameEn || "",
+            displayNameAr: category.displayNameAr || "",
+            descriptionEn: category.descriptionEn || "",
+            descriptionAr: category.descriptionAr || "",
             imageUrl: category.imageUrl || "",
             isEnabled: category.isEnabled,
             order: category.order,
@@ -57,8 +63,10 @@ const Categories = () => {
         setEditingCategory(null);
         setFormData({
             name: "",
-            displayName: "",
-            description: "",
+            displayNameEn: "",
+            displayNameAr: "",
+            descriptionEn: "",
+            descriptionAr: "",
             imageUrl: "",
             isEnabled: true,
             order: 0,
@@ -149,7 +157,7 @@ const Categories = () => {
                                         <div className="flex-1">
                                             <div className="flex items-center gap-2">
                                                 <h3 className="text-lg font-semibold text-white">
-                                                    {category.displayName}
+                                                    {category.displayNameEn} / {category.displayNameAr}
                                                 </h3>
                                                 {category.isPredefined && (
                                                     <span className="px-2 py-1 text-xs bg-blue-500/20 text-blue-400 rounded">
@@ -160,9 +168,11 @@ const Categories = () => {
                                             <p className="text-sm text-white/60 mt-1">
                                                 {category.name}
                                             </p>
-                                            {category.description && (
+                                            {(category.descriptionEn || category.descriptionAr) && (
                                                 <p className="text-sm text-white/40 mt-1">
-                                                    {category.description}
+                                                    {category.descriptionEn && <span>EN: {category.descriptionEn}</span>}
+                                                    {category.descriptionEn && category.descriptionAr && <span> | </span>}
+                                                    {category.descriptionAr && <span>AR: {category.descriptionAr}</span>}
                                                 </p>
                                             )}
                                         </div>
@@ -247,13 +257,13 @@ const Categories = () => {
                             </div>
                             <div>
                                 <label className="block text-sm font-medium mb-1">
-                                    Display Name
+                                    Display Name (English) *
                                 </label>
                                 <input
                                     type="text"
-                                    value={formData.displayName}
+                                    value={formData.displayNameEn}
                                     onChange={(e) =>
-                                        setFormData({ ...formData, displayName: e.target.value })
+                                        setFormData({ ...formData, displayNameEn: e.target.value })
                                     }
                                     required
                                     className="w-full px-4 py-2 bg-[#121417] border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
@@ -262,16 +272,47 @@ const Categories = () => {
                             </div>
                             <div>
                                 <label className="block text-sm font-medium mb-1">
-                                    Description (optional)
+                                    Display Name (Arabic) *
+                                </label>
+                                <input
+                                    type="text"
+                                    value={formData.displayNameAr}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, displayNameAr: e.target.value })
+                                    }
+                                    required
+                                    className="w-full px-4 py-2 bg-[#121417] border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                                    placeholder="e.g., فئة مخصصة"
+                                    dir="rtl"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium mb-1">
+                                    Description (English) (optional)
                                 </label>
                                 <textarea
-                                    value={formData.description}
+                                    value={formData.descriptionEn}
                                     onChange={(e) =>
-                                        setFormData({ ...formData, description: e.target.value })
+                                        setFormData({ ...formData, descriptionEn: e.target.value })
                                     }
                                     rows={3}
                                     className="w-full px-4 py-2 bg-[#121417] border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
-                                    placeholder="Category description..."
+                                    placeholder="Category description in English..."
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium mb-1">
+                                    Description (Arabic) (optional)
+                                </label>
+                                <textarea
+                                    value={formData.descriptionAr}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, descriptionAr: e.target.value })
+                                    }
+                                    rows={3}
+                                    className="w-full px-4 py-2 bg-[#121417] border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                                    placeholder="وصف الفئة بالعربية..."
+                                    dir="rtl"
                                 />
                             </div>
                             <div>

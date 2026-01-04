@@ -3,13 +3,13 @@ import { baseUrl } from "../../utils/baseUrl";
 import axios from "axios";
 import useAuthStore from "../../store/userTokenStore";
 
-export const useAdminGetCategories = () => {
+export const useAdminGetCategories = (lang = "en") => {
     const token = useAuthStore((state) => state.authToken);
 
     return useQuery({
-        queryKey: ["admin", "categories"],
+        queryKey: ["admin", "categories", lang],
         queryFn: async () => {
-            const response = await axios.get(`${baseUrl}/admin/categories`, {
+            const response = await axios.get(`${baseUrl}/admin/categories?lang=${lang}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
