@@ -1,246 +1,129 @@
-import React, { useEffect, useState } from "react";
-import LogoHeader from "../../components/shared/ui/LogoHeader";
-import { formVideo } from "../../assets";
-import {
-    BackButton,
-    IndividualRegisterForm,
-    Loading,
-    OrganizationRegisterForm,
-} from "../../components";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { formVideo } from "../../assets";
+import { BackButton, IndividualRegisterForm, Loading, OrganizationRegisterForm } from "../../components";
+import LogoHeader from "../../components/shared/ui/LogoHeader";
+import { useI18n } from "../../hooks/useI18n";
 
 const Signup = () => {
-    const [role, setRole] = useState("Individual");
-    const [loading, setLoading] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
-    const location = useLocation();
+	const [role, setRole] = useState("Individual");
+	const [loading, setLoading] = useState(false);
+	const location = useLocation();
+	const { t, isRtl } = useI18n();
 
-    const handleRoleChange = (selectedRole) => {
-        setRole(selectedRole);
-    };
+	useEffect(() => {
+		document.documentElement.dir = isRtl ? "rtl" : "ltr";
+	}, [isRtl]);
 
-    // Enhanced mobile detection using multiple methods
-    // const detectMobile = () => {
-    //     const userAgent =
-    //         navigator.userAgent || navigator.vendor || window.opera;
-    //     const mobileRegex =
-    //         /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i;
+	const handleRoleChange = (selectedRole) => {
+		setRole(selectedRole);
+	};
 
-    //     const conditions = [
-    //         mobileRegex.test(userAgent.toLowerCase()),
-    //         typeof window.orientation !== "undefined",
-    //         navigator.maxTouchPoints > 0,
-    //         // window.innerWidth <= 768,
-    //     ];
+	useEffect(() => {
+		if (location.state?.role) {
+			setRole(location.state.role);
+		} else {
+			setRole("Individual");
+		}
+	}, [location.state?.role]);
 
-    //     return conditions.some((condition) => condition);
-    // };
-    const detectMobile = () => {
-        // First check for any CSS media features that indicate mobile/tablet
-        const mediaQuery = window.matchMedia(
-            "(hover: none) and (pointer: coarse)"
-        );
-        const hasMobileTouch = mediaQuery.matches;
+	return (
+		<>
+			{loading && (
+				<div className="fixed inset-0 flex justify-center items-center z-[10000] bg-black/50">
+					<Loading />
+				</div>
+			)}
+			<section className="min-h-screen pb-8 sm:pb-[30px] w-full bg-[#121417]">
+				<LogoHeader />
+				<div className="container min-h-[calc(100vh-56px)] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-8 lg:gap-y-0 mt-6 sm:mt-10 px-4 sm:px-6">
+					<div className="flex flex-col gap-4 lg:gap-[5%]">
+						<div className={`flex gap-4 sm:gap-10 ${isRtl ? "flex-row-reverse" : ""} items-start`}>
+							<BackButton />
+							<div className={`flex flex-col gap-2 sm:gap-3 flex-1 min-w-0 ${isRtl ? "text-right" : ""}`}>
+								<h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-white-base">
+									{t("signup.title")}
+								</h1>
+								<p className="text-sm text-white-base/40 w-full lg:w-[70%]">
+									{t("signup.subtitle")}
+								</p>
+							</div>
+						</div>
 
-        // Use navigator.userAgentData if available (modern browsers)
-        if (navigator.userAgentData) {
-            const platform = navigator.userAgentData.platform.toLowerCase();
-            const mobile = navigator.userAgentData.mobile;
+						<div className="flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-3 sm:gap-5 w-full">
+							{/* Organization Button */}
+							<div className="relative group w-full sm:w-1/2">
+								<button
+									key={"Organization"}
+									type="button"
+									onClick={() => handleRoleChange("Organization")}
+									className={`${
+										role === "Organization" ? "bg-white-base text-gray-deep" : "bg-[#27292C] text-white-base"
+									} w-full px-4 sm:px-5 py-3 sm:py-4 border-medium border-white-base text-sm sm:text-medium font-bold rounded-xl transition-all duration-300`}
+								>
+									{t("signup.organization")}
+								</button>
+								<div
+									className={`absolute w-[280px] sm:w-[300px] bottom-full ${isRtl ? "right-0 sm:right-1/2 sm:translate-x-1/2" : "left-0 sm:left-1/2 sm:-translate-x-1/2"} mb-2 hidden sm:group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md ${isRtl ? "text-right" : ""} z-10`}
+								>
+									{t("signup.organizationTooltip")}
+								</div>
+							</div>
 
-            // If browser reports it's mobile, trust that
-            // if (mobile) return true;
+							{/* Individual Button */}
+							<div className="relative group w-full sm:w-1/2">
+								<button
+									key={"Individual"}
+									type="button"
+									onClick={() => handleRoleChange("Individual")}
+									className={`${
+										role === "Individual" ? "bg-white-base text-gray-deep" : "bg-[#27292C] text-white-base"
+									} w-full px-4 sm:px-5 py-3 sm:py-4 border-medium border-white-base text-sm sm:text-medium font-bold rounded-xl transition-all duration-300`}
+								>
+									{t("signup.individual")}
+								</button>
+								<div
+									className={`absolute w-[280px] sm:w-[350px] bottom-full ${isRtl ? "left-0 sm:left-[-100%]" : "right-0 sm:-right-[100%]"} z-[1000] sm:transform sm:-translate-x-1/2 mb-2 hidden sm:group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md duration-300 ${isRtl ? "text-right" : ""}`}
+								>
+									{t("signup.individualTooltip")}
+								</div>
+							</div>
+						</div>
 
-            // Check for known mobile/tablet platforms
-            // if (platform === "android" || platform === "ios") return true;
+						{role === "Organization" ? (
+							<OrganizationRegisterForm
+								key={"Organization"}
+								role={role}
+								loading={loading}
+								setLoading={setLoading}
+							/>
+						) : (
+							<IndividualRegisterForm
+								key={"Individual"}
+								role={role}
+								loading={loading}
+								setLoading={setLoading}
+							/>
+						)}
+					</div>
 
-            // If we got here and have mobile touch, check screen size
-            // if (hasMobileTouch) {
-            //     const screenWidth = window.screen.width;
-            //     const screenHeight = window.screen.height;
-            //     const minDimension = Math.min(screenWidth, screenHeight);
-            //     // Most tablets are under 1200px in their smallest dimension
-            //     return minDimension < 1300;
-            // }
-
-            const screenWidth = window.screen.width;
-            const screenHeight = window.screen.height;
-            // console.log(screenWidth, screenHeight);
-            if (screenWidth < 1023) return true;
-            if (screenHeight < 700) return true;
-
-            return false;
-        }
-
-        // Fallback for browsers that don't support userAgentData
-        const userAgent = navigator.userAgent.toLowerCase();
-
-        // More precise regex patterns
-        const mobilePattern = /android.*mobile|ip(hone|od)|windows phone/i;
-        const tabletPattern = /ipad|android(?!.*mobile)/i;
-
-        // Check if it matches known mobile/tablet patterns
-        if (mobilePattern.test(userAgent) || tabletPattern.test(userAgent)) {
-            return true;
-        }
-
-        // For iOS 13+ iPads which report as desktop Safari
-        if (
-            navigator.maxTouchPoints &&
-            navigator.maxTouchPoints > 1 &&
-            /macintosh/i.test(userAgent)
-        ) {
-            return true;
-        }
-
-        return false;
-    };
-
-    useEffect(() => {
-        // Initial check
-        setIsMobile(detectMobile());
-
-        // Add resize listener for responsive detection
-        const handleResize = () => {
-            setIsMobile(detectMobile());
-        };
-
-        window.addEventListener("resize", handleResize);
-
-        // Cleanup
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (location.state?.role) {
-            setRole(location.state.role);
-        } else {
-            setRole("Individual");
-        }
-    }, []);
-
-    return (
-        <>
-            {isMobile ? (
-                <div className="relative w-full h-screen flex justify-center items-center">
-                    <div className="absolute top-10 left-10">
-                        <BackButton />
-                    </div>
-                    <h1 className="text-2xl text-center italic leading-10 font-display font-bold text-white-base">
-                        Desktop Only: This feature is not available on mobile
-                        devices.
-                    </h1>
-                </div>
-            ) : (
-                <>
-                    {loading && (
-                        <div className="absolute w-full h-full flex justify-center items-center z-[10000] bg-black/50">
-                            <Loading />
-                        </div>
-                    )}
-                    <section className="min-h-screen pb-[30px] w-full bg-[#121417]">
-                        <LogoHeader />
-                        <div className="container min-h-[calc(100vh-56px)] mx-auto grid grid-cols-2 gap-x-8 mt-10">
-                            <div className="flex flex-col gap-[5%]">
-                                <div className="flex gap-10">
-                                    <BackButton />
-                                    <div className="flex flex-col gap-3">
-                                        <h1 className="text-5xl font-display font-bold text-white-base">
-                                            Step into the Spotlight
-                                        </h1>
-                                        <p className="text-sm text-white-base/40 w-[70%]">
-                                            Create your profile today and open
-                                            the door to exciting new
-                                            opportunities.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="flex justify-center items-center gap-5 w-full">
-                                    {/* Organization Button */}
-                                    <div className="relative group w-1/2">
-                                        <button
-                                            key={"Organization"}
-                                            type="button"
-                                            onClick={() =>
-                                                handleRoleChange("Organization")
-                                            }
-                                            className={`${
-                                                role === "Organization"
-                                                    ? "bg-white-base text-gray-deep"
-                                                    : "bg-[#27292C] text-white-base"
-                                            } w-full px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
-                                        >
-                                            Organization
-                                        </button>
-                                        <div className="absolute w-[300px] bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md">
-                                            Log in as an organization to hire
-                                            top talents in different fields for
-                                            your job or project.
-                                        </div>
-                                    </div>
-
-                                    {/* Individual Button */}
-                                    <div className="relative group w-1/2">
-                                        <button
-                                            key={"Individual"}
-                                            type="button"
-                                            onClick={() =>
-                                                handleRoleChange("Individual")
-                                            }
-                                            className={`${
-                                                role === "Individual"
-                                                    ? "bg-white-base text-gray-deep"
-                                                    : "bg-[#27292C] text-white-base"
-                                            } w-full px-5 py-4 border-medium border-white-base text-medium font-bold rounded-xl transition-all duration-300`}
-                                        >
-                                            Individual
-                                        </button>
-                                        <div className="absolute w-[350px] bottom-full -right-[100%] z-[1000] transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm p-2 rounded-lg shadow-md duration-300">
-                                            Log in as an individual to showcase
-                                            your talent, connect with
-                                            businesses, and launch your career
-                                            on a trusted platform.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {role === "Organization" ? (
-                                    <OrganizationRegisterForm
-                                        key={"Organization"}
-                                        role={role}
-                                        loading={loading}
-                                        setLoading={setLoading}
-                                    />
-                                ) : (
-                                    <IndividualRegisterForm
-                                        key={"Individual"}
-                                        role={role}
-                                        loading={loading}
-                                        setLoading={setLoading}
-                                    />
-                                )}
-                            </div>
-                            <div className="max-w-[400px] max-h-full mx-auto">
-                                <div className="relative rounded-3xl max-h-full border-[4px] border-[#ffffff46] w-full overflow-hidden">
-                                    <video
-                                        className="max-h-full max-w-full top-0 left-0 z-10 bg-transparent object-cover grayscale"
-                                        autoPlay
-                                        muted
-                                        loop
-                                    >
-                                        <source src={formVideo} />
-                                    </video>
-                                    {/* <div className="w-full z-20 h-full bg  rounded-3xl absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" /> */}
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </>
-            )}
-        </>
-    );
+					<div className="w-full max-w-[400px] lg:max-w-none mx-auto lg:mx-0 flex-shrink-0">
+						<div className="relative rounded-2xl sm:rounded-3xl border-2 sm:border-[4px] border-[#ffffff46] w-full overflow-hidden aspect-video lg:aspect-auto lg:max-h-[500px]">
+							<video
+								className="w-full h-full object-cover grayscale"
+								autoPlay
+								muted
+								loop
+								playsInline
+							>
+								<source src={formVideo} />
+							</video>
+						</div>
+					</div>
+				</div>
+			</section>
+		</>
+	);
 };
 
 export default Signup;

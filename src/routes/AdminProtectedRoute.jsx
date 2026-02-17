@@ -1,28 +1,35 @@
-import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
-import useAuthStore from "../store/userTokenStore";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useUserStore } from "../store/userStore";
+import useAuthStore from "../store/userTokenStore";
 
-const AdminProtectedRoute = ({ redirectPath = "/login" }) => {
-    const token = useAuthStore((state) => state.authToken);
-    const { userStatus } = useUserStore((state) => state);
+const AdminProtectedRoute = ({ redirectPath = "login" }) => {
+	const token = useAuthStore((state) => state.authToken);
+	const { userStatus } = useUserStore((state) => state);
+	const location = useLocation();
 
-    if (!token) {
-        return <Navigate to={redirectPath} replace />;
-    }
+	// Get current language from URL
+	const pathSegments = location.pathname.split("/").filter(Boolean);
+	const currentLang = ["en", "ar"].includes(pathSegments[0]) ? pathSegments[0] : "en";
 
-    if (!userStatus || userStatus.role !== "ADMIN") {
-        return <Navigate to={redirectPath} replace />;
-    }
+	if (!token) {
+		return (
+			<Navigate
+				to={`/${currentLang}/${redirectPath}`}
+				replace
+			/>
+		);
+	}
 
-    return (
-        <>
-            <Outlet />
-        </>
-    );
+	if (!userStatus || userStatus.role !== "ADMIN") {
+		return (
+			<Navigate
+				to={`/${currentLang}/${redirectPath}`}
+				replace
+			/>
+		);
+	}
+
+	return <Outlet />;
 };
 
 export default AdminProtectedRoute;
-
-
-
