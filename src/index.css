@@ -9,74 +9,74 @@
 @tailwind utilities;
 
 @layer components {
-    .button {
-        padding-inline: 1.5rem;
-        padding-block: 0.5rem;
-        border-radius: 99px;
-        font-size: 16px;
-        line-height: 20.83px;
-        letter-spacing: -0.6965643763542175px;
-        text-align: center;
-    }
+	.button {
+		padding-inline: 1.5rem;
+		padding-block: 0.5rem;
+		border-radius: 99px;
+		font-size: 16px;
+		line-height: 20.83px;
+		letter-spacing: -0.6965643763542175px;
+		text-align: center;
+	}
 }
 
 :root {
-    --background-color: #121417;
+	--background-color: #121417;
 }
 
 html {
-    scrollbar-width: thin;
-    scrollbar-color: #3b3b3b #121417;
-    overflow-x: hidden !important;
+	scrollbar-width: thin;
+	scrollbar-color: #3b3b3b #121417;
+	overflow-x: hidden;
 }
 
 .custom-scrollbar {
-    /* Firefox scrollbar */
-    scrollbar-width: none; /* Completely hide scrollbar in Firefox */
+	/* Firefox scrollbar */
+	scrollbar-width: none; /* Completely hide scrollbar in Firefox */
 
-    /* Webkit (Chrome, Safari, newer versions of Opera) */
-    &::-webkit-scrollbar {
-        display: none; /* Completely hide scrollbar in Webkit browsers */
-    }
+	/* Webkit (Chrome, Safari, newer versions of Opera) */
+	&::-webkit-scrollbar {
+		display: none; /* Completely hide scrollbar in Webkit browsers */
+	}
 
-    /* Ensure scrolling still works */
-    overflow-y: auto;
-    -ms-overflow-style: none; /* IE and Edge */
-    overflow-x: hidden;
+	/* Ensure scrolling still works */
+	overflow-y: auto;
+	-ms-overflow-style: none; /* IE and Edge */
+	overflow-x: hidden;
 }
 
 body {
-    background-color: var(--background-color);
+	background-color: var(--background-color);
 }
 
 input[type="date"] {
-    color-scheme: white;
+	color-scheme: white;
 }
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 input[type="number"] {
-    -moz-appearance: textfield;
+	-moz-appearance: textfield;
 }
 
 ::-webkit-calendar-picker-indicator {
-    background-color: #fcfcfcc9;
-    border-radius: 3px;
-    padding: 3px;
-    cursor: pointer;
+	background-color: #fcfcfcc9;
+	border-radius: 3px;
+	padding: 3px;
+	cursor: pointer;
 }
 
 .drop-shadow {
-    text-shadow: 0px 0px 5px #ffff;
+	text-shadow: 0px 0px 5px #ffff;
 }
 
 select {
-    color: #fcfcfc;
+	color: #fcfcfc;
 }
 option {
-    background-color: #121417;
-    color: #fcfcfc;
+	background-color: #121417;
+	color: #fcfcfc;
 }

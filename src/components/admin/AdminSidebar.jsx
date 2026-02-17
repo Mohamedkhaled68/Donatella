@@ -1,63 +1,60 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import useAuthStore from "../../store/userTokenStore";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useI18n } from "../../hooks/useI18n";
+import { getLanguagePath } from "../../hooks/useLanguageNavigate";
 import { useUserStore } from "../../store/userStore";
-import { useNavigate } from "react-router-dom";
+import useAuthStore from "../../store/userTokenStore";
 
 const AdminSidebar = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const { signOut } = useAuthStore((state) => state);
-    const { clearUserStatus } = useUserStore((state) => state);
+	const location = useLocation();
+	const navigate = useNavigate();
+	const { signOut } = useAuthStore((state) => state);
+	const { clearUserStatus } = useUserStore((state) => state);
+	const { t } = useI18n();
 
-    const handleLogout = () => {
-        signOut();
-        clearUserStatus();
-        navigate("/login");
-    };
+	const handleLogout = () => {
+		signOut();
+		clearUserStatus();
+		navigate("/login");
+	};
 
-    const isActive = (path) => location.pathname === path;
+	const isActive = (path) => location.pathname === path;
 
-    const navItems = [
-        { path: "/admin/dashboard", label: "Dashboard", icon: "📊" },
-        { path: "/admin/users", label: "Users", icon: "👥" },
-        { path: "/admin/categories", label: "Categories", icon: "📂" },
-        { path: "/admin/notifications", label: "Notifications", icon: "🔔" },
-        { path: "/admin/payouts", label: "Payouts", icon: "💰" },
-    ];
+	const navItems = [
+		{ path: "/admin/dashboard", label: t("admin.sidebar.dashboard"), icon: "📊" },
+		{ path: "/admin/users", label: t("admin.sidebar.users"), icon: "👥" },
+		{ path: "/admin/notifications", label: t("admin.sidebar.notifications"), icon: "🔔" },
+		{ path: "/admin/payouts", label: t("admin.sidebar.payouts"), icon: "💰" },
+	];
 
-    return (
-        <div className="w-64 bg-[#27292C] min-h-screen p-6 flex flex-col">
-            <div className="mb-8">
-                <h2 className="text-xl font-bold text-white">Admin Panel</h2>
-            </div>
+	return (
+		<div className="w-64 bg-[#27292C] min-h-screen p-6 flex flex-col">
+			<div className="mb-8">
+				<h2 className="text-xl font-bold text-white">{t("admin.sidebar.adminPanel")}</h2>
+			</div>
 
-            <nav className="flex-1">
-                {navItems.map((item) => (
-                    <Link
-                        key={item.path}
-                        to={item.path}
-                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg mb-2 transition-colors ${
-                            isActive(item.path)
-                                ? "bg-blue-500 text-white"
-                                : "text-white/60 hover:bg-[#2d2f33] hover:text-white"
-                        }`}
-                    >
-                        <span>{item.icon}</span>
-                        <span>{item.label}</span>
-                    </Link>
-                ))}
-            </nav>
+			<nav className="flex-1">
+				{navItems.map((item) => (
+					<Link
+						key={item.path}
+						to={getLanguagePath(item.path)}
+						className={`flex items-center space-x-3 px-4 py-3 rounded-lg mb-2 transition-colors ${
+							isActive(item.path) ? "bg-blue-500 text-white" : "text-white/60 hover:bg-[#2d2f33] hover:text-white"
+						}`}
+					>
+						<span>{item.icon}</span>
+						<span>{item.label}</span>
+					</Link>
+				))}
+			</nav>
 
-            <button
-                onClick={handleLogout}
-                className="w-full px-4 py-3 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors"
-            >
-                Logout
-            </button>
-        </div>
-    );
+			<button
+				onClick={handleLogout}
+				className="w-full px-4 py-3 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors"
+			>
+				{t("admin.sidebar.logout")}
+			</button>
+		</div>
+	);
 };
 
 export default AdminSidebar;
-

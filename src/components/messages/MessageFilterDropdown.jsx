@@ -1,168 +1,191 @@
-import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaBuilding, FaBriefcase, FaCheckCircle, FaSearch } from "react-icons/fa";
-import { useUserStore } from "../../store/userStore";
+import React, { useEffect, useState } from "react";
+import { FaBriefcase, FaBuilding, FaCheckCircle, FaSearch } from "react-icons/fa";
 import useGetOrganizationJobs from "../../hooks/organization/useGetOrganizationJobs";
+import { useI18n } from "../../hooks/useI18n";
+import { useUserStore } from "../../store/userStore";
 
 const filterAnimationVariants = {
-    open: { height: "auto" },
-    closed: { height: 0 },
+	open: { height: "auto" },
+	closed: { height: 0 },
 };
 
-const proposalStatusOptions = [
-    { value: "", label: "Proposal Status" },
-    { value: "PENDING", label: "Pending" },
-    { value: "APPROVED", label: "Approved" },
-    { value: "REJECTED", label: "Rejected" },
-    { value: "FINISHED", label: "Finished" },
-];
-
 const MessageFilterDropdown = ({ isOpen, onFilterChange, chats = [] }) => {
-    const { userStatus } = useUserStore((state) => state);
-    const [organizationId, setOrganizationId] = useState("");
-    const [jobName, setJobName] = useState("");
-    const [proposalStatus, setProposalStatus] = useState("");
-    const [searchKey, setSearchKey] = useState("");
-    const [organizationJobs, setOrganizationJobs] = useState([]);
-    
-    const { mutateAsync: getOrganizationJobs } = useGetOrganizationJobs();
-    const isOrganization = userStatus?.role === "ORGANIZATION";
+	const { t } = useI18n();
+	const { userStatus } = useUserStore((state) => state);
+	const [organizationId, setOrganizationId] = useState("");
+	const [jobName, setJobName] = useState("");
+	const [proposalStatus, setProposalStatus] = useState("");
+	const [searchKey, setSearchKey] = useState("");
+	const [organizationJobs, setOrganizationJobs] = useState([]);
 
-    // Fetch organization jobs when component mounts and user is an organization
-    useEffect(() => {
-        if (isOrganization) {
-            const fetchJobs = async () => {
-                try {
-                    const jobs = await getOrganizationJobs();
-                    setOrganizationJobs(jobs || []);
-                } catch (error) {
-                    console.error("Failed to fetch organization jobs:", error);
-                    setOrganizationJobs([]);
-                }
-            };
-            fetchJobs();
-        }
-    }, [isOrganization, getOrganizationJobs]);
+	const { mutateAsync: getOrganizationJobs } = useGetOrganizationJobs();
+	const isOrganization = userStatus?.role === "ORGANIZATION";
 
-    // Extract unique organizations from chats (only for individuals)
-    const uniqueOrganizations = React.useMemo(() => {
-        if (isOrganization) return [];
-        const orgsMap = new Map();
-        chats.forEach((chat) => {
-            if (chat.friend?.organization?.id && chat.friend?.organization?.name) {
-                if (!orgsMap.has(chat.friend.organization.id)) {
-                    orgsMap.set(chat.friend.organization.id, {
-                        id: chat.friend.organization.id,
-                        name: chat.friend.organization.name,
-                    });
-                }
-            }
-        });
-        return Array.from(orgsMap.values());
-    }, [chats, isOrganization]);
+	const proposalStatusOptions = [
+		{ value: "", label: t("explore.filters.proposalStatus") },
+		{ value: "PENDING", label: t("explore.filters.pending") },
+		{ value: "APPROVED", label: t("explore.filters.approved") },
+		{ value: "REJECTED", label: t("explore.filters.rejected") },
+		{ value: "FINISHED", label: t("explore.filters.finished") },
+	];
 
-    // Extract unique job names from chats (for individuals) or use organization jobs (for organizations)
-    const uniqueJobNames = React.useMemo(() => {
-        if (isOrganization && organizationJobs.length > 0) {
-            // For organizations: use all their jobs
-            return organizationJobs.map((job) => job.title);
-        } else {
-            // For individuals: extract from chats
-            const jobNamesSet = new Set();
-            chats.forEach((chat) => {
-                if (chat.latestMessage?.jobRequest?.job?.title) {
-                    jobNamesSet.add(chat.latestMessage.jobRequest.job.title);
-                }
-            });
-            return Array.from(jobNamesSet);
-        }
-    }, [chats, isOrganization, organizationJobs]);
+	// Fetch organization jobs when component mounts and user is an organization
+	useEffect(() => {
+		if (isOrganization) {
+			const fetchJobs = async () => {
+				try {
+					const jobs = await getOrganizationJobs();
+					setOrganizationJobs(jobs || []);
+				} catch (error) {
+					console.error("Failed to fetch organization jobs:", error);
+					setOrganizationJobs([]);
+				}
+			};
+			fetchJobs();
+		}
+	}, [isOrganization, getOrganizationJobs]);
 
-    // Notify parent of filter changes
-    useEffect(() => {
-        onFilterChange({
-            organizationId: organizationId || undefined,
-            jobName: jobName || undefined,
-            proposalStatus: proposalStatus || undefined,
-            searchKey: searchKey || undefined,
-        });
-    }, [organizationId, jobName, proposalStatus, searchKey, onFilterChange]);
+	// Extract unique organizations from chats (only for individuals)
+	const uniqueOrganizations = React.useMemo(() => {
+		if (isOrganization) return [];
+		const orgsMap = new Map();
+		chats.forEach((chat) => {
+			if (chat.friend?.organization?.id && chat.friend?.organization?.name) {
+				if (!orgsMap.has(chat.friend.organization.id)) {
+					orgsMap.set(chat.friend.organization.id, {
+						id: chat.friend.organization.id,
+						name: chat.friend.organization.name,
+					});
+				}
+			}
+		});
+		return Array.from(orgsMap.values());
+	}, [chats, isOrganization]);
 
-    return (
-        <motion.div
-            initial="closed"
-            animate={isOpen ? "open" : "closed"}
-            variants={filterAnimationVariants}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden mb-4"
-        >
-            <div className="w-full rounded-lg bg-[#27292C] flex flex-wrap justify-between items-center gap-4 px-4 py-3">
-                {/* Search Key Filter */}
-                <div className="flex items-center gap-2">
-                    <FaSearch color="#197FE5" size={16} />
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="bg-transparent p-2 outline-none border-none text-white-base placeholder-white-base/50 min-w-[150px] text-sm"
-                        value={searchKey}
-                        onChange={(e) => setSearchKey(e.target.value)}
-                    />
-                </div>
+	// Extract unique job names from chats (for individuals) or use organization jobs (for organizations)
+	const uniqueJobNames = React.useMemo(() => {
+		if (isOrganization && organizationJobs.length > 0) {
+			// For organizations: use all their jobs
+			return organizationJobs.map((job) => job.title);
+		} else {
+			// For individuals: extract from chats
+			const jobNamesSet = new Set();
+			chats.forEach((chat) => {
+				if (chat.latestMessage?.jobRequest?.job?.title) {
+					jobNamesSet.add(chat.latestMessage.jobRequest.job.title);
+				}
+			});
+			return Array.from(jobNamesSet);
+		}
+	}, [chats, isOrganization, organizationJobs]);
 
-                {/* Organization Filter - Only for individuals */}
-                {!isOrganization && uniqueOrganizations.length > 0 && (
-                    <div className="flex items-center gap-2">
-                        <FaBuilding color="#197FE5" size={16} />
-                        <select
-                            className="bg-transparent p-2 outline-none border-none text-white-base min-w-[150px] text-sm"
-                            value={organizationId}
-                            onChange={(e) => setOrganizationId(e.target.value)}
-                        >
-                            <option value="">All Organizations</option>
-                            {uniqueOrganizations.map((org) => (
-                                <option key={org.id} value={org.id}>
-                                    {org.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                )}
+	// Notify parent of filter changes
+	useEffect(() => {
+		onFilterChange({
+			organizationId: organizationId || undefined,
+			jobName: jobName || undefined,
+			proposalStatus: proposalStatus || undefined,
+			searchKey: searchKey || undefined,
+		});
+	}, [organizationId, jobName, proposalStatus, searchKey, onFilterChange]);
 
-                {/* Job Name Filter */}
-                <div className="flex items-center gap-2">
-                    <FaBriefcase color="#197FE5" size={16} />
-                    <select
-                        className="bg-transparent p-2 outline-none border-none text-white-base min-w-[150px] text-sm"
-                        value={jobName}
-                        onChange={(e) => setJobName(e.target.value)}
-                    >
-                        <option value="">All Jobs</option>
-                        {uniqueJobNames.map((name, index) => (
-                            <option key={index} value={name}>
-                                {name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+	return (
+		<motion.div
+			initial="closed"
+			animate={isOpen ? "open" : "closed"}
+			variants={filterAnimationVariants}
+			transition={{ duration: 0.3, ease: "easeInOut" }}
+			className="overflow-hidden mb-4"
+		>
+			<div className="w-full rounded-lg bg-[#27292C] flex flex-wrap justify-between items-center gap-4 px-4 py-3">
+				{/* Search Key Filter */}
+				<div className="flex items-center gap-2">
+					<FaSearch
+						color="#197FE5"
+						size={16}
+					/>
+					<input
+						type="text"
+						placeholder={t("messages.search")}
+						className="bg-transparent p-2 outline-none border-none text-white-base placeholder-white-base/50 min-w-[150px] text-sm"
+						value={searchKey}
+						onChange={(e) => setSearchKey(e.target.value)}
+					/>
+				</div>
 
-                {/* Proposal Status Filter */}
-                <div className="flex items-center gap-2">
-                    <FaCheckCircle color="#197FE5" size={16} />
-                    <select
-                        className="bg-transparent p-2 outline-none border-none text-white-base min-w-[150px] text-sm"
-                        value={proposalStatus}
-                        onChange={(e) => setProposalStatus(e.target.value)}
-                    >
-                        {proposalStatusOptions.map((option) => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-            </div>
-        </motion.div>
-    );
+				{/* Organization Filter - Only for individuals */}
+				{!isOrganization && uniqueOrganizations.length > 0 && (
+					<div className="flex items-center gap-2">
+						<FaBuilding
+							color="#197FE5"
+							size={16}
+						/>
+						<select
+							className="bg-transparent p-2 outline-none border-none text-white-base min-w-[150px] text-sm"
+							value={organizationId}
+							onChange={(e) => setOrganizationId(e.target.value)}
+						>
+							<option value="">{t("explore.filters.allOrganizations")}</option>
+							{uniqueOrganizations.map((org) => (
+								<option
+									key={org.id}
+									value={org.id}
+								>
+									{org.name}
+								</option>
+							))}
+						</select>
+					</div>
+				)}
+
+				{/* Job Name Filter */}
+				<div className="flex items-center gap-2">
+					<FaBriefcase
+						color="#197FE5"
+						size={16}
+					/>
+					<select
+						className="bg-transparent p-2 outline-none border-none text-white-base min-w-[150px] text-sm"
+						value={jobName}
+						onChange={(e) => setJobName(e.target.value)}
+					>
+						<option value="">{t("messages.allJobs")}</option>
+						{uniqueJobNames.map((name, index) => (
+							<option
+								key={index}
+								value={name}
+							>
+								{name}
+							</option>
+						))}
+					</select>
+				</div>
+
+				{/* Proposal Status Filter */}
+				<div className="flex items-center gap-2">
+					<FaCheckCircle
+						color="#197FE5"
+						size={16}
+					/>
+					<select
+						className="bg-transparent p-2 outline-none border-none text-white-base min-w-[150px] text-sm"
+						value={proposalStatus}
+						onChange={(e) => setProposalStatus(e.target.value)}
+					>
+						{proposalStatusOptions.map((option) => (
+							<option
+								key={option.value}
+								value={option.value}
+							>
+								{option.label}
+							</option>
+						))}
+					</select>
+				</div>
+			</div>
+		</motion.div>
+	);
 };
 
 export default MessageFilterDropdown;

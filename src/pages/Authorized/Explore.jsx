@@ -1,198 +1,184 @@
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import {
-    FilterButtons,
-    FilterDropdown,
-    Footer,
-    IndividualCard,
-    JobCard,
-    Loading,
-    SearchContainer,
+	FilterButtons,
+	FilterDropdown,
+	Footer,
+	IndividualCard,
+	JobCard,
+	Loading,
+	SearchContainer,
 } from "../../components";
-import { useUserStore } from "../../store/userStore";
+import JobFilterDropdown from "../../components/explore/JobFilterDropdown";
 import useGetIndividuals from "../../hooks/explore/useGetIndividuals";
 import useGetJobs from "../../hooks/explore/useGetJobs";
-import toast from "react-hot-toast";
-import JobFilterDropdown from "../../components/explore/JobFilterDropdown";
+import { useUserStore } from "../../store/userStore";
 
 const Explore = () => {
-    const [filter, setFilter] = useState("MODEL");
-    const [searchTerm, setSearchTerm] = useState("");
-    const [data, setData] = useState([]);
-    const [cateSwitch, setCateSwitch] = useState("");
-    const [openFilter, setOpenFilter] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [filterValues, setFilterValues] = useState({});
-    const [jobFilters, setJobFilters] = useState({});
-    const { userStatus } = useUserStore((state) => state);
-    const { mutateAsync: getIndividuals } = useGetIndividuals();
-    const { mutateAsync: getJobs } = useGetJobs();
+	const [filter, setFilter] = useState("MODEL");
+	const [searchTerm, setSearchTerm] = useState("");
+	const [data, setData] = useState([]);
+	const [cateSwitch, setCateSwitch] = useState("");
+	const [openFilter, setOpenFilter] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [filterValues, setFilterValues] = useState({});
+	const [jobFilters, setJobFilters] = useState({});
+	const { userStatus } = useUserStore((state) => state);
+	const { mutateAsync: getIndividuals } = useGetIndividuals();
+	const { mutateAsync: getJobs } = useGetJobs();
 
-    // Handle advanced filter changes
-    const handleAdvancedFilterChange = (filterId, value) => {
-        setFilterValues((prev) => ({
-            ...prev,
-            [filterId]: value,
-        }));
-    };
+	// Handle advanced filter changes
+	const handleAdvancedFilterChange = (filterId, value) => {
+		setFilterValues((prev) => ({
+			...prev,
+			[filterId]: value,
+		}));
+	};
 
-    // Handle job filter changes - only update if values actually changed
-    const handleJobFilterChange = React.useCallback((filters) => {
-        setJobFilters((prev) => {
-            // Only update if filters actually changed
-            if (
-                prev.organizationId !== filters.organizationId ||
-                prev.jobName !== filters.jobName ||
-                prev.proposalStatus !== filters.proposalStatus ||
-                prev.jobStatus !== filters.jobStatus
-            ) {
-                return filters;
-            }
-            return prev;
-        });
-    }, []);
+	// Handle job filter changes - only update if values actually changed
+	const handleJobFilterChange = React.useCallback((filters) => {
+		setJobFilters((prev) => {
+			// Only update if filters actually changed
+			if (
+				prev.organizationId !== filters.organizationId ||
+				prev.jobName !== filters.jobName ||
+				prev.proposalStatus !== filters.proposalStatus ||
+				prev.jobStatus !== filters.jobStatus
+			) {
+				return filters;
+			}
+			return prev;
+		});
+	}, []);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            if (cateSwitch) {
-                try {
-                    if (cateSwitch === "jobs") {
-                        const jobsData = await getJobs([
-                            filter,
-                            searchTerm.trim(),
-                            jobFilters,
-                        ]);
-                        let filteredJobs = jobsData.items;
+	useEffect(() => {
+		const fetchData = async () => {
+			setLoading(true);
+			if (cateSwitch) {
+				try {
+					if (cateSwitch === "jobs") {
+						const jobsData = await getJobs([filter, searchTerm.trim(), jobFilters]);
+						const filteredJobs = jobsData.items;
 
-                        setData(filteredJobs);
-                    } else {
-                        const profilesData = await getIndividuals([
-                            filter,
-                            searchTerm.trim(),
-                        ]);
-                        console.log(profilesData);
+						setData(filteredJobs);
+					} else {
+						const profilesData = await getIndividuals([filter, searchTerm.trim()]);
+						console.log(profilesData);
 
-                        let filteredProfiles = profilesData.items;
+						let filteredProfiles = profilesData.items;
 
-                        // Apply advanced filters
-                        Object.entries(filterValues).forEach(([key, value]) => {
-                            if (value) {
-                                filteredProfiles = filteredProfiles.filter(
-                                    (profile) =>
-                                        profile.specialtyInfo[key] === value
-                                );
-                            }
-                        });
+						// Apply advanced filters
+						Object.entries(filterValues).forEach(([key, value]) => {
+							if (value) {
+								filteredProfiles = filteredProfiles.filter((profile) => profile.specialtyInfo[key] === value);
+							}
+						});
 
-                        setData(filteredProfiles);
-                    }
-                } catch (error) {
-                    toast.error(
-                        error?.response?.data?.message || "Error fetching data"
-                    );
-                } finally {
-                    setLoading(false);
-                }
-            }
-        };
+						setData(filteredProfiles);
+					}
+				} catch (error) {
+					toast.error(error?.response?.data?.message || "Error fetching data");
+				} finally {
+					setLoading(false);
+				}
+			}
+		};
 
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filter, searchTerm, filterValues, jobFilters, cateSwitch]);
+		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [filter, searchTerm, filterValues, jobFilters, cateSwitch, getIndividuals, getJobs]);
 
-    useEffect(() => {
-        if (userStatus.role === "INDIVIDUAL") {
-            setCateSwitch("jobs");
-        } else {
-            setCateSwitch("profiles");
-        }
-    }, [userStatus.role]);
+	useEffect(() => {
+		if (userStatus.role === "INDIVIDUAL") {
+			setCateSwitch("jobs");
+		} else {
+			setCateSwitch("profiles");
+		}
+	}, [userStatus.role]);
 
-    return (
-        <>
-            <section className="min-h-screen mb-10">
-                <div className="container mx-auto w-full">
-                    {cateSwitch && (
-                        <FilterButtons setFilter={setFilter} filter={filter} />
-                    )}
+	return (
+		<>
+			<section className="min-h-screen mb-10">
+				<div className="container mx-auto w-full">
+					{cateSwitch && (
+						<FilterButtons
+							setFilter={setFilter}
+							filter={filter}
+						/>
+					)}
 
-                    <div className="flex justify-between items-center mt-12">
-                        <SearchContainer
-                            setIsOpent={setOpenFilter}
-                            onSearch={setSearchTerm}
-                            isOpen={openFilter}
-                            setLoading={setLoading}
-                            cateSwitch={cateSwitch}
-                            setCateSwitch={setCateSwitch}
-                        />
-                    </div>
+					<div className="flex justify-between items-center mt-12">
+						<SearchContainer
+							setIsOpent={setOpenFilter}
+							onSearch={setSearchTerm}
+							isOpen={openFilter}
+							setLoading={setLoading}
+							cateSwitch={cateSwitch}
+							setCateSwitch={setCateSwitch}
+						/>
+					</div>
 
-                    {cateSwitch === "jobs" ? (
-                        <JobFilterDropdown
-                            isOpen={openFilter}
-                            onFilterChange={handleJobFilterChange}
-                            jobs={data}
-                        />
-                    ) : (
-                        <FilterDropdown
-                            isOpen={openFilter}
-                            onFilterChange={handleAdvancedFilterChange}
-                        />
-                    )}
+					{cateSwitch === "jobs" ? (
+						<JobFilterDropdown
+							isOpen={openFilter}
+							onFilterChange={handleJobFilterChange}
+							jobs={data}
+						/>
+					) : (
+						<FilterDropdown
+							isOpen={openFilter}
+							onFilterChange={handleAdvancedFilterChange}
+						/>
+					)}
 
-                    {loading && (
-                        <div className="w-full h-full py-20 flex justify-center items-center">
-                            <Loading
-                                dimensions={{
-                                    width: "80px",
-                                    height: "80px",
-                                }}
-                            />
-                        </div>
-                    )}
+					{loading && (
+						<div className="w-full h-full py-20 flex justify-center items-center">
+							<Loading
+								dimensions={{
+									width: "80px",
+									height: "80px",
+								}}
+							/>
+						</div>
+					)}
 
-                    {!loading && data.length === 0 && (
-                        <div className="w-full h-full py-20 flex justify-center items-center">
-                            <div className="text-center">
-                                <h1 className="text-2xl text-white-base font-bold font-display">
-                                    No{" "}
-                                    {userStatus.role === "INDIVIDUAL"
-                                        ? "jobs"
-                                        : "profiles"}{" "}
-                                    found
-                                </h1>
-                            </div>
-                        </div>
-                    )}
+					{!loading && data.length === 0 && (
+						<div className="w-full h-full py-20 flex justify-center items-center">
+							<div className="text-center">
+								<h1 className="text-2xl text-white-base font-bold font-display">
+									No {userStatus.role === "INDIVIDUAL" ? "jobs" : "profiles"} found
+								</h1>
+							</div>
+						</div>
+					)}
 
-                    {!loading &&
-                        data.length > 0 &&
-                        cateSwitch !== "" &&
-                        (cateSwitch === "jobs" ? (
-                            <div className="flex flex-col gap-5">
-                                {data.map((job) => (
-                                    <JobCard key={job.id} job={job} />
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-2 justify-items-center lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-10">
-                                {data.map((profile, idx) => (
-                                    <IndividualCard
-                                        profile={profile}
-                                        key={idx}
-                                        className={
-                                            filter === "MODEL"
-                                                ? ""
-                                                : "col-span-2 min-w-full max-h-[350px]"
-                                        }
-                                    />
-                                ))}
-                            </div>
-                        ))}
-                </div>
-            </section>
-            <Footer />
-        </>
-    );
+					{!loading &&
+						data.length > 0 &&
+						cateSwitch !== "" &&
+						(cateSwitch === "jobs" ? (
+							<div className="flex flex-col gap-5">
+								{data.map((job) => (
+									<JobCard
+										key={job.id}
+										job={job}
+									/>
+								))}
+							</div>
+						) : (
+							<div className="grid grid-cols-2 justify-items-center lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-10">
+								{data.map((profile, idx) => (
+									<IndividualCard
+										profile={profile}
+										key={idx}
+										className={filter === "MODEL" ? "" : "col-span-2 min-w-full max-h-[350px]"}
+									/>
+								))}
+							</div>
+						))}
+				</div>
+			</section>
+			<Footer />
+		</>
+	);
 };
 export default Explore;
