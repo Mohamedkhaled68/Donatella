@@ -1,368 +1,244 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import useCreateDeposit from "../../hooks/payments/useCreateDeposit";
+import { createPortal } from "react-dom";
 import toast from "react-hot-toast";
+import useCreateDeposit from "../../hooks/payments/useCreateDeposit";
+import { useI18n } from "../../hooks/useI18n";
 import { useUserStore } from "../../store/userStore";
-import { useNavigate } from "react-router-dom";
-import { baseUrl } from "../../utils/baseUrl";
 
 const DepositModal = ({ isOpen, onClose }) => {
-    const { userStatus } = useUserStore((state) => state);
-    const navigate = useNavigate();
-    const { mutateAsync: createDeposit, isPending } = useCreateDeposit();
-    const [formData, setFormData] = useState({
-        amount: "",
-        paymentMethod: "MADA", // Default to MADA (first payment option per Saudi Payments requirements)
-        email: userStatus?.verifiedEmail || "",
-        givenName: "",
-        surname: "",
-        street: "",
-        city: "",
-        state: "",
-        country: "SA",
-        postcode: "",
-        currency: "SAR",
-    });
+	const { t } = useI18n();
+	const { userStatus } = useUserStore((state) => state);
+	const { mutateAsync: createDeposit, isPending } = useCreateDeposit();
+	const [formData, setFormData] = useState({
+		amount: "",
+		paymentMethod: "MASTERCARD",
+		email: userStatus?.verifiedEmail || "",
+		givenName: "",
+		surname: "",
+		street: "",
+		city: "",
+		state: "",
+		country: "SA",
+		postcode: "",
+		currency: "USD",
+	});
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 
-        // Validate form data before submitting
-        const amountValue = parseFloat(formData.amount);
-        if (!formData.amount || amountValue <= 0) {
-            toast.error("Please enter a valid amount");
-            return;
-        }
-        
-        // Round amount to ensure whole numbers (xx.00) for test server
-        const roundedAmount = Math.round(amountValue * 100) / 100;
+		if (!formData.amount || parseFloat(formData.amount) <= 0) {
+			toast.error(t("payments.pleaseEnterValidAmount"));
+			return;
+		}
 
-        if (!formData.email || !formData.email.includes('@')) {
-            toast.error("Please enter a valid email address");
-            return;
-        }
+		try {
+			const response = await createDeposit({
+				...formData,
+				amount: parseFloat(formData.amount),
+			});
 
-        if (!formData.givenName || !formData.surname) {
-            toast.error("Please enter your full name");
-            return;
-        }
+			if (response?.status && response?.data?.id) {
+				// Redirect to payment iframe
+				const iframeUrl = `${window.location.origin}/api/v1/payments/iframe/${response.data.id}`;
+				window.open(iframeUrl, "_blank", "width=800,height=600");
+				toast.success(t("payments.redirectingToPayment"));
+				onClose();
+			} else {
+				toast.error(response?.message || t("payments.failedToCreateDeposit"));
+			}
+		} catch (error) {
+			toast.error(error?.message || t("payments.failedToCreateDeposit"));
+		}
+	};
 
-        if (!formData.street || !formData.city || !formData.state || !formData.postcode) {
-            toast.error("Please complete all billing address fields");
-            return;
-        }
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData((prev) => ({
+			...prev,
+			[name]: value,
+		}));
+	};
 
-        try {
-            const response = await createDeposit({
-                ...formData,
-                amount: roundedAmount,
-            });
+	const modalContent = (
+		<AnimatePresence>
+			{isOpen && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+					<motion.div
+						initial={{ opacity: 0, scale: 0.9 }}
+						animate={{ opacity: 1, scale: 1 }}
+						exit={{ opacity: 0, scale: 0.9 }}
+						className="bg-[#27292C] rounded-lg w-full max-w-md text-white flex flex-col max-h-[90vh]"
+					>
+						<div className="flex justify-between items-center p-6 pb-4 flex-shrink-0">
+							<h2 className="text-2xl font-bold">{t("payments.depositFunds")}</h2>
+							<button
+								onClick={onClose}
+								className="text-gray-400 hover:text-white"
+							>
+								✕
+							</button>
+						</div>
 
-            if (response?.status && response?.data?.id) {
-                const checkoutId = response.data.id;
-                
-                // Store payment method in localStorage for callback page
-                localStorage.setItem(`paymentMethod_${checkoutId}`, formData.paymentMethod);
-                
-                // Redirect to payment iframe - use backend URL
-                // Extract base URL from baseUrl (remove /api/v1)
-                const backendBaseUrl = baseUrl.replace('/api/v1', '');
-                const iframeUrl = `${backendBaseUrl}/api/v1/payments/iframe/${checkoutId}`;
-                const paymentWindow = window.open(
-                    iframeUrl,
-                    "_blank",
-                    "width=800,height=600,scrollbars=yes"
-                );
+						<div className="overflow-y-auto px-6 flex-1">
+							<form
+								onSubmit={handleSubmit}
+								className="space-y-4 pb-4"
+							>
+								<div>
+									<label className="block text-sm font-medium mb-2">{t("payments.amountDollars")}</label>
+									<input
+										type="number"
+										name="amount"
+										value={formData.amount}
+										onChange={handleChange}
+										min="1"
+										step="0.01"
+										required
+										className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
+										placeholder={t("payments.enterAmount")}
+									/>
+								</div>
 
-                if (!paymentWindow) {
-                    toast.error("Please allow popups to proceed with payment");
-                    return;
-                }
+								<div>
+									<label className="block text-sm font-medium mb-2">{t("payments.paymentMethod")}</label>
+									<select
+										name="paymentMethod"
+										value={formData.paymentMethod}
+										onChange={handleChange}
+										required
+										className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
+									>
+										<option value="MASTERCARD">Mastercard</option>
+										<option value="VISA">Visa</option>
+										<option value="MADA">MADA</option>
+									</select>
+								</div>
 
-                // Monitor if payment window is closed
-                const checkClosed = setInterval(() => {
-                    if (paymentWindow.closed) {
-                        clearInterval(checkClosed);
-                        // Navigate to callback page to check status
-                        navigate(`/payments/callback/${checkoutId}?status=pending`);
-                    }
-                }, 1000);
+								<div>
+									<label className="block text-sm font-medium mb-2">{t("payments.email")}</label>
+									<input
+										type="email"
+										name="email"
+										value={formData.email}
+										onChange={handleChange}
+										required
+										className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
+									/>
+								</div>
 
-                toast.success("Redirecting to payment...");
-                onClose();
-            } else {
-                // Ensure message is a string, not an object
-                const errorMsg = typeof response?.message === 'string' 
-                    ? response.message 
-                    : "Failed to create deposit";
-                toast.error(errorMsg);
-                console.error("Deposit creation failed:", response);
-            }
-        } catch (error) {
-            // Extract error message properly - handle object responses
-            let errorMessage = "Failed to create deposit. Please try again.";
-            
-            // Check if the error response has a data.message (from our backend)
-            if (error?.response?.data?.data?.message) {
-                const msg = error.response.data.data.message;
-                errorMessage = typeof msg === 'string' ? msg : JSON.stringify(msg);
-            } else if (error?.response?.data?.message) {
-                const msg = error.response.data.message;
-                errorMessage = typeof msg === 'string' ? msg : JSON.stringify(msg);
-            } else if (error?.message) {
-                errorMessage = typeof error.message === 'string' ? error.message : String(error.message);
-            }
-            
-            toast.error(errorMessage);
-            console.error("Deposit error:", error);
-        }
-    };
+								<div className="grid grid-cols-2 gap-4">
+									<div>
+										<label className="block text-sm font-medium mb-2">{t("payments.firstName")}</label>
+										<input
+											type="text"
+											name="givenName"
+											value={formData.givenName}
+											onChange={handleChange}
+											required
+											className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
+										/>
+									</div>
+									<div>
+										<label className="block text-sm font-medium mb-2">{t("payments.lastName")}</label>
+										<input
+											type="text"
+											name="surname"
+											value={formData.surname}
+											onChange={handleChange}
+											required
+											className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
+										/>
+									</div>
+								</div>
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
+								<div>
+									<label className="block text-sm font-medium mb-2">{t("payments.streetAddress")}</label>
+									<input
+										type="text"
+										name="street"
+										value={formData.street}
+										onChange={handleChange}
+										required
+										className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
+									/>
+								</div>
 
-    if (!isOpen) return null;
+								<div className="grid grid-cols-2 gap-4">
+									<div>
+										<label className="block text-sm font-medium mb-2">{t("payments.city")}</label>
+										<input
+											type="text"
+											name="city"
+											value={formData.city}
+											onChange={handleChange}
+											required
+											className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
+										/>
+									</div>
+									<div>
+										<label className="block text-sm font-medium mb-2">{t("payments.state")}</label>
+										<input
+											type="text"
+											name="state"
+											value={formData.state}
+											onChange={handleChange}
+											required
+											className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
+										/>
+									</div>
+								</div>
 
-    return (
-        <AnimatePresence>
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    className="bg-[#27292C] rounded-lg p-6 w-full max-w-md text-white"
-                >
-                    <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-2xl font-bold">Deposit Funds</h2>
-                        <button
-                            onClick={onClose}
-                            className="text-gray-400 hover:text-white"
-                        >
-                            ✕
-                        </button>
-                    </div>
+								<div className="grid grid-cols-2 gap-4">
+									<div>
+										<label className="block text-sm font-medium mb-2">{t("payments.postalCode")}</label>
+										<input
+											type="text"
+											name="postcode"
+											value={formData.postcode}
+											onChange={handleChange}
+											required
+											className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
+										/>
+									</div>
+									<div>
+										<label className="block text-sm font-medium mb-2">{t("payments.country")}</label>
+										<input
+											type="text"
+											name="country"
+											value={formData.country}
+											onChange={handleChange}
+											required
+											className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
+										/>
+									</div>
+								</div>
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <div>
-                            <label className="block text-sm font-medium mb-2">
-                                Payment Method
-                            </label>
-                            <div className="space-y-2">
-                                {/* MADA - First option per Saudi Payments requirements */}
-                                <label className="flex items-center p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 transition">
-                                    <input
-                                        type="radio"
-                                        name="paymentMethod"
-                                        value="MADA"
-                                        checked={formData.paymentMethod === "MADA"}
-                                        onChange={handleChange}
-                                        className="mr-3"
-                                    />
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-12 h-8 bg-gradient-to-r from-green-600 to-green-700 rounded flex items-center justify-center text-white font-bold text-xs">
-                                            MADA
-                                        </div>
-                                        <span className="text-white">MADA</span>
-                                    </div>
-                                </label>
-                                
-                                {/* VISA */}
-                                <label className="flex items-center p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 transition">
-                                    <input
-                                        type="radio"
-                                        name="paymentMethod"
-                                        value="VISA"
-                                        checked={formData.paymentMethod === "VISA"}
-                                        onChange={handleChange}
-                                        className="mr-3"
-                                    />
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-12 h-8 bg-blue-600 rounded flex items-center justify-center">
-                                            <span className="text-white font-bold text-xs">VISA</span>
-                                        </div>
-                                        <span className="text-white">VISA</span>
-                                    </div>
-                                </label>
-                                
-                                {/* MASTER */}
-                                <label className="flex items-center p-3 bg-[#1a1a1a] border border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 transition">
-                                    <input
-                                        type="radio"
-                                        name="paymentMethod"
-                                        value="MASTERCARD"
-                                        checked={formData.paymentMethod === "MASTERCARD"}
-                                        onChange={handleChange}
-                                        className="mr-3"
-                                    />
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-12 h-8 bg-gradient-to-r from-red-500 to-orange-500 rounded flex items-center justify-center">
-                                            <span className="text-white font-bold text-xs">MC</span>
-                                        </div>
-                                        <span className="text-white">MasterCard</span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
+								<div className="flex gap-4 pt-4">
+									<button
+										type="button"
+										onClick={onClose}
+										className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition"
+									>
+										{t("payments.cancel")}
+									</button>
+									<button
+										type="submit"
+										disabled={isPending}
+										className="flex-1 bg-blue-primary hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition disabled:opacity-50"
+									>
+										{isPending ? t("payments.processing") : t("payments.continueToPayment")}
+									</button>
+								</div>
+							</form>
+						</div>
+					</motion.div>
+				</div>
+			)}
+		</AnimatePresence>
+	);
 
-                        <div>
-                            <label className="block text-sm font-medium mb-2">
-                                Amount (SAR)
-                            </label>
-                            <input
-                                type="number"
-                                name="amount"
-                                value={formData.amount}
-                                onChange={handleChange}
-                                min="1"
-                                step="1"
-                                required
-                                className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
-                                placeholder="Enter amount (whole numbers only)"
-                            />
-                            <p className="text-xs text-gray-400 mt-1">Amount should be in whole numbers (e.g., 100.00)</p>
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium mb-2">
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                                className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
-                            />
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium mb-2">
-                                    First Name
-                                </label>
-                                <input
-                                    type="text"
-                                    name="givenName"
-                                    value={formData.givenName}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium mb-2">
-                                    Last Name
-                                </label>
-                                <input
-                                    type="text"
-                                    name="surname"
-                                    value={formData.surname}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium mb-2">
-                                Street Address
-                            </label>
-                            <input
-                                type="text"
-                                name="street"
-                                value={formData.street}
-                                onChange={handleChange}
-                                required
-                                className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
-                            />
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium mb-2">
-                                    City
-                                </label>
-                                <input
-                                    type="text"
-                                    name="city"
-                                    value={formData.city}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium mb-2">
-                                    State
-                                </label>
-                                <input
-                                    type="text"
-                                    name="state"
-                                    value={formData.state}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium mb-2">
-                                    Postal Code
-                                </label>
-                                <input
-                                    type="text"
-                                    name="postcode"
-                                    value={formData.postcode}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium mb-2">
-                                    Country
-                                </label>
-                                <input
-                                    type="text"
-                                    name="country"
-                                    value={formData.country}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full bg-[#1a1a1a] border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="flex gap-4 pt-4">
-                            <button
-                                type="button"
-                                onClick={onClose}
-                                className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                type="submit"
-                                disabled={isPending}
-                                className="flex-1 bg-blue-primary hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition disabled:opacity-50"
-                            >
-                                {isPending ? "Processing..." : "Continue to Payment"}
-                            </button>
-                        </div>
-                    </form>
-                </motion.div>
-            </div>
-        </AnimatePresence>
-    );
+	return createPortal(modalContent, document.body);
 };
 
 export default DepositModal;
