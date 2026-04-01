@@ -1,0 +1,1346 @@
+{
+  "constants": {
+    "language": {
+      "AR": "العربية",
+      "EN": "الانجليزية"
+    },
+    "currency": "﷼"
+  },
+  "hero": {
+    "title": "التقط قصتك",
+    "description": "ليس لأن العالم يقول لك ذلك، بل لأنه كان دائماً داخلك",
+    "login": "تسجيل الدخول",
+    "getStarted": "ابدأ الآن"
+  },
+  "models": {
+    "men": {
+      "title": "رجال",
+      "description": "أظهر قوتك وثقتك في كل وضعية.",
+      "button": "عارض كرجل"
+    },
+    "women": {
+      "title": "نساء",
+      "description": "جسّدي الأناقة، احتفلي بتفردك.",
+      "button": "عارضة كامرأة"
+    },
+    "talent": {
+      "title": "المواهب",
+      "description": "أبرز إبداعك وخبرتك كمصور فيديو أو مصور فوتوغرافي أو محرر موهوب.",
+      "findProfessionals": "اعثر على أفضل المحترفين في الصناعة",
+      "connectingText": "نربط مؤسستك بأفضل المواهب في الصناعة عبر 10 قطاعات إبداعية، حيث تعمل منصتنا على تبسيط عملية التوظيف لمساعدتك في العثور على الخبراء المثاليين لمشاريعك واحتياجات عملك",
+      "lookForTalent": "ابحث عن المواهب",
+      "signUpAsTalent": "سجل كموهبة",
+      "mobileNote": "تسجيل الدخول متاح حالياً على سطح المكتب فقط"
+    },
+    "alreadyLoggedIn": "أنت مسجل دخول بالفعل"
+  },
+  "instructions": {
+    "title": "كيف يعمل:",
+    "steps": [
+      {
+        "title": "أنشئ حسابك",
+        "description": "سجل بسهولة من خلال تقديم معلوماتك وإنشاء ملف تعريف يعرض مهاراتك ومحفظتك.",
+        "button": "إنشاء حساب"
+      },
+      {
+        "title": "تقدم للوظائف",
+        "description": "تصفح المشاريع المتاحة، وقدم طلبات للفرص التي تتناسب مع مواهبك، وأبرز مؤهلاتك.",
+        "button": "تقدم للوظائف"
+      },
+      {
+        "title": "احصل على أجرك من خلالنا",
+        "description": "بعد إكمال المشروع، احصل على دفعة آمنة من خلال منصتنا، واستمتع بمرونة العمل وفقاً لشروطك.",
+        "button": "ابدأ الآن"
+      }
+    ],
+    "alreadyLoggedIn": "أنت مسجل دخول بالفعل"
+  },
+  "footer": {
+    "allRightsReserved": "جميع الحقوق محفوظة",
+    "findUsAt": "تابعنا على:",
+    "links": {
+      "aboutUs": "من نحن",
+      "privacyPolicy": "سياسة الخصوصية",
+      "services": "الخدمات",
+      "contactUs": "اتصل بنا"
+    }
+  },
+  "sidebar": {
+    "links": {
+      "about": "من نحن",
+      "services": "الخدمات",
+      "contact": "اتصل بنا",
+      "privacyPolicy": "سياسة الخصوصية"
+    },
+    "mobileNote": "إدارة الحساب متاحة فقط من خلال سطح المكتب في الوقت الحالي."
+  },
+  "aboutUs": {
+    "title": "من نحن",
+    "subtitle": "تعرف على رحلتنا.",
+    "vision": {
+      "title": "الرؤية",
+      "content": "إعادة تعريف المشهد الإبداعي في المملكة العربية السعودية من خلال تمكين المواهب وإلهام التميز الفني."
+    },
+    "mission": {
+      "title": "المهمة",
+      "content": "ربط الباحثين عن المواهب مع أفضل المحترفين في منصة آمنة للتعاون السلس، ورفع معايير الإنتاج الإعلامي واختيار المواهب عالمياً."
+    },
+    "values": {
+      "title": "القيم",
+      "items": [
+        "التميز الفني: تعزيز الإبداع والابتكار.",
+        "الريادة الفاخرة: تقديم خدمات مواهب مخصصة وفاخرة.",
+        "التأثير التحويلي: تمكين المواهب للحصول على اعتراف عالمي.",
+        "الابتكار الثقافي: ربط التراث بالحداثة لسرد قصص أصيلة."
+      ]
+    },
+    "promise": {
+      "title": "وعد",
+      "toTalents": "للمواهب: \"نحن نرعى إمكاناتك، ونقدم الأدوات والإرشاد والفرص لتحويلك إلى رمز للتميز.\"",
+      "toClients": "للعملاء: \"نحن نوائم الإبداع مع الاستراتيجية، ونقدم مواهب متميزة وحلول مخصصة لجودة لا مثيل لها.\""
+    },
+    "whyUs": {
+      "title": "لماذا نحن؟",
+      "items": [
+        "منصة آمنة مع مواهب من الدرجة الأولى.",
+        "حرية إبداعية وعمليات سلسة.",
+        "موثوق به من قبل المواهب والمؤسسات على حد سواء."
+      ]
+    }
+  },
+  "services": {
+    "title": "الخدمات",
+    "subtitle": "أعد تعريف الإبداع والتميز.",
+    "categories": [
+      {
+        "title": "عرض الأزياء",
+        "slogan": "اجعل رؤيتك حقيقة مع مواهب استثنائية",
+        "orgBtn": "ابحث عن عارضك القادم",
+        "userBtn": "انضم كعارض"
+      },
+      {
+        "title": "التصوير الفوتوغرافي",
+        "slogan": "التقط كل لحظة بدقة وفن",
+        "orgBtn": "ابحث عن المصور القادم",
+        "userBtn": "انضم كمصور"
+      },
+      {
+        "title": "تصوير الفيديو",
+        "slogan": "اصنع قصصاً ديناميكية من خلال تصوير فيديو مذهل",
+        "orgBtn": "ابحث عن مصور الفيديو القادم",
+        "userBtn": "انضم كمصور فيديو"
+      },
+      {
+        "title": "المونتاج",
+        "slogan": "أتقن كل التفاصيل مع ما بعد الإنتاج الخبير",
+        "orgBtn": "ابحث عن المحرر القادم",
+        "userBtn": "انضم كمحرر"
+      },
+      {
+        "title": "السياحة",
+        "slogan": "استكشف العالم مع أفضل المرشدين",
+        "orgBtn": "ابحث عن مرشدك السياحي القادم",
+        "userBtn": "انضم كمرشد سياحي"
+      },
+      {
+        "title": "الفنون البصرية",
+        "slogan": "إحياء الإبداع، ضربة واحدة في كل مرة",
+        "orgBtn": "ابحث عن الفنان البصري القادم",
+        "userBtn": "انضم كفنان بصري"
+      },
+      {
+        "title": "الموسيقى",
+        "slogan": "خلق ألحان تلهم الروح",
+        "orgBtn": "ابحث عن الموسيقي القادم",
+        "userBtn": "انضم كموسيقي"
+      },
+      {
+        "title": "الموضة",
+        "slogan": "إعادة تعريف الأسلوب، اتجاه واحد في كل مرة",
+        "orgBtn": "ابحث عن خبير الموضة القادم",
+        "userBtn": "انضم كخبير موضة"
+      },
+      {
+        "title": "الجمال",
+        "slogan": "تعزيز الجمال بلمسة خبيرة",
+        "orgBtn": "ابحث عن خبير الجمال القادم",
+        "userBtn": "انضم كخبير جمال"
+      },
+      {
+        "title": "الرياضيون",
+        "slogan": "دفع الحدود، تحقيق العظمة",
+        "orgBtn": "ابحث عن الرياضي القادم",
+        "userBtn": "انضم كرياضي"
+      }
+    ]
+  },
+  "contact": {
+    "title": "اتصل بنا",
+    "subtitle": "تواصل معنا.",
+    "phone": "الهاتف:",
+    "email": "البريد الإلكتروني:",
+    "headquarters": "المقر الرئيسي:"
+  },
+  "navbar": {
+    "messages": "الرسائل",
+    "payments": "المدفوعات",
+    "explore": "استكشف",
+    "profile": "الملف الشخصي"
+  },
+  "dropMenu": {
+    "logout": "تسجيل الخروج",
+    "changeEmail": "تغيير عنوان البريد الإلكتروني",
+    "changePassword": "تغيير كلمة المرور",
+    "changeLanguage": "اللغة"
+  },
+  "app": {
+    "onboarding": {
+      "title": "لم تكمل عملية التسجيل",
+      "message": "يرجى إكمال عملية التسجيل للمتابعة",
+      "cancel": "إلغاء",
+      "complete": "إكمال"
+    }
+  },
+  "signup": {
+    "mobileOnly": "سطح المكتب فقط: هذه الميزة غير متاحة على الأجهزة المحمولة.",
+    "title": "ادخل إلى دائرة الضوء",
+    "subtitle": "أنشئ ملفك الشخصي اليوم وافتح الباب أمام فرص جديدة ومثيرة.",
+    "organization": "مؤسسة",
+    "individual": "فرد",
+    "organizationTooltip": "سجل الدخول كمؤسسة لتوظيف أفضل المواهب في مختلف المجالات لوظيفتك أو مشروعك.",
+    "individualTooltip": "سجل الدخول كفرد لعرض موهبتك، والتواصل مع الشركات، وإطلاق مسيرتك المهنية على منصة موثوقة."
+  },
+  "login": {
+    "mobileOnly": "سطح المكتب فقط: هذه الميزة غير متاحة على الأجهزة المحمولة.",
+    "title": "من الجيد رؤيتك مرة أخرى",
+    "subtitle": "مرحباً بعودتك! لنعود إلى رحلتك الإبداعية.",
+    "loginAs": "تسجيل الدخول كـ:",
+    "organization": "مؤسسة",
+    "individual": "فرد",
+    "organizationTooltip": "سجل الدخول كمؤسسة لتوظيف أفضل المواهب في مختلف المجالات لوظيفتك أو مشروعك.",
+    "individualTooltip": "سجل الدخول كفرد لعرض موهبتك، والتواصل مع الشركات، وإطلاق مسيرتك المهنية على منصة موثوقة.",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "emailPlaceholder": "مثال: davon@mail.com",
+    "passwordPlaceholder": "********",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "loginButton": "تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟",
+    "createAccount": "إنشاء حساب مجاني",
+    "loggingIn": "جاري تسجيل الدخول...",
+    "loginSuccess": "تم تسجيل الدخول بنجاح!",
+    "loginError": "فشل تسجيل الدخول! يرجى التحقق من بيانات الاعتماد الخاصة بك."
+  },
+  "verifyingPage": {
+    "title": "أدخل رمز التحقق",
+    "subtitle": "مرحباً بعودتك! لنعود إلى رحلتك الإبداعية.",
+    "didntReceive": "لم تستلم الرمز بعد؟",
+    "clickHere": "انقر هنا لطلب رمز آخر!",
+    "resending": "جاري إعادة الإرسال...",
+    "resentSuccess": "تم إعادة الإرسال بنجاح!",
+    "resentError": "فشل إعادة الإرسال.",
+    "verifySuccess": "تم التحقق من رمز OTP بنجاح!",
+    "verifyError": "فشل التحقق من رمز OTP."
+  },
+  "verifyForgotOTP": {
+    "title": "أدخل رمز التحقق المرسل إلى البريد الإلكتروني:",
+    "didntReceive": "لم تستلم الرمز بعد؟",
+    "clickHere": "انقر هنا لطلب رمز آخر!",
+    "resending": "جاري إعادة الإرسال...",
+    "resentSuccess": "تم إعادة الإرسال بنجاح!",
+    "resentError": "فشل إعادة الإرسال.",
+    "verifyError": "فشل التحقق من رمز OTP."
+  },
+  "forgotPassword": {
+    "emailTitle": "أدخل عنوان بريدك الإلكتروني:",
+    "passwordTitle": "أدخل كلمة المرور الجديدة:",
+    "emailPlaceholder": "أدخل عنوان البريد الإلكتروني",
+    "passwordPlaceholder": "أدخل كلمة المرور الجديدة",
+    "requestOTP": "طلب رمز التحقق",
+    "changePassword": "تغيير كلمة المرور",
+    "enterValidEmail": "أدخل بريد إلكتروني صالح.",
+    "enterValidPassword": "أدخل كلمة مرور صالحة.",
+    "requestOTPError": "فشل طلب رمز التحقق.",
+    "changePasswordSuccess": "تم تغيير كلمة المرور بنجاح!",
+    "changePasswordError": "فشل تغيير كلمة المرور."
+  },
+  "privacy": {
+    "title": "الخصوصية",
+    "subtitle": "ثقتك هي أولويتنا.",
+    "policyTitle": "السياسة",
+    "intro": "في دوناتيلا، نقدر خصوصيتك ونلتزم بحماية معلوماتك الشخصية.",
+    "intro2": "توضح سياسة الخصوصية هذه كيفية جمع واستخدام ومشاركة وحماية معلوماتك عند استخدام منصتنا. باستخدام خدماتنا، فإنك توافق على الممارسات الموضحة في هذه السياسة.",
+    "sections": [
+      {
+        "head": "1. المعلومات التي نجمعها",
+        "des": "نجمع الأنواع التالية من المعلومات لتقديم وتحسين خدماتنا:",
+        "points": [
+          "المعلومات الشخصية: الاسم وعنوان البريد الإلكتروني ورقم الهاتف والعنوان الفعلي. معلومات الدفع والفواتير (مثل تفاصيل البنك أو معلومات بطاقة الائتمان).",
+          "معلومات الملف الشخصي: الصور وتفاصيل المحفظة والمهارات والخبرة التي تختار مشاركتها في ملفك الشخصي. التفضيلات المتعلقة بخدمات المواهب أو المشاريع.",
+          "بيانات الاستخدام: بيانات السجل مثل عنوان IP ونوع المتصفح ونظام التشغيل وأوقات الوصول. الإجراءات المتخذة على المنصة، مثل عمليات البحث والرسائل وتفاعلات المشروع.",
+          "الاتصالات: الرسائل والاستفسارات وطلبات الدعم المرسلة عبر المنصة."
+        ]
+      },
+      {
+        "head": "2. كيف نستخدم معلوماتك",
+        "des": "نستخدم المعلومات التي نجمعها للأغراض التالية:",
+        "points": [
+          "لتقديم الخدمات: مطابقة المواهب مع العملاء وتسهيل التعاون في المشاريع.",
+          "لتحسين تجربة المستخدم: تحسين وظائف وسهولة استخدام منصتنا.",
+          "للتواصل معك: إرسال التحديثات والرد على الاستفسارات ومشاركة المواد الترويجية.",
+          "لضمان الأمان: الكشف عن الأنشطة الاحتيالية أو غير المصرح بها ومنعها.",
+          "للامتثال للالتزامات القانونية: تلبية المتطلبات القانونية والتنظيمية."
+        ]
+      },
+      {
+        "head": "3. مشاركة معلوماتك",
+        "des": "نشارك معلوماتك فقط عند الضرورة وكما هو موضح أدناه:",
+        "points": [
+          "مع العملاء أو المواهب: لتسهيل المشاريع، قد تكون الملفات الشخصية مرئية للعملاء أو المواهب حسب إعدادات المنصة.",
+          "مقدمو الخدمات: مع مقدمي خدمات خارجيين موثوقين يساعدوننا في تشغيل منصتنا (مثل معالجات الدفع وخدمات الاستضافة).",
+          "المتطلبات القانونية: عند الحاجة للامتثال للقوانين أو اللوائح أو العمليات القانونية.",
+          "التحويلات التجارية: في حالة الاندماج أو الاستحواذ أو بيع أصول الشركة."
+        ]
+      },
+      {
+        "head": "4. خياراتك وحقوقك",
+        "des": "لديك الحقوق التالية فيما يتعلق بمعلوماتك الشخصية:",
+        "points": [
+          "الوصول والتحديث: مراجعة وتحديث معلومات ملفك الشخصي من خلال حسابك.",
+          "حذف حسابك: طلب حذف الحساب عن طريق الاتصال بنا على [أدخل البريد الإلكتروني للاتصال].",
+          "إلغاء الاشتراك: إلغاء الاشتراك من الاتصالات الترويجية في أي وقت.",
+          "تقييد استخدام البيانات: تحديد كيفية معالجة معلوماتك في ظروف معينة."
+        ]
+      },
+      {
+        "head": "5. أمان البيانات",
+        "points": [
+          "نطبق تدابير أمنية قياسية في الصناعة لحماية بياناتك. ومع ذلك، لا يوجد نظام آمن تماماً. يرجى إخطارنا فوراً إذا كنت تشك في وصول غير مصرح به إلى حسابك."
+        ]
+      },
+      {
+        "head": "6. ملفات تعريف الارتباط وتقنيات التتبع",
+        "points": [
+          "نستخدم ملفات تعريف الارتباط والتقنيات المماثلة لتحسين تجربة التصفح الخاصة بك وتحليل أداء المنصة وتقديم محتوى مخصص.",
+          "يمكنك إدارة تفضيلات ملفات تعريف الارتباط من خلال إعدادات المتصفح الخاص بك."
+        ]
+      },
+      {
+        "head": "7. روابط الطرف الثالث",
+        "points": [
+          "قد تحتوي منصتنا على روابط لمواقع ويب تابعة لجهات خارجية.",
+          "نحن لسنا مسؤولين عن ممارسات الخصوصية أو محتوى هذه المواقع الخارجية."
+        ]
+      },
+      {
+        "head": "8. خصوصية الأطفال",
+        "points": [
+          "منصتنا غير مخصصة للأفراد الذين تقل أعمارهم عن 18 عاماً.",
+          "نحن لا نجمع معلومات شخصية من القصر عن علم."
+        ]
+      },
+      {
+        "head": "9. التغييرات على سياسة الخصوصية هذه",
+        "points": [
+          "قد نقوم بتحديث هذه السياسة من وقت لآخر.",
+          "سيتم إبلاغ التغييرات الكبيرة عبر البريد الإلكتروني أو إشعار على منصتنا."
+        ]
+      }
+    ]
+  },
+  "explore": {
+    "filters": {
+      "modeling": "عرض الأزياء",
+      "videographing": "تصوير الفيديو",
+      "photographing": "التصوير الفوتوغرافي",
+      "photoVideoEditing": "المونتاج والتحرير",
+      "tourismHistoricalAdvising": "السياحة والإرشاد التاريخي",
+      "musicSoundEngineering": "الموسيقى والهندسة الصوتية",
+      "athleteicFitnessCoaching": "التدريب الرياضي واللياقة البدنية",
+      "beautyCosmetics": "الجمال ومستحضرات التجميل",
+      "visualArtingDesign": "الفنون البصرية والتصميم",
+      "fashionDesign": "تصميم الأزياء",
+      "filters": "الفلاتر",
+      "gender": "الجنس",
+      "male": "ذكر",
+      "female": "أنثى",
+      "other": "آخر",
+      "hairColor": "لون الشعر",
+      "black": "أسود",
+      "brown": "بني",
+      "blonde": "أشقر",
+      "red": "أحمر",
+      "tone": "اللون",
+      "light": "فاتح",
+      "medium": "متوسط",
+      "dark": "داكن",
+      "eyeColor": "لون العين",
+      "blue": "أزرق",
+      "green": "أخضر",
+      "hazel": "عسلي",
+      "shoeSize": "مقاس الحذاء",
+      "dressSize": "مقاس الفستان",
+      "proposalStatus": "حالة العرض",
+      "pending": "قيد الانتظار",
+      "approved": "موافق عليه",
+      "rejected": "مرفوض",
+      "finished": "منتهي",
+      "jobStatus": "حالة الوظيفة",
+      "open": "مفتوح",
+      "closed": "مغلق",
+      "accepted": "مقبول",
+      "allOrganizations": "جميع المؤسسات",
+      "jobName": "اسم الوظيفة"
+    },
+    "tags": {
+      "tags": "الوسوم",
+      "typeAndPressEnter": "اكتب واضغط Enter",
+      "cancel": "إلغاء",
+      "addTag": "إضافة وسم +",
+      "tagMustIncludeCharacters": "يجب أن يحتوي الوسم على أحرف"
+    },
+    "customSelect": {
+      "jobs": "الوظائف",
+      "profiles": "الملفات الشخصية"
+    },
+    "search": {
+      "searchForJobs": "البحث عن وظائف",
+      "searchForModel": "ابحث عن عارض تريد توظيفه",
+      "search": "بحث"
+    }
+  },
+  "messages": {
+    "welcome": "مرحباً بك في دردشة دوناتيلا",
+    "welcomeDescription": "ابق على اتصال مع أصدقائك وزملائك في منصة واحدة سلسة. ابدأ محادثات ذات مغزى، وشارك التحديثات، واجعل كل تفاعل مهماً.",
+    "online": "متصل",
+    "typeYourMessage": "اكتب رسالتك...",
+    "noMessagesYet": "لا توجد رسائل بعد",
+    "startConversation": "ابدأ محادثة لترى دردشاتك هنا",
+    "newContract": "عقد جديد:",
+    "costToBeNegotiated": "التكلفة قابلة للتفاوض",
+    "proposed": "مقترح",
+    "decline": "رفض",
+    "accept": "قبول",
+    "finishJob": "إنهاء الوظيفة",
+    "jobAcceptedSuccessfully": "تم قبول الوظيفة بنجاح!",
+    "jobRejectedSuccessfully": "تم رفض الوظيفة بنجاح!",
+    "jobFinishedSuccessfully": "تم إنهاء الوظيفة بنجاح!",
+    "failedToSendMessage": "فشل في إرسال الرسالة.",
+    "allJobs": "جميع الوظائف",
+    "search": "بحث...",
+    "reviewClient": "تقييم العميل:",
+    "sendingReviewWarning": "سيؤدي إرسال التقييم إلى تحديد الدفع على أنه مكتمل، وإغلاق وإنهاء العقد.",
+    "back": "رجوع",
+    "acceptAndReview": "قبول وتقييم",
+    "pleaseAddCommentAndRate": "يرجى إضافة تعليق وتقييم العميل!",
+    "reviewSentSuccessfully": "تم إرسال التقييم بنجاح!",
+    "failedToSendReview": "فشل في إرسال التقييم."
+  },
+  "notifications": {
+    "notifications": "الإشعارات",
+    "loadingNotifications": "جاري تحميل الإشعارات...",
+    "noNotificationsYet": "لا توجد إشعارات بعد",
+    "justNow": "الآن",
+    "minutesAgo": "د",
+    "hoursAgo": "س",
+    "daysAgo": "ي"
+  },
+  "payments": {
+    "paymentsDetails": "تفاصيل المدفوعات",
+    "projectsCompleted": "المشاريع المنجزة",
+    "totalEarnings": "إجمالي الأرباح",
+    "availableToWithdraw": "المتاح للسحب",
+    "pending": "قيد الانتظار",
+    "deposit": "إيداع",
+    "withdraw": "سحب",
+    "jobHistory": "سجل الوظائف",
+    "filters": "الفلاتر",
+    "allStatuses": "جميع الحالات",
+    "searchByJobName": "البحث باسم الوظيفة...",
+    "loadingJobHistory": "جاري تحميل سجل الوظائف...",
+    "salary": "الراتب",
+    "costNegotiable": "التكلفة: قابلة للتفاوض",
+    "duration": "المدة",
+    "viewJob": "عرض الوظيفة",
+    "noJobsIndividual": "أي وظائف تتقدم لها في المستقبل ستظهر هنا.",
+    "noJobsOrganization": "أي وظائف تنشرها في المستقبل ستظهر هنا.",
+    "previous": "السابق",
+    "next": "التالي",
+    "page": "صفحة",
+    "of": "من",
+    "paymentHistory": "سجل المدفوعات",
+    "withdrawal": "سحب",
+    "withdrawalRequests": "طلبات السحب",
+    "withdrawalRequest": "طلب السحب",
+    "ibanLabel": "رقم الآيبان",
+    "clickToViewDetails": "انقر لعرض التفاصيل والسجل",
+    "withdrawalDetails": "تفاصيل السحب",
+    "amount": "المبلغ",
+    "status": "الحالة",
+    "iban": "رقم الآيبان",
+    "accountName": "اسم الحساب",
+    "transactionHistory": "سجل المعاملات",
+    "noTransactionHistory": "لا يوجد سجل معاملات متاح",
+    "close": "إغلاق",
+    "statusChanged": "تغيرت الحالة",
+    "amountChanged": "تغير المبلغ",
+    "processedAmountUpdated": "تم تحديث المبلغ المعالج",
+    "adminNotesAdded": "تمت إضافة ملاحظات المسؤول",
+    "withdrawalProcessed": "تمت معالجة السحب",
+    "withdrawalRejected": "تم رفض السحب",
+    "depositFunds": "إيداع الأموال",
+    "amountDollars": "المبلغ ($)",
+    "enterAmount": "أدخل المبلغ",
+    "paymentMethod": "طريقة الدفع",
+    "email": "البريد الإلكتروني",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "streetAddress": "عنوان الشارع",
+    "city": "المدينة",
+    "state": "الولاية",
+    "postalCode": "الرمز البريدي",
+    "country": "البلد",
+    "cancel": "إلغاء",
+    "continueToPayment": "المتابعة إلى الدفع",
+    "processing": "جاري المعالجة...",
+    "redirectingToPayment": "إعادة التوجيه إلى الدفع...",
+    "pleaseEnterValidAmount": "يرجى إدخال مبلغ صالح",
+    "failedToCreateDeposit": "فشل في إنشاء الإيداع",
+    "requestWithdrawal": "طلب سحب",
+    "availableBalance": "الرصيد المتاح",
+    "minimumMaximum": "الحد الأدنى: $50 | الحد الأقصى: $50,000",
+    "enterAmountRange": "أدخل المبلغ ($50 - $50,000)",
+    "amountExceedsBalance": "المبلغ يتجاوز الرصيد المتاح",
+    "enterBankIban": "أدخل رقم الآيبان للحساب البنكي",
+    "accountHolderName": "اسم صاحب الحساب",
+    "enterAccountHolderName": "أدخل اسم صاحب الحساب",
+    "withdrawalReviewWarning": "سيتم مراجعة طلب السحب الخاص بك من قبل فريق الإدارة لدينا. عادة ما تستغرق المعالجة من 1 إلى 3 أيام عمل.",
+    "submitting": "جاري الإرسال...",
+    "submitRequest": "إرسال الطلب",
+    "minimumWithdrawalAmount": "الحد الأدنى لمبلغ السحب هو $50",
+    "maximumWithdrawalAmount": "الحد الأقصى لمبلغ السحب هو $50,000",
+    "insufficientBalance": "رصيد غير كافٍ",
+    "pleaseEnterAccountName": "يرجى إدخال اسم الحساب",
+    "withdrawalSubmittedSuccessfully": "تم تقديم طلب السحب بنجاح",
+    "failedToCreateWithdrawal": "فشل في إنشاء طلب السحب"
+  },
+  "onBoarding": {
+    "selectYourSpeciality": "اختر تخصصك",
+    "createProfileDescription": "أنشئ ملفك الشخصي اليوم وافتح الباب أمام فرص جديدة ومثيرة.",
+    "model": "عارض",
+    "videographer": "مصور فيديو",
+    "photographer": "مصور",
+    "editor": "محرر",
+    "tourGuide": "مرشد سياحي",
+    "beautician": "خبير تجميل",
+    "athlete": "رياضي",
+    "artist": "فنان",
+    "visualArtist": "فنان بصري",
+    "fashionista": "خبير موضة",
+    "musician": "موسيقي",
+    "next": "التالي",
+    "workExperience": "الخبرة العملية",
+    "jobTitle": "المسمى الوظيفي",
+    "enterJobTitle": "أدخل المسمى الوظيفي",
+    "company": "الشركة",
+    "enterCompanyName": "أدخل اسم الشركة",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ الانتهاء",
+    "untilNow": "حتى الآن",
+    "startDateRequired": "تاريخ البدء مطلوب",
+    "endDateRequired": "تاريخ الانتهاء مطلوب إذا لم يتم تحديد 'حتى الآن'",
+    "startDateBeforeEndDate": "يجب أن يكون تاريخ البدء قبل تاريخ الانتهاء",
+    "addMoreExperience": "إضافة المزيد من الخبرة",
+    "submit": "إرسال"
+  },
+  "profile": {
+    "profileVisibility": "رؤية الملف الشخصي",
+    "public": "عام",
+    "editAccount": "تعديل الحساب",
+    "postJob": "نشر وظيفة",
+    "projectsCompleted": "المشاريع المنجزة",
+    "failedToUpdate": "فشل التحديث.",
+    "noReviewsAvailable": "لا توجد تقييمات متاحة.",
+    "seeMore": "شاهد المزيد",
+    "about": "نبذة",
+    "editAbout": "تعديل النبذة",
+    "reviews": "التقييمات",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "failedToUpdateBio": "فشل تحديث السيرة الذاتية."
+  },
+  "validators": {
+    "fieldRequired": "{{field}} مطلوب.",
+    "mustBeAtLeast3Characters": "يجب أن يكون على الأقل 3 أحرف.",
+    "emailRequired": "البريد الإلكتروني مطلوب.",
+    "invalidEmailFormat": "تنسيق البريد الإلكتروني غير صالح.",
+    "passwordRequired": "كلمة المرور مطلوبة.",
+    "passwordRequirements": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل، وتتضمن حرفاً كبيراً واحداً على الأقل ورقماً واحداً ورمزاً خاصاً واحداً.",
+    "invalidUrlOrEmail": "يرجى إدخال رابط صالح أو عنوان بريد إلكتروني."
+  },
+  "form": {
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "birthDate": "تاريخ الميلاد",
+    "gender": "الجنس",
+    "nationality": "الجنسية",
+    "skinTone": "لون البشرة",
+    "hairColor": "لون الشعر",
+    "eyeColor": "لون العين",
+    "bust": "الصدر",
+    "hips": "الوركين",
+    "waist": "الخصر",
+    "dressSize": "مقاس الفستان",
+    "shoeSize": "مقاس الحذاء",
+    "weight": "الوزن",
+    "height": "الطول",
+    "cameraOwnedUsed": "الكاميرا المملوكة / المستخدمة",
+    "lightningOwnedUsed": "الإضاءة المملوكة / المستخدمة",
+    "lensUsed": "العدسة المستخدمة",
+    "stabilizerGimbalAvailability": "توفر المثبت / الجيمبال",
+    "bio": "السيرة الذاتية",
+    "organizationName": "اسم المؤسسة",
+    "location": "الموقع",
+    "instagram": "إنستغرام",
+    "tiktok": "تيك توك",
+    "website": "الموقع الإلكتروني",
+    "phoneNumber": "رقم الهاتف",
+    "linkYourMostFollowedSocialAccount": "اربط حسابك الاجتماعي الأكثر متابعة:",
+    "howManyYearsOfExperience": "كم عدد سنوات الخبرة لديك؟",
+    "availableForTravelForShoots": "هل أنت متاح للسفر لأجل التصوير؟",
+    "legallyEligibleToWork": "هل أنت مؤهل قانونياً للعمل في موقعك؟",
+    "doYouHaveTattoos": "هل لديك بكالوريوس؟",
+    "typeHere": "اكتب هنا",
+    "jobTitle": "المسمى الوظيفي:",
+    "jobCategory": "فئة الوظيفة:",
+    "experienceNeeded": "الخبرة المطلوبة:",
+    "careerLevel": "المستوى الوظيفي:",
+    "jobDescription": "وصف الوظيفة:",
+    "jobRequirements": "متطلبات الوظيفة:"
+  },
+  "admin": {
+    "sidebar": {
+      "adminPanel": "لوحة الإدارة",
+      "dashboard": "لوحة التحكم",
+      "users": "المستخدمون",
+      "notifications": "الإشعارات",
+      "payouts": "المدفوعات",
+      "logout": "تسجيل الخروج"
+    },
+    "createUser": {
+      "email": "البريد الإلكتروني",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "البريد الإلكتروني غير صالح",
+      "password": "كلمة المرور",
+      "passwordRequired": "كلمة المرور مطلوبة",
+      "passwordMinLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+      "passwordPlaceholder": "أدخل كلمة المرور (8 أحرف على الأقل)",
+      "role": "الدور",
+      "roleRequired": "الدور مطلوب",
+      "individual": "فرد",
+      "organization": "مؤسسة",
+      "admin": "مسؤول",
+      "firstName": "الاسم الأول",
+      "firstNameRequired": "الاسم الأول مطلوب",
+      "firstNameMinLength": "يجب أن يتكون الاسم الأول من حرفين على الأقل",
+      "firstNamePlaceholder": "أدخل الاسم الأول",
+      "lastName": "اسم العائلة",
+      "lastNameRequired": "اسم العائلة مطلوب",
+      "lastNameMinLength": "يجب أن يتكون اسم العائلة من حرفين على الأقل",
+      "lastNamePlaceholder": "أدخل اسم العائلة",
+      "createUser": "إنشاء مستخدم",
+      "cancel": "إلغاء",
+      "userCreatedSuccess": "تم إنشاء المستخدم بنجاح",
+      "failedToCreateUser": "فشل في إنشاء المستخدم",
+      "emailPlaceholder": "user@example.com"
+    },
+    "deleteUser": {
+      "title": "حذف المستخدم",
+      "message": "هل أنت متأكد أنك تريد حذف هذا المستخدم؟ لا يمكن التراجع عن هذا الإجراء.",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "deleting": "جاري الحذف..."
+    },
+    "notification": {
+      "targetAudience": "الجمهور المستهدف",
+      "specificUser": "مستخدم محدد",
+      "allUsers": "جميع المستخدمين",
+      "byUserRole": "حسب دور المستخدم",
+      "byIndividualCategory": "حسب فئة الفرد",
+      "email": "البريد الإلكتروني",
+      "enterUserEmail": "أدخل البريد الإلكتروني للمستخدم",
+      "userRole": "دور المستخدم",
+      "selectRole": "اختر الدور",
+      "individual": "فرد",
+      "organization": "مؤسسة",
+      "individualCategory": "فئة الفرد",
+      "selectCategory": "اختر الفئة",
+      "model": "عارض",
+      "photographer": "مصور",
+      "videographer": "مصور فيديو",
+      "editor": "محرر",
+      "beauty": "تجميل",
+      "tourism": "سياحة",
+      "athlete": "رياضي",
+      "artist": "فنان",
+      "fashion": "موضة",
+      "musicAndSoundEngineer": "موسيقى وهندسة صوتية",
+      "title": "العنوان",
+      "titlePlaceholder": "أدخل عنوان الإشعار",
+      "body": "المحتوى",
+      "bodyPlaceholder": "أدخل محتوى الإشعار",
+      "sendNotification": "إرسال الإشعار"
+    },
+    "userSearch": {
+      "search": "بحث",
+      "searchPlaceholder": "البحث بالبريد الإلكتروني، الاسم...",
+      "role": "الدور",
+      "allRoles": "جميع الأدوار",
+      "individual": "فرد",
+      "organization": "مؤسسة",
+      "admin": "مسؤول",
+      "individualCategory": "فئة الفرد",
+      "allCategories": "جميع الفئات",
+      "model": "عارض",
+      "photographer": "مصور",
+      "videographer": "مصور فيديو",
+      "editor": "محرر",
+      "beauty": "تجميل",
+      "tourism": "سياحة",
+      "athlete": "رياضي",
+      "artist": "فنان",
+      "fashion": "موضة",
+      "musicAndSoundEngineer": "موسيقى وهندسة صوتية",
+      "blockedStatus": "حالة الحظر",
+      "all": "الكل",
+      "blocked": "محظور",
+      "notBlocked": "غير محظور",
+      "onboardingStatus": "حالة التسجيل",
+      "completed": "مكتمل",
+      "notCompleted": "غير مكتمل",
+      "searchButton": "بحث",
+      "reset": "إعادة تعيين"
+    },
+    "usersTable": {
+      "email": "البريد الإلكتروني",
+      "name": "الاسم",
+      "role": "الدور",
+      "status": "الحالة",
+      "onboarding": "التسجيل",
+      "created": "تاريخ الإنشاء",
+      "actions": "الإجراءات",
+      "blocked": "محظور",
+      "active": "نشط",
+      "completed": "مكتمل",
+      "pending": "قيد الانتظار",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "showing": "عرض",
+      "to": "إلى",
+      "of": "من",
+      "users": "مستخدمين",
+      "previous": "السابق",
+      "page": "صفحة",
+      "next": "التالي"
+    },
+    "categories": {
+      "categoryManagement": "إدارة الفئات",
+      "createCategory": "إنشاء فئة",
+      "noCategoriesFound": "لم يتم العثور على فئات",
+      "predefined": "محدد مسبقاً",
+      "enabled": "مفعل",
+      "disabled": "معطل",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "editCategory": "تعديل الفئة",
+      "name": "الاسم (معرف فريد)",
+      "namePlaceholder": "مثال: CUSTOM_CATEGORY",
+      "displayNameEn": "اسم العرض (الإنجليزية) *",
+      "displayNameAr": "اسم العرض (العربية) *",
+      "descriptionEn": "الوصف (الإنجليزية) *",
+      "descriptionAr": "الوصف (العربية) *",
+      "descriptionPlaceholderEn": "وصف الفئة (الإنجليزية)...",
+      "descriptionPlaceholderAr": "وصف الفئة (العربية)...",
+      "imageUrl": "رابط الصورة (اختياري)",
+      "imageUrlPlaceholder": "https://example.com/image.png",
+      "order": "الترتيب",
+      "update": "تحديث",
+      "create": "إنشاء",
+      "cancel": "إلغاء",
+      "categoryUpdatedSuccess": "تم تحديث الفئة بنجاح",
+      "categoryCreatedSuccess": "تم إنشاء الفئة بنجاح",
+      "failedToSaveCategory": "فشل في حفظ الفئة",
+      "enabledSuccess": "تم التفعيل بنجاح",
+      "disabledSuccess": "تم التعطيل بنجاح",
+      "failedToUpdateStatus": "فشل في تحديث حالة الفئة",
+      "deleteConfirm": "هل أنت متأكد أنك تريد حذف \"{{name}}\"?",
+      "categoryDeletedSuccess": "تم حذف الفئة بنجاح",
+      "failedToDeleteCategory": "فشل في حذف الفئة"
+    },
+    "createUserPage": {
+      "title": "إنشاء مستخدم جديد"
+    },
+    "dashboard": {
+      "title": "لوحة تحكم الإدارة",
+      "totalUsers": "إجمالي المستخدمين",
+      "activeUsers": "المستخدمون النشطون",
+      "totalJobs": "إجمالي الوظائف",
+      "blockedUsers": "المستخدمون المحظورون",
+      "recentRegistrations": "التسجيلات الأخيرة",
+      "onboardingCompletion": "إتمام التسجيل",
+      "usersByCategory": "المستخدمون حسب الفئة",
+      "individuals": "أفراد",
+      "organizations": "مؤسسات",
+      "active": "نشط",
+      "finished": "منتهي",
+      "last30Days": "آخر 30 يوماً",
+      "days7": "7 أيام",
+      "days30": "30 يوماً"
+    }
+  },
+  "registration": {
+    "individual": {
+      "registering": "جاري التسجيل...",
+      "registeredSuccess": "تم التسجيل بنجاح!",
+      "failedToRegister": "فشل التسجيل.",
+      "signUp": "تسجيل",
+      "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+      "clickHereToLogin": "انقر هنا لتسجيل الدخول!"
+    },
+    "organization": {
+      "registering": "جاري التسجيل...",
+      "registeredSuccess": "تم التسجيل بنجاح!",
+      "signUp": "تسجيل",
+      "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+      "clickHereToLogin": "انقر هنا لتسجيل الدخول!"
+    }
+  },
+  "profileForms": {
+    "common": {
+      "createYourProfile": "أنشئ ملفك الشخصي، واعرض مهاراتك، واعثر على مشروعك القادم.",
+      "createAccount": "إنشاء حساب",
+      "dontHaveAccount": "ليس لديك حساب بعد؟",
+      "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+      "clickHereToCreateOne": "انقر هنا لإنشاء حساب!",
+      "login": "تسجيل الدخول",
+      "choose": "اختر",
+      "select": "اختر",
+      "yes": "نعم",
+      "no": "لا",
+      "pleaseEnterValidAge": "يرجى إدخال عمر صالح.",
+      "profileCreatedSuccess": "تم إنشاء الملف الشخصي بنجاح.",
+      "failedToCreateProfile": "فشل في إنشاء الملف الشخصي.",
+      "unexpectedError": "حدث خطأ غير متوقع"
+    },
+    "model": {
+      "title": "نموذج العارض"
+    },
+    "photographer": {
+      "title": "نموذج المصور"
+    },
+    "videographer": {
+      "title": "نموذج مصور الفيديو"
+    },
+    "editor": {
+      "title": "نموذج المحرر",
+      "mainSoftware": "البرنامج الرئيسي المملوك / المستخدم",
+      "softwarePlaceholder": "البرنامج",
+      "colorGrading": "هل تقدم تدريج الألوان؟",
+      "soundEffects": "هل تقدم المؤثرات الصوتية؟",
+      "visualEffects": "المؤثرات البصرية",
+      "motionGraphics": "الرسوم المتحركة"
+    },
+    "artist": {
+      "title": "الفنانون والبصريات",
+      "professionalCategory": "الفئة المهنية",
+      "selectOne": "(اختر واحدة)",
+      "notableExhibitions": "المعارض والمنشورات أو الجوائز البارزة",
+      "exhibitionsPlaceholder": "الأوسكار، الأفلام...",
+      "collaboratedWithBrands": "هل تعاونت مع علامات تجارية أو عملاء؟",
+      "collaboratedPlaceholder": "قدم الرابط هنا",
+      "artisticStyle": "الأسلوب الفني والخبرة",
+      "selectUpTo3": "(اختر حتى 3 أنماط ذات صلة)",
+      "portfolioLinks": "إنستغرام / ArtStation / Behance / الموقع الإلكتروني (روابط)",
+      "portfolioPlaceholder": "قدم الرابط هنا",
+      "professionalCategories": {
+        "painter": "رسام",
+        "sketchArtist": "فنان رسم / رسام توضيحي",
+        "muralArtist": "فنان جداريات / فنان شارع",
+        "sculptor": "نحات / فنان ثلاثي الأبعاد",
+        "digitalArtist": "فنان رقمي (فن المفاهيم، فن NFT، إلخ)"
+      },
+      "expertise": {
+        "realism": "الواقعية / الواقعية المفرطة",
+        "abstract": "التجريدية / التعبيرية",
+        "surrealism": "السريالية / الخيال",
+        "portraits": "البورتريهات",
+        "conceptArt": "فن المفاهيم والرسوم التوضيحية",
+        "digitalArt": "الفن الرقمي وإنشاء NFT"
+      },
+      "selectUpTo3Error": "يمكنك اختيار حتى 3 خيارات."
+    },
+    "athlete": {
+      "title": "الرياضيون وعشاق الرياضة",
+      "professionalCategory": "الفئة المهنية",
+      "selectUpTo3": "(اختر حتى 3 فئات ذات صلة)",
+      "achievementsOrTitles": "أهم الإنجازات أو الألقاب",
+      "achievementsPlaceholder": "حاصل على ميدالية أولمبية، لاعب FIFA",
+      "affiliated": "هل أنت مرتبط بأي أندية أو منظمات أو علامات تجارية؟",
+      "portfolioLinks": "إنستغرام / ArtStation / Behance / الموقع الإلكتروني (روابط)",
+      "portfolioPlaceholder": "قدم الرابط هنا",
+      "professionalCategories": {
+        "professional": "رياضي محترف",
+        "retired": "رياضي متقاعد / سفير رياضي",
+        "publicFigure": "شخصية عامة / مؤثر رياضي",
+        "coach": "مدرب / مدرب",
+        "fitnessBlogger": "مدون اللياقة البدنية",
+        "healthExpert": "خبير الصحة والعافية",
+        "bodyBuilder": "كمال الأجسام"
+      },
+      "selectUpTo3Error": "يمكنك اختيار حتى 3 خيارات."
+    },
+    "beauty": {
+      "title": "الجمال ومستحضرات التجميل",
+      "areasOfExperts": "مجالات الخبراء",
+      "selectAllThatApply": "(اختر كل ما ينطبق)",
+      "highLevelExperience": "هل عملت في جلسات تصوير أو أحداث على مستوى عالٍ؟",
+      "portfolioLinks": "إنستغرام / ArtStation / Behance / الموقع الإلكتروني (روابط)",
+      "portfolioPlaceholder": "قدم الرابط هنا",
+      "preferredBrands": "علامات الماكياج المفضلة التي تعمل معها",
+      "formalTraining": "هل تلقت تدريباً رسمياً في فن الماكياج؟",
+      "expertise": {
+        "bridal": "ماكياج العرائس",
+        "specialEffects": "ماكياج المؤثرات الخاصة",
+        "editorial": "ماكياج التحرير والموضة",
+        "runway": "ماكياج منصة العرض",
+        "filmTv": "ماكياج الأفلام والتلفزيون",
+        "theatre": "ماكياج المسرح",
+        "faceBody": "طلاء الوجه والجسم"
+      },
+      "brands": {
+        "mac": "MAC Cosmetics",
+        "fenty": "Fenty Beauty",
+        "huda": "Huda Beauty",
+        "nars": "NARS",
+        "dior": "Dior Beauty",
+        "other": "أخرى"
+      }
+    },
+    "fashion": {
+      "title": "خبير الموضة ومصمم المجوهرات",
+      "professionalCategory": "الفئة المهنية",
+      "selectOne": "(اختر واحدة)",
+      "notableClients": "العملاء أو العلامات التجارية أو المنشورات البارزة",
+      "clientsPlaceholder": "الأوسكار، الأفلام...",
+      "portfolioQuestion": "هل لديك محفظة تصميم شخصية أو صفحة إنستغرام تعرض عملك؟",
+      "portfolioPlaceholder": "قدم الرابط هنا",
+      "formalTraining": "هل لديك تدريب رسمي أو شهادات في تصميم الموضة؟",
+      "workedWithCelebrities": "هل عملت مع المشاهير أو عملاء ذوي ملفات تعريفية عالية؟",
+      "professionalCategories": {
+        "stylist": "مصمم أزياء",
+        "jewelryStylist": "مصمم مجوهرات",
+        "wardrobeConsultant": "مستشار خزانة الملابس / مستشار الصورة",
+        "runwayStylist": "مصمم منصة العرض وعروض الأزياء",
+        "bridalStylist": "مصمم العرائس والمناسبات"
+      }
+    },
+    "organization": {
+      "title": "نموذج المؤسسة",
+      "bio": "السيرة الذاتية",
+      "organizationName": "اسم المؤسسة",
+      "location": "الموقع",
+      "selectLocation": "اختر الموقع",
+      "instagram": "إنستغرام",
+      "tiktok": "تيك توك",
+      "website": "الموقع الإلكتروني",
+      "phoneNumber": "رقم الهاتف",
+      "invalidTikTokUrl": "يرجى إدخال رابط تيك توك صالح.",
+      "invalidInstagramUrl": "يرجى إدخال رابط إنستغرام صالح.",
+      "profileCreatedSuccess": "تم إنشاء الملف الشخصي بنجاح!"
+    },
+    "musician": {
+      "title": "الموسيقى والهندسة الصوتية",
+      "professionalCategory": "الفئة المهنية",
+      "selectOne": "(اختر واحدة)",
+      "majorProjects": "هل عملت على مشاريع كبيرة أو مع فنانين معروفين؟",
+      "majorProjectsPlaceholder": "(نعم/لا - إذا كانت الإجابة نعم، اذكر الأسماء أو المشاريع)",
+      "preferWorkingWith": "ما نوع العملاء الذين تفضل العمل معهم؟",
+      "experienceHandlingHighProfileClients": "هل لديك خبرة في التعامل مع عملاء بارزين أو أحداث مباشرة؟",
+      "wonAwards": "هل فازت أعمالك بأي جوائز أو تم ترشيحها؟",
+      "portfolioLinks": "شارك رابط إنستغرام / ArtStation / Behance / موقعك الإلكتروني (روابط)",
+      "portfolioPlaceholder": "قدم الرابط هنا",
+      "professionalCategories": {
+        "musicProducer": "منتج موسيقي",
+        "soundEngineer": "مهندس صوت",
+        "audioPostProduction": "متخصص في ما بعد إنتاج الصوت",
+        "composer": "ملحن / منسق موسيقي",
+        "voiceover": "معلق صوتي / محرر بودكاست",
+        "dj": "دي جي ومهندس أداء مباشر"
+      },
+      "typeOfClients": {
+        "recordLabels": "شركات التسجيل والفنانين",
+        "audioPostProduction": "متخصص في ما بعد إنتاج الصوت",
+        "corporateClients": "العملاء المؤسسيون والأعمال",
+        "eventPlanners": "منظمي الفعاليات والحفلات",
+        "advertisingAgencies": "وكالات الإعلان والتسويق"
+      }
+    },
+    "tourism": {
+      "title": "مستشار السياحة والتاريخ",
+      "specializations": "ما هي تخصصاتك",
+      "selectAllThatApply": "(اختر كل ما ينطبق)",
+      "travelLogistics": "هل لديك خبرة في إدارة الخدمات اللوجستية للسفر (وسائل النقل، الفنادق، إلخ)؟",
+      "currentEmployer": "ما هو صاحب عملك الحالي أو الأكثر حداثة؟",
+      "employerPlaceholder": "(شركة سياحية، متحف، أو مستقل)",
+      "license": "هل لديك ترخيص دليل سياحي صالح أو أي شهادات رسمية؟",
+      "otherLanguage": "هل تتحدث أكثر من لغة واحدة؟",
+      "specializationTypes": {
+        "cultural": "السياحة الثقافية",
+        "historical": "جولات المواقع التاريخية",
+        "archeological": "جولات أثرية",
+        "religious": "السياحة الدينية",
+        "heritage": "التراث والتقاليد المحلية",
+        "adventure": "المغامرة والسياحة البيئية",
+        "faceBody": "طلاء الوجه والجسم"
+      }
+    }
+  },
+  "imageUpload": {
+    "uploading": "جاري الرفع...",
+    "fileSizeExceeds": "حجم الملف يتجاوز حد 1 ميجابايت.",
+    "errorUploadingImage": "خطأ في رفع الصورة",
+    "errorUploadingImageTryAgain": "خطأ في رفع الصورة، يرجى المحاولة مرة أخرى."
+  },
+  "videoUpload": {
+    "uploading": "جاري الرفع...",
+    "fileSizeExceeds5MB": "حجم الملف يتجاوز حد 5 ميجابايت.",
+    "errorUploadingReel": "خطأ في رفع الفيديو، يرجى المحاولة مرة أخرى."
+  },
+  "otp": {
+    "enterOTP": "أدخل رمز التحقق",
+    "receiveOTPMessage": "ستتلقى رمز التحقق على عنوان بريدك الإلكتروني.",
+    "emailChangedSuccess": "تم تغيير البريد الإلكتروني بنجاح!",
+    "passwordChangedSuccess": "تم تغيير كلمة المرور بنجاح!",
+    "failedToVerifyOTP": "فشل التحقق من رمز OTP."
+  },
+  "profileEdit": {
+    "editSpecialty": "تعديل التخصص",
+    "camera": "الكاميرا",
+    "lightning": "الإضاءة",
+    "lense": "العدسة",
+    "stabilizer": "المثبت",
+    "selectOption": "اختر خياراً",
+    "yes": "نعم",
+    "no": "لا",
+    "saveChanges": "حفظ التغييرات",
+    "specialtyInfoUpdated": "تم تحديث معلومات التخصص بنجاح.",
+    "failedToUpdate": "فشل التحديث.",
+    "gender": "الجنس",
+    "other": "آخر",
+    "male": "ذكر",
+    "female": "أنثى",
+    "birthdate": "تاريخ الميلاد",
+    "nationality": "الجنسية",
+    "height": "الطول",
+    "weight": "الوزن",
+    "eyeColor": "لون العين",
+    "skinTone": "لون البشرة",
+    "hairColor": "لون الشعر",
+    "dressSize": "مقاس الفستان",
+    "shoeSize": "مقاس الحذاء",
+    "waist": "الخصر",
+    "hips": "الوركين",
+    "bust": "الصدر",
+    "editingSoftware": "برنامج التحرير",
+    "colorGrading": "تدريج الألوان",
+    "soundEditing": "تحرير الصوت",
+    "visualEffects": "المؤثرات البصرية",
+    "motionGraphics": "الرسوم المتحركة",
+    "hasColorGrading": "يقدم تدريج الألوان",
+    "hasNoColorGrading": "لا يقدم تدريج الألوان",
+    "hasMotionGraphics": "يقدم الرسوم المتحركة",
+    "hasNoMotionGraphics": "لا يقدم الرسوم المتحركة",
+    "hasSoundEditing": "يقدم تحرير الصوت",
+    "hasNoSoundEditing": "لا يقدم تحرير الصوت",
+    "hasVisualEffects": "يقدم المؤثرات البصرية",
+    "hasNoVisualEffects": "لا يقدم المؤثرات البصرية"
+  },
+  "experience": {
+    "title": "الخبرة والجوائز",
+    "experience": "الخبرة",
+    "remove": "إزالة",
+    "titlePlaceholder": "المسمى الوظيفي",
+    "companyPlaceholder": "الشركة",
+    "startDatePlaceholder": "تاريخ البدء",
+    "endDatePlaceholder": "تاريخ الانتهاء",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "startDateBeforeEndDate": "يجب أن يكون تاريخ البدء قبل تاريخ الانتهاء.",
+    "at": "في"
+  },
+  "orgProfile": {
+    "cancel": "إلغاء",
+    "done": "تم",
+    "organizationName": "اسم المؤسسة",
+    "location": "الموقع",
+    "selectCountry": "اختر الدولة",
+    "instagram": "إنستغرام",
+    "tiktok": "تيك توك",
+    "website": "الموقع الإلكتروني",
+    "phone": "الهاتف",
+    "bio": "السيرة الذاتية",
+    "nameTooShort": "يجب أن يكون الاسم 3 أحرف على الأقل.",
+    "invalidInstagramURL": "يرجى إدخال رابط إنستغرام صالح.",
+    "invalidTiktokURL": "يرجى إدخال رابط تيك توك صالح.",
+    "profileUpdatedSuccess": "تم تحديث الملف الشخصي بنجاح!",
+    "failedToUpdateProfile": "فشل تحديث الملف الشخصي.",
+    "fileSizeExceeds": "حجم الملف يتجاوز حد 1 ميجابايت."
+  },
+  "changeEmail": {
+    "title": "أدخل عنوان البريد الإلكتروني",
+    "subtitle": "مرحباً بعودتك! لنعود إلى رحلتك الإبداعية.",
+    "changeEmail": "تغيير البريد الإلكتروني",
+    "invalidEmail": "عنوان بريد إلكتروني غير صالح. يرجى إدخال عنوان بريد إلكتروني صالح.",
+    "emailChangedSuccess": "تم تغيير البريد الإلكتروني بنجاح.",
+    "failedToChangeEmail": "فشل تغيير البريد الإلكتروني."
+  },
+  "changePassword": {
+    "title": "أدخل كلمة المرور الجديدة",
+    "subtitle": "مرحباً بعودتك! لنعود إلى رحلتك الإبداعية.",
+    "changePassword": "تغيير كلمة المرور",
+    "enterNewPassword": "أدخل كلمة المرور الجديدة",
+    "passwordRequirements": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وتتضمن حرفاً كبيراً واحداً على الأقل ورقماً واحداً ورمزاً خاصاً واحداً (@$!%*?&).",
+    "passwordChangedSuccess": "تم تغيير كلمة المرور بنجاح!",
+    "failedToChangePassword": "فشل تغيير كلمة المرور."
+  },
+  "sendChangeOTP": {
+    "title": "سيتم طلب كلمة مرور لمرة واحدة من:",
+    "subtitle": "سيساعدنا هذا في التحقق من هويتك قبل إجراء أي تغييرات.",
+    "requestOTP": "طلب رمز التحقق",
+    "otpSentSuccess": "تم إرسال رمز التحقق بنجاح!",
+    "failedToSendOTP": "فشل إرسال رمز التحقق"
+  },
+  "individualView": {
+    "about": "نبذة",
+    "portfolio": "المحفظة",
+    "trophies": "الجوائز",
+    "headshots": "صور الرأس",
+    "certificates": "الشهادات",
+    "fullBody": "الجسم الكامل",
+    "tiktoksReels": "تيك توك / ريلز",
+    "bodyPictures": "صور الجسم",
+    "experienceAwards": "الخبرة والجوائز",
+    "projectsCompleted": "0 مشروع مكتمل",
+    "musicAndSoundEngineer": "موسيقى وهندسة صوتية",
+    "na": "غير متاح"
+  },
+  "jobView": {
+    "organization": "مؤسسة",
+    "applyForJob": "التقدم للوظيفة",
+    "onlyIndividualsCanApply": "الأفراد فقط يمكنهم التقدم",
+    "jobClosed": "الوظيفة مغلقة",
+    "copiedSuccessfully": "تم النسخ بنجاح",
+    "close": "إغلاق",
+    "applyToJob": "التقدم للوظيفة:",
+    "costToBeSpecified": "التكلفة سيتم تحديدها",
+    "yourProposedCost": "تكلفتك المقترحة ($USD):",
+    "enterProposedCost": "أدخل تكلفتك المقترحة",
+    "coverLetter": "خطاب التقديم:",
+    "goBack": "رجوع",
+    "apply": "تقدم",
+    "coverLetterRequired": "خطاب التقديم مطلوب",
+    "pleaseSpecifyCost": "يرجى تحديد تكلفتك المقترحة",
+    "applicationSentSuccess": "تم إرسال الطلب بنجاح",
+    "alreadyApplied": "لقد تقدمت بالفعل لهذه الوظيفة.",
+    "failedToApply": "فشل التقدم للوظيفة.",
+    "failedToGetJob": "فشل الحصول على الوظيفة",
+    "details": "التفاصيل",
+    "posted": "نُشر",
+    "remote": "عن بُعد",
+    "peopleHaveApplied": "شخص تقدموا حتى الآن!",
+    "noApplicationsYet": "لا توجد طلبات بعد. فرصتك للتميز!",
+    "skillsAndTools": "المهارات والأدوات",
+    "experienceNeeded": "الخبرة المطلوبة:",
+    "to": "إلى",
+    "years": "سنوات",
+    "careerLevel": "المستوى الوظيفي:",
+    "educationLevel": "المستوى التعليمي:",
+    "tattoosOnBody": "الوشوم على الجسم:",
+    "yes": "نعم",
+    "jobSalary": "راتب الوظيفة:",
+    "jobCategory": "فئة الوظيفة:",
+    "jobDuration": "مدة الوظيفة:",
+    "jobDescription": "وصف الوظيفة",
+    "jobRequirements": "متطلبات الوظيفة",
+    "noRequirementsSpecified": "لم يتم تحديد متطلبات"
+  },
+  "postJob": {
+    "title": "نشر وظيفة",
+    "subtitle": "أبرز تخصصك لجذب التعاونات المناسبة.",
+    "jobTitle": "المسمى الوظيفي",
+    "enterJobTitle": "أدخل المسمى الوظيفي",
+    "jobCategory": "فئة الوظيفة",
+    "chooseCategory": "اختر فئة",
+    "model": "عارض",
+    "photographer": "مصور",
+    "videographer": "مصور فيديو",
+    "editor": "محرر",
+    "tourGuide": "مرشد سياحي",
+    "musician": "موسيقي",
+    "athlete": "رياضي",
+    "makeupArtist": "خبير تجميل",
+    "artist": "فنان",
+    "fashionista": "خبير موضة",
+    "experienceNeeded": "الخبرة المطلوبة",
+    "minYears": "الحد الأدنى (سنوات)",
+    "maxYears": "الحد الأقصى (سنوات)",
+    "jobDuration": "مدة الوظيفة",
+    "minDuration": "الحد الأدنى",
+    "maxDuration": "الحد الأقصى",
+    "unit": "الوحدة",
+    "year": "سنة",
+    "month": "شهر",
+    "week": "أسبوع",
+    "day": "يوم",
+    "careerLevel": "المستوى الوظيفي",
+    "chooseCareerLevel": "اختر المستوى الوظيفي",
+    "entryLevel": "مبتدئ",
+    "midLevel": "متوسط",
+    "senior": "كبير",
+    "location": "الموقع",
+    "selectCountry": "اختر الدولة",
+    "salary": "الراتب",
+    "jobSalaryUSD": " راتب الوظيفة بالريال السعودي",
+    "letTalentSpecifyCost": "دع الموهبة تحدد التكلفة في العرض",
+    "educationLevel": "المستوى التعليمي",
+    "chooseEducationLevel": "اختر المستوى التعليمي",
+    "highSchool": "ثانوية عامة",
+    "bachelorsDegree": "بكالوريوس",
+    "otherDegree": "درجة أخرى",
+    "description": "الوصف",
+    "addDescription": "إضافة وصف",
+    "requirements": "المتطلبات",
+    "addRequirements": "إضافة متطلبات",
+    "addRequirementsTitle": "إضافة المتطلبات",
+    "done": "تم",
+    "iAgreeToTerms": "أوافق على هذه الشروط والخدمات.",
+    "termsMessage": "أؤكد أن المعلومات المقدمة في هذا الطلب دقيقة وكاملة حسب علمي، وأن أي تزوير أو حذف قد يؤدي إلى الاستبعاد من المنصة.",
+    "postJob": "نشر الوظيفة",
+    "jobPostedSuccess": "تم نشر الوظيفة بنجاح",
+    "minimumExperienceError": "يجب أن تكون الخبرة الدنيا أقل من الخبرة القصوى",
+    "invalidDurationRange": "نطاق المدة غير صالح. يرجى التحقق من الحد الأدنى والأقصى للمدة.",
+    "addDescriptionTitle": "إضافة الوصف",
+    "enterJobDescription": "أدخل وصف الوظيفة",
+    "cancel": "إلغاء"
+  },
+  "experienceForm": {
+    "categories": {
+      "tourGuide": "السياحة والإرشاد التاريخي",
+      "beautician": "الجمال ومستحضرات التجميل",
+      "athlete": "الرياضيون وعشاق الرياضة",
+      "artist": "الفنانون والبصريات",
+      "fashionista": "خبير الموضة والمجوهرات",
+      "musician": "الموسيقى والهندسة الصوتية"
+    },
+    "description": "أبرز تخصصك لجذب التعاونات المناسبة.",
+    "next": "التالي",
+    "workExperienceLabel": "أين عملت سابقاً كـ",
+    "addExperience": "إضافة خبرة"
+  },
+  "termsAndConditions": {
+    "title": "الشروط والأحكام",
+    "companyName": "دوناتيلا السعودية",
+    "lastUpdated": "آخر تحديث: [يوم/شهر/سنة]",
+    "sections": {
+      "introduction": {
+        "title": "1. المقدمة",
+        "content": "تحكم هذه الشروط والأحكام استخدامك لخدمات دوناتيلا السعودية. وباستخدامك للخدمات، فإنك توافق على الالتزام بهذه الشروط."
+      },
+      "eligibility": {
+        "title": "2. الأهلية",
+        "points": [
+          "يجب ألا يقل عمر المستخدم عن 18 عاماً.",
+          "يجب تقديم معلومات صحيحة وكاملة ومحدثة.",
+          "يجب الالتزام بالأنظمة المعمول بها عند استخدام الخدمات."
+        ]
+      },
+      "internationalUse": {
+        "title": "3. الاستخدام الدولي",
+        "content": "يمكن استخدام الخدمات من داخل أو خارج المملكة العربية السعودية. ويتحمل المستخدم خارج المملكة مسؤولية الالتزام بالأنظمة المعمول بها في بلده عند استخدام الخدمات. تخضع هذه الشروط لأنظمة المملكة العربية السعودية بغض النظر عن موقع المستخدم."
+      },
+      "accounts": {
+        "title": "4. الحسابات",
+        "points": [
+          "يتحمل المستخدم مسؤولية الحفاظ على سرية بيانات الدخول.",
+          "يتحمل المستخدم مسؤولية جميع الأنشطة التي تتم من خلال الحساب.",
+          "يحق لنا تعليق أو إنهاء الحسابات المخالفة لهذه الشروط."
+        ]
+      },
+      "services": {
+        "title": "5. الخدمات",
+        "points": [
+          "نقوم بتسهيل التواصل بين العملاء والمواهب.",
+          "يتم أي اتفاق أو تعامل مباشرة بين الأطراف المعنية.",
+          "لا نتحمل مسؤولية تنفيذ أو نتائج أي تعامل."
+        ]
+      },
+      "payments": {
+        "title": "6. المدفوعات",
+        "points": [
+          "تتم المدفوعات عبر مزودي خدمات دفع خارجيين.",
+          "يتم عرض أي رسوم قبل تأكيد العملية.",
+          "لا نتحمل مسؤولية أي تأخير أو خلل ناتج عن مزودي الدفع."
+        ]
+      },
+      "cancellationsRefunds": {
+        "title": "7. الإلغاء والاسترجاع",
+        "points": [
+          "تخضع الإلغاءات والاسترجاعات لشروط الاتفاق بين الأطراف.",
+          "يجب الإبلاغ عن أي نزاع خلال 7 أيام من انتهاء الخدمة."
+        ]
+      },
+      "communications": {
+        "title": "8. التواصل",
+        "points": [
+          "يلتزم المستخدم بالتواصل باحترام وحسن نية.",
+          "يحق لنا إيقاف الحسابات في حال إساءة الاستخدام."
+        ]
+      },
+      "intellectualProperty": {
+        "title": "9. الملكية الفكرية",
+        "points": [
+          "جميع المحتويات والعلامات التجارية مملوكة لدوناتيلا السعودية.",
+          "لا يجوز استخدام المحتوى دون إذن مسبق.",
+          "تحتفظ المواهب بحقوق الاسم والصورة ما لم يتم الاتفاق على خلاف ذلك خطياً."
+        ]
+      },
+      "dataPrivacy": {
+        "title": "10. البيانات والخصوصية",
+        "points": [
+          "يتم التعامل مع البيانات وفق الأنظمة السعودية المعمول بها.",
+          "باستخدام الخدمات، يوافق المستخدم على معالجة بياناته لتشغيل الخدمات."
+        ]
+      },
+      "limitationOfLiability": {
+        "title": "11. تحديد المسؤولية",
+        "points": [
+          "لا نتحمل أي أضرار غير مباشرة أو تبعية.",
+          "تقتصر المسؤولية على قيمة المبالغ المدفوعة ذات الصلة."
+        ]
+      },
+      "termination": {
+        "title": "12. إنهاء الخدمة",
+        "content": "يحق لنا تعليق أو إنهاء الوصول إلى الخدمات في حال مخالفة الشروط."
+      },
+      "governingLaw": {
+        "title": "13. النظام القضائي",
+        "content": "تخضع هذه الشروط لأنظمة المملكة العربية السعودية، ويكون الاختصاص القضائي للمحاكم السعودية المختصة."
+      }
+    },
+    "close": "إغلاق",
+    "iAgreeToTerms": "أوافق على هذه الشروط والخدمات.",
+    "termsMessage": "أؤكد أن المعلومات المقدمة في هذا الطلب دقيقة وكاملة حسب علمي، وأن أي تزوير أو حذف قد يؤدي إلى الاستبعاد من المنصة."
+  }
+}

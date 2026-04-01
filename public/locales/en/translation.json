@@ -1,0 +1,1346 @@
+{
+  "constants": {
+    "language": {
+      "AR": "Arabic",
+      "EN": "English"
+    },
+    "currency": "$"
+  },
+  "hero": {
+    "title": "Capture Your Story",
+    "description": "Not because the world says so, but because it was always inside",
+    "login": "Login",
+    "getStarted": "Get Started"
+  },
+  "models": {
+    "men": {
+      "title": "Men",
+      "description": "Show your strength and confidence in every pose.",
+      "button": "Model As Man"
+    },
+    "women": {
+      "title": "Women",
+      "description": "Embody elegance, celebrating your uniqueness.",
+      "button": "Model As Woman"
+    },
+    "talent": {
+      "title": "Talent",
+      "description": "Highlight your creativity and expertise as a talented videographer, photographer, or editor.",
+      "findProfessionals": "Find top industry professionals",
+      "connectingText": "Connecting your organization with top industry talent across 10 creative sectors, our platform streamlines the hiring process to help you find the perfect experts for your projects and business needs",
+      "lookForTalent": "Look For Talent",
+      "signUpAsTalent": "Sign Up As Talent",
+      "mobileNote": "Sign in is currently only available on desktop"
+    },
+    "alreadyLoggedIn": "You are already logged in"
+  },
+  "instructions": {
+    "title": "How It Works:",
+    "steps": [
+      {
+        "title": "Create Your Account",
+        "description": "Sign up easily by providing your information and setting up a profile that showcases your skills and portfolio.",
+        "button": "Create Account"
+      },
+      {
+        "title": "Apply For Jobs",
+        "description": "Browse available projects, submit applications for opportunities that match your talents, highlight your vqualifications.",
+        "button": "Apply For Jobs"
+      },
+      {
+        "title": "Get Paid Through Us",
+        "description": "After completing a project, receive secure payment through our platform, enjoying the flexibility of working on your terms.",
+        "button": "Get Started"
+      }
+    ],
+    "alreadyLoggedIn": "You are already logged in"
+  },
+  "footer": {
+    "allRightsReserved": "All Rights Reserved",
+    "findUsAt": "Find us at:",
+    "links": {
+      "aboutUs": "About us",
+      "privacyPolicy": "Privacy Policy",
+      "services": "Services",
+      "contactUs": "Contact us"
+    }
+  },
+  "sidebar": {
+    "links": {
+      "about": "About",
+      "services": "Services",
+      "contact": "Contact",
+      "privacyPolicy": "Privacy Policy"
+    },
+    "mobileNote": "Account management is only through desktop for now."
+  },
+  "aboutUs": {
+    "title": "About Us",
+    "subtitle": "Learn more about our journey.",
+    "vision": {
+      "title": "Vision",
+      "content": "Redefining Saudi Arabia's creative landscape by empowering talents and inspiring artistic excellence."
+    },
+    "mission": {
+      "title": "Mission",
+      "content": "Connecting talent seekers with top professionals in a secure platform for seamless collaboration, elevating media production and talent casting standards globally."
+    },
+    "values": {
+      "title": "Values",
+      "items": [
+        "Artistic Excellence: Fostering creativity and innovation.",
+        "Luxury Leadership: Delivering bespoke, premium talent services.",
+        "Transformative Impact: Empowering talents for global recognition.",
+        "Cultural Innovation: Bridging heritage with modernity for authentic narratives."
+      ]
+    },
+    "promise": {
+      "title": "A Promise",
+      "toTalents": "To Talents: \"We nurture your potential, offering tools, mentorship, and opportunities to transform you into a symbol of excellence.\"",
+      "toClients": "To Clients: \"We align creativity with strategy, delivering premium talent and bespoke solutions for unmatched quality.\""
+    },
+    "whyUs": {
+      "title": "Why Us?",
+      "items": [
+        "Secure platform with top-tier talent.",
+        "Creative freedom and seamless processes.",
+        "Trusted by talents and organizations alike."
+      ]
+    }
+  },
+  "services": {
+    "title": "Services",
+    "subtitle": "Redefine creativity and excellence.",
+    "categories": [
+      {
+        "title": "Modeling",
+        "slogan": "Bring Your Vision to Life with Exceptional Talent",
+        "orgBtn": "Look for your next model",
+        "userBtn": "Join as Model"
+      },
+      {
+        "title": "Photography",
+        "slogan": "Capture Every Moment with Precision and Artistry",
+        "orgBtn": "Look for your next Photographer",
+        "userBtn": "Join as Photographer"
+      },
+      {
+        "title": "Videography",
+        "slogan": "Craft Dynamic Stories Through Stunning Videography",
+        "orgBtn": "Look for your next Videographer",
+        "userBtn": "Join as Videographer"
+      },
+      {
+        "title": "Editing",
+        "slogan": "Perfect Every Detail with Expert Post-Production",
+        "orgBtn": "Look for your next Editor",
+        "userBtn": "Join as Editor"
+      },
+      {
+        "title": "Tourism",
+        "slogan": "Explore the World with the Best Guides",
+        "orgBtn": "Look for your next Tour guide",
+        "userBtn": "Join as Tour guide"
+      },
+      {
+        "title": "Visual Arts",
+        "slogan": "Bringing Creativity to Life, One Stroke at a Time",
+        "orgBtn": "Look for your next Visual Artist",
+        "userBtn": "Join as Visual Artist"
+      },
+      {
+        "title": "Music",
+        "slogan": "Creating Harmonies That Inspire the Soul",
+        "orgBtn": "Look for your next Musician",
+        "userBtn": "Join as Musician"
+      },
+      {
+        "title": "Fashion",
+        "slogan": "Redefining Style, One Trend at a Time",
+        "orgBtn": "Look for your next Fashionista",
+        "userBtn": "Join as Fashionista"
+      },
+      {
+        "title": "Beauty",
+        "slogan": "Enhancing Beauty with Expert Touch",
+        "orgBtn": "Look for your next Beauty Expert",
+        "userBtn": "Join as Beauty Expert"
+      },
+      {
+        "title": "Athletes",
+        "slogan": "Pushing Limits, Achieving Greatness",
+        "orgBtn": "Look for your next Sport Athlete",
+        "userBtn": "Join as Sport Athlete"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Reach out to us.",
+    "phone": "Phone:",
+    "email": "Email:",
+    "headquarters": "Headquarters:"
+  },
+  "navbar": {
+    "messages": "Messages",
+    "payments": "Payments",
+    "explore": "Explore",
+    "profile": "Profile"
+  },
+  "dropMenu": {
+    "logout": "Logout",
+    "changeEmail": "Change Email Address",
+    "changePassword": "Change Password",
+    "changeLanguage": "Language"
+  },
+  "app": {
+    "onboarding": {
+      "title": "You did not complete the onboarding",
+      "message": "Please complete the onboarding to continue",
+      "cancel": "Cancel",
+      "complete": "Complete"
+    }
+  },
+  "signup": {
+    "mobileOnly": "Desktop Only: This feature is not available on mobile devices.",
+    "title": "Step into the Spotlight",
+    "subtitle": "Create your profile today and open the door to exciting new opportunities.",
+    "organization": "Organization",
+    "individual": "Individual",
+    "organizationTooltip": "Log in as an organization to hire top talents in different fields for your job or project.",
+    "individualTooltip": "Log in as an individual to showcase your talent, connect with businesses, and launch your career on a trusted platform."
+  },
+  "login": {
+    "mobileOnly": "Desktop Only: This feature is not available on mobile devices.",
+    "title": "Good To See You Again",
+    "subtitle": "Welcome back! Let's dive back into your creative journey.",
+    "loginAs": "Login As:",
+    "organization": "Organization",
+    "individual": "Individual",
+    "organizationTooltip": "Log in as an organization to hire top talents in different fields for your job or project.",
+    "individualTooltip": "Log in as an individual to showcase your talent, connect with businesses, and launch your career on a trusted platform.",
+    "email": "Email",
+    "password": "Password",
+    "emailPlaceholder": "i.e. davon@mail.com",
+    "passwordPlaceholder": "********",
+    "forgotPassword": "Forgot your password?",
+    "loginButton": "Login",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create free account",
+    "loggingIn": "Logging in...",
+    "loginSuccess": "Logged in successfully!",
+    "loginError": "Login failed! Please check your credentials."
+  },
+  "verifyingPage": {
+    "title": "Enter OTP",
+    "subtitle": "Welcome back! Let's dive back into your creative journey.",
+    "didntReceive": "Didn't receive a code yet?",
+    "clickHere": "Click here to request another one!",
+    "resending": "Resending...",
+    "resentSuccess": "Resent successfully!",
+    "resentError": "Failed to resend.",
+    "verifySuccess": "OTP verified successfully!",
+    "verifyError": "Failed to verify OTP."
+  },
+  "verifyForgotOTP": {
+    "title": "Enter OTP sent to email inbox:",
+    "didntReceive": "Didn't receive a code yet?",
+    "clickHere": "Click here to request another one!",
+    "resending": "Resending...",
+    "resentSuccess": "Resent successfully!",
+    "resentError": "Failed to resend.",
+    "verifyError": "Failed to verify OTP."
+  },
+  "forgotPassword": {
+    "emailTitle": "Enter Your Email Address:",
+    "passwordTitle": "Enter New Password:",
+    "emailPlaceholder": "Enter email address",
+    "passwordPlaceholder": "Enter new password",
+    "requestOTP": "Request OTP",
+    "changePassword": "Change Password",
+    "enterValidEmail": "Enter valid email.",
+    "enterValidPassword": "Enter valid password.",
+    "requestOTPError": "Failed to request OTP.",
+    "changePasswordSuccess": "Password changed successfully!",
+    "changePasswordError": "Failed to change password."
+  },
+  "privacy": {
+    "title": "Privacy",
+    "subtitle": "Your trust is our priority.",
+    "policyTitle": "Policy",
+    "intro": "At Donatella, we value your privacy and are committed to protecting your personal information.",
+    "intro2": "This Privacy Policy outlines how we collect, use, share, and safeguard your information when you use our platform. By accessing or using our services, you agree to the practices described in this policy.",
+    "sections": [
+      {
+        "head": "1. Information We collect",
+        "des": "We collect the following types of information to provide and improve our services:",
+        "points": [
+          "Personal Information: Name, email address, phone number, and physical address. Payment and billing information (e.g., bank details or credit card information).",
+          "Profile Information: Photos, portfolio details, skillsets, and experience you choose to share on your profile. Preferences related to talent services or projects.",
+          "Usage Data: Log data such as IP address, browser type, operating system, and access times. Actions taken on the platform, like searches, messages, and project interactions.",
+          "Communications: Messages, inquiries, and support requests sent through the platform."
+        ]
+      },
+      {
+        "head": "2. How We Use Your Information",
+        "des": "We use the information we collect for the following purposes:",
+        "points": [
+          "To Provide Services: Match talents with clients and facilitate project collaboration.",
+          "To Enhance User Experience: Improve the functionality and usability of our platform.",
+          "To Communicate with You: Send updates, respond to inquiries, and share promotional materials.",
+          "To Ensure Security: Detect and prevent fraudulent or unauthorized activities.",
+          "To Comply with Legal Obligations: Meet legal and regulatory requirements."
+        ]
+      },
+      {
+        "head": "3. Sharing Your Information",
+        "des": "We share your information only when necessary and as described below:",
+        "points": [
+          "With Clients or Talents: To facilitate projects, profiles may be visible to clients or talents depending on platform settings.",
+          "Service Providers: With trusted third-party providers who help us operate our platform (e.g., payment processors, hosting services).",
+          "Legal Requirements: When required to comply with laws, regulations, or legal processes.",
+          "Business Transfers: In the event of a merger, acquisition, or sale of company assets."
+        ]
+      },
+      {
+        "head": "4.Your Choices and Rights",
+        "des": "You have the following rights regarding your personal information:",
+        "points": [
+          "Access and Update: Review and update your profile information through your account.",
+          "Delete Your Account: Request account deletion by contacting us at [Insert Contact Email].",
+          "Opt-Out: Unsubscribe from promotional communications at any time.",
+          "Restrict Data Use: Limit how we process your information under certain circumstances."
+        ]
+      },
+      {
+        "head": "5. Data Security",
+        "points": [
+          "We implement industry-standard security measures to protect your data. However, no system is completely secure. Please notify us immediately if you suspect unauthorized access to your account."
+        ]
+      },
+      {
+        "head": "6. Cookies and Tracking Technologies",
+        "points": [
+          "We use cookies and similar technologies to enhance your browsing experience, analyze platform performance, and deliver tailored content.",
+          "You can manage your cookie preferences through your browser settings."
+        ]
+      },
+      {
+        "head": "7. Third-Party Links",
+        "points": [
+          "Our platform may contain links to third-party websites.",
+          "We are not responsible for the privacy practices or content of these external sites."
+        ]
+      },
+      {
+        "head": "8. Children's Privacy",
+        "points": [
+          "Our platform is not intended for individuals under the age of 18.",
+          "We do not knowingly collect personal information from minors."
+        ]
+      },
+      {
+        "head": "9. Changes to This Privacy Policy",
+        "points": [
+          "We may update this policy from time to time.",
+          "Significant changes will be communicated via email or a notice on our platform."
+        ]
+      }
+    ]
+  },
+  "explore": {
+    "filters": {
+      "modeling": "Modeling",
+      "videographing": "Videographing",
+      "photographing": "Photographing",
+      "photoVideoEditing": "Photo & Video Editing",
+      "tourismHistoricalAdvising": "Tourism & Historical Advising",
+      "musicSoundEngineering": "Music & Sound Engineering",
+      "athleteicFitnessCoaching": "Athleteic & Fitness Coaching",
+      "beautyCosmetics": "Beauty & Cosmetics",
+      "visualArtingDesign": "Visual Arting & Design",
+      "fashionDesign": "Fashion Design",
+      "filters": "Filters",
+      "gender": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "other": "Other",
+      "hairColor": "Hair Color",
+      "black": "Black",
+      "brown": "Brown",
+      "blonde": "Blonde",
+      "red": "Red",
+      "tone": "Tone",
+      "light": "Light",
+      "medium": "Medium",
+      "dark": "Dark",
+      "eyeColor": "Eye Color",
+      "blue": "Blue",
+      "green": "Green",
+      "hazel": "Hazel",
+      "shoeSize": "Shoe Size",
+      "dressSize": "Dress Size",
+      "proposalStatus": "Proposal Status",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "finished": "Finished",
+      "jobStatus": "Job Status",
+      "open": "Open",
+      "closed": "Closed",
+      "accepted": "Accepted",
+      "allOrganizations": "All Organizations",
+      "jobName": "Job Name"
+    },
+    "tags": {
+      "tags": "Tags",
+      "typeAndPressEnter": "Type and press Enter",
+      "cancel": "Cancel",
+      "addTag": "Add Tag +",
+      "tagMustIncludeCharacters": "Tag must include characters"
+    },
+    "customSelect": {
+      "jobs": "Jobs",
+      "profiles": "Profiles"
+    },
+    "search": {
+      "searchForJobs": "Search for jobs",
+      "searchForModel": "Search for a model you want to hire",
+      "search": "Search"
+    }
+  },
+  "messages": {
+    "welcome": "Welcome to Donatella Chat",
+    "welcomeDescription": "Stay connected with your friends and colleagues in one seamless platform. Start meaningful conversations, share updates, and make every interaction count.",
+    "online": "online",
+    "typeYourMessage": "Type your message...",
+    "noMessagesYet": "No messages yet",
+    "startConversation": "Start a conversation to see your chats here",
+    "newContract": "New Contract:",
+    "costToBeNegotiated": "Cost to be negotiated",
+    "proposed": "Proposed",
+    "decline": "Decline",
+    "accept": "Accept",
+    "finishJob": "Finish Job",
+    "jobAcceptedSuccessfully": "Job accepted successfully!",
+    "jobRejectedSuccessfully": "Job rejected successfully!",
+    "jobFinishedSuccessfully": "Job finished successfully!",
+    "failedToSendMessage": "Failed to send message.",
+    "allJobs": "All Jobs",
+    "search": "Search...",
+    "reviewClient": "Review Client:",
+    "sendingReviewWarning": "Sending a review will mark payment as complete, close, and end the contract.",
+    "back": "Back",
+    "acceptAndReview": "Accept & Review",
+    "pleaseAddCommentAndRate": "Please add a comment and rate the client!",
+    "reviewSentSuccessfully": "Review sent successfully!",
+    "failedToSendReview": "Failed to send review."
+  },
+  "notifications": {
+    "notifications": "Notifications",
+    "loadingNotifications": "Loading notifications...",
+    "noNotificationsYet": "No notifications yet",
+    "justNow": "just now",
+    "minutesAgo": "m ago",
+    "hoursAgo": "h ago",
+    "daysAgo": "d ago"
+  },
+  "payments": {
+    "paymentsDetails": "Payments Details",
+    "projectsCompleted": "Projects Completed",
+    "totalEarnings": "Total Earnings",
+    "availableToWithdraw": "Available to Withdraw",
+    "pending": "pending",
+    "deposit": "Deposit",
+    "withdraw": "Withdraw",
+    "jobHistory": "Job History",
+    "filters": "Filters",
+    "allStatuses": "All Statuses",
+    "searchByJobName": "Search by job name...",
+    "loadingJobHistory": "Loading job history...",
+    "salary": "Cost",
+    "costNegotiable": "Cost: Negotiable",
+    "duration": "Duration",
+    "viewJob": "View Job",
+    "noJobsIndividual": "Any jobs you apply to in the future will show up in here.",
+    "noJobsOrganization": "Any jobs you publish in the future will show up in here.",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "paymentHistory": "Payment History",
+    "withdrawal": "Withdrawal",
+    "withdrawalRequests": "Withdrawal Requests",
+    "withdrawalRequest": "Withdrawal Request",
+    "ibanLabel": "IBAN",
+    "clickToViewDetails": "Click to view details and history",
+    "withdrawalDetails": "Withdrawal Details",
+    "amount": "Amount",
+    "status": "Status",
+    "iban": "IBAN",
+    "accountName": "Account Name",
+    "transactionHistory": "Transaction History",
+    "noTransactionHistory": "No transaction history available",
+    "close": "Close",
+    "statusChanged": "Status Changed",
+    "amountChanged": "Amount Changed",
+    "processedAmountUpdated": "Processed Amount Updated",
+    "adminNotesAdded": "Admin Notes Added",
+    "withdrawalProcessed": "Withdrawal Processed",
+    "withdrawalRejected": "Withdrawal Rejected",
+    "depositFunds": "Deposit Funds",
+    "amountDollars": "Amount ($)",
+    "enterAmount": "Enter amount",
+    "paymentMethod": "Payment Method",
+    "email": "Email",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "streetAddress": "Street Address",
+    "city": "City",
+    "state": "State",
+    "postalCode": "Postal Code",
+    "country": "Country",
+    "cancel": "Cancel",
+    "continueToPayment": "Continue to Payment",
+    "processing": "Processing...",
+    "redirectingToPayment": "Redirecting to payment...",
+    "pleaseEnterValidAmount": "Please enter a valid amount",
+    "failedToCreateDeposit": "Failed to create deposit",
+    "requestWithdrawal": "Request Withdrawal",
+    "availableBalance": "Available Balance",
+    "minimumMaximum": "Minimum: $50 | Maximum: $50,000",
+    "enterAmountRange": "Enter amount ($50 - $50,000)",
+    "amountExceedsBalance": "Amount exceeds available balance",
+    "enterBankIban": "Enter your bank account IBAN",
+    "accountHolderName": "Account Holder Name",
+    "enterAccountHolderName": "Enter account holder name",
+    "withdrawalReviewWarning": "Your withdrawal request will be reviewed by our admin team. Processing typically takes 1-3 business days.",
+    "submitting": "Submitting...",
+    "submitRequest": "Submit Request",
+    "minimumWithdrawalAmount": "Minimum withdrawal amount is $50",
+    "maximumWithdrawalAmount": "Maximum withdrawal amount is $50,000",
+    "insufficientBalance": "Insufficient available balance",
+    "pleaseEnterAccountName": "Please enter account name",
+    "withdrawalSubmittedSuccessfully": "Withdrawal request submitted successfully",
+    "failedToCreateWithdrawal": "Failed to create withdrawal request"
+  },
+  "onBoarding": {
+    "selectYourSpeciality": "Select Your Speciality",
+    "createProfileDescription": "Create your profile today and open the door to exciting new opportunities.",
+    "model": "Model",
+    "videographer": "Videographer",
+    "photographer": "Photographer",
+    "editor": "Editor",
+    "tourGuide": "Tour Guide",
+    "beautician": "Beautician",
+    "athlete": "Athlete",
+    "artist": "Artist",
+    "visualArtist": "Visual Artist",
+    "fashionista": "Fashionista",
+    "musician": "Musician",
+    "next": "Next",
+    "workExperience": "Work Experience",
+    "jobTitle": "Job Title",
+    "enterJobTitle": "Enter job title",
+    "company": "Company",
+    "enterCompanyName": "Enter company name",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "untilNow": "Until Now",
+    "startDateRequired": "Start date is required",
+    "endDateRequired": "End date is required if 'Until Now' is not checked",
+    "startDateBeforeEndDate": "Start date must be before end date",
+    "addMoreExperience": "Add More Experience",
+    "submit": "Submit"
+  },
+  "profile": {
+    "profileVisibility": "Profile Visibility",
+    "public": "Public",
+    "editAccount": "Edit Account",
+    "postJob": "Post Job",
+    "projectsCompleted": "Projects Completed",
+    "failedToUpdate": "Failed to update.",
+    "noReviewsAvailable": "No reviews available.",
+    "seeMore": "see more",
+    "about": "About",
+    "editAbout": "Edit About",
+    "reviews": "Reviews",
+    "cancel": "Cancel",
+    "save": "Save",
+    "failedToUpdateBio": "Failed to update bio."
+  },
+  "validators": {
+    "fieldRequired": "{{field}} is required.",
+    "mustBeAtLeast3Characters": "must be at least 3 characters.",
+    "emailRequired": "Email is required.",
+    "invalidEmailFormat": "Invalid email format.",
+    "passwordRequired": "Password is required.",
+    "passwordRequirements": "Password must be at least 8 characters long, and include at least one uppercase letter, one number, and one special character.",
+    "invalidUrlOrEmail": "Please enter a valid URL or email address."
+  },
+  "form": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "password": "Password",
+    "birthDate": "BirthDate",
+    "gender": "Gender",
+    "nationality": "Nationality",
+    "skinTone": "Skin Tone",
+    "hairColor": "Hair Color",
+    "eyeColor": "Eye Color",
+    "bust": "Bust",
+    "hips": "Hips",
+    "waist": "Waist",
+    "dressSize": "Dress Size",
+    "shoeSize": "Shoe Size",
+    "weight": "Weight",
+    "height": "Height",
+    "cameraOwnedUsed": "Camera owned / used",
+    "lightningOwnedUsed": "lightning owned / used",
+    "lensUsed": "Lens Used",
+    "stabilizerGimbalAvailability": "Stabilizer / gimbal availability",
+    "bio": "Bio",
+    "organizationName": "Organization Name",
+    "location": "Location",
+    "instagram": "Instagram",
+    "tiktok": "Tiktok",
+    "website": "Website",
+    "phoneNumber": "Phone Number",
+    "linkYourMostFollowedSocialAccount": "Link Your Most Followed Social Account:",
+    "howManyYearsOfExperience": "How many years of experience do you have?",
+    "availableForTravelForShoots": "Are you available for travel for shoots?",
+    "legallyEligibleToWork": "Are you legally eligible to work in your location?",
+    "doYouHaveTattoos": "Do you have Bachelor's degree?",
+    "typeHere": "Type here",
+    "jobTitle": "Job Title:",
+    "jobCategory": "Job Category:",
+    "experienceNeeded": "Experience Needed:",
+    "careerLevel": "Career Level:",
+    "jobDescription": "Job Description:",
+    "jobRequirements": "Job Requirements:"
+  },
+  "admin": {
+    "sidebar": {
+      "adminPanel": "Admin Panel",
+      "dashboard": "Dashboard",
+      "users": "Users",
+      "notifications": "Notifications",
+      "payouts": "Payouts",
+      "logout": "Logout"
+    },
+    "createUser": {
+      "email": "Email",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Email is invalid",
+      "password": "Password",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Password must be at least 8 characters",
+      "passwordPlaceholder": "Enter password (min 8 characters)",
+      "role": "Role",
+      "roleRequired": "Role is required",
+      "individual": "Individual",
+      "organization": "Organization",
+      "admin": "Admin",
+      "firstName": "First Name",
+      "firstNameRequired": "First name is required",
+      "firstNameMinLength": "First name must be at least 2 characters",
+      "firstNamePlaceholder": "Enter first name",
+      "lastName": "Last Name",
+      "lastNameRequired": "Last name is required",
+      "lastNameMinLength": "Last name must be at least 2 characters",
+      "lastNamePlaceholder": "Enter last name",
+      "createUser": "Create User",
+      "cancel": "Cancel",
+      "userCreatedSuccess": "User created successfully",
+      "failedToCreateUser": "Failed to create user",
+      "emailPlaceholder": "user@example.com"
+    },
+    "deleteUser": {
+      "title": "Delete User",
+      "message": "Are you sure you want to delete this user? This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting..."
+    },
+    "notification": {
+      "targetAudience": "Target Audience",
+      "specificUser": "Specific User",
+      "allUsers": "All Users",
+      "byUserRole": "By User Role",
+      "byIndividualCategory": "By Individual Category",
+      "email": "Email",
+      "enterUserEmail": "Enter user email",
+      "userRole": "User Role",
+      "selectRole": "Select Role",
+      "individual": "Individual",
+      "organization": "Organization",
+      "individualCategory": "Individual Category",
+      "selectCategory": "Select Category",
+      "model": "Model",
+      "photographer": "Photographer",
+      "videographer": "Videographer",
+      "editor": "Editor",
+      "beauty": "Beauty",
+      "tourism": "Tourism",
+      "athlete": "Athlete",
+      "artist": "Artist",
+      "fashion": "Fashion",
+      "musicAndSoundEngineer": "Music & Sound Engineer",
+      "title": "Title",
+      "titlePlaceholder": "Enter notification title",
+      "body": "Body",
+      "bodyPlaceholder": "Enter notification body",
+      "sendNotification": "Send Notification"
+    },
+    "userSearch": {
+      "search": "Search",
+      "searchPlaceholder": "Search by email, name...",
+      "role": "Role",
+      "allRoles": "All Roles",
+      "individual": "Individual",
+      "organization": "Organization",
+      "admin": "Admin",
+      "individualCategory": "Individual Category",
+      "allCategories": "All Categories",
+      "model": "Model",
+      "photographer": "Photographer",
+      "videographer": "Videographer",
+      "editor": "Editor",
+      "beauty": "Beauty",
+      "tourism": "Tourism",
+      "athlete": "Athlete",
+      "artist": "Artist",
+      "fashion": "Fashion",
+      "musicAndSoundEngineer": "Music & Sound Engineer",
+      "blockedStatus": "Blocked Status",
+      "all": "All",
+      "blocked": "Blocked",
+      "notBlocked": "Not Blocked",
+      "onboardingStatus": "Onboarding Status",
+      "completed": "Completed",
+      "notCompleted": "Not Completed",
+      "searchButton": "Search",
+      "reset": "Reset"
+    },
+    "usersTable": {
+      "email": "Email",
+      "name": "Name",
+      "role": "Role",
+      "status": "Status",
+      "onboarding": "Onboarding",
+      "created": "Created",
+      "actions": "Actions",
+      "blocked": "Blocked",
+      "active": "Active",
+      "completed": "Completed",
+      "pending": "Pending",
+      "edit": "Edit",
+      "delete": "Delete",
+      "showing": "Showing",
+      "to": "to",
+      "of": "of",
+      "users": "users",
+      "previous": "Previous",
+      "page": "Page",
+      "next": "Next"
+    },
+    "categories": {
+      "categoryManagement": "Category Management",
+      "createCategory": "Create Category",
+      "noCategoriesFound": "No categories found",
+      "predefined": "Predefined",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "edit": "Edit",
+      "delete": "Delete",
+      "editCategory": "Edit Category",
+      "name": "Name (unique identifier)",
+      "namePlaceholder": "e.g., CUSTOM_CATEGORY",
+      "displayNameEn": "Display Name (English) *",
+      "displayNameAr": "Display Name (Arabic) *",
+      "descriptionEn": "Description (English) *",
+      "descriptionAr": "Description (Arabic) *",
+      "descriptionPlaceholderEn": "Category description (English)...",
+      "descriptionPlaceholderAr": "Category description (Arabic)...",
+      "imageUrl": "Image URL (optional)",
+      "imageUrlPlaceholder": "https://example.com/image.png",
+      "order": "Order",
+      "update": "Update",
+      "create": "Create",
+      "cancel": "Cancel",
+      "categoryUpdatedSuccess": "Category updated successfully",
+      "categoryCreatedSuccess": "Category created successfully",
+      "failedToSaveCategory": "Failed to save category",
+      "enabledSuccess": "enabled successfully",
+      "disabledSuccess": "disabled successfully",
+      "failedToUpdateStatus": "Failed to update category status",
+      "deleteConfirm": "Are you sure you want to delete \"{{name}}\"?",
+      "categoryDeletedSuccess": "Category deleted successfully",
+      "failedToDeleteCategory": "Failed to delete category"
+    },
+    "createUserPage": {
+      "title": "Create New User"
+    },
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "totalUsers": "Total Users",
+      "activeUsers": "Active Users",
+      "totalJobs": "Total Jobs",
+      "blockedUsers": "Blocked Users",
+      "recentRegistrations": "Recent Registrations",
+      "onboardingCompletion": "Onboarding Completion",
+      "usersByCategory": "Users by Category",
+      "individuals": "Individuals",
+      "organizations": "Organizations",
+      "active": "Active",
+      "finished": "Finished",
+      "last30Days": "Last 30 days",
+      "days7": "7 days",
+      "days30": "30 days"
+    }
+  },
+  "registration": {
+    "individual": {
+      "registering": "Registering...",
+      "registeredSuccess": "Registered successfully!",
+      "failedToRegister": "Failed to register.",
+      "signUp": "Sign Up",
+      "alreadyHaveAccount": "Already have an account?",
+      "clickHereToLogin": "Click here to log in!"
+    },
+    "organization": {
+      "registering": "Registering...",
+      "registeredSuccess": "Registered successfully!",
+      "signUp": "Sign Up",
+      "alreadyHaveAccount": "Already have an account?",
+      "clickHereToLogin": "Click here to log in!"
+    }
+  },
+  "profileForms": {
+    "common": {
+      "createYourProfile": "Create your profile, showcase your skills, and find your next project.",
+      "createAccount": "Create Account",
+      "dontHaveAccount": "Don't have an account yet?",
+      "alreadyHaveAccount": "Already have an account?",
+      "clickHereToCreateOne": "Click here to create one!",
+      "login": "Login",
+      "choose": "Choose",
+      "select": "Select",
+      "yes": "Yes",
+      "no": "No",
+      "pleaseEnterValidAge": "Please enter a valid age.",
+      "profileCreatedSuccess": "Profile created successfully.",
+      "failedToCreateProfile": "Failed to create profile.",
+      "unexpectedError": "An unexpected error occurred"
+    },
+    "model": {
+      "title": "Model form"
+    },
+    "photographer": {
+      "title": "Photographer form"
+    },
+    "videographer": {
+      "title": "Videographer form"
+    },
+    "editor": {
+      "title": "Editor form",
+      "mainSoftware": "Main Software owned / used",
+      "softwarePlaceholder": "Software",
+      "colorGrading": "Do you Offer Color Grading?",
+      "soundEffects": "Do you Offer Sound Effects?",
+      "visualEffects": "Visual Effects",
+      "motionGraphics": "Motion Graphics"
+    },
+    "artist": {
+      "title": "Artists and Visuals",
+      "professionalCategory": "Professional Category",
+      "selectOne": "(Select one)",
+      "notableExhibitions": "Notable Exhibitions, Publications, or Awards",
+      "exhibitionsPlaceholder": "Oscars, Movies...",
+      "collaboratedWithBrands": "Have you collaborated with brands or clients?",
+      "collaboratedPlaceholder": "Provide link here",
+      "artisticStyle": "Artistic style & Expertise",
+      "selectUpTo3": "(Select up to 3 relevant styles)",
+      "portfolioLinks": "Instagram / ArtStation / Behance / Website (links)",
+      "portfolioPlaceholder": "Provide link here",
+      "professionalCategories": {
+        "painter": "Painter",
+        "sketchArtist": "Sketch Artist / Illustrator",
+        "muralArtist": "Mural / Street Artist",
+        "sculptor": "Sculptor / 3D Artist",
+        "digitalArtist": "Digital Artist (Concept Art, NFT Art, etc)"
+      },
+      "expertise": {
+        "realism": "Realism / Hyperrealism",
+        "abstract": "Abstract / Expressionism",
+        "surrealism": "Surrealism / Fantasy",
+        "portraits": "Portraits",
+        "conceptArt": "Concept Art & Illustration",
+        "digitalArt": "Digital Art & NFT Creation"
+      },
+      "selectUpTo3Error": "You can select up to 3 options."
+    },
+    "athlete": {
+      "title": "Athletes & Sports Ensuthiast",
+      "professionalCategory": "Professional Category",
+      "selectUpTo3": "(Select up to 3 relevant category)",
+      "achievementsOrTitles": "Top Achievements or Titles",
+      "achievementsPlaceholder": "Olympics Medalist, FIFA Player",
+      "affiliated": "Are you affiliated with any clubs, organizations, or brands?",
+      "portfolioLinks": "Instagram / ArtStation / Behance / Website (links)",
+      "portfolioPlaceholder": "Provide link here",
+      "professionalCategories": {
+        "professional": "Proffessional Athlete",
+        "retired": "Retired Athlete / Sports Ambassador",
+        "publicFigure": "Public Figure / Sports Influencer",
+        "coach": "Coach / trainer",
+        "fitnessBlogger": "Fitness Blogger",
+        "healthExpert": "Health & Wellness Expert",
+        "bodyBuilder": "Body Builder"
+      },
+      "selectUpTo3Error": "You can select up to 3 options."
+    },
+    "beauty": {
+      "title": "Beauty and Cosmetics",
+      "areasOfExperts": "Areas of Experts",
+      "selectAllThatApply": "(Select All That Apply)",
+      "highLevelExperience": "Have you worked on high level shoots or events?",
+      "portfolioLinks": "Instagram / ArtStation / Behance / Website (links)",
+      "portfolioPlaceholder": "Provide link here",
+      "preferredBrands": "Preferred makeup brands you work with",
+      "formalTraining": "Have you received formal training in makeup artistry?",
+      "expertise": {
+        "bridal": "Bridal Makeup",
+        "specialEffects": "Special Effects Makeup",
+        "editorial": "Editorial & Fashion Makeup",
+        "runway": "Runway Makeup",
+        "filmTv": "Film & Tv Makeup",
+        "theatre": "Theatre Makeup",
+        "faceBody": "Face & Body Painting"
+      },
+      "brands": {
+        "mac": "MAC Cosmetics",
+        "fenty": "Fenty Beauty",
+        "huda": "Huda Beauty",
+        "nars": "NARS",
+        "dior": "Dior Beauty",
+        "other": "Other"
+      }
+    },
+    "fashion": {
+      "title": "Fashion and Jewelry Stylist",
+      "professionalCategory": "Professional Category",
+      "selectOne": "(Select one)",
+      "notableClients": "Notable Clients, Brands, or Publications",
+      "clientsPlaceholder": "Oscars, Movies...",
+      "portfolioQuestion": "Do you have a personal styling portfolio or Instagram page showcasing your work?",
+      "portfolioPlaceholder": "Provide link here",
+      "formalTraining": "Do you have formal training or certifications in fashion styling?",
+      "workedWithCelebrities": "Have you worked with celebrities or high-profile clients?",
+      "professionalCategories": {
+        "stylist": "Fashion Stylist",
+        "jewelryStylist": "Jewelry Stylist",
+        "wardrobeConsultant": "Wardrobe Consultant / Image Consultant",
+        "runwayStylist": "Runway & Fashion Show Stylist",
+        "bridalStylist": "Bridal & Occasion Stylist"
+      }
+    },
+    "organization": {
+      "title": "Organization form",
+      "bio": "Bio",
+      "organizationName": "Organization Name",
+      "location": "Location",
+      "selectLocation": "Select Location",
+      "instagram": "Instagram",
+      "tiktok": "Tiktok",
+      "website": "Website",
+      "phoneNumber": "Phone Number",
+      "invalidTikTokUrl": "Please enter a valid TikTok URL.",
+      "invalidInstagramUrl": "Please enter a valid Instagram URL.",
+      "profileCreatedSuccess": "Profile created successfully!"
+    },
+    "musician": {
+      "title": "Music & Sound Engineer",
+      "professionalCategory": "Professional Category",
+      "selectOne": "(Select one)",
+      "majorProjects": "Have you worked on major projects or with well-known artists?",
+      "majorProjectsPlaceholder": "(Yes/No - if yes, list names or projects)",
+      "preferWorkingWith": "What type of clients do you prefer working with?",
+      "experienceHandlingHighProfileClients": "Do you have experience handling high-profile clients or live events?",
+      "wonAwards": "Have your works won any awards or been nominated ?",
+      "portfolioLinks": "Share your Instagram / ArtStation / Behance / Website (Links)",
+      "portfolioPlaceholder": "Provide link here",
+      "professionalCategories": {
+        "musicProducer": "Music Producer",
+        "soundEngineer": "Sound Engineer",
+        "audioPostProduction": "Audio Post-Production specialist",
+        "composer": "Composer / Music Arranger",
+        "voiceover": "Voiceover / Podcast Editor",
+        "dj": "DJ & Live Performance Engineer"
+      },
+      "typeOfClients": {
+        "recordLabels": "Record Labels & Artists",
+        "audioPostProduction": "Audio Post-Production Specialist",
+        "corporateClients": "Croporate Clients & Bussiness",
+        "eventPlanners": "Event Planners & Concerts",
+        "advertisingAgencies": "Advertising & Marketing Agencies"
+      }
+    },
+    "tourism": {
+      "title": "Tourism & Historical Advisor",
+      "specializations": "What is your specializations",
+      "selectAllThatApply": "(Select All That Apply)",
+      "travelLogistics": "Do you have experience managing travel logistics (transportations, hotels, etc.)?",
+      "currentEmployer": "What is your current or most recent employer?",
+      "employerPlaceholder": "(Tour Company, Museum, or Freelance)",
+      "license": "Do you have a valid tour guide licence or any offical certifications?",
+      "otherLanguage": "Do you speak more than one language?",
+      "specializationTypes": {
+        "cultural": "Cultural Tourism",
+        "historical": "Historical Site Tours",
+        "archeological": "Archeological Tours",
+        "religious": "Religious Tourism",
+        "heritage": "Local Heritage & Traditions",
+        "adventure": "Adventure & Ecotourism",
+        "faceBody": "Face & Body Painting"
+      }
+    }
+  },
+  "imageUpload": {
+    "uploading": "Uploading...",
+    "fileSizeExceeds": "File size exceeds 1MB limit.",
+    "errorUploadingImage": "Error uploading image",
+    "errorUploadingImageTryAgain": "Error uploading image, please try again."
+  },
+  "videoUpload": {
+    "uploading": "Uploading...",
+    "fileSizeExceeds5MB": "File size exceeds 5MB limit.",
+    "errorUploadingReel": "Error uploading Reel, please try again."
+  },
+  "otp": {
+    "enterOTP": "Enter OTP",
+    "receiveOTPMessage": "You will receive an OTP on your email address.",
+    "emailChangedSuccess": "Email changed successfully!",
+    "passwordChangedSuccess": "Password changed successfully!",
+    "failedToVerifyOTP": "Failed to verify OTP."
+  },
+  "profileEdit": {
+    "editSpecialty": "Edit Specialty",
+    "camera": "Camera",
+    "lightning": "Lightning",
+    "lense": "Lense",
+    "stabilizer": "Stabilizer",
+    "selectOption": "Select Option",
+    "yes": "Yes",
+    "no": "No",
+    "saveChanges": "Save Changes",
+    "specialtyInfoUpdated": "Specialty info updated successfully.",
+    "failedToUpdate": "Failed to update.",
+    "gender": "Gender",
+    "other": "Other",
+    "male": "Male",
+    "female": "Female",
+    "birthdate": "Birthdate",
+    "nationality": "Nationality",
+    "height": "Height",
+    "weight": "Weight",
+    "eyeColor": "Eye Color",
+    "skinTone": "Skin tone",
+    "hairColor": "Hair Color",
+    "dressSize": "Dress Size",
+    "shoeSize": "Shoe Size",
+    "waist": "Waist",
+    "hips": "Hips",
+    "bust": "Bust",
+    "editingSoftware": "Editing Software",
+    "colorGrading": "Color Grading",
+    "soundEditing": "Sound Editing",
+    "visualEffects": "Visual Effects",
+    "motionGraphics": "Motion Graphics",
+    "hasColorGrading": "Has Color Grading",
+    "hasNoColorGrading": "Has No Color Grading",
+    "hasMotionGraphics": "Has Motion Graphics",
+    "hasNoMotionGraphics": "Has No Motion Graphics",
+    "hasSoundEditing": "Has Sound Editing",
+    "hasNoSoundEditing": "Has No Sound Editing",
+    "hasVisualEffects": "Has Visual Effects",
+    "hasNoVisualEffects": "Has No Visual Effects"
+  },
+  "experience": {
+    "title": "Experience & Awards",
+    "experience": "Experience",
+    "remove": "Remove",
+    "titlePlaceholder": "Title",
+    "companyPlaceholder": "Company",
+    "startDatePlaceholder": "Start Date",
+    "endDatePlaceholder": "End Date",
+    "cancel": "Cancel",
+    "save": "Save",
+    "startDateBeforeEndDate": "Start date must be before the end date.",
+    "at": "at"
+  },
+  "orgProfile": {
+    "cancel": "Cancel",
+    "done": "Done",
+    "organizationName": "Organization Name",
+    "location": "Location",
+    "selectCountry": "Select Country",
+    "instagram": "Instagram",
+    "tiktok": "Tiktok",
+    "website": "Website",
+    "phone": "Phone",
+    "bio": "bio",
+    "nameTooShort": "Name should be at least 3 characters long.",
+    "invalidInstagramURL": "Please enter a valid Instagram URL.",
+    "invalidTiktokURL": "Please enter a valid Tiktok URL.",
+    "profileUpdatedSuccess": "Profile updated successfully!",
+    "failedToUpdateProfile": "Failed to update profile.",
+    "fileSizeExceeds": "File size exceeds 1MB limit."
+  },
+  "changeEmail": {
+    "title": "Enter Email Address",
+    "subtitle": "Welcome back! Let's dive back into your creative journey.",
+    "changeEmail": "Change Email",
+    "invalidEmail": "Invalid email address. Please enter a valid email address.",
+    "emailChangedSuccess": "Email changed successfully.",
+    "failedToChangeEmail": "Failed to change email."
+  },
+  "changePassword": {
+    "title": "Enter New Password",
+    "subtitle": "Welcome back! Let's dive back into your creative journey.",
+    "changePassword": "Change Password",
+    "enterNewPassword": "Enter New Password",
+    "passwordRequirements": "Password must be at least 8 characters long and include at least one uppercase letter, one number, and one special character (@$!%*?&).",
+    "passwordChangedSuccess": "Password changed successfully!",
+    "failedToChangePassword": "Failed to change password."
+  },
+  "sendChangeOTP": {
+    "title": "A one time password will be requested from:",
+    "subtitle": "This will help us verify who you are, before making any changes.",
+    "requestOTP": "Request OTP",
+    "otpSentSuccess": "OTP sent successfully!",
+    "failedToSendOTP": "Fialed to send OTP"
+  },
+  "individualView": {
+    "about": "About",
+    "portfolio": "Portfolio",
+    "trophies": "Trophies",
+    "headshots": "Headshots",
+    "certificates": "Certificates",
+    "fullBody": "Full Body",
+    "tiktoksReels": "TikToks / Reels",
+    "bodyPictures": "Body Pictures",
+    "experienceAwards": "Experience & Awards",
+    "projectsCompleted": "0 Projects Completed",
+    "musicAndSoundEngineer": "Music & Sound Engineer",
+    "na": "N/A"
+  },
+  "jobView": {
+    "organization": "organization",
+    "applyForJob": "Apply For Job",
+    "onlyIndividualsCanApply": "Only Individuals Can Apply",
+    "jobClosed": "Job Closed",
+    "copiedSuccessfully": "Copied successfully",
+    "close": "Close",
+    "applyToJob": "Apply to job :",
+    "costToBeSpecified": "Cost to be specified",
+    "yourProposedCost": "Your Proposed Cost ($USD):",
+    "enterProposedCost": "Enter your proposed cost",
+    "coverLetter": "Cover Letter:",
+    "goBack": "Go Back",
+    "apply": "Apply",
+    "coverLetterRequired": "Cover letter is required",
+    "pleaseSpecifyCost": "Please specify your proposed cost",
+    "applicationSentSuccess": "Application sent successfully",
+    "alreadyApplied": "You have already applied for this job.",
+    "failedToApply": "Failed to apply job.",
+    "failedToGetJob": "Failed to get job",
+    "details": "Details",
+    "posted": "Posted",
+    "remote": "Remote",
+    "peopleHaveApplied": "People Have Applied So Far!",
+    "noApplicationsYet": "No applications yet. Your opportunity to stand out!",
+    "skillsAndTools": "Skills And Tools",
+    "experienceNeeded": "Experience Needed:",
+    "to": "to",
+    "years": "Years",
+    "careerLevel": "Career Level:",
+    "educationLevel": "Education Level:",
+    "tattoosOnBody": "Tattoos On Body:",
+    "yes": "Yes",
+    "jobSalary": "Job Salary:",
+    "jobCategory": "Job Category:",
+    "jobDuration": "Job Duration:",
+    "jobDescription": "Job Description",
+    "jobRequirements": "Job Requirements",
+    "noRequirementsSpecified": "No requirements specified"
+  },
+  "postJob": {
+    "title": "Post a Job",
+    "subtitle": "Highlight your specialty to attract the right collaborations.",
+    "jobTitle": "Job Title",
+    "enterJobTitle": "Enter job title",
+    "jobCategory": "Job Category",
+    "chooseCategory": "Choose a category",
+    "model": "Model",
+    "photographer": "Photographer",
+    "videographer": "Videographer",
+    "editor": "Editor",
+    "tourGuide": "Tour Guide",
+    "musician": "Musician",
+    "athlete": "Athlete",
+    "makeupArtist": "Makeup Artist",
+    "artist": "Artist",
+    "fashionista": "Fashionista",
+    "experienceNeeded": "Experience Needed",
+    "minYears": "Min Years",
+    "maxYears": "Max Years",
+    "jobDuration": "Job Duration",
+    "minDuration": "Min Duration",
+    "maxDuration": "Max Duration",
+    "unit": "Unit",
+    "year": "Year",
+    "month": "Month",
+    "week": "Week",
+    "day": "Day",
+    "careerLevel": "Career Level",
+    "chooseCareerLevel": "Choose a career level",
+    "entryLevel": "Entry Level",
+    "midLevel": "Mid-Level",
+    "senior": "Senior",
+    "location": "Location",
+    "selectCountry": "Select Country",
+    "salary": "Cost",
+    "jobSalaryUSD": "Job Salary in SAR",
+    "letTalentSpecifyCost": "Let talent specify cost in proposal",
+    "educationLevel": "Education Level",
+    "chooseEducationLevel": "Choose your education level",
+    "highSchool": "High School",
+    "bachelorsDegree": "Bachelor's Degree",
+    "otherDegree": "Other Degree",
+    "description": "Description",
+    "addDescription": "Add Description",
+    "requirements": "Requirements",
+    "addRequirements": "Add Requirements",
+    "addRequirementsTitle": "Add Requirements",
+    "done": "Done",
+    "iAgreeToTerms": "I Agree To These Terms And Services.",
+    "termsMessage": "I affirm that the information provided in this application is accurate and complete to the best of my knowledge, and that any falsification or omission may result in disqualification from the platform.",
+    "postJob": "Post Job",
+    "jobPostedSuccess": "Job posted successfully",
+    "minimumExperienceError": "Minimum experience should be less than maximum experience",
+    "invalidDurationRange": "Invalid duration range. Please check your minimum and maximum durations.",
+    "addDescriptionTitle": "Add Description",
+    "enterJobDescription": "Enter job description",
+    "cancel": "Cancel"
+  },
+  "experienceForm": {
+    "categories": {
+      "tourGuide": "Tourism & Historical Advisor",
+      "beautician": "Beauty and Cosmetics",
+      "athlete": "Athletes & Sports Enthusiast",
+      "artist": "Artists and Visuals",
+      "fashionista": "Fashion and Jewelry Stylist",
+      "musician": "Music & Sound Engineer"
+    },
+    "description": "Highlight your specialty to attract the right collaborations.",
+    "next": "Next",
+    "workExperienceLabel": "Where have you previously worked as a",
+    "addExperience": "Add Experience"
+  },
+  "termsAndConditions": {
+    "title": "TERMS & CONDITIONS",
+    "companyName": "DonatellaKSA",
+    "lastUpdated": "Last Updated: [DD/MM/YYYY]",
+    "sections": {
+      "introduction": {
+        "title": "1. Introduction",
+        "content": "These Terms & Conditions govern your use of DonatellaKSA (\"we\", \"us\", \"our\"). By accessing or using our services, you agree to be bound by these Terms."
+      },
+      "eligibility": {
+        "title": "2. Eligibility",
+        "points": [
+          "Users must be 18 years or older.",
+          "Users must provide accurate, complete, and up-to-date information.",
+          "Use of the services must comply with applicable laws."
+        ]
+      },
+      "internationalUse": {
+        "title": "3. International Use",
+        "content": "Our services may be accessed by users located inside or outside the Kingdom of Saudi Arabia. Users accessing the services from outside Saudi Arabia are responsible for ensuring that their use complies with applicable local laws in their country of residence. These Terms shall remain governed by the laws of the Kingdom of Saudi Arabia regardless of the user's location."
+      },
+      "accounts": {
+        "title": "4. Accounts",
+        "points": [
+          "Users are responsible for maintaining the confidentiality of their account credentials.",
+          "You are responsible for all activities that occur under your account.",
+          "We reserve the right to suspend or terminate accounts that violate these Terms."
+        ]
+      },
+      "services": {
+        "title": "5. Services",
+        "points": [
+          "We facilitate connections between clients and talent.",
+          "Any agreement, booking, or engagement is entered into directly between the involved parties.",
+          "We are not responsible for the conduct, performance, or outcome of any engagement."
+        ]
+      },
+      "payments": {
+        "title": "6. Payments",
+        "points": [
+          "Payments are processed through third-party payment service providers.",
+          "Any applicable fees will be displayed before confirmation.",
+          "We are not responsible for delays, errors, or failures caused by payment providers."
+        ]
+      },
+      "cancellationsRefunds": {
+        "title": "7. Cancellations & Refunds",
+        "points": [
+          "Cancellation and refund terms depend on the specific agreement between the parties.",
+          "Any disputes must be reported within 7 days of completion of the engagement."
+        ]
+      },
+      "communications": {
+        "title": "8. Communications",
+        "points": [
+          "Users agree to communicate respectfully and in good faith.",
+          "Any misuse of the services may result in account suspension or termination."
+        ]
+      },
+      "intellectualProperty": {
+        "title": "9. Intellectual Property",
+        "points": [
+          "All content, branding, and materials provided by DonatellaKSA remain our property.",
+          "Users may not copy, distribute, or use content without prior permission.",
+          "Talent retains rights to their name and image unless otherwise agreed in writing."
+        ]
+      },
+      "dataPrivacy": {
+        "title": "10. Data & Privacy",
+        "points": [
+          "Personal data is handled in accordance with applicable Saudi data protection laws.",
+          "By using the services, you consent to the processing of your data as necessary to operate the services."
+        ]
+      },
+      "limitationOfLiability": {
+        "title": "11. Limitation of Liability",
+        "points": [
+          "We are not liable for indirect, incidental, or consequential damages.",
+          "Our total liability, if any, is limited to the amount paid through the services for the relevant engagement."
+        ]
+      },
+      "termination": {
+        "title": "12. Termination",
+        "content": "We may suspend or terminate access to the services at any time if these Terms are violated."
+      },
+      "governingLaw": {
+        "title": "13. Governing Law & Jurisdiction",
+        "content": "These Terms are governed by the laws of the Kingdom of Saudi Arabia. Any disputes shall be subject to the exclusive jurisdiction of the competent courts in Saudi Arabia."
+      }
+    },
+    "close": "Close",
+    "iAgreeToTerms": "I Agree To These Terms And Services.",
+    "termsMessage": "I affirm that the information provided in this application is accurate and complete to the best of my knowledge, and that any falsification or omission may result in disqualification from the platform."
+  }
+}
