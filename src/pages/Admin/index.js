@@ -1,3 +1,4 @@
+export { default as Categories } from "./Categories";
 export { default as CreateUser } from "./CreateUser";
 export { default as Dashboard } from "./Dashboard";
 export { default as Notifications } from "./Notifications";

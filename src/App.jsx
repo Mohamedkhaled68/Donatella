@@ -8,6 +8,7 @@ import SelectCategory from "./components/onBoarding/SelectCategory";
 import { useI18n } from "./hooks/useI18n";
 import {
 	AboutUs,
+	Categories,
 	Contact,
 	CreateUser,
 	Dashboard,
@@ -320,6 +321,10 @@ const App = () => {
 								<Route
 									path="admin/dashboard"
 									element={<Dashboard />}
+								/>
+								<Route
+									path="admin/categories"
+									element={<Categories />}
 								/>
 								<Route
 									path="admin/users"
