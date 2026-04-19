@@ -21,6 +21,7 @@ const AdminSidebar = () => {
 
 	const navItems = [
 		{ path: "/admin/dashboard", label: t("admin.sidebar.dashboard"), icon: "📊" },
+		{ path: "/admin/categories", label: t("admin.sidebar.categories"), icon: "📁" },
 		{ path: "/admin/users", label: t("admin.sidebar.users"), icon: "👥" },
 		{ path: "/admin/notifications", label: t("admin.sidebar.notifications"), icon: "🔔" },
 		{ path: "/admin/payouts", label: t("admin.sidebar.payouts"), icon: "💰" },

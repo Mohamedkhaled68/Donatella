@@ -624,6 +624,7 @@
     "sidebar": {
       "adminPanel": "Admin Panel",
       "dashboard": "Dashboard",
+      "categories": "Categories",
       "users": "Users",
       "notifications": "Notifications",
       "payouts": "Payouts",
