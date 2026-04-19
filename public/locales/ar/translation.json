@@ -624,6 +624,7 @@
     "sidebar": {
       "adminPanel": "لوحة الإدارة",
       "dashboard": "لوحة التحكم",
+      "categories": "التصنيفات",
       "users": "المستخدمون",
       "notifications": "الإشعارات",
       "payouts": "المدفوعات",

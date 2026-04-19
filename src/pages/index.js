@@ -1,7 +1,16 @@
 //AUTHORIZED
 
 //ADMIN
-export { CreateUser, Dashboard, Notifications, PayoutDetail, Payouts, UserEdit, Users } from "./Admin";
+export {
+	Categories,
+	CreateUser,
+	Dashboard,
+	Notifications,
+	PayoutDetail,
+	Payouts,
+	UserEdit,
+	Users,
+} from "./Admin";
 export { default as Explore } from "./Authorized/Explore";
 export { default as Messages } from "./Authorized/Messages";
 export { default as Payments } from "./Authorized/Payments";
